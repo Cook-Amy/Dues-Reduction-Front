@@ -13,6 +13,12 @@ import { HeaderComponent } from './header/header.component';
 import { WalnutCreekComponent } from './walnut-creek/walnut-creek.component';
 import { CarterFinleyComponent } from './carter-finley/carter-finley.component';
 import { AdminPageComponent } from './admin-page/admin-page.component';
+import { VenueLinksComponent } from './venue-links/venue-links.component';
+import { EventsComponent } from './events/events.component';
+import { VenueContactsComponent } from './venue-contacts/venue-contacts.component';
+import { FormsComponent } from './forms/forms.component';
+import { DocumentsComponent } from './documents/documents.component';
+import { ReportsComponent } from './reports/reports.component';
 
 
 @NgModule({
@@ -25,7 +31,13 @@ import { AdminPageComponent } from './admin-page/admin-page.component';
     HeaderComponent,
     WalnutCreekComponent,
     CarterFinleyComponent,
-    AdminPageComponent
+    AdminPageComponent,
+    VenueLinksComponent,
+    EventsComponent,
+    VenueContactsComponent,
+    FormsComponent,
+    DocumentsComponent,
+    ReportsComponent
   ],
   imports: [
     BrowserModule,

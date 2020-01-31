@@ -10,17 +10,23 @@
   <div class="collapse navbar-collapse" id="navbarsExampleDefault">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" routerLink='/home' routerLinkActive='active'>Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link" routerLink='/home' routerLinkActive='active'>Home</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink='/pnc' routerLinkActive='active'>PNC</a>
+      <li class="nav-item" *ngFor="let venue of venues">
+        <a class="nav-link" [routerLink]="['/venues', venue.shortName]">{{ venue.name }}</a>
+      </li>
+
+
+
+      <!-- <li class="nav-item">
+        <a class="nav-link" routerLink='/pnc' routerLinkActive='active'>PNC Arena</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" routerLink='/wc' routerLinkActive='active'>Walnut Creek</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" routerLink='/cf' routerLinkActive='active'>Carter-Finley</a>
-      </li>
+      </li> -->
       <li class="nav-item">
         <a class="nav-link" routerLink='/admin' routerLinkActive='active'>Admin</a>
       </li>

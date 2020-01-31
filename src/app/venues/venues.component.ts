@@ -8,14 +8,9 @@ import { ServerService } from './../server.service';
 })
 export class VenuesComponent implements OnInit {
 
-  venues: any = [];
-  // modalCallback: () => void;
+  
 
   constructor(private server: ServerService) {}
 
-  ngOnInit() {
-    this.server.getVenues().subscribe(data => {
-      this.venues = data;
-    })
-  }
+  ngOnInit() {}
 }

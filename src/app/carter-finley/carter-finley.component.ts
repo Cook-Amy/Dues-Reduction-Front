@@ -1,3 +1,4 @@
+import { ServerService } from './../server.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CarterFinleyComponent implements OnInit {
 
-  constructor() { }
+  venueId = 3;
 
-  ngOnInit() {
-  }
+  constructor(private server: ServerService) {}
+
+  ngOnInit() {}
 
 }
