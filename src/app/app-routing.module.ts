@@ -18,18 +18,24 @@ import { HomeComponent } from './home/home.component';
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
   { path: 'home', component: HomeComponent },
-  // { path: 'venues/:shortName', component: VenuesComponent },
+
   { path: 'venues/PNC', component: PncComponent },
   { path: 'venues/WC', component: WalnutCreekComponent },
   { path: 'venues/CF', component: CarterFinleyComponent },
-  { path: 'admin', component: AdminPageComponent },
-  { path: 'venues', component: VenuesComponent },
-  { path: 'events', component: EventsComponent },
-  { path: 'staff', component: StaffComponent },
-  { path: 'venuecontacts', component: VenueContactsComponent },
-  { path: 'forms', component: FormsComponent },
-  { path: 'documents', component: DocumentsComponent },
-  { path: 'reports', component: ReportsComponent }
+
+
+  // { path: ':id', component: VenuesComponent, children: [
+    { path: 'venues', component: VenuesComponent, children: [
+
+    { path: 'events', component: EventsComponent },
+    { path: 'staff', component: StaffComponent },
+    { path: 'venuecontacts', component: VenueContactsComponent },
+    { path: 'forms', component: FormsComponent },
+    { path: 'documents', component: DocumentsComponent },
+    { path: 'reports', component: ReportsComponent }
+  ] },
+
+  { path: 'admin', component: AdminPageComponent }
 ];
 
 @NgModule({

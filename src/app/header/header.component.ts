@@ -1,5 +1,6 @@
 import { ServerService } from './../server.service';
 import { Component, OnInit } from '@angular/core';
+import { Venue } from '../venue.model';
 
 @Component({
   selector: 'app-header',
@@ -7,14 +8,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  venues: any = [];
+  venues: Venue[];
 
-  constructor( private server: ServerService) { }
+  constructor( private serverService: ServerService) { }
 
   ngOnInit() {
-    this.server.getVenues().subscribe(data => {
+    this.serverService.getVenues().subscribe(data => {
       this.venues = data;
-      // console.log("Data back from DB: " + this.venues[0].idvenue);
     });
   }
 
