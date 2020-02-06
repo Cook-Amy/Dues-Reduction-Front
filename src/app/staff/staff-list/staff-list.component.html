@@ -1,0 +1,22 @@
+<div class="row">
+  <div class="col-xs-12">
+    <button class="btn btn-success">New Staff</button>
+  </div>
+</div>
+
+<hr>
+
+<div class="row">
+  <div class="col-md-12">
+
+    <app-staff-item
+      *ngFor="let staffElement of allStaff; let i = index"
+      [staff]="staffElement"
+      [index]="i">
+    </app-staff-item>
+
+    <router-outlet></router-outlet>
+    
+    <app-staff-edit></app-staff-edit>
+  </div>
+</div>

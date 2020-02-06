@@ -1,3 +1,7 @@
+import { EventEditComponent } from './events/event-edit/event-edit.component';
+import { StaffDetailComponent } from './staff/staff-list/staff-detail/staff-detail.component';
+import { EventDetailComponent } from './events/event-list/event-detail/event-detail.component';
+import { VenueStartComponent } from './venues/venue-start/venue-start.component';
 import { VenueContactsComponent } from './venue-contacts/venue-contacts.component';
 import { ReportsComponent } from './reports/reports.component';
 import { DocumentsComponent } from './documents/documents.component';
@@ -5,10 +9,7 @@ import { FormsComponent } from './forms/forms.component';
 import { StaffComponent } from './staff/staff.component';
 import { EventsComponent } from './events/events.component';
 import { AdminPageComponent } from './admin-page/admin-page.component';
-import { CarterFinleyComponent } from './carter-finley/carter-finley.component';
-import { WalnutCreekComponent } from './walnut-creek/walnut-creek.component';
 import { VenuesComponent } from './venues/venues.component';
-import { PncComponent } from './pnc/pnc.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
@@ -19,21 +20,41 @@ const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
   { path: 'home', component: HomeComponent },
 
-  { path: 'venues/PNC', component: PncComponent },
-  { path: 'venues/WC', component: WalnutCreekComponent },
-  { path: 'venues/CF', component: CarterFinleyComponent },
+  { path: 'pnc', component: VenuesComponent, children: [
+    { path: '', component: VenueStartComponent },
+    { path: 'events', component: EventsComponent, children: [
+      { path: 'new', component: EventEditComponent },
+      { path: ':id', component: EventDetailComponent },
+      { path: ':id/edit', component: EventEditComponent }
+    ] },
+    { path: 'staff', component: StaffComponent, children: [
+      { path: ':id', component: StaffDetailComponent }
+    ] }
+   ]},
 
+  { path: 'wc', component: VenuesComponent, children: [
+    { path: '', component: VenueStartComponent },
+    { path: 'events', component: EventsComponent, children: [
+      { path: 'new', component: EventEditComponent },
+      { path: ':id', component: EventDetailComponent },
+      { path: ':id/edit', component: EventEditComponent }
+    ] },
+    { path: 'staff', component: StaffComponent, children: [
+      { path: ':id', component: StaffDetailComponent }
+    ] }
+   ]},
 
-  // { path: ':id', component: VenuesComponent, children: [
-    { path: 'venues', component: VenuesComponent, children: [
-
-    { path: 'events', component: EventsComponent },
-    { path: 'staff', component: StaffComponent },
-    { path: 'venuecontacts', component: VenueContactsComponent },
-    { path: 'forms', component: FormsComponent },
-    { path: 'documents', component: DocumentsComponent },
-    { path: 'reports', component: ReportsComponent }
-  ] },
+  { path: 'cf', component: VenuesComponent, children: [
+    { path: '', component: VenueStartComponent },
+    { path: 'events', component: EventsComponent, children: [
+      { path: 'new', component: EventEditComponent },
+      { path: ':id', component: EventDetailComponent },
+      { path: ':id/edit', component: EventEditComponent }
+    ] },
+    { path: 'staff', component: StaffComponent, children: [
+      { path: ':id', component: StaffDetailComponent }
+    ] }
+   ]},
 
   { path: 'admin', component: AdminPageComponent }
 ];

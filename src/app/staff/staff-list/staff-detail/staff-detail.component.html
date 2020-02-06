@@ -1,0 +1,33 @@
+<div class="row">
+  <div class="col-xs-12">
+    <h5>Staff Details</h5>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xs-12">
+    <div 
+      class="btn-group"
+      appDropdown>
+      <button 
+        type="button" 
+        class="btn btn-primary dropdown-toggle">
+        Manage Staff<span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li><a>Edit</a></li>
+        <li><a>Delete</a></li>
+        <li><a>Send Email</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xs-12">
+    <div class="list-group-item-text">TU Account: {{ staff.tuAccout }} </div>
+    <div class="list-group-item-text">PNC Active: {{ staff.pncActive }}</div>
+    <div class="list-group-item-text">PNC Experienced: {{ staff.pncExperienced }}</div>
+  </div>
+</div>
+

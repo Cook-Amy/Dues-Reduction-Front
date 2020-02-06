@@ -1,3 +1,5 @@
+import { StaffService } from './staff/staff.service';
+import { DropdownDirective } from './shared/dropdown.directive';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
@@ -6,38 +8,50 @@ import { FullCalendarModule } from '@fullcalendar/angular';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
-import { PncComponent } from './pnc/pnc.component';
 import { StaffComponent } from './staff/staff.component';
 import { VenuesComponent } from './venues/venues.component';
 import { HeaderComponent } from './header/header.component';
-import { WalnutCreekComponent } from './walnut-creek/walnut-creek.component';
-import { CarterFinleyComponent } from './carter-finley/carter-finley.component';
 import { AdminPageComponent } from './admin-page/admin-page.component';
-import { VenueLinksComponent } from './venue-links/venue-links.component';
+import { VenueLinksComponent } from './venues/venue-links/venue-links.component';
 import { EventsComponent } from './events/events.component';
 import { VenueContactsComponent } from './venue-contacts/venue-contacts.component';
 import { FormsComponent } from './forms/forms.component';
 import { DocumentsComponent } from './documents/documents.component';
 import { ReportsComponent } from './reports/reports.component';
-
+import { EventListComponent } from './events/event-list/event-list.component';
+import { EventItemComponent } from './events/event-list/event-item/event-item.component';
+import { StaffListComponent } from './staff/staff-list/staff-list.component';
+import { StaffItemComponent } from './staff/staff-list/staff-item/staff-item.component';
+import { EventDetailComponent } from './events/event-list/event-detail/event-detail.component';
+import { StaffDetailComponent } from './staff/staff-list/staff-detail/staff-detail.component';
+import { StaffEditComponent } from './staff/staff-list/staff-edit/staff-edit.component';
+import { VenueStartComponent } from './venues/venue-start/venue-start.component';
+import { EventEditComponent } from './events/event-edit/event-edit.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    PncComponent,
     StaffComponent,
     VenuesComponent,
     HeaderComponent,
-    WalnutCreekComponent,
-    CarterFinleyComponent,
     AdminPageComponent,
     VenueLinksComponent,
     EventsComponent,
     VenueContactsComponent,
     FormsComponent,
     DocumentsComponent,
-    ReportsComponent
+    ReportsComponent,
+    EventListComponent,
+    EventItemComponent,
+    StaffListComponent,
+    StaffItemComponent,
+    EventDetailComponent,
+    StaffDetailComponent,
+    StaffEditComponent,
+    DropdownDirective,
+    VenueStartComponent,
+    EventEditComponent
   ],
   imports: [
     BrowserModule,
@@ -45,7 +59,7 @@ import { ReportsComponent } from './reports/reports.component';
     HttpClientModule,
     FullCalendarModule
   ],
-  providers: [],
+  providers: [StaffService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

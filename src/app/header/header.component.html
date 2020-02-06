@@ -9,15 +9,28 @@
 
   <div class="collapse navbar-collapse" id="navbarsExampleDefault">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" routerLink='/home' routerLinkActive='active'>Home</a>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="/home">Home</a>
       </li>
-      <li 
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="/pnc">PNC</a>
+      </li>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="/wc">WC</a>
+      </li>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="/cf">CF</a>
+      </li>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="/admin">Admin</a>
+      </li>
+
+      <!-- <li 
         class="nav-item" 
         *ngFor="let venue of venues"
         [venue]="venue">
         <a class="nav-link" [routerLink]="['/venues', venue.shortName]">{{ venue.name }}</a>
-      </li>
+      </li> -->
 
 
 
@@ -30,9 +43,7 @@
       <li class="nav-item">
         <a class="nav-link" routerLink='/cf' routerLinkActive='active'>Carter-Finley</a>
       </li> -->
-      <li class="nav-item">
-        <a class="nav-link" routerLink='/admin' routerLinkActive='active'>Admin</a>
-      </li>
+
     </ul>
   </div>
 </nav>

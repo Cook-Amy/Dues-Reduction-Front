@@ -1,0 +1,28 @@
+<div class="row">
+  <div class="col-xs-12">
+    <button class="btn btn-success" (click)="onNewEvent()">New Event</button>
+  </div>
+</div>
+
+<hr>
+
+<div class="row">
+  <div class="col-md-12">
+
+    <app-event-item
+      *ngFor="let eventElement of events; let i = index"
+      [event]="eventElement"
+      [index]="i">
+    </app-event-item>
+
+    <router-outlet></router-outlet>
+
+    <!-- <app-event-detail
+      *ngIf="selectedEvent; else infoText"></app-event-detail>
+      <ng-template #infoText>
+        <p>Please select an event</p>
+      </ng-template> -->
+
+  </div>
+</div>
+

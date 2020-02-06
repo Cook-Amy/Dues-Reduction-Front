@@ -1,6 +1,6 @@
 import { ServerService } from './../server.service';
 import { Component, OnInit } from '@angular/core';
-import { Venue } from '../venue.model';
+import { Venue } from '../models/venue.model';
 
 @Component({
   selector: 'app-header',
@@ -13,9 +13,10 @@ export class HeaderComponent implements OnInit {
   constructor( private serverService: ServerService) { }
 
   ngOnInit() {
-    this.serverService.getVenues().subscribe(data => {
-      this.venues = data;
-    });
+    // this.serverService.getVenues().subscribe(data => {
+    //   this.venues = data;
+    // });
   }
 
 }
+

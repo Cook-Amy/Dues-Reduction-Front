@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ServerService } from './../server.service';
 import { VenueService } from './venue.service';
-import { Venue } from '../venue.model';
+import { Venue } from '../models/venue.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-venues',
@@ -10,15 +10,25 @@ import { Venue } from '../venue.model';
   providers: [VenueService]
 })
 export class VenuesComponent implements OnInit {
-  venues: Venue[];
-  venueName: string;
+  // venues: Venue[] = [
+  //   new Venue('PNC Arena', 'Home of the Hurricanes', 'Coordinator is Manit', 'S109', 'PNC'),
+  //   new Venue('Walnut Creek Amphitheatre', 'Outdoor Concert Venue', 'Coordinator is Sarah', 'N.Pourhouse', 'WC'),
+  //   new Venue('Carter-Finley Stadium', 'Home of the Wolfpack', 'Coordinator is Amy', 'B2', 'CF')
+  
+  // ];
+  venueName: string = "PNC";
+  currentVenue: Venue;
   
 
-  constructor(private venueService: VenueService) {}
+  constructor(private venueService: VenueService,
+              private router: Router) {}
 
   ngOnInit() {
-    this.venues = this.venueService.getVenues();
-    console.log('venues: ' + this.venues[0].shortName);
-    this.venueName = this.venues[0].name;
+    const venuePath = this.router.url;
+    this.venueService.setCurrentVenue(venuePath);
+    this.currentVenue = this.venueService.getCurrentVenue();
+    this.venueName = this.currentVenue.name;
   }
+
+
 }

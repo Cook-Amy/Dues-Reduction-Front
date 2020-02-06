@@ -1,6 +1,6 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Venue } from './venue.model';
+import { Venue } from './models/venue.model';
 
 @Injectable({
   providedIn: 'root'

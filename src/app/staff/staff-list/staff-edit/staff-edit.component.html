@@ -1,0 +1,47 @@
+<div class="row">
+  <div class="col-xs-12">
+    <form>
+      <div class="row">
+        <div class="col-sm-5 form-group">
+          <label for="name">Name</label>
+          <input 
+            type="text" 
+            id="name" 
+            class="form-control"
+            #nameInput>
+        </div>
+        <div class="col-sm-5 form-group">
+          <label for="email">Email</label>
+          <input 
+            type="text" 
+            id="email" 
+            class="form-control"
+            #emailInput>
+        </div>
+        <div class="col-sm-5 form-group">
+          <label for="phone">Phone Number</label>
+          <input 
+            type="text" 
+            id="phone" 
+            class="form-control"
+            #phoneInput>
+        </div>
+        <div class="col-sm-5 form-group">
+          <label for="tuaccount">TU Account</label>
+          <input 
+            type="text" 
+            id="tuaccount" 
+            class="form-control"
+            #tuaccountInput>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12">
+          <button class="btn btn-success" type="button" (click)="onSaveStaff()">Save</button>
+          <button class="btn btn-danger" type="button">Cancel</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
