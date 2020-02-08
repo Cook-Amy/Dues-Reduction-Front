@@ -1,4 +1,4 @@
-<a 
+<!-- <a 
   [routerLink]="[index]"
   routerLinkActive="active"
   class="list-group-item clearfix">
@@ -7,4 +7,12 @@
     <p class="list-group-item-text">Season: {{ event.season }}</p>
     <p class="list-group-item-text">Date: {{ event.date }}</p>
   </div>
+</a> -->
+<a
+    [routerLink]="[index]"
+    routerLinkActive="active"
+    class="list-group-item clearfix">
+    <td>{{ event.name }}</td>
+    <td>{{ event.date }}</td>
 </a>
+

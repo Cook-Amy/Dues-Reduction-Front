@@ -11,3 +11,12 @@ li {
   font-size: large;
   padding-right: 2em;
 }
+
+.login {
+  text-align: right;
+  margin-right: 10px;
+}
+
+img {
+  max-width: 120px;
+}

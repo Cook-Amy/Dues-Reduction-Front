@@ -5,6 +5,10 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FullCalendarModule } from '@fullcalendar/angular';
+import { MatSelectModule } from '@angular/material/select';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { MatFormFieldModule, MatInputModule } from  '@angular/material';
+import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -27,6 +31,8 @@ import { StaffDetailComponent } from './staff/staff-list/staff-detail/staff-deta
 import { StaffEditComponent } from './staff/staff-list/staff-edit/staff-edit.component';
 import { VenueStartComponent } from './venues/venue-start/venue-start.component';
 import { EventEditComponent } from './events/event-edit/event-edit.component';
+import { AuthComponent } from './auth/auth.component';
+
 
 @NgModule({
   declarations: [
@@ -51,13 +57,19 @@ import { EventEditComponent } from './events/event-edit/event-edit.component';
     StaffEditComponent,
     DropdownDirective,
     VenueStartComponent,
-    EventEditComponent
+    EventEditComponent,
+    AuthComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FullCalendarModule
+    FullCalendarModule,
+    NoopAnimationsModule,
+    MatFormFieldModule, 
+    MatSelectModule,
+    MatInputModule,
+    FormsModule
   ],
   providers: [StaffService],
   bootstrap: [AppComponent]

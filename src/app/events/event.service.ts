@@ -1,5 +1,6 @@
 import { Event } from './../models/event.model';
 import { Subject } from 'rxjs';
+import { Season } from '../models/season.model';
 
 export class EventService {
 
@@ -14,6 +15,21 @@ export class EventService {
 
   getEvent(index: number) {
     return this.events[index];
+  }
+
+  private seasons: Season[] = [
+    new Season('2017-2018'),
+    new Season('2018-2019'),
+    new Season('2019-2020'),
+    new Season('2020-2021')
+  ];
+
+  getSeasons() {
+    return this.seasons.slice();
+  }
+
+  getSeason(index: number) {
+    return this.seasons[index];
   }
   
 }
