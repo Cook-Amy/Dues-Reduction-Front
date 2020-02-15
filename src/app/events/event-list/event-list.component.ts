@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { Event } from '../../models/event.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Season } from 'src/app/models/season.model';
-import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-event-list',
@@ -11,26 +10,39 @@ import { FormGroup, FormBuilder } from '@angular/forms';
   styleUrls: ['./event-list.component.css']
 })
 export class EventListComponent implements OnInit {
-  events: Event[];
-  seasons: Season[];
+  events: Event[] = [];
+  seasons: Season[] = [];
   reversedSeasons: Season[];
-  // seasonForm: FormGroup;
+  currentSeason: Season;
 
   constructor(private eventService: EventService, 
               private router: Router, 
               private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.events = this.eventService.getEvents();
-    this.seasons = this.eventService.getSeasons();
-    this.reversedSeasons = this.seasons.slice().reverse();
+    this.eventService.getSeasons().subscribe(res => {
+      this.eventService.setSeasons(res);
+      this.seasons = res;
+      this.eventService.setCurrentSeason(this.seasons[this.seasons.length - 1]);
+      this.currentSeason = this.eventService.getCurrentSeason();
+      this.getEvents("dateDescending");
+    });
+    
+  }
 
-    // this.seasonForm = this.fb.group({
-    //   formControl: [this.seasons[0].seasonName]
-    // });
+  getEvents(sort) {
+    this.eventService.getAllEvents().subscribe(events => {
+      this.events = this.eventService.setEvents(events, sort);
+    })
   }
 
   onNewEvent() {
     this.router.navigate(['new'], {relativeTo: this.route});
+  }
+
+  getDate(date) {
+    var newDate = new Date(date);
+    var convertDate = (newDate.getMonth() + 1) + '-' + newDate.getDate() + '-' + newDate.getFullYear();
+    return convertDate;
   }
 }

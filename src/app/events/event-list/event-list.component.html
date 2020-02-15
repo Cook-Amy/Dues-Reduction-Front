@@ -1,3 +1,4 @@
+<!--  Seasons dropdown -->
 <div class="row">
   <div class="col-md-6">
       <mat-form-field >
@@ -6,7 +7,7 @@
           <option [value]="all">All</option>
           <option 
             [value]="seasonElement"
-            *ngFor="let seasonElement of reversedSeasons" selected>
+            *ngFor="let seasonElement of seasons" selected>
             {{ seasonElement.seasonName }}
           </option>
         </select>
@@ -19,6 +20,7 @@
 
 <hr>
 
+<!--  Events Table -->
 <div class="row">
   <div class="col-lg-5">
     <table id="eventTable" class="table table-hover table-sm">
@@ -34,13 +36,14 @@
           *ngFor="let eventElement of events; let i = index" 
           [routerLink]="i" 
           routerLinkActive="active">
-          <td>{{ eventElement.name }}</td>
-          <td>{{ eventElement.date }}</td>
+          <td>{{ eventElement.title }}</td>
+          <td>{{ getDate(eventElement.dateTime) }}</td>
         </tr>
       </tbody>
     </table>
   </div>
 
+  <!--  Event details  -->
   <div class="col-lg-7">
     <router-outlet></router-outlet>
   </div>

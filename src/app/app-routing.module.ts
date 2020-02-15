@@ -59,7 +59,7 @@ const routes: Routes = [
 
   { path: 'admin', component: AdminPageComponent },
 
-  { path: 'auth', component: AuthComponent }
+  { path: 'login', component: AuthComponent }
 ];
 
 @NgModule({

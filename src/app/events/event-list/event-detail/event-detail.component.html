@@ -36,10 +36,10 @@
   
   <div class="row">
     <div class="col-xs-12">
-      <div class="list-group-item-text">Estimated Check: ${{ event.estimatedCheck }}</div>
-      <div class="list-group-item-text">Actual Check: ${{ event.actualCheck }}</div>
-      <div class="list-group-item-text">Estimated Profit: ${{ event.estimatedProfit }}</div>
-      <div class="list-group-item-text">Actual Profit: ${{ event.actualProfit }}</div>
+      <div class="list-group-item-text">Estimated Check: ${{ event.estimatedCheck.toFixed(2) }}</div>
+      <div class="list-group-item-text">Actual Check: ${{ event.actualCheck.toFixed(2) }}</div>
+      <div class="list-group-item-text">Estimated Profit: ${{ event.estimatedProfit.toFixed(2) }}</div>
+      <div class="list-group-item-text">Actual Profit: ${{ event.actualProfit.toFixed(2) }}</div>
     </div>
   </div>
   
