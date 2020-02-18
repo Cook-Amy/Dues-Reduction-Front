@@ -1,17 +1,20 @@
 <!--  Seasons dropdown -->
+
 <div class="row">
   <div class="col-md-6">
-      <mat-form-field >
-        <mat-label>Seasons</mat-label>
-        <select matNativeControl>
-          <option [value]="all">All</option>
-          <option 
-            [value]="seasonElement"
-            *ngFor="let seasonElement of seasons" selected>
+
+    <form #seasonForm="ngForm" (change)="changeSeason(seasonForm.value)">
+      <div class="form-group">
+        <label for="seasonSelect">Seasons</label>
+        <select ngModel name="seasonSelect" id="seasonSelect" class="form-control">
+          <option *ngFor="let seasonElement of seasons" [value]="seasonElement.idSeason">
             {{ seasonElement.seasonName }}
           </option>
         </select>
-      </mat-form-field>
+      </div>
+    </form>
+
+
   </div>
   <div class="col-md-6">
     <button class="btn btn-success" (click)="onNewEvent()">New Event</button>
@@ -20,56 +23,9 @@
 
 <hr>
 
-<!--  Events Table -->
-<div class="row">
-  <div class="col-lg-5">
-    <table id="eventTable" class="table table-hover table-sm">
-      <thead>
-        <tr>
-          <th>Event</th>
-          <th>Date</th>
-        </tr>
-      </thead>
 
-      <tbody>
-        <tr  
-          *ngFor="let eventElement of events; let i = index" 
-          [routerLink]="i" 
-          routerLinkActive="active">
-          <td>{{ eventElement.title }}</td>
-          <td>{{ getDate(eventElement.dateTime) }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+<!-- Collapsible Table -->
+<app-event-table [dataSource]="events"></app-event-table>
 
-  <!--  Event details  -->
-  <div class="col-lg-7">
-    <router-outlet></router-outlet>
-  </div>
-</div>
-
-
-    <!-- Trial #1 with dropdown -->
-    <!-- <div class="dropdown">
-      <button 
-        class="btn btn-secondary dropdown-toggle" 
-        type="button" 
-        id="seasonDropdown"
-        data-toggle="dropdown"
-        aria-haspopup="true"
-        aria-expanded="false"
-        data-target="#my-target"
-        role="button">
-        Seasons
-      </button>
-      <div id="my-target" class="dropdown-menu">
-        <a 
-          class="dropdown-item"
-          *ngFor="let seasonElement of seasons">
-          {{ seasonElement.seasonName }}
-        </a>
-      </div> 
-    </div> -->
 
 

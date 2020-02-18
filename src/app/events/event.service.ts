@@ -31,6 +31,7 @@ export class EventService {
   
   constructor(private http: HttpClient, private venueService: VenueService) {}
 
+  // Get all events for selected season
   getAllEvents() {
     const params = new HttpParams().set('seasonID', this.currentSeason.idSeason.toString())
                                     .set('venueID', this.venueService.getCurrentVenue().idvenue.toString());
@@ -42,26 +43,29 @@ export class EventService {
     return this.events.length;
   }
 
+  // Save events to object after they come from DB, according to sort chosen
   setEvents(events: Event[], sort) {
     this.events = events;
-    this.eventsChanged.next(this.events.slice());
+    if(events == null) {
+
+    }
+    else {
+      this.eventsChanged.next(this.events.slice());
+    }
 
     if(sort === "dateDescending") {
       this.eventsSortedByDateDescending = events.sort((val1, val2) => {
         return <any>new Date(val2.dateTime) - <any>new Date(val1.dateTime) 
       });
       this.eventsSortedByDateDescendingChanged.next(this.eventsSortedByDateDescending.slice());
-      console.log("sorted Events: " + this.eventsSortedByDateDescending.length);
       return this.eventsSortedByDateDescending;
     }
 
     else if(sort === "dateAscending") {
-      console.log("sort: " + sort);
       this.eventsSortedByDateAscending = events.sort((val1, val2) => {
         return <any>new Date(val1.dateTime) - <any>new Date(val2.dateTime) 
       });
       this.eventsSortedByDateAscendingChanged.next(this.eventsSortedByDateAscending.slice());
-      console.log("sorted Events: " + this.eventsSortedByDateAscending.length);
       return this.eventsSortedByDateAscending;
     }
 
@@ -106,6 +110,7 @@ export class EventService {
     return this.events[index];
   }
 
+  // get all seasons from DB
   getSeasons() {
     const seasonsReturned = this.http.get<Season[]>(this.serverUrl + 'getSeasons');
     return seasonsReturned;
@@ -126,7 +131,6 @@ export class EventService {
   getCurrentSeason() {
     return this.currentSeason;
   }
-
 
   getOneSeason(index: number) {
     return this.seasons[index];
