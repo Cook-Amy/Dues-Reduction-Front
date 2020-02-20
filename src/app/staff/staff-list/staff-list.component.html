@@ -1,22 +1,32 @@
+<!-- Activity Level dropdown -->
+
 <div class="row">
-  <div class="col-xs-12">
-    <button class="btn btn-success">New Staff</button>
+  <div class="col-md-6">
+
+    <form #activeForm="ngForm" (change)="changeActive(activeForm.value)">
+      <div class="form-group">
+        <label for="activeSelect">Active Level</label>
+        <select ngModel name="activeSelect" id="activeSelect" class="form-control">
+          <option [value]="1" selected>Active</option>
+          <option [value]="2">Inactive</option>
+          <option [value]="3">Interested</option>
+          <option [value]="4">All</option>
+        </select>
+      </div>
+    </form>
+
+
+  </div>
+  <div class="col-md-6">
+    <button class="btn new-event-btn">Add New Staff Member</button>
   </div>
 </div>
 
 <hr>
 
-<div class="row">
-  <!-- <div class="col-md-12">
+<!-- Collapsible Table -->
+<app-staff-table *ngIf="currentVenueID == 1" [currentVenueID]="currentVenueID" [dataSource]="setStaff"></app-staff-table>
+<app-staff-table *ngIf="currentVenueID == 2" [currentVenueID]="currentVenueID" [dataSource2]="setStaff"></app-staff-table>
+<app-staff-table *ngIf="currentVenueID == 3" [currentVenueID]="currentVenueID" [dataSource3]="setStaff"></app-staff-table>
 
-    <app-staff-item
-      *ngFor="let staffElement of allStaff; let i = index"
-      [staff]="staffElement"
-      [index]="i">
-    </app-staff-item>
 
-    <router-outlet></router-outlet>
-    
-    <app-staff-edit></app-staff-edit>
-  </div> -->
-</div>

@@ -4,7 +4,6 @@ import { EventWC } from './../../../models/eventWC.model';
 import { Timesheet } from './../../../models/timesheet.model';
 import { EventPNC } from './../../../models/eventPNC.model';
 import { EventService } from './../../event.service';
-import { Event } from './../../../models/event.model';
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
@@ -17,17 +16,13 @@ export class EventDetailComponent implements OnInit {
   @Input() event2: EventWC;
   @Input() event3: EventCF;
   @Input() currentVenueID: number;
-  // eventPnc: EventPNC[] = [];
 
   timesheet: Timesheet[] = [];
   getStaff = null;
 
-  constructor(private eventService: EventService,
-              private venueService: VenueService) { }
+  constructor(private eventService: EventService) { }
 
-  ngOnInit() {
-
-  }
+  ngOnInit() { }
 
   getStaffForEvent() {
     if(this.currentVenueID == 1) {

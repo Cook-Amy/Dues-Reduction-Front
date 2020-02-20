@@ -1,33 +1,184 @@
-<!-- <div class="row">
-  <div class="col-xs-12">
-    <h5>Staff Details</h5>
-  </div>
+<!-- PNC Staff Details -->
+<div *ngIf="currentVenueID == 1">
+  <table class="table table-sm table-responsive">
+    <tbody>
+      <tr>
+        <td colspan="3">  
+          <i class="far fa-square" *ngIf="staff.pncExperienced == 0"></i>
+          <i class="far fa-check-square" *ngIf="staff.pncExperienced == 1"></i>
+          Experienced
+        </td>
+        <td colspan="3">
+          <i class="far fa-square" *ngIf="staff.pncHealthForm == 0"></i>
+          <i class="far fa-check-square" *ngIf="staff.pncHealthForm == 1"></i>
+          Health Form
+        </td>
+        <td colspan="3">
+          <i class="far fa-square" *ngIf="staff.pncWaiver == 0"></i>
+          <i class="far fa-check-square" *ngIf="staff.pncWaiver == 1"></i>
+          Waiver
+        </td>
+        <td colspan="3">BARS Date: {{ checkForNullString(getDate(staff.pncBars)) }}</td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          <i class="far fa-square"></i>
+          <!-- <i class="far fa-square" *ngIf="staff.pncStandLeader == 0"></i>
+          <i class="far fa-check-square" *ngIf="staff.pncStandLeader == 1"></i> -->
+          Stand Leader
+        </td>
+        <td colspan="3">
+          <i class="far fa-square"></i>
+          <!-- <i class="far fa-square" *ngIf="staff.pncStandLeader == 0"></i>
+          <i class="far fa-check-square" *ngIf="staff.pncStandLeader == 1"></i> -->
+          Group Leader
+        </td>
+        <td colspan="3">
+          <i class="far fa-square"></i>
+          <!-- <i class="far fa-square" *ngIf="staff.pncStandLeader == 0"></i>
+          <i class="far fa-check-square" *ngIf="staff.pncStandLeader == 1"></i> -->
+          Register
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          <i class="far fa-square"></i>
+          <!-- <i class="far fa-square" *ngIf="staff.pncStandLeader == 0"></i>
+          <i class="far fa-check-square" *ngIf="staff.pncStandLeader == 1"></i> -->
+          Head Cook
+        </td>
+        <td colspan="3">
+          <i class="far fa-square"></i>
+          <!-- <i class="far fa-square" *ngIf="staff.pncStandLeader == 0"></i>
+          <i class="far fa-check-square" *ngIf="staff.pncStandLeader == 1"></i> -->
+          Assistant Cook
+        </td>
+        <td colspan="3">
+          <i class="far fa-square"></i>
+          <!-- <i class="far fa-square" *ngIf="staff.pncStandLeader == 0"></i>
+          <i class="far fa-check-square" *ngIf="staff.pncStandLeader == 1"></i> -->
+          Beer Cart
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          <button type="button" class="btn event-btn" (click)="onEditStaff()">Edit Member</button>
+        </td>
+        <td colspan="3">
+          <button type="button" class="btn event-btn">Remove Member</button>
+        </td>
+        <td colspan="3">
+          <button type="button" class="btn event-btn">Send Email</button>
+        </td>
+        <td colspan="3">
+          <button type="button" class="btn event-btn">Credit Summary</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 
-<div class="row">
-  <div class="col-xs-12">
-    <div 
-      class="btn-group"
-      appDropdown>
-      <button 
-        type="button" 
-        class="btn btn-primary dropdown-toggle">
-        Manage Staff<span class="caret"></span>
-      </button>
-      <ul class="dropdown-menu">
-        <li><a>Edit</a></li>
-        <li><a>Delete</a></li>
-        <li><a>Send Email</a></li>
-      </ul>
-    </div>
-  </div>
+<!-- WC Staff Details -->
+<div *ngIf="currentVenueID == 2">
+  <table class="table table-sm table-responsive">
+    <tbody>
+      <tr>
+        <td colspan="6">Team Training Date: {{ checkForNullString(getDate(staff2.wcTeamTraining)) }}</td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          <i class="far fa-square"></i>
+          <!-- <i class="far fa-square" *ngIf="staff.pncStandLeader == 0"></i>
+          <i class="far fa-check-square" *ngIf="staff.pncStandLeader == 1"></i> -->
+          Stand Leader
+        </td>
+        <td colspan="3">
+          <i class="far fa-square"></i>
+          <!-- <i class="far fa-square" *ngIf="staff.pncStandLeader == 0"></i>
+          <i class="far fa-check-square" *ngIf="staff.pncStandLeader == 1"></i> -->
+          Container Bar Lead
+        </td>
+        <td colspan="3">
+          <i class="far fa-square"></i>
+          <!-- <i class="far fa-square" *ngIf="staff.pncStandLeader == 0"></i>
+          <i class="far fa-check-square" *ngIf="staff.pncStandLeader == 1"></i> -->
+          Sales
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          <i class="far fa-square"></i>
+          <!-- <i class="far fa-square" *ngIf="staff.pncStandLeader == 0"></i>
+          <i class="far fa-check-square" *ngIf="staff.pncStandLeader == 1"></i> -->
+          Move Stock Out
+        </td>
+        <td colspan="3">
+          <i class="far fa-square"></i>
+          <!-- <i class="far fa-square" *ngIf="staff.pncStandLeader == 0"></i>
+          <i class="far fa-check-square" *ngIf="staff.pncStandLeader == 1"></i> -->
+          Final Stand Prep
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          <button type="button" class="btn event-btn" (click)="onEditStaff()">Edit Member</button>
+        </td>
+        <td colspan="3">
+          <button type="button" class="btn event-btn">Remove Member</button>
+        </td>
+        <td colspan="3">
+          <button type="button" class="btn event-btn">Send Email</button>
+        </td>
+        <td colspan="3">
+          <button type="button" class="btn event-btn">Credit Summary</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 
-<div class="row">
-  <div class="col-xs-12">
-    <div class="list-group-item-text">TU Account: {{ staff.tuAccout }} </div>
-    <div class="list-group-item-text">PNC Active: {{ staff.pncActive }}</div>
-    <div class="list-group-item-text">PNC Experienced: {{ staff.pncExperienced }}</div>
-  </div>
-</div> -->
 
+<!-- CF Staff Details -->
+<div *ngIf="currentVenueID == 3">
+  <table class="table table-sm table-responsive">
+    <tbody>
+      <tr>
+        <td colspan="6">Alcohol Training Date: {{ checkForNullString(getDate(staff3.cfAlcoholTraining)) }}</td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          <i class="far fa-square"></i>
+          <!-- <i class="far fa-square" *ngIf="staff.pncStandLeader == 0"></i>
+          <i class="far fa-check-square" *ngIf="staff.pncStandLeader == 1"></i> -->
+          Leader
+        </td>
+        <td colspan="3">
+          <i class="far fa-square"></i>
+          <!-- <i class="far fa-square" *ngIf="staff.pncStandLeader == 0"></i>
+          <i class="far fa-check-square" *ngIf="staff.pncStandLeader == 1"></i> -->
+          Assistant Leader
+        </td>
+        <td colspan="3">
+          <i class="far fa-square"></i>
+          <!-- <i class="far fa-square" *ngIf="staff.pncStandLeader == 0"></i>
+          <i class="far fa-check-square" *ngIf="staff.pncStandLeader == 1"></i> -->
+          Staff
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          <button type="button" class="btn event-btn" (click)="onEditStaff()">Edit Member</button>
+        </td>
+        <td colspan="3">
+          <button type="button" class="btn event-btn">Remove Member</button>
+        </td>
+        <td colspan="3">
+          <button type="button" class="btn event-btn">Send Email</button>
+        </td>
+        <td colspan="3">
+          <button type="button" class="btn event-btn">Credit Summary</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -35,6 +35,7 @@ import { VenueStartComponent } from './venues/venue-start/venue-start.component'
 import { EventEditComponent } from './events/event-edit/event-edit.component';
 import { AuthComponent } from './auth/auth.component';
 import { EventTableComponent } from './events/event-list/event-table/event-table.component';
+import { StaffTableComponent } from './staff/staff-list/staff-table/staff-table.component';
 
 
 @NgModule({
@@ -62,7 +63,8 @@ import { EventTableComponent } from './events/event-list/event-table/event-table
     VenueStartComponent,
     EventEditComponent,
     AuthComponent,
-    EventTableComponent
+    EventTableComponent,
+    StaffTableComponent
   ],
   imports: [
     BrowserModule,

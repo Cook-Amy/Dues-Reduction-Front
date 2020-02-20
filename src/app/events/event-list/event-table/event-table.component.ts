@@ -36,42 +36,24 @@ export class EventTableComponent implements OnInit {
   expandedElement2: EventWC;
   expandedElement3: EventCF;
 
-  constructor(private venueService: VenueService,
-              private eventService: EventService) { }
+  constructor() { }
 
-  ngOnInit() {
-    // console.log("current venue ID: " + this.currentVenueID);
-    // this.currentVenue = this.venueService.getCurrentVenue();
-    // this.currentVenueID = this.currentVenue.idvenue; 
-
-    // if(this.currentVenueID == 1) {
-    //   this.dataSource = this.eventService.getEventsPncSortedByDateAscending();
-    //   console.log('PNC events length: ' + this.eventService.getEventsPncSortedByDateAscending().length);
-    //   console.log('PNC events length: ' + this.eventService.getEventsPnc().length);
-
-    //   console.log('dataSource: ' + this.dataSource.length);
-    //   this.expandedElement = this.expandedElementPNC;
-    // }
-    // else if(this.currentVenueID == 2) {
-    //   this.dataSource = this.eventService.getEventsWc();
-    //   this.expandedElement = this.expandedElementWC;
-    // }
-    // else if(this.currentVenueID == 3) {
-    //   this.dataSource = this.eventService.getEventsCf();
-    //   this.expandedElement = this.expandedElementCF;
-    // }
-
-  }
+  ngOnInit() { }
 
   getDate(date) {
-    var newDate: Date = new Date(date);
-
-    if(newDate.getDate()) {
-      var convertDate = (newDate.getMonth() + 1) + '-' + newDate.getDate() + '-' + newDate.getFullYear() + ' ' + this.getDay(newDate.getDay());
-      return convertDate;
-  }
+    if(date == null) {
+      return "---";
+    }
     else {
-      return date;
+      var newDate: Date = new Date(date);
+  
+      if(newDate.getDate()) {
+        var convertDate = (newDate.getMonth() + 1) + '-' + newDate.getDate() + '-' + newDate.getFullYear();
+        return convertDate;
+      } 
+      else {
+        return date;
+      }
     }
   }
 

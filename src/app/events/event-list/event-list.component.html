@@ -17,7 +17,7 @@
 
   </div>
   <div class="col-md-6">
-    <button class="btn new-event-btn" (click)="onNewEvent()">Add New Event</button>
+    <button class="btn new-event-btn">Add New Event</button>
   </div>
 </div>
 
@@ -29,7 +29,7 @@
 <app-event-table *ngIf="currentVenueID == 2" [currentVenueID]="currentVenueID" [dataSource2]="eventsWC"></app-event-table>
 <app-event-table *ngIf="currentVenueID == 3" [currentVenueID]="currentVenueID" [dataSource3]="eventsCF"></app-event-table>
 
-<!-- <app-event-table></app-event-table> -->
+
 
 
 
