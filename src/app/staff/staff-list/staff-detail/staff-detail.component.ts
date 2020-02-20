@@ -10,19 +10,19 @@ import { ActivatedRoute, Params } from '@angular/router';
 })
 export class StaffDetailComponent implements OnInit {
   // @Input() staff: Staff
-  staff: Staff;
-  id: number;
+  // staff: Staff;
+  // id: number;
 
   constructor(private staffService: StaffService, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.route.params
-    .subscribe(
-      (params: Params) => {
-        this.id = +params['id'];
-        this.staff = this.staffService.getStaff(this.id);
-      }
-    );
+    // this.route.params
+    // .subscribe(
+    //   (params: Params) => {
+    //     this.id = +params['id'];
+    //     this.staff = this.staffService.getStaff(this.id);
+    //   }
+    // );
   }
 
 }

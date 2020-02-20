@@ -9,6 +9,7 @@ import { MatTableModule } from '@angular/material';
 import { MatSelectModule } from '@angular/material/select';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule, MatInputModule } from  '@angular/material';
+import {MatPaginatorModule} from '@angular/material/paginator';
 import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
@@ -73,7 +74,8 @@ import { EventTableComponent } from './events/event-list/event-table/event-table
     MatSelectModule,
     MatInputModule,
     FormsModule,
-    MatTableModule
+    MatTableModule,
+    MatPaginatorModule
   ],
   providers: [StaffService],
   bootstrap: [AppComponent]

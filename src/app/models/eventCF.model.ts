@@ -1,8 +1,5 @@
-
-export class Event {
+export class EventCF {
   public idevent: number;
-  public seasonID: number;
-  public venue: string;
   public Date: string;
   public Title: string;
   public compensated: Boolean;
@@ -20,32 +17,38 @@ export class Event {
   public eventNotes: string;
   public closed: Boolean;
   public eventcol: number;
+  public shuttleBonusBool: Boolean;
+  public shuttleBonusAmount: number;
+  public shuttleLocation: string;
+  public totalSales: number;
+  public coordinatorAdminAmount: number;
 
   constructor(
-    idevent: number,
-    seasonID: number,
-    venue: string,
-    Date: string,
-    Title: string,
-    compensated: Boolean,
-    location: string,
-    venueBonus: number,
-    estimatedCheck: number,
-    estimatedProfit: number,
-    actualCheck: number,
-    payout: number,
-    discrepancy: number,
-    actualProfit: number,
-    tacPct: number,
-    tacCut: number,
-    drCut: number,
-    eventNotes: string,
-    closed: Boolean,
-    eventcol: number,
-      ){
+     idevent: number,
+     Date: string,
+     Title: string,
+     compensated: Boolean,
+     location: string,
+     venueBonus: number,
+     estimatedCheck: number,
+     estimatedProfit: number,
+     actualCheck: number,
+     payout: number,
+     discrepancy: number,
+     actualProfit: number,
+     tacPct: number,
+     tacCut: number,
+     drCut: number,
+     eventNotes: string,
+     closed: Boolean,
+     eventcol: number,
+     shuttleBonusBool: Boolean,
+     shuttleBonusAmount: number,
+     shuttleLocation: string,
+     totalSales: number,
+     coordinatorAdminAmount: number
+  ) {
     this.idevent = idevent;
-    this.seasonID = seasonID;
-    this.venue = venue;
     this.Date = Date;
     this.Title = Title;
     this.compensated = compensated;
@@ -63,6 +66,10 @@ export class Event {
     this.eventNotes = eventNotes;
     this.closed = closed;
     this.eventcol = eventcol;
+    this.shuttleBonusBool = shuttleBonusBool;
+    this.shuttleBonusAmount = shuttleBonusAmount;
+    this.shuttleLocation = shuttleLocation;
+    this.totalSales = totalSales;
+    this.coordinatorAdminAmount = coordinatorAdminAmount;
   }
-
 }

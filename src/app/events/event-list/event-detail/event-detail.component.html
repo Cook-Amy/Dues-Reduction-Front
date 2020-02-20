@@ -1,47 +1,375 @@
-<div class="container">
-  <div class="row">
-    <div class="col-xs-12">
-      <h5>Finances</h5>
-    </div>
-  </div>
+<!--------------------------------------------------------------------
+  - PNC event details 
+---------------------------------------------------------------------->
+<div *ngIf="currentVenueID == 1">
+  <table class="table table-sm table-responsive">
+    <tbody>
+      <tr>
+        <td colspan="4">Doors: {{ checkForNullString(getTime(event.Date)) }}</td>
+        <td colspan="4">Location: {{ checkForNullString(event.location) }}</td>
+        <td colspan="4"></td>
+      </tr>
+      <tr>
+        <td colspan="4">Total Sales: {{ checkForNullNum(event.totalSales).toFixed(2) }}</td>
+        <td colspan="4">Alc Sales: {{ checkForNullNum(event.alcSales).toFixed(2) }}</td>
+        <td colspan="4">Venue Bonus: {{ checkForNullNum(event.venueBonus).toFixed(2) }}</td>
+      </tr>
+      <tr>
+        <td colspan="4">Payout: ${{ checkForNullNum(event.payout).toFixed(2) }}</td>
+        <td colspan="4">Est. Check: ${{ checkForNullNum(event.estimatedCheck).toFixed(2) }}</td>
+        <td colspan="4">Est. Profit: ${{ checkForNullNum(event.estimatedProfit).toFixed(2) }}</td>
+      </tr>
+      <tr>
+        <td colspan="4">Discrepancy: ${{ checkForNullNum(event.discrepancy).toFixed(2) }}</td>
+        <td colspan="4">Actual Check: ${{ checkForNullNum(event.actualCheck).toFixed(2) }}</td>
+        <td colspan="4">Actual Profit: ${{ checkForNullNum(event.actualProfit).toFixed(2) }}</td>
+      </tr>
+      <tr>
+        <td colspan="4">TAC Cut: ${{ checkForNullNum(event.tacCut).toFixed(2) }}</td>
+        <td colspan="4">DR Cut: ${{ checkForNullNum(event.drCut).toFixed(2) }}</td>
+        <td colspan="4">Coordinator Payout: {{ checkForNullNum(event.coordinatorAdminAmt).toFixed(2) }}</td>
+      </tr>
+      <tr>
+        <td colspan="12">Notes: ${{ checkForNullString(event.eventNotes) }}</td>
+      </tr>
+      <tr>
+        <td colspan="3">  
+          <i class="far fa-square" *ngIf="event.closed == 0"></i>
+          <i class="far fa-check-square" *ngIf="event.closed == 1"></i>
+          Closed
+        </td>
+        <td colspan="3">
+          <i class="far fa-square" *ngIf="event.metCommissionBonus == 0"></i>
+          <i class="far fa-check-square" *ngIf="event.metCommissionBonus == 1"></i>
+          Met Commission Bonus
+        </td>
+        <td colspan="3">
+          <i class="far fa-square" *ngIf="event.eventCountsTowardsTotal == 0"></i>
+          <i class="far fa-check-square" *ngIf="event.eventCountsTowardsTotal == 1"></i>
+          Count Towards Total
+        </td>
+        <td colspan="3">
+          <i class="far fa-square" *ngIf="event.guarantee == 0"></i>
+          <i class="far fa-check-square" *ngIf="event.guarantee == 1"></i>
+          Guarantee
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          <button type="button" class="btn event-btn" (click)="onEditEvent()">Edit Event</button>
+        </td>
+        <td colspan="3">
+          <button type="button" class="btn event-btn">Delete Event</button>
+        </td>
+        <td colspan="3">
+          <button type="button" class="btn event-btn">Send Gate List</button>
+        </td>
+        <td colspan="3">
+          <button type="button" class="btn event-btn">Send Reminder</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
   
   <div class="row">
-    <div class="col-xs-12">
-  
-      <div class="btn-group" role="group" aria-label="Manage Event">
-        <button type="button" class="btn btn-success" (click)="onEditEvent()">Edit</button>
-        <button type="button" class="btn btn-danger">Delete</button>
-        <button type="button" class="btn btn-secondary">Send Gate List</button>
-        <button type="button" class="btn btn-warning">Send Reminder</button>
+    <div class="col-md-12">
+      <div *ngIf="!getStaff">
+        <button class="btn get-staff-btn" (click)="getStaffForEvent()">Get Staff</button>
       </div>
-  
-      <!-- <div 
-        class="btn-group"
-        appDropdown>
-        <button 
-          type="button" 
-          class="btn btn-primary dropdown-toggle">
-          Manage Event<span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu">
-          <li><a>Edit</a></li>
-          <li><a>Delete</a></li>
-          <li><a>Send Gate List</a></li>
-          <li><a>Send Reminder</a></li>
-        </ul>
-      </div> -->
-  
+      <div *ngIf="getStaff">
+        <table class="table table-striped table-sm">
+          <thead class="thead-dark">
+            <tr>
+              <th>Staff</th>
+              <th>Job</th>
+              <th>Rate</th>
+              <th>Scheduled Time</th>
+              <th>Time In</th>
+              <th>Time Out</th>
+              <th class="align-right">Hrs Worked</th>
+              <!-- <th class="align-right">Shuttle Bonus</th>
+              <th class="align-right">CC Tips</th> -->
+              <th class="align-right">Event Bonus</th>
+              <th class="align-right">Hourly Bonus</th>
+              <th class="align-right">Payout</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let t of timesheet">
+              <td>{{ checkForNullString(t.lastName) }}, {{ checkForNullString(t.firstName) }}</td>
+              <td>{{ checkForNullString(t.jobName) }}</td>
+              <td>{{ checkForNullNum(t.hourlyRate).toFixed(2) }}</td>
+              <td>{{ checkForNullString(getTime(t.scheduledArrivalTime)) }}</td>
+              <td>{{ checkForNullString(getTime(t.timeIn)) }}</td>
+              <td>{{ checkForNullString(getTime(t.timeOut)) }}</td>
+              <td class="align-right">{{ checkForNullNum(t.hoursWorked) }}</td>
+              <td class="align-right">{{ checkForNullNum(t.eventBonus).toFixed(2) }}</td>
+              <td class="align-right">{{ checkForNullNum(t.hourlyBonus).toFixed(2) }}</td>
+              <!-- <td class="align-right">{{ checkForNullNum(t.shuttleBonus).toFixed(2) }}</td>
+              <td class="align-right">{{ checkForNullNum(t.creditCardTips).toFixed(2) }}</td> -->
+              <td class="align-right">{{ checkForNullNum(t.creditAmount).toFixed(2) }}</td>
+            </tr>
+            <tr>
+              <td colspan="4">
+                <button type="button" class="btn event-btn" (click)="onEditEvent()">Add Staff</button>
+              </td>
+              <td colspan="4">
+                <button type="button" class="btn event-btn" (click)="onEditEvent()">Delete Staff</button>
+              </td>
+              <td colspan="4">
+                <button type="button" class="btn event-btn" (click)="onEditEvent()">Add Bonus</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+     
     </div>
   </div>
+</div>
+
+
+<!--------------------------------------------------------------------
+  - WC event details 
+---------------------------------------------------------------------->
+<div *ngIf="currentVenueID == 2">
+  <table class="table table-sm table-responsive">
+    <tbody>
+      <tr>
+        <td colspan="4">Doors: {{ checkForNullString(getTime(event2.Date)) }}</td>
+        <td colspan="4">Location: {{ checkForNullString(event2.location) }}</td>
+        <td colspan="4"></td>
+      </tr>
+      <tr>
+        <td colspan="4">Credit Card Tips: {{ checkForNullNum(event2.creditCardTips).toFixed(2) }}</td>
+        <td colspan="4">Max Credit Card Tips: {{ checkForNullNum(event2.maxCreditCardTips).toFixed(2) }}</td>
+        <td colspan="4">Venue Bonus: {{ checkForNullNum(event2.venueBonus).toFixed(2) }}</td>
+      </tr>
+      <tr>
+        <td colspan="4">Payout: ${{ checkForNullNum(event2.payout).toFixed(2) }}</td>
+        <td colspan="4">Est. Check: ${{ checkForNullNum(event2.estimatedCheck).toFixed(2) }}</td>
+        <td colspan="4">Est. Profit: ${{ checkForNullNum(event2.estimatedProfit).toFixed(2) }}</td>
+      </tr>
+      <tr>
+        <td colspan="4">Discrepancy: ${{ checkForNullNum(event2.discrepancy).toFixed(2) }}</td>
+        <td colspan="4">Actual Check: ${{ checkForNullNum(event2.actualCheck).toFixed(2) }}</td>
+        <td colspan="4">Actual Profit: ${{ checkForNullNum(event2.actualProfit).toFixed(2) }}</td>
+      </tr>
+      <tr>
+        <td colspan="4">TAC Cut: ${{ checkForNullNum(event2.tacCut).toFixed(2) }}</td>
+        <td colspan="4">DR Cut: ${{ checkForNullNum(event2.drCut).toFixed(2) }}</td>
+        <td colspan="4">Coordinator Payout: {{ checkForNullNum(event2.coordinatorAdminAmt).toFixed(2) }}</td>
+      </tr>
+      <tr>
+        <td colspan="12">Notes: ${{ checkForNullString(event2.eventNotes) }}</td>
+      </tr>
+      <tr>
+        <td colspan="4">  
+          <i class="far fa-square" *ngIf="event2.closed == 0"></i>
+          <i class="far fa-check-square" *ngIf="event2.closed == 1"></i>
+          Closed
+        </td>
+        <td colspan="4">
+          <i class="far fa-square" *ngIf="event2.shuttleBonusBool == 0"></i>
+          <i class="far fa-check-square" *ngIf="event2.shuttleBonusBool == 1"></i>
+          Shuttle Bonus
+        </td>
+        <td colspan="4">Shuttle Bonus Amount: {{ checkForNullNum(event2.shuttleBonusAmount).toFixed(2) }}</td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          <button type="button" class="btn event-btn" (click)="onEditEvent()">Edit Event</button>
+        </td>
+        <td colspan="3">
+          <button type="button" class="btn event-btn">Delete Event</button>
+        </td>
+        <td colspan="3">
+          <button type="button" class="btn event-btn">Send Gate List</button>
+        </td>
+        <td colspan="3">
+          <button type="button" class="btn event-btn">Send Reminder</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
   
   <div class="row">
-    <div class="col-xs-12">
-      <div class="list-group-item-text">Estimated Check: ${{ event.estimatedCheck.toFixed(2) }}</div>
-      <div class="list-group-item-text">Actual Check: ${{ event.actualCheck.toFixed(2) }}</div>
-      <div class="list-group-item-text">Estimated Profit: ${{ event.estimatedProfit.toFixed(2) }}</div>
-      <div class="list-group-item-text">Actual Profit: ${{ event.actualProfit.toFixed(2) }}</div>
+    <div class="col-md-12">
+      <div *ngIf="!getStaff">
+        <button class="btn get-staff-btn" (click)="getStaffForEvent()">Get Staff</button>
+      </div>
+      <div *ngIf="getStaff">
+        <table class="table table-striped table-sm">
+          <thead class="thead-dark">
+            <tr>
+              <th>Staff</th>
+              <th>Job</th>
+              <th>Rate</th>
+              <th>Scheduled Time</th>
+              <th>Time In</th>
+              <th>Time Out</th>
+              <th class="align-right">Hrs Worked</th>
+              <th class="align-right">Shuttle Bonus</th>
+              <th class="align-right">CC Tips</th>
+              <th class="align-right">Event Bonus</th>
+              <th class="align-right">Hourly Bonus</th>
+              <th class="align-right">Payout</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let t of timesheet">
+              <td>{{ checkForNullString(t.lastName) }}, {{ checkForNullString(t.firstName) }}</td>
+              <td>{{ checkForNullString(t.jobName) }}</td>
+              <td>{{ checkForNullNum(t.hourlyRate).toFixed(2) }}</td>
+              <td>{{ checkForNullString(getTime(t.scheduledArrivalTime)) }}</td>
+              <td>{{ checkForNullString(getTime(t.timeIn)) }}</td>
+              <td>{{ checkForNullString(getTime(t.timeOut)) }}</td>
+              <td class="align-right">{{ checkForNullNum(t.hoursWorked) }}</td>
+              <td class="align-right">{{ checkForNullNum(t.eventBonus).toFixed(2) }}</td>
+              <td class="align-right">{{ checkForNullNum(t.hourlyBonus).toFixed(2) }}</td>
+              <td class="align-right">{{ checkForNullNum(t.shuttleBonus).toFixed(2) }}</td>
+              <td class="align-right">{{ checkForNullNum(t.creditCardTips).toFixed(2) }}</td>
+              <td class="align-right">{{ checkForNullNum(t.creditAmount).toFixed(2) }}</td>
+            </tr>
+            <tr>
+              <td colspan="4">
+                <button type="button" class="btn event-btn" (click)="onEditEvent()">Add Staff</button>
+              </td>
+              <td colspan="4">
+                <button type="button" class="btn event-btn" (click)="onEditEvent()">Delete Staff</button>
+              </td>
+              <td colspan="4">
+                <button type="button" class="btn event-btn" (click)="onEditEvent()">Add Bonus</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+     
     </div>
   </div>
-  
 </div>
+
+
+<!--------------------------------------------------------------------
+  - CF event details 
+---------------------------------------------------------------------->
+<div *ngIf="currentVenueID == 3">
+  <table class="table table-sm table-responsive">
+    <tbody>
+      <tr>
+        <td colspan="4">Doors: {{ checkForNullString(getTime(event3.Date)) }}</td>
+        <td colspan="4">Location: {{ checkForNullString(event3.location) }}</td>
+        <td colspan="4"></td>
+      </tr>
+      <tr>
+        <td colspan="4">Total Sales: {{ checkForNullNum(event3.totalSales).toFixed(2) }}</td>
+        <td colspan="4">Venue Bonus: {{ checkForNullNum(event3.venueBonus).toFixed(2) }}</td>
+      </tr>
+      <tr>
+        <td colspan="4">Payout: ${{ checkForNullNum(event3.payout).toFixed(2) }}</td>
+        <td colspan="4">Est. Check: ${{ checkForNullNum(event3.estimatedCheck).toFixed(2) }}</td>
+        <td colspan="4">Est. Profit: ${{ checkForNullNum(event3.estimatedProfit).toFixed(2) }}</td>
+      </tr>
+      <tr>
+        <td colspan="4">Discrepancy: ${{ checkForNullNum(event3.discrepancy).toFixed(2) }}</td>
+        <td colspan="4">Actual Check: ${{ checkForNullNum(event3.actualCheck).toFixed(2) }}</td>
+        <td colspan="4">Actual Profit: ${{ checkForNullNum(event3.actualProfit).toFixed(2) }}</td>
+      </tr>
+      <tr>
+        <td colspan="4">TAC Cut: ${{ checkForNullNum(event3.tacCut).toFixed(2) }}</td>
+        <td colspan="4">DR Cut: ${{ checkForNullNum(event3.drCut).toFixed(2) }}</td>
+        <td colspan="4">Coordinator Payout: {{ checkForNullNum(event3.coordinatorAdminAmt).toFixed(2) }}</td>
+      </tr>
+      <tr>
+        <td colspan="12">Notes: ${{ checkForNullString(event3.eventNotes) }}</td>
+      </tr>
+      <tr>
+        <td colspan="4">  
+          <i class="far fa-square" *ngIf="event3.closed == 0"></i>
+          <i class="far fa-check-square" *ngIf="event3.closed == 1"></i>
+          Closed
+        </td>
+        <td colspan="4">
+          <i class="far fa-square" *ngIf="event3.shuttleBonusBool == 0"></i>
+          <i class="far fa-check-square" *ngIf="event3.shuttleBonusBool == 1"></i>
+          Shuttle Bonus
+        </td>
+        <td colspan="4">Shuttle Bonus Amount: {{ checkForNullNum(event3.shuttleBonusAmount).toFixed(2) }}</td>
+      </tr>
+      <tr>
+        <td colspan="3">
+          <button type="button" class="btn event-btn" (click)="onEditEvent()">Edit Event</button>
+        </td>
+        <td colspan="3">
+          <button type="button" class="btn event-btn">Delete Event</button>
+        </td>
+        <td colspan="3">
+          <button type="button" class="btn event-btn">Send Gate List</button>
+        </td>
+        <td colspan="3">
+          <button type="button" class="btn event-btn">Send Reminder</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <div class="row">
+    <div class="col-md-12">
+      <div *ngIf="!getStaff">
+        <button class="btn get-staff-btn" (click)="getStaffForEvent()">Get Staff</button>
+      </div>
+      <div *ngIf="getStaff">
+        <table class="table table-striped table-sm">
+          <thead class="thead-dark">
+            <tr>
+              <th>Staff</th>
+              <th>Job</th>
+              <th>Rate</th>
+              <th>Scheduled Time</th>
+              <th>Time In</th>
+              <th>Time Out</th>
+              <th class="align-right">Hrs Worked</th>
+              <th class="align-right">Shuttle Bonus</th>
+              <th class="align-right">CC Tips</th>
+              <th class="align-right">Event Bonus</th>
+              <th class="align-right">Hourly Bonus</th>
+              <th class="align-right">Payout</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let t of timesheet">
+              <td>{{ checkForNullString(t.lastName) }}, {{ checkForNullString(t.firstName) }}</td>
+              <td>{{ checkForNullString(t.jobName) }}</td>
+              <td>{{ checkForNullNum(t.hourlyRate).toFixed(2) }}</td>
+              <td>{{ checkForNullString(getTime(t.scheduledArrivalTime)) }}</td>
+              <td>{{ checkForNullString(getTime(t.timeIn)) }}</td>
+              <td>{{ checkForNullString(getTime(t.timeOut)) }}</td>
+              <td class="align-right">{{ checkForNullNum(t.hoursWorked) }}</td>
+              <td class="align-right">{{ checkForNullNum(t.eventBonus).toFixed(2) }}</td>
+              <td class="align-right">{{ checkForNullNum(t.hourlyBonus).toFixed(2) }}</td>
+              <td class="align-right">{{ checkForNullNum(t.shuttleBonus).toFixed(2) }}</td>
+              <td class="align-right">{{ checkForNullNum(t.creditCardTips).toFixed(2) }}</td>
+              <td class="align-right">{{ checkForNullNum(t.creditAmount).toFixed(2) }}</td>
+            </tr>
+            <tr>
+              <td colspan="4">
+                <button type="button" class="btn event-btn" (click)="onEditEvent()">Add Staff</button>
+              </td>
+              <td colspan="4">
+                <button type="button" class="btn event-btn" (click)="onEditEvent()">Delete Staff</button>
+              </td>
+              <td colspan="4">
+                <button type="button" class="btn event-btn" (click)="onEditEvent()">Add Bonus</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
 

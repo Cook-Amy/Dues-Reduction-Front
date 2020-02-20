@@ -8,12 +8,12 @@ import { Component, OnInit, ElementRef, ViewChild, OnDestroy } from '@angular/co
   styleUrls: ['./staff-edit.component.css']
 })
 export class StaffEditComponent implements OnInit {
-  @ViewChild('nameInput', {static: false}) nameInputRef: ElementRef;
-  @ViewChild('emailInput', {static: false}) emailInputRef: ElementRef;
-  @ViewChild('phoneInput', {static: false}) phoneInputRef: ElementRef;
-  @ViewChild('tuaccountInput', {static: false}) tuaccountInputRef: ElementRef;
-  pncActive: boolean = true;
-  pncExperienced: boolean = true;
+  // @ViewChild('nameInput', {static: false}) nameInputRef: ElementRef;
+  // @ViewChild('emailInput', {static: false}) emailInputRef: ElementRef;
+  // @ViewChild('phoneInput', {static: false}) phoneInputRef: ElementRef;
+  // @ViewChild('tuaccountInput', {static: false}) tuaccountInputRef: ElementRef;
+  // pncActive: boolean = true;
+  // pncExperienced: boolean = true;
 
 
   constructor(private staffService: StaffService) { }
@@ -22,15 +22,15 @@ export class StaffEditComponent implements OnInit {
   }
 
   onSaveStaff() {
-    const staffName = this.nameInputRef.nativeElement.value;
-    const staffEmail = this.emailInputRef.nativeElement.value;
-    const staffPhone = this.phoneInputRef.nativeElement.value;
-    const staffTuAccout = this.tuaccountInputRef.nativeElement.value;
-    const staffPncActive = this.pncActive;
-    const staffPncExperienced = this.pncExperienced;
+    // const staffName = this.nameInputRef.nativeElement.value;
+    // const staffEmail = this.emailInputRef.nativeElement.value;
+    // const staffPhone = this.phoneInputRef.nativeElement.value;
+    // const staffTuAccout = this.tuaccountInputRef.nativeElement.value;
+    // const staffPncActive = this.pncActive;
+    // const staffPncExperienced = this.pncExperienced;
 
-    const newStaff = new Staff(staffName, staffEmail, staffPhone, staffTuAccout, staffPncActive, staffPncExperienced);
-    this.staffService.addStaff(newStaff);
+    // const newStaff = new Staff(staffName, staffEmail, staffPhone, staffTuAccout, staffPncActive, staffPncExperienced);
+    // this.staffService.addStaff(newStaff);
     
   }
 

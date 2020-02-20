@@ -17,7 +17,7 @@
 
   </div>
   <div class="col-md-6">
-    <button class="btn btn-success" (click)="onNewEvent()">New Event</button>
+    <button class="btn new-event-btn" (click)="onNewEvent()">Add New Event</button>
   </div>
 </div>
 
@@ -25,7 +25,11 @@
 
 
 <!-- Collapsible Table -->
-<app-event-table [dataSource]="events"></app-event-table>
+<app-event-table *ngIf="currentVenueID == 1" [currentVenueID]="currentVenueID" [dataSource]="eventsPNC"></app-event-table>
+<app-event-table *ngIf="currentVenueID == 2" [currentVenueID]="currentVenueID" [dataSource2]="eventsWC"></app-event-table>
+<app-event-table *ngIf="currentVenueID == 3" [currentVenueID]="currentVenueID" [dataSource3]="eventsCF"></app-event-table>
+
+<!-- <app-event-table></app-event-table> -->
 
 
 

@@ -1,3 +1,18 @@
 .container {
   margin-left: 10px;
 }
+
+.event-btn {
+  min-width: 200px;
+  background-color: #0579AE;
+  color: white;
+}
+
+.get-staff-btn {
+  background-color: maroon;
+  color: white;
+}
+
+.align-right {
+  text-align: right;
+}

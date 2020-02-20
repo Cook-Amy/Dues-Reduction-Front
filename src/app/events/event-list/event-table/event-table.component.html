@@ -1,29 +1,95 @@
-<table mat-table
-       [dataSource]="dataSource" multiTemplateDataRows
-       class="mat-elevation-z8">
-  <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
-    <th mat-header-cell *matHeaderCellDef> {{column}} </th>
-    <td mat-cell *matCellDef="let element"> {{ getDate(element[column]) }} </td>
-  </ng-container>
-
-  <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
-  <ng-container matColumnDef="expandedDetail">
-    <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
-      <div class="example-element-detail"
-           [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-
-        <div class="example-element-description">
-          Estimated Check: ${{ element.estimatedCheck.toFixed(2) }}
+<!-- PNC event table -->
+<div *ngIf="currentVenueID == 1">
+  <div class="mat-elevation-z8">
+    <table mat-table
+      [dataSource]="dataSource" multiTemplateDataRows>
+      <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
+        <th mat-header-cell *matHeaderCellDef> {{column}} </th>
+        <td mat-cell *matCellDef="let element"> {{ getDate(element[column]) }} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="expandedDetail">
+        <td class="mat-detail-area" mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+        <div class="example-element-detail"
+              [@detailExpand]="element == expandedElement1 ? 'expanded' : 'collapsed'">
+          <div class="example-element-description">
+            <app-event-detail [currentVenueID]="currentVenueID" [event]="element"></app-event-detail>
+          </div>
         </div>
-      </div>
-    </td>
-  </ng-container>
-
-  <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-  <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"
+        </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+      <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"
       class="example-element-row"
-      [class.example-expanded-row]="expandedElement === element"
-      (click)="expandedElement = element">
-  </tr>
-  <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
-</table>
+      [class.example-expanded-row]="expandedElement1 === element"
+      (click)="expandedElement1 = element">
+      </tr>
+      <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+    </table>
+  </div>
+</div>
+
+<!-- WC event table -->
+<div *ngIf="currentVenueID == 2">
+  <div class="mat-elevation-z8">
+    <table mat-table
+      [dataSource]="dataSource2" multiTemplateDataRows>
+      <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
+        <th mat-header-cell *matHeaderCellDef> {{column}} </th>
+        <td mat-cell *matCellDef="let element"> {{ getDate(element[column]) }} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="expandedDetail">
+        <td class="mat-detail-area" mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+        <div class="example-element-detail"
+              [@detailExpand]="element == expandedElement2 ? 'expanded' : 'collapsed'">
+          <div class="example-element-description">
+            <app-event-detail [currentVenueID]="currentVenueID" [event2]="element"></app-event-detail>
+          </div>
+        </div>
+        </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+      <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"
+      class="example-element-row"
+      [class.example-expanded-row]="expandedElement2 === element"
+      (click)="expandedElement2 = element">
+      </tr>
+      <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+    </table>
+  </div>
+</div>
+
+<!-- CF event table -->
+<div *ngIf="currentVenueID == 3">
+  <div class="mat-elevation-z8">
+    <table mat-table
+      [dataSource]="dataSource3" multiTemplateDataRows>
+      <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
+        <th mat-header-cell *matHeaderCellDef> {{column}} </th>
+        <td mat-cell *matCellDef="let element"> {{ getDate(element[column]) }} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="expandedDetail">
+        <td class="mat-detail-area" mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+        <div class="example-element-detail"
+              [@detailExpand]="element == expandedElement3 ? 'expanded' : 'collapsed'">
+          <div class="example-element-description">
+            <app-event-detail [currentVenueID]="currentVenueID" [event3]="element"></app-event-detail>
+          </div>
+        </div>
+        </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+      <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"
+      class="example-element-row"
+      [class.example-expanded-row]="expandedElement3 === element"
+      (click)="expandedElement3= element">
+      </tr>
+      <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+    </table>
+  </div>
+</div>

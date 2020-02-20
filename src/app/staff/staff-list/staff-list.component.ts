@@ -13,12 +13,12 @@ export class StaffListComponent implements OnInit {
   constructor(private staffService: StaffService) { }
 
   ngOnInit() {
-    this.allStaff = this.staffService.getAllStaff();
-    this.staffService.staffChanged
-      .subscribe(
-        (staff: Staff[]) => {
-          this.allStaff = staff;
-        }
-      );
+  //   this.allStaff = this.staffService.getAllStaff();
+  //   this.staffService.staffChanged
+  //     .subscribe(
+  //       (staff: Staff[]) => {
+  //         this.allStaff = staff;
+  //       }
+  //     );
   }
 }

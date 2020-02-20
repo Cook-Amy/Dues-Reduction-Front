@@ -1,3 +1,8 @@
+import { EventCF } from './../../models/eventCF.model';
+import { EventWC } from './../../models/eventWC.model';
+import { Venue } from './../../models/venue.model';
+import { VenueService } from './../../venues/venue.service';
+import { EventPNC } from './../../models/eventPNC.model';
 import { EventService } from './../event.service';
 import { Component, OnInit } from '@angular/core';
 import { Event } from '../../models/event.model';
@@ -14,13 +19,19 @@ export class EventListComponent implements OnInit {
   selectedSeason: string;
   
 
-  events: Event[] = [];
+  // events: Event[] = [];
+  eventsPNC: EventPNC[];
+  eventsWC: EventWC[];
+  eventsCF: EventCF[];
   seasons: Season[] = [];
-  reversedSeasons: Season[];
+  // reversedSeasons: Season[];
   currentSeason: Season;
+  currentVenue: Venue;
+  currentVenueID: number;
   // currentSeasonFromForm;
 
   constructor(private eventService: EventService, 
+              private venueService: VenueService,
               private router: Router, 
               private route: ActivatedRoute) { }
 
@@ -32,29 +43,37 @@ export class EventListComponent implements OnInit {
       this.seasons = res;
       this.eventService.setCurrentSeason(this.seasons[this.seasons.length - 2]);
       this.currentSeason = this.eventService.getCurrentSeason();
+      this.currentVenue = this.venueService.getCurrentVenue();
+      this.currentVenueID = this.currentVenue.idvenue;
+      // console.log("current venue ID: " + this.currentVenueID);
       this.getEvents("dateAscending");
-      // this.currentSeasonFromForm = this.seasonControl.value;
-      // console.log('currentSeasonFromForm: ' + this.currentSeasonFromForm);
     });
   }
 
-
-
   getEvents(sort) {
-    this.eventService.getAllEvents().subscribe(events => {
-      this.events = this.eventService.setEvents(events, sort);
-    })
+    var venueID = this.currentVenueID;
+    if(venueID == 1) {
+      this.eventService.getAllEventsPnc().subscribe(eventsPNC => {
+        this.eventsPNC = this.eventService.setEventsPnc(eventsPNC, sort);
+      });
+    }
+
+    else if(venueID == 2) {
+      this.eventService.getAllEventsWc().subscribe(eventsWC => {
+        this.eventsWC = this.eventService.setEventsWc(eventsWC, sort);
+      });
+    }
+
+    else if(venueID == 3) {
+      this.eventService.getAllEventsCf().subscribe(eventsCF => {
+        this.eventsCF = this.eventService.setEventsCf(eventsCF, sort);
+      });
+    }
   }
 
   onNewEvent() {
     this.router.navigate(['new'], {relativeTo: this.route});
   }
-
-  // getDate(date) {
-  //   var newDate = new Date(date);
-  //   var convertDate = (newDate.getMonth() + 1) + '-' + newDate.getDate() + '-' + newDate.getFullYear();
-  //   return convertDate;
-  // }
 
   changeSeason(change) {
     if(change.seasonSelect == 999) {
@@ -63,7 +82,6 @@ export class EventListComponent implements OnInit {
     else {
       this.eventService.setCurrentSeason(this.seasons[change.seasonSelect - 1]);
     }
-
     this.currentSeason = this.eventService.getCurrentSeason();
     this.getEvents("dateAscending");
   }

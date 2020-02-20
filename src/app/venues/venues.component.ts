@@ -19,6 +19,7 @@ export class VenuesComponent implements OnInit {
 
   ngOnInit() {
     const venuePath: string = this.router.url;
+    // console.log("venue path: " + venuePath);
     this.getCurrentVenue(venuePath);
   }
 
@@ -28,13 +29,16 @@ export class VenuesComponent implements OnInit {
         this.venueService.setVenues(venues);
         this.venueService.setCurrentVenue(venuePath);
         this.currentVenue = this.venueService.getCurrentVenue();
-        this.venueName = this.currentVenue.shortName;
+        // console.log("current venue: " + this.currentVenue.idvenue);
+        this.venueName = this.currentVenue.name;
       })
     }
     else {
+      // console.log("already have venues saved.");
       this.venueService.setCurrentVenue(venuePath);
       this.currentVenue = this.venueService.getCurrentVenue();
-      this.venueName = this.currentVenue.shortName;
+      // console.log("current venue 2: " + this.currentVenue.idvenue);
+      this.venueName = this.currentVenue.name;
     }
   }
 

@@ -23,11 +23,12 @@ const routes: Routes = [
 
   { path: 'pnc', component: VenuesComponent, children: [
     { path: '', component: VenueStartComponent },
-    { path: 'events', component: EventsComponent, children: [
-      { path: 'new', component: EventEditComponent },
-      { path: ':id', component: EventDetailComponent },
-      { path: ':id/edit', component: EventEditComponent }
-    ] },
+    { path: 'events', component: EventsComponent },
+    // { path: 'events', component: EventsComponent, children: [
+    //   { path: 'new', component: EventEditComponent },
+    //   { path: ':id', component: EventDetailComponent },
+    //   { path: ':id/edit', component: EventEditComponent }
+    // ] },
     { path: 'staff', component: StaffComponent, children: [
       { path: ':id', component: StaffDetailComponent }
     ] }

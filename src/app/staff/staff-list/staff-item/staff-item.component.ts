@@ -7,8 +7,8 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./staff-item.component.css']
 })
 export class StaffItemComponent implements OnInit {
-  @Input() staff: Staff;
-  @Input() index: number;
+  // @Input() staff: Staff;
+  // @Input() index: number;
 
   constructor() { }
 
