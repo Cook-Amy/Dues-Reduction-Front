@@ -35,6 +35,7 @@ export class EventTableComponent implements OnInit {
   expandedElement1: EventPNC;
   expandedElement2: EventWC;
   expandedElement3: EventCF;
+  count = 0
 
   constructor() { }
 
@@ -45,15 +46,22 @@ export class EventTableComponent implements OnInit {
       return "---";
     }
     else {
-      var newDate: Date = new Date(date);
+      this.count++;
+      if(this.count % 2 == 0) {
+        var newDate: Date = new Date(date);
   
-      if(newDate.getDate()) {
-        var convertDate = (newDate.getMonth() + 1) + '-' + newDate.getDate() + '-' + newDate.getFullYear();
-        return convertDate;
-      } 
+        if(newDate.getDate()) {
+          var convertDate = (newDate.getMonth() + 1) + '-' + newDate.getDate() + '-' + newDate.getFullYear();
+          return convertDate;
+        } 
+        else {
+          return date;
+        }
+      }
       else {
         return date;
       }
+
     }
   }
 

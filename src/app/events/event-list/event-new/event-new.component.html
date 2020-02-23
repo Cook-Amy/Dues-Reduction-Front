@@ -1,0 +1,81 @@
+<hr>
+<form [formGroup]="newEventForm" (ngSubmit)="onSubmit()">
+
+  <div class="form-row">
+    <div class="form-group col-md-8">
+      <label for="eventTitle">Title</label>
+      <input type="text" class="form-control" id="eventTitle" formControlName="eventTitle">
+    </div>
+    <div class="form-group col-md-4"></div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group col-md-3">
+      <label for="dateTime">Date & Time</label>
+      <ejs-datetimepicker class="date-picker" id='datetimepicker' placeholder='Select a date' [value]='dateValue' formControlName="dateTime"></ejs-datetimepicker>
+    </div>
+    <div class="form-group col-md-4">
+      <label for="inputLocation">Stand Assignment</label>
+      <input type="text" class="form-control" id="inputLocation" placeholder="S109" formControlName="inputLocation">
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group col-md-12">
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="commBonus" formControlName="commBonus">
+        <label class="form-check-label" for="commBonus">
+          Met Commission Bonus
+        </label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="guarantee" formControlName="guarantee">
+        <label class="form-check-label" for="guarantee">
+          Guarantee
+        </label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="countTotal" formControlName="countTotal">
+        <label class="form-check-label" for="countTotal">
+          Counts Towards Total
+        </label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="closed" formControlName="closed">
+        <label class="form-check-label" for="closed">
+          Closed
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group col-md-2">
+      <label for="totalSales">Total Sales</label>
+      <input type="text" class="form-control" id="totalSales" formControlName="totalSales">
+    </div>
+    <div class="form-group col-md-2">
+      <label for="alcSales">Alcohol Sales</label>
+      <input type="text" class="form-control" id="alcSales"formControlName="alcSales">
+    </div>
+    <div class="form-group col-md-2">
+      <label for="bonus">Venue Bonus</label>
+      <input type="text" class="form-control" id="bonus" formControlName="bonus">
+    </div>
+    <div class="form-group col-md-2">
+      <label for="checkRcvd">Check Recieved</label>
+      <input type="text" class="form-control" id="checkRcvd" formControlName="checkRcvd">
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group col-md-8">
+      <label for="notes">Notes</label>
+      <textarea rows="2" class="form-control" id="notes" formControlName="notes"></textarea>
+    </div>
+  </div>
+
+
+  <button class="btn btn-primary" type="button" (click)="onCancel()">Cancel</button>
+  <button class="btn btn-primary" type="submit">Submit</button>
+</form>

@@ -17,23 +17,20 @@ import { FormControl, FormBuilder, NgForm } from '@angular/forms';
 })
 export class EventListComponent implements OnInit {
   selectedSeason: string;
-  
 
-  // events: Event[] = [];
   eventsPNC: EventPNC[];
   eventsWC: EventWC[];
   eventsCF: EventCF[];
   seasons: Season[] = [];
-  // reversedSeasons: Season[];
   currentSeason: Season;
   currentVenue: Venue;
   currentVenueID: number;
-  // currentSeasonFromForm;
+
+  sort: String = "dateAscending";
+  eventNew: Boolean;
 
   constructor(private eventService: EventService, 
-              private venueService: VenueService,
-              private router: Router, 
-              private route: ActivatedRoute) { }
+              private venueService: VenueService) { }
 
 
 
@@ -46,34 +43,50 @@ export class EventListComponent implements OnInit {
       this.currentVenue = this.venueService.getCurrentVenue();
       this.currentVenueID = this.currentVenue.idvenue;
       // console.log("current venue ID: " + this.currentVenueID);
-      this.getEvents("dateAscending");
+      this.getEvents();
     });
+
+    this.eventNew = this.eventService.getEventNew();
+    this.eventService.eventNewChanged.subscribe(newEventChanged => {
+      this.eventNew = newEventChanged;
+    });
+  
+    this.eventService.eventsPncSortedByDateAscendingChanged.subscribe(events => {
+      this.eventsPNC = events;
+    });
+    
+
   }
 
-  getEvents(sort) {
+  getEvents() {
     var venueID = this.currentVenueID;
     if(venueID == 1) {
       this.eventService.getAllEventsPnc().subscribe(eventsPNC => {
-        this.eventsPNC = this.eventService.setEventsPnc(eventsPNC, sort);
+        this.eventService.setEventsPnc(eventsPNC);
+        this.sort = "dateAscending";
+        this.eventService.eventsPncSortedByDateAscendingChanged.subscribe(events => {
+          this.eventsPNC = events;
+        });
+        // this.eventsPNC = this.eventService.getEventsPnc(this.sort);
       });
     }
 
     else if(venueID == 2) {
       this.eventService.getAllEventsWc().subscribe(eventsWC => {
-        this.eventsWC = this.eventService.setEventsWc(eventsWC, sort);
+        this.eventsWC = this.eventService.setEventsWc(eventsWC, this.sort);
       });
     }
 
     else if(venueID == 3) {
       this.eventService.getAllEventsCf().subscribe(eventsCF => {
-        this.eventsCF = this.eventService.setEventsCf(eventsCF, sort);
+        this.eventsCF = this.eventService.setEventsCf(eventsCF, this.sort);
       });
     }
   }
 
-  onNewEvent() {
-    this.router.navigate(['new'], {relativeTo: this.route});
-  }
+  // onNewEvent() {
+  //   this.router.navigate(['new'], {relativeTo: this.route});
+  // }
 
   changeSeason(change) {
     if(change.seasonSelect == 999) {
@@ -83,6 +96,10 @@ export class EventListComponent implements OnInit {
       this.eventService.setCurrentSeason(this.seasons[change.seasonSelect - 1]);
     }
     this.currentSeason = this.eventService.getCurrentSeason();
-    this.getEvents("dateAscending");
+    this.getEvents();
+  }
+
+  addNewEvent() {
+    this.eventNew = true;
   }
 }

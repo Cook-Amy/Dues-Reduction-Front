@@ -10,7 +10,11 @@ import { MatSelectModule } from '@angular/material/select';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule, MatInputModule } from  '@angular/material';
 import {MatPaginatorModule} from '@angular/material/paginator';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DlDateTimeDateModule, DlDateTimePickerModule } from 'angular-bootstrap-datetimepicker';
+import { DateTimePickerModule } from '@syncfusion/ej2-angular-calendars';
+
+
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -36,6 +40,7 @@ import { EventEditComponent } from './events/event-edit/event-edit.component';
 import { AuthComponent } from './auth/auth.component';
 import { EventTableComponent } from './events/event-list/event-table/event-table.component';
 import { StaffTableComponent } from './staff/staff-list/staff-table/staff-table.component';
+import { EventNewComponent } from './events/event-list/event-new/event-new.component';
 
 
 @NgModule({
@@ -64,7 +69,8 @@ import { StaffTableComponent } from './staff/staff-list/staff-table/staff-table.
     EventEditComponent,
     AuthComponent,
     EventTableComponent,
-    StaffTableComponent
+    StaffTableComponent,
+    EventNewComponent
   ],
   imports: [
     BrowserModule,
@@ -76,8 +82,12 @@ import { StaffTableComponent } from './staff/staff-list/staff-table/staff-table.
     MatSelectModule,
     MatInputModule,
     FormsModule,
+    ReactiveFormsModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    DlDateTimeDateModule,
+    DlDateTimePickerModule,
+    DateTimePickerModule
   ],
   providers: [StaffService],
   bootstrap: [AppComponent]

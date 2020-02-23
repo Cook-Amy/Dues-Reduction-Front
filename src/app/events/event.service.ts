@@ -18,6 +18,9 @@ export class EventService {
   serverUrl = 'http://localhost:4000/';
   // serverUrl = 'http://duesbackend-env-1.b6qgyzs5az.us-east-2.elasticbeanstalk.com/';
 
+  private eventNew = false;
+  eventNewChanged = new Subject<boolean>();
+
   private seasons: Season[] = [];
   private currentSeason: Season;
 
@@ -167,59 +170,92 @@ export class EventService {
   /*********************************************************************************
    * PNC EVENTS 
   *********************************************************************************/
+  // get all PNC events from DB
   getAllEventsPnc() {
     const params = new HttpParams().set('seasonID', this.currentSeason.idSeason.toString());
     const eventsReturned = this.http.get<EventPNC[]>(this.serverUrl + 'getEventsPNC', {params});
     return eventsReturned;
   }
 
-  setEventsPnc(eventsPnc: EventPNC[], sort) {
-    this.eventsPnc = eventsPnc;
+  // set events
+  setEventsPnc(eventsPnc: EventPNC[]) {
+
     if(eventsPnc == null) {
 
     }
     else {
-      if(sort === "dateDescending") {
-        this.eventsPncSortedByDateDescending = eventsPnc.sort((val1, val2) => {
-          return <any>new Date(val2.Date) - <any>new Date(val1.Date) 
-        });
-        this.eventsPncSortedByDateDescendingChanged.next(this.eventsPncSortedByDateDescending.slice());
-        return this.eventsPncSortedByDateDescending;
-      }
-  
-      else if(sort === "dateAscending") {
-        this.eventsPncSortedByDateAscending = eventsPnc.sort((val1, val2) => {
-          return <any>new Date(val1.Date) - <any>new Date(val2.Date) 
-        });
-        this.eventsPncSortedByDateAscendingChanged.next(this.eventsPncSortedByDateAscending.slice());
-        return this.eventsPncSortedByDateAscending;
-      }
-  
-      else if(sort === "nameDescending") {
-        this.eventsPncSortedByNameDescending = eventsPnc.sort((val1, val2) => {
-          return (<any>val2.Title > <any>val1.Title) ? 1 : -1; 
-        });
-        this.eventsPncSortedByNameDescendingChanged.next(this.eventsPncSortedByNameDescending.slice());
-        return this.eventsPncSortedByNameDescending;
-      }
-  
-      else if(sort === "nameAscending") {
-        this.eventsPncSortedByNameAscending = eventsPnc.sort((val1, val2) => {
-          return (<any>val1.Title > <any>val2.Title) ? 1 : -1; 
-        });
-        this.eventsPncSortedByNameAscendingChanged.next(this.eventsPncSortedByNameAscending.slice());
-        return this.eventsPncSortedByNameAscending;
-      }
-    }
+      // TODO: figure out why sorting isn't working
+      // this.eventsPnc = eventsPnc;
+      this.eventsPnc = eventsPnc.sort((val1, val2) => {
+        return <any>new Date(val2.Date) - <any>new Date(val1.Date) 
+      });
+      this.eventsPncChanged.next(this.eventsPnc.slice());
 
+      this.eventsPncSortedByDateDescending = eventsPnc.sort((val1, val2) => {
+        return <any>new Date(val2.Date) - <any>new Date(val1.Date) 
+      });
+      this.eventsPncSortedByDateDescendingChanged.next(this.eventsPncSortedByDateDescending.slice());
+    
+      this.eventsPncSortedByDateAscending = eventsPnc.sort((val1, val2) => {
+        return <any>new Date(val1.Date) - <any>new Date(val2.Date) 
+      });
+      this.eventsPncSortedByDateAscendingChanged.next(this.eventsPncSortedByDateAscending.slice());
+
+      this.eventsPncSortedByNameDescending = eventsPnc.sort((val1, val2) => {
+        return (<any>val2.Title > <any>val1.Title) ? 1 : -1; 
+      });
+      this.eventsPncSortedByNameDescendingChanged.next(this.eventsPncSortedByNameDescending.slice());
+
+      this.eventsPncSortedByNameAscending = eventsPnc.sort((val1, val2) => {
+        return (<any>val1.Title > <any>val2.Title) ? 1 : -1; 
+      });
+      this.eventsPncSortedByNameAscendingChanged.next(this.eventsPncSortedByNameAscending.slice());
+     
+      
+      // if(sort === "dateDescending") {
+      //   this.eventsPncSortedByDateDescending = eventsPnc.sort((val1, val2) => {
+      //     return <any>new Date(val2.Date) - <any>new Date(val1.Date) 
+      //   });
+      //   this.eventsPncSortedByDateDescendingChanged.next(this.eventsPncSortedByDateDescending.slice());
+      //   return this.eventsPncSortedByDateDescending;
+      // }
+  
+      // else if(sort === "dateAscending") {
+      //   this.eventsPncSortedByDateAscending = eventsPnc.sort((val1, val2) => {
+      //     return <any>new Date(val1.Date) - <any>new Date(val2.Date) 
+      //   });
+      //   this.eventsPncSortedByDateAscendingChanged.next(this.eventsPncSortedByDateAscending.slice());
+      //   return this.eventsPncSortedByDateAscending;
+      // }
+  
+      // else if(sort === "nameDescending") {
+      //   this.eventsPncSortedByNameDescending = eventsPnc.sort((val1, val2) => {
+      //     return (<any>val2.Title > <any>val1.Title) ? 1 : -1; 
+      //   });
+      //   this.eventsPncSortedByNameDescendingChanged.next(this.eventsPncSortedByNameDescending.slice());
+      //   return this.eventsPncSortedByNameDescending;
+      // }
+  
+      // else if(sort === "nameAscending") {
+      //   this.eventsPncSortedByNameAscending = eventsPnc.sort((val1, val2) => {
+      //     return (<any>val1.Title > <any>val2.Title) ? 1 : -1; 
+      //   });
+      //   this.eventsPncSortedByNameAscendingChanged.next(this.eventsPncSortedByNameAscending.slice());
+      //   return this.eventsPncSortedByNameAscending;
+      // }
+    }
   }
 
-  getEventsPnc() {
-    return this.eventsPnc.slice();
+  getEventsPnc(sort) {
+    if(sort.includes("all")) { console.log("getting all events"); return this.eventsPnc; }
+    else if(sort.includes("dateDescending")) { console.log("getting events date descending"); return this.eventsPncSortedByDateDescending; }
+    else if(sort.includes("dateAscending")) { console.log("getting events date ascending"); return this.eventsPncSortedByDateAscending; }
+    else if(sort.includes("nameDescending")) { return this.eventsPncSortedByNameDescending; }
+    else if(sort.includes("nameAscending")) { return this.eventsPncSortedByNameAscending; }
   }
 
   getEventsPncSortedByDateDescending() {
-    return this.eventsPncSortedByDateDescending;
+    return this.eventsPncSortedByDateDescending.slice();
   }
 
   getEventsPncSortedByDateAscending() {
@@ -236,6 +272,37 @@ export class EventService {
 
   getEventPnc(index: number) {
     return this.eventsPnc[index];
+  }
+
+  setNewPncEvent(event: EventPNC) {
+    const params = {
+      idevent: event.idevent,
+      Date: event.Date,
+      Title: event.Title,
+      compensated: event.compensated,
+      location: event.location,
+      venueBonue: event.venueBonus,
+      estimatedCheck: event.estimatedCheck,
+      estimatedProfit: event.estimatedProfit,
+      actualCheck: event.actualCheck,
+      payout: event.payout,
+      discrepancy: event.discrepancy,
+      actualProfit: event.actualProfit,
+      tacPct: event.tacPct,
+      tacCut: event.tacCut,
+      drCut: event.drCut,
+      eventNotes: event.eventNotes,
+      closed: event.closed,
+      metCommissionBonus: event.metCommissionBonus,
+      guarantee: event.guarantee,
+      totalSales: event.totalSales,
+      alcSales: event.alcSales,
+      coordinatorAdminAmount: event.coordinatorAdminAmount,
+      eventCountsTowardsTotal: event.eventCountsTowardsTotal,
+      season: this.currentSeason.idSeason
+    };
+    const eventSaved = this.http.post(this.serverUrl + 'setNewPncEvent', params);
+    return eventSaved;
   }
 
   /*********************************************************************************
@@ -383,4 +450,17 @@ export class EventService {
     const timesheetsReturned = this.http.get<Timesheet[]>(this.serverUrl + 'getStaffForEvent', {params});
     return timesheetsReturned;
   }
+
+  /*********************************************************************************
+   * OTHER
+  *********************************************************************************/
+  getEventNew() {
+    return this.eventNew;
+  }
+
+  setEventNew(eventNew: boolean) {
+    this.eventNew = eventNew;
+    this.eventNewChanged.next(this.eventNew);
+  }
+
 }

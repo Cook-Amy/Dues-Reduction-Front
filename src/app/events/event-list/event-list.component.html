@@ -17,10 +17,13 @@
 
   </div>
   <div class="col-md-6">
-    <button class="btn new-event-btn">Add New Event</button>
+    <button class="btn new-event-btn" (click)="addNewEvent()">Add New Event</button>
   </div>
 </div>
 
+<app-event-new *ngIf="eventNew == true" 
+                [currentVenueID]="currentVenueID">
+</app-event-new>
 <hr>
 
 
