@@ -1,3 +1,4 @@
+import { ExcelService } from './../../../createReports/excel.service';
 import { VenueService } from './../../../venues/venue.service';
 import { EventCF } from './../../../models/eventCF.model';
 import { EventWC } from './../../../models/eventWC.model';
@@ -20,13 +21,14 @@ export class EventDetailComponent implements OnInit {
   timesheet: Timesheet[] = [];
   getStaff = null;
 
-  constructor(private eventService: EventService) { }
+  constructor(private eventService: EventService,
+              private excelService: ExcelService) { }
 
   ngOnInit() { }
 
-  getStaffForEvent() {
+  getTimesheetForEvent() {
     if(this.currentVenueID == 1) {
-      this.eventService.getStaffForEvent(this.event.idevent).subscribe(res => {
+      this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(res => {
         this.getStaff = 1;
         this.timesheet = res;
         // console.log("timesheets: " + this.timesheet[1].firstName);
@@ -34,7 +36,7 @@ export class EventDetailComponent implements OnInit {
     }
 
     else if(this.currentVenueID == 2) {
-      this.eventService.getStaffForEvent(this.event2.idevent).subscribe(res => {
+      this.eventService.getTimesheetForEvent(this.event2.idevent).subscribe(res => {
         this.getStaff = 1;
         this.timesheet = res;
         // console.log("timesheets: " + this.timesheet[1].firstName);
@@ -42,7 +44,7 @@ export class EventDetailComponent implements OnInit {
     }
 
     if(this.currentVenueID == 3) {
-      this.eventService.getStaffForEvent(this.event3.idevent).subscribe(res => {
+      this.eventService.getTimesheetForEvent(this.event3.idevent).subscribe(res => {
         this.getStaff = 1;
         this.timesheet = res;
         // console.log("timesheets: " + this.timesheet[1].firstName);
@@ -67,17 +69,8 @@ export class EventDetailComponent implements OnInit {
     if(hours > 12) {
       hours -= 12;
     }
-    var min = newDate.getMinutes();
-    var minConv = "";
-    if(min < 10) {
-      minConv = "0" + min.toString(); 
-    }
-    else if(min == 0) {
-      minConv = "00";
-    }
-    else {
-      minConv = min.toString();
-    }
+    // var min = newDate.getMinutes();
+    var min = (newDate.getMinutes() < 10 ? '0' : '') + newDate.getMinutes();
 
     var convertDate = hours + ':' + min + " " + night;
     return convertDate;
@@ -95,6 +88,10 @@ export class EventDetailComponent implements OnInit {
       return 0;
     else  
       return num;
+  }
+
+  sendGateList() {
+    this.excelService.generateGateList(this.event);
   }
 
 }

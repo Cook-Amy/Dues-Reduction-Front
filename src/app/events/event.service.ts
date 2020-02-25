@@ -8,7 +8,6 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Event } from './../models/event.model';
 import { Subject } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { Theme } from '@fullcalendar/core';
 
 @Injectable({
   providedIn: 'root'
@@ -445,9 +444,9 @@ export class EventService {
   /*********************************************************************************
    * STAFF FOR EVENT
   *********************************************************************************/
-  getStaffForEvent(eventID) {
+  getTimesheetForEvent(eventID) {
     const params = new HttpParams().set('eventID', eventID);
-    const timesheetsReturned = this.http.get<Timesheet[]>(this.serverUrl + 'getStaffForEvent', {params});
+    const timesheetsReturned = this.http.get<Timesheet[]>(this.serverUrl + 'getTimesheetForEvent', {params});
     return timesheetsReturned;
   }
 

@@ -29,6 +29,8 @@
     "@syncfusion/ej2-angular-calendars": "^17.4.50",
     "angular-bootstrap-datetimepicker": "^4.0.2",
     "bootstrap": "^4.4.1",
+    "exceljs": "^1.12.0",
+    "file-saver": "^2.0.2",
     "moment": "^2.24.0",
     "open-iconic": "^1.1.1",
     "rxjs": "~6.4.0",
