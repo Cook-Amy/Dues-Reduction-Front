@@ -16,3 +16,10 @@
 .align-right {
   text-align: right;
 }
+
+.deleteConfirm {
+  margin-left: 200px;
+  color: maroon;
+  font-weight: bold;
+  font-size: 18px;
+}

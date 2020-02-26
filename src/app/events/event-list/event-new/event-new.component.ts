@@ -75,6 +75,7 @@ export class EventNewComponent implements OnInit {
     let eventTitle = "";
     let dateTime = this.dateValue;
     let inputLocation = "S109";
+    let coordinatorAdminAmt = 30;
     let commBonus = false;
     let guarantee = false; 
     let countTotal = false;
@@ -88,6 +89,7 @@ export class EventNewComponent implements OnInit {
     this.newEventForm = new FormGroup({
       'eventTitle': new FormControl(eventTitle, Validators.required),
       'dateTime': new FormControl(dateTime, Validators.required),
+      'coordinatorAdminAmt': new FormControl(coordinatorAdminAmt, Validators.required),
       'inputLocation': new FormControl(inputLocation, Validators.required),
       'commBonus': new FormControl(commBonus, Validators.required),
       'guarantee': new FormControl(guarantee, Validators.required),
@@ -129,7 +131,7 @@ export class EventNewComponent implements OnInit {
       this.newEventForm.value['guarantee'],
       this.newEventForm.value['totalSales'],
       this.newEventForm.value['alcSales'],
-      30,
+      this.newEventForm.value['coordinatorAdminAmt'],
       this.newEventForm.value['countTotal'] 
     );
     this.newPncEvent = pncEvent;

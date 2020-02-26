@@ -21,7 +21,7 @@ export class EventWC {
   public shuttleBonusAmount: number;
   public creditCardTips: number;
   public maxCreditCardTips: number;
-  public coordinatorAdminAmount: number;
+  public coordinatorAdminAmt: number;
 
   constructor(
      idevent: number,
@@ -46,7 +46,7 @@ export class EventWC {
      shuttleBonusAmount: number,
      creditCardTips: number,
      maxCreditCardTips: number,
-     coordinatorAdminAmount: number
+     coordinatorAdminAmt: number
   ) {
     this.idevent = idevent;
     this.Date = Date;
@@ -70,6 +70,6 @@ export class EventWC {
     this.shuttleBonusAmount = shuttleBonusAmount;
     this.creditCardTips = creditCardTips;
     this.maxCreditCardTips = maxCreditCardTips;
-    this.coordinatorAdminAmount = coordinatorAdminAmount;
+    this.coordinatorAdminAmt = coordinatorAdminAmt;
   }
 }

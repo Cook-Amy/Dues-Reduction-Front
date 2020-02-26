@@ -30,7 +30,9 @@ export class EventListComponent implements OnInit {
   eventNew: Boolean;
 
   constructor(private eventService: EventService, 
-              private venueService: VenueService) { }
+              private venueService: VenueService,
+              private route: ActivatedRoute,
+              private router: Router) { }
 
 
 
@@ -53,6 +55,7 @@ export class EventListComponent implements OnInit {
   
     this.eventService.eventsPncSortedByDateAscendingChanged.subscribe(events => {
       this.eventsPNC = events;
+      this.router.navigate([], {relativeTo: this.route});
     });
     
 

@@ -21,7 +21,7 @@ export class EventCF {
   public shuttleBonusAmount: number;
   public shuttleLocation: string;
   public totalSales: number;
-  public coordinatorAdminAmount: number;
+  public coordinatorAdminAmt: number;
 
   constructor(
      idevent: number,
@@ -46,7 +46,7 @@ export class EventCF {
      shuttleBonusAmount: number,
      shuttleLocation: string,
      totalSales: number,
-     coordinatorAdminAmount: number
+     coordinatorAdminAmt: number
   ) {
     this.idevent = idevent;
     this.Date = Date;
@@ -70,6 +70,6 @@ export class EventCF {
     this.shuttleBonusAmount = shuttleBonusAmount;
     this.shuttleLocation = shuttleLocation;
     this.totalSales = totalSales;
-    this.coordinatorAdminAmount = coordinatorAdminAmount;
+    this.coordinatorAdminAmt = coordinatorAdminAmt;
   }
 }

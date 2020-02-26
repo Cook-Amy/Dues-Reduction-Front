@@ -1,4 +1,4 @@
-import { EventEditComponent } from './events/event-edit/event-edit.component';
+import { EventEditComponent } from './events/event-list/event-edit/event-edit.component';
 import { StaffDetailComponent } from './staff/staff-list/staff-detail/staff-detail.component';
 import { EventDetailComponent } from './events/event-list/event-detail/event-detail.component';
 import { VenueStartComponent } from './venues/venue-start/venue-start.component';
@@ -36,11 +36,12 @@ const routes: Routes = [
 
   { path: 'wc', component: VenuesComponent, children: [
     { path: '', component: VenueStartComponent },
-    { path: 'events', component: EventsComponent, children: [
-      { path: 'new', component: EventEditComponent },
-      { path: ':id', component: EventDetailComponent },
-      { path: ':id/edit', component: EventEditComponent }
-    ] },
+    { path: 'events', component: EventsComponent},
+    // { path: 'events', component: EventsComponent, children: [
+    //   { path: 'new', component: EventEditComponent },
+    //   { path: ':id', component: EventDetailComponent },
+    //   { path: ':id/edit', component: EventEditComponent }
+    // ] },
     { path: 'staff', component: StaffComponent, children: [
       { path: ':id', component: StaffDetailComponent }
     ] }
@@ -48,11 +49,12 @@ const routes: Routes = [
 
   { path: 'cf', component: VenuesComponent, children: [
     { path: '', component: VenueStartComponent },
-    { path: 'events', component: EventsComponent, children: [
-      { path: 'new', component: EventEditComponent },
-      { path: ':id', component: EventDetailComponent },
-      { path: ':id/edit', component: EventEditComponent }
-    ] },
+    { path: 'events', component: EventsComponent},
+    // { path: 'events', component: EventsComponent, children: [
+    //   { path: 'new', component: EventEditComponent },
+    //   { path: ':id', component: EventDetailComponent },
+    //   { path: ':id/edit', component: EventEditComponent }
+    // ] },
     { path: 'staff', component: StaffComponent, children: [
       { path: ':id', component: StaffDetailComponent }
     ] }

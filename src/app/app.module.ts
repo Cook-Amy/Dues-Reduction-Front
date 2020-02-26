@@ -36,7 +36,7 @@ import { EventDetailComponent } from './events/event-list/event-detail/event-det
 import { StaffDetailComponent } from './staff/staff-list/staff-detail/staff-detail.component';
 import { StaffEditComponent } from './staff/staff-list/staff-edit/staff-edit.component';
 import { VenueStartComponent } from './venues/venue-start/venue-start.component';
-import { EventEditComponent } from './events/event-edit/event-edit.component';
+import { EventEditComponent } from './events/event-list/event-edit/event-edit.component';
 import { AuthComponent } from './auth/auth.component';
 import { EventTableComponent } from './events/event-list/event-table/event-table.component';
 import { StaffTableComponent } from './staff/staff-list/staff-table/staff-table.component';

@@ -21,7 +21,7 @@ export class EventPNC {
   public guarantee: Boolean;
   public totalSales: number;
   public alcSales: number;
-  public coordinatorAdminAmount: number;
+  public coordinatorAdminAmt: number;
   public eventCountsTowardsTotal: Boolean;
 
   constructor(
@@ -47,7 +47,7 @@ export class EventPNC {
      guarantee: Boolean,
      totalSales: number,
      alcSales: number,
-     coordinatorAdminAmount: number,
+     coordinatorAdminAmt: number,
      eventCountsTowardsTotal: Boolean
   ) {
     this.idevent = idevent;
@@ -72,7 +72,7 @@ export class EventPNC {
     this.guarantee = guarantee;
     this.totalSales = totalSales;
     this.alcSales = alcSales;
-    this.coordinatorAdminAmount = coordinatorAdminAmount;
+    this.coordinatorAdminAmt = coordinatorAdminAmt;
     this.eventCountsTowardsTotal = eventCountsTowardsTotal;
   }
 }

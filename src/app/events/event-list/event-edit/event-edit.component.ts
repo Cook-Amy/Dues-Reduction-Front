@@ -1,0 +1,124 @@
+import { ActivatedRoute, Router } from '@angular/router';
+import { EventService } from './../../event.service';
+import { EventPNC } from './../../../models/eventPNC.model';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Component, OnInit, Input } from '@angular/core';
+
+@Component({
+  selector: 'app-event-edit',
+  templateUrl: './event-edit.component.html',
+  styleUrls: ['./event-edit.component.css']
+})
+export class EventEditComponent implements OnInit {
+  @Input() event: EventPNC;
+  @Input() currentVenueID: number;
+  public dateValue: Date;
+  editEventForm: FormGroup;
+  // allPncEvents: EventPNC[];
+
+  constructor(private eventService: EventService,
+              private route: ActivatedRoute,
+              private router: Router) { }
+
+  ngOnInit() {
+    // this.allPncEvents = this.eventService.getEventsPnc("dateAscending");
+    this.dateValue = this.getToday();
+    this.initForm();
+  }
+
+  // set the starting day/time to today's date at 6:00 PM
+  getToday() {
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+    var todayDate = new Date(mm + '/' + dd + '/' + yyyy); 
+    todayDate.setHours(18);
+    todayDate.setMinutes(0);
+    return todayDate;
+  }
+ 
+  private initForm() {
+    let eventTitle = this.event.Title;
+    let dateTime = this.event.Date;
+    let inputLocation = this.event.location;
+    let coordinatorAdminAmt = this.event.coordinatorAdminAmt;
+    let commBonus = this.event.metCommissionBonus;
+    let guarantee = this.event.guarantee;
+    let countTotal = this.event.eventCountsTowardsTotal;
+    let closed = this.event.closed;
+    let totalSales = this.event.totalSales;
+    let alcSales = this.event.alcSales;
+    let bonus = this.event.venueBonus;
+    let checkRcvd = this.event.actualCheck;
+    let notes = this.event.eventNotes;
+    
+    this.editEventForm = new FormGroup({
+      'eventTitle': new FormControl(eventTitle, Validators.required),
+      'dateTime': new FormControl(dateTime, Validators.required),
+      'inputLocation': new FormControl(inputLocation, Validators.required),
+      'coordinatorAdminAmt': new FormControl(coordinatorAdminAmt, Validators.required),
+      'commBonus': new FormControl(commBonus, Validators.required),
+      'guarantee': new FormControl(guarantee, Validators.required),
+      'countTotal': new FormControl(countTotal, Validators.required),
+      'closed': new FormControl(closed, Validators.required),
+      'totalSales': new FormControl(totalSales, Validators.required),
+      'alcSales': new FormControl(alcSales, Validators.required),
+      'bonus': new FormControl(bonus, Validators.required),
+      'checkRcvd': new FormControl(checkRcvd, Validators.required),
+      'notes': new FormControl(notes, Validators.required)
+    });
+  }
+
+  onCancelEdit() {
+    this.eventService.setEventEdit(false);
+    this.router.navigate([], {relativeTo: this.route});
+  }
+
+  onSubmit() {
+    if(this.currentVenueID == 1) {
+      var sales = this.editEventForm.value['totalSales'];
+      var alc = this.editEventForm.value['alcSales'];
+      if(sales > 0 || alc > 0) {
+        this.doEventMath(sales, alc);
+      }
+
+      this.updateEvent();
+      this.eventService.editPncEvent(this.event).subscribe(res => {
+        this.eventService.getAllEventsPnc().subscribe(events => {
+          this.eventService.setEventsPnc(events);
+          this.onCancelEdit();
+        })
+      });
+
+      // this.eventService.setNewPncEvent(this.newPncEvent).subscribe(res => {
+      //   this.allPncEvents.push(this.newPncEvent);
+      //   this.eventService.setEventsPnc(this.allPncEvents);
+      //   this.allPncEvents = this.eventService.getEventsPnc("dateAscending");
+      // });
+
+      
+    }
+  }
+
+  doEventMath(sales, alc) {
+    // TODO: calculate event figures
+  }
+
+  updateEvent() {
+    this.event.Title = this.editEventForm.value['eventTitle'];
+    this.event.Date = this.editEventForm.value['dateTime'];
+    this.event.location = this.editEventForm.value['inputLocation'];
+    this.event.coordinatorAdminAmt = this.editEventForm.value['coordinatorAdminAmt'];
+    this.event.venueBonus = this.editEventForm.value['bonus'];
+    this.event.actualCheck = this.editEventForm.value['checkRcvd'];
+    this.event.eventNotes = this.editEventForm.value['notes'];
+    this.event.closed = this.editEventForm.value['closed'];
+    this.event.metCommissionBonus = this.editEventForm.value['commBonus'];
+    this.event.guarantee = this.editEventForm.value['guarantee'];
+    this.event.totalSales = this.editEventForm.value['totalSales'];
+    this.event.alcSales = this.editEventForm.value['alcSales'];
+    this.event.eventCountsTowardsTotal = this.editEventForm.value['countTotal'];
+  }
+
+}

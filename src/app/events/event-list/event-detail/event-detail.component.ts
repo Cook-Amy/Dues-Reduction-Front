@@ -1,3 +1,5 @@
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormGroup } from '@angular/forms';
 import { ExcelService } from './../../../createReports/excel.service';
 import { VenueService } from './../../../venues/venue.service';
 import { EventCF } from './../../../models/eventCF.model';
@@ -20,11 +22,21 @@ export class EventDetailComponent implements OnInit {
 
   timesheet: Timesheet[] = [];
   getStaff = null;
+  eventEdit: Boolean;
+  confirmDelete = false;
+
 
   constructor(private eventService: EventService,
-              private excelService: ExcelService) { }
+              private excelService: ExcelService,
+              private route: ActivatedRoute,
+              private router: Router) { }
 
-  ngOnInit() { }
+  ngOnInit() { 
+    this.eventEdit = this.eventService.getEventEdit();
+    this.eventService.eventEditChanged.subscribe(newEditChanged => {
+      this.eventEdit = newEditChanged;
+    });
+  }
 
   getTimesheetForEvent() {
     if(this.currentVenueID == 1) {
@@ -53,8 +65,30 @@ export class EventDetailComponent implements OnInit {
   }
 
   onEditEvent() {
-
+    this.eventEdit = true;
   }
+
+  onDeleteEvent() {
+    this.confirmDelete = true;
+  }
+
+  onDeleteNo() {
+    this.confirmDelete = false;
+  }
+
+  // TODO: Event is not being removed from list on first delete
+  onDeleteYes() {
+    if(this.currentVenueID == 1) {
+      this.eventService.deletePncEvent(this.event).subscribe(res => {
+        this.eventService.getAllEventsPnc().subscribe(events => {
+          this.eventService.setEventsPnc(events);
+          this.router.navigate([], {relativeTo: this.route});
+          this.confirmDelete = false;
+        });
+      });
+    }
+  }
+
 
   getTime(date) {
     if(date == null) {
@@ -93,5 +127,11 @@ export class EventDetailComponent implements OnInit {
   sendGateList() {
     this.excelService.generateGateList(this.event);
   }
+
+  onAddStaff() {}
+
+  onDeleteStaff() {}
+
+  onAddBonus() {}
 
 }
