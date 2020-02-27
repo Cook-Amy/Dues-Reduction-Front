@@ -1,3 +1,5 @@
+import { MathService } from './../../math.service';
+import { Timesheet } from './../../../models/timesheet.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EventService } from './../../event.service';
 import { EventPNC } from './../../../models/eventPNC.model';
@@ -17,6 +19,7 @@ export class EventEditComponent implements OnInit {
   // allPncEvents: EventPNC[];
 
   constructor(private eventService: EventService,
+              private mathService: MathService,
               private route: ActivatedRoute,
               private router: Router) { }
 
@@ -77,35 +80,30 @@ export class EventEditComponent implements OnInit {
 
   onSubmit() {
     if(this.currentVenueID == 1) {
-      var sales = this.editEventForm.value['totalSales'];
-      var alc = this.editEventForm.value['alcSales'];
-      if(sales > 0 || alc > 0) {
-        this.doEventMath(sales, alc);
-      }
-
-      this.updateEvent();
-      this.eventService.editPncEvent(this.event).subscribe(res => {
-        this.eventService.getAllEventsPnc().subscribe(events => {
-          this.eventService.setEventsPnc(events);
-          this.onCancelEdit();
-        })
+      this.updatePncEvent();
+      this.eventService.getContractInfo().subscribe(contract => {
+        this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
+          this.event = this.mathService.calculatePncEvent(this.event, contract, timesheets);
+          this.eventService.editPncEvent(this.event).subscribe(res => {
+            this.eventService.getAllEventsPnc().subscribe(events => {
+              this.eventService.setEventsPnc(events);
+              this.onCancelEdit();
+            });
+          });
+        });
       });
+    }
+    else if(this.currentVenueID == 2) {
 
-      // this.eventService.setNewPncEvent(this.newPncEvent).subscribe(res => {
-      //   this.allPncEvents.push(this.newPncEvent);
-      //   this.eventService.setEventsPnc(this.allPncEvents);
-      //   this.allPncEvents = this.eventService.getEventsPnc("dateAscending");
-      // });
+    }
+    else if(this.currentVenueID == 3) {
 
-      
     }
   }
 
-  doEventMath(sales, alc) {
-    // TODO: calculate event figures
-  }
 
-  updateEvent() {
+
+  updatePncEvent() {
     this.event.Title = this.editEventForm.value['eventTitle'];
     this.event.Date = this.editEventForm.value['dateTime'];
     this.event.location = this.editEventForm.value['inputLocation'];

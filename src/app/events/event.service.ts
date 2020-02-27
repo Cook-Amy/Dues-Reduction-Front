@@ -1,3 +1,4 @@
+import { ContractPNC } from './../models/contractPNC.model';
 import { EventCF } from './../models/eventCF.model';
 import { EventWC } from './../models/eventWC.model';
 import { Timesheet } from './../models/timesheet.model';
@@ -309,6 +310,18 @@ export class EventService {
     const params = { idevent: event.idevent };
     const deleteEvent = this.http.post(this.serverUrl + 'deletePncEvent', params);
     return deleteEvent;
+  }
+
+  getContractInfo() {
+    const params = new HttpParams().set('seasonID', this.currentSeason.idSeason.toString());
+    const contractReturned = this.http.get<ContractPNC>(this.serverUrl + 'getContractPnc', {params});
+    return contractReturned; 
+  }
+
+  getTimesheetsForOneEvent(id: number) {
+    const params = new HttpParams().set('eventID', id.toString());
+    const timesheetReturned = this.http.get<Timesheet[]>(this.serverUrl + 'getTimesheetsForOneEvent', {params});
+    return timesheetReturned; 
   }
 
   /*********************************************************************************

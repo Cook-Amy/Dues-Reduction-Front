@@ -1,3 +1,5 @@
+import { Timesheet } from './../../../models/timesheet.model';
+import { MathService } from './../../math.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EventService } from './../../event.service';
 import { EventPNC } from './../../../models/eventPNC.model';
@@ -18,6 +20,7 @@ export class EventNewComponent implements OnInit {
   allPncEvents: EventPNC[];
 
   constructor(private eventService: EventService,
+              private mathService: MathService,
               private route: ActivatedRoute,
               private router: Router) { }
 
@@ -45,21 +48,16 @@ export class EventNewComponent implements OnInit {
 
   onSubmit() {
     if(this.currentVenueID == 1) {
-      var sales = this.newEventForm.value['totalSales'];
-      var alc = this.newEventForm.value['alcSales'];
-      if(sales > 0 || alc > 0) {
-        this.doEventMath(sales, alc);
-      }
-
-      // try this instead of createNewEvent()
-      //  this.newPncEvent = this.newEventForm.value;
-
-
-      this.createNewEvent();
-      this.eventService.setNewPncEvent(this.newPncEvent).subscribe(res => {
-        this.allPncEvents.push(this.newPncEvent);
-        this.eventService.setEventsPnc(this.allPncEvents);
-        this.allPncEvents = this.eventService.getEventsPnc("dateAscending");
+      var newEvent = this.createNewPncEvent();
+      this.eventService.getContractInfo().subscribe(contract => {
+        // new events have no timesheets yet; send an empty array
+        var timesheets: Timesheet[];
+        this.newPncEvent = this.mathService.calculatePncEvent(newEvent, contract, timesheets);
+        this.eventService.setNewPncEvent(this.newPncEvent).subscribe(res => {
+          this.allPncEvents.push(this.newPncEvent);
+          this.eventService.setEventsPnc(this.allPncEvents);
+          this.allPncEvents = this.eventService.getEventsPnc("dateAscending");
+        });
       });
     }
 
@@ -103,12 +101,10 @@ export class EventNewComponent implements OnInit {
     });
   }
 
-  doEventMath(sales, alc) {
-    // TODO: calculate event figures
-  }
-
-  createNewEvent() {
-    var pncEvent = new EventPNC(
+  createNewPncEvent() {
+    // var pncEvent = new EventPNC(
+    return  new EventPNC(
+      
       0, 
       this.newEventForm.value['dateTime'],
       this.newEventForm.value['eventTitle'],
@@ -132,9 +128,9 @@ export class EventNewComponent implements OnInit {
       this.newEventForm.value['totalSales'],
       this.newEventForm.value['alcSales'],
       this.newEventForm.value['coordinatorAdminAmt'],
-      this.newEventForm.value['countTotal'] 
+      this.newEventForm.value['countTotal']
     );
-    this.newPncEvent = pncEvent;
+    // this.newPncEvent = pncEvent;
   }
 
 }

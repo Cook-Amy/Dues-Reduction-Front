@@ -13,6 +13,8 @@ export class Timesheet {
   public hourlyBonus: number;
   public creditCardTips: number;
   public creditAmount: number;
+  public isGuarantee: boolean;
+  public venuePay: number;
 
   constructor(
      idtimesheet: number,
@@ -28,7 +30,9 @@ export class Timesheet {
      eventBonus: number,
      hourlyBonus: number,
      creditCardTips: number,
-     creditAmount: number
+     creditAmount: number,
+     isGuarantee: boolean,
+     venuePay: number
   ) {
     this.idtimesheet = idtimesheet;
     this.firstName = firstName;
@@ -55,5 +59,7 @@ export class Timesheet {
     if(!this.creditCardTips ) { this.creditCardTips = 0; }
     this.creditAmount = creditAmount;
     if(!this.creditAmount ) { this.creditAmount = 0; }
+    this.isGuarantee = isGuarantee;
+    this.venuePay = venuePay;
   }
 }
