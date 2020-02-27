@@ -63,10 +63,10 @@
         <button type="button" class="btn event-btn" (click)="onEditEvent()">Edit Event</button>
       </td>
       <td colspan="3">
-        <button type="button" class="btn event-btn" (click)="onDeleteEvent()">Delete Event</button>
+        <button type="button" class="btn event-btn" (click)="confirmGateList=false; onDeleteEvent()">Delete Event</button>
       </td>
       <td colspan="3">
-        <button type="button" class="btn event-btn" (click)="sendGateList()">Send Gate List</button>
+        <button type="button" class="btn event-btn" (click)="confirmGateList=true; confirmDelete=false">Send Gate List</button>
       </td>
       <td colspan="3">
         <button type="button" class="btn event-btn">Send Reminder</button>
@@ -78,6 +78,33 @@
       <button class="btn btn-outline-danger" (click)="onDeleteNo()">No</button>
       &nbsp;&nbsp;
       <button class="btn btn-outline-info" (click)="onDeleteYes()">Yes</button>
+    </div>
+
+    <div class="confirmGateList" *ngIf="confirmGateList">
+      <form [formGroup]="gateListForm" (ngSubmit)="onGateListSubmit()">
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            What do you want to do with the Gate List?
+            &nbsp;
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="emailGateList" formControlName="emailGateList">
+              <label class="form-check-label" for="emailGateList">
+                Email
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="downloadGateList" formControlName="downloadGateList">
+              <label class="form-check-label" for="downloadGateList">
+                Download
+              </label>
+            </div>
+            <button class="btn btn-outline-info" type="submit">Send</button>
+            &nbsp;
+            <button class="btn btn-outline-danger" type="button" (click)="confirmGateList=false">Cancel</button>
+          </div>
+        </div>
+      </form>
+
     </div>
 
     <div class="row">

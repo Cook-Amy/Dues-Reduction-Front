@@ -1,5 +1,5 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ExcelService } from './../../../createReports/excel.service';
 import { VenueService } from './../../../venues/venue.service';
 import { EventCF } from './../../../models/eventCF.model';
@@ -24,6 +24,8 @@ export class EventDetailComponent implements OnInit {
   getStaff = null;
   eventEdit: Boolean;
   confirmDelete = false;
+  confirmGateList = false;
+  gateListForm: FormGroup;
 
 
   constructor(private eventService: EventService,
@@ -36,6 +38,26 @@ export class EventDetailComponent implements OnInit {
     this.eventService.eventEditChanged.subscribe(newEditChanged => {
       this.eventEdit = newEditChanged;
     });
+
+    this.initForm();
+  }
+
+  private initForm() {
+    let emailGateList = true;
+    let downloadGateList = false;
+    
+    this.gateListForm = new FormGroup({
+      'emailGateList': new FormControl(emailGateList, Validators.required),
+      'downloadGateList': new FormControl(downloadGateList, Validators.required)
+    });
+  }
+
+  onGateListSubmit() {
+    let email = this.gateListForm.value['emailGateList'];
+    let download = this.gateListForm.value['downloadGateList'];
+    this.excelService.generateGateList(this.event, email, download);
+    this.confirmGateList = false;
+
   }
 
   getTimesheetForEvent() {
@@ -122,10 +144,6 @@ export class EventDetailComponent implements OnInit {
       return 0;
     else  
       return num;
-  }
-
-  sendGateList() {
-    this.excelService.generateGateList(this.event);
   }
 
   onAddStaff() {}

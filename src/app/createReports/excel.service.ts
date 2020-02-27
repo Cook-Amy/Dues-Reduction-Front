@@ -18,12 +18,12 @@ export class ExcelService {
 
   constructor(private http: HttpClient) { }
 
-  generateGateList(event: EventPNC) {
+  generateGateList(event: EventPNC, email: boolean, download: boolean) {
     const params = new HttpParams().set('eventID', event.idevent.toString());
     this.http.get(this.serverUrl + 'getStaffForEvent', {params}).subscribe(res => {
       this.setData(res);
       this.styleGateList(event);
-      this.saveGateList(event);
+      this.saveGateList(event, email, download);
     })
 
   }
@@ -60,7 +60,6 @@ export class ExcelService {
     var min = (newTime.getMinutes() < 10 ? '0' : '') + newTime.getMinutes();
  
     var str = hour + ':' + min + " " + night;
-    console.log("time: " + str);
     return str;
   }
 
@@ -101,12 +100,10 @@ export class ExcelService {
   }
 
   getRefresher(ref) {
-    console.log('refresher 1: ' + ref);
     if(ref == 1) { return 'a'; }
     else { return ''; }
   }
   getRefresher2(ref) {
-    console.log('refresher 2: ' + ref);
     if(ref == 0) { return 'a'; }
     else { return ''; }
   }
@@ -366,15 +363,19 @@ export class ExcelService {
     });
   }
 
-  saveGateList(event: EventPNC) {
+  saveGateList(event: EventPNC, email: boolean, download: boolean) {
     let date = new Date(event.Date);
     let dateFormat:string = "";
     dateFormat = (date.getMonth() + 1) + '-' + date.getDate() + '-' + date.getFullYear();
 
-    
     this.workbook.xlsx.writeBuffer().then((data) => {
       let blob = new Blob([data],{type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
-      fs.saveAs(blob, 'GateList_' + dateFormat);
+      if(download) {
+        fs.saveAs(blob, 'GateList_' + dateFormat);
+      }
+      if(email) {
+
+      }
     });
   }
 
