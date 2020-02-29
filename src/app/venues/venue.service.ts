@@ -1,3 +1,4 @@
+import { GlobalVariables } from './../shared/GlobalVariables';
 import { Subject } from 'rxjs';
 import { Venue } from './../models/venue.model';
 import { HttpClient } from '@angular/common/http';
@@ -8,14 +9,15 @@ import { Injectable } from '@angular/core';
 })
 export class VenueService {
 
-  serverUrl = 'http://localhost:4000/';
+  // serverUrl = 'http://localhost:4000/';
   // serverUrl = 'http://duesbackend-env-1.b6qgyzs5az.us-east-2.elasticbeanstalk.com/';
+  serverUrl = this.global.serverUrl;
 
   venuesChanged = new Subject<Venue[]>();
   private venues: Venue[] = [];
   private currentVenue: Venue;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private global: GlobalVariables) { }
 
   getAllVenues() {
     return this.http.get<Venue[]>(this.serverUrl + 'venues');

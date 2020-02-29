@@ -4,19 +4,21 @@ import { Injectable } from '@angular/core';
 import { Workbook } from 'exceljs';
 import * as fs from 'file-saver';
 import * as vabLogoFile from './vabLogo.js';
+import { GlobalVariables } from '../shared/GlobalVariables';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ExcelService {
 
-  serverUrl = 'http://localhost:4000/';
+  // serverUrl = 'http://localhost:4000/';
   // serverUrl = 'http://duesbackend-env-1.b6qgyzs5az.us-east-2.elasticbeanstalk.com/';
+  serverUrl = this.global.serverUrl;
 
   workbook = new Workbook();
   data = [];
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private global: GlobalVariables) { }
 
   getStaffForEvent(eventID: number) {
     const params = new HttpParams().set('eventID', eventID.toString());

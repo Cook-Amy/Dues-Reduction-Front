@@ -1,5 +1,4 @@
 import { AuthService } from './../auth/auth.service';
-import { ServerService } from './../server.service';
 import { Component, OnInit } from '@angular/core';
 import { Venue } from '../models/venue.model';
 
@@ -13,11 +12,7 @@ export class HeaderComponent implements OnInit {
 
   constructor( private auth: AuthService) { }
 
-  ngOnInit() {
-    // this.serverService.getVenues().subscribe(data => {
-    //   this.venues = data;
-    // });
-  }
+  ngOnInit() {}
 
   onLogout() {
     this.auth.onLogout();

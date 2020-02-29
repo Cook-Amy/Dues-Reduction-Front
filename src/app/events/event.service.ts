@@ -1,3 +1,4 @@
+import { GlobalVariables } from './../shared/GlobalVariables';
 import { ContractPNC } from './../models/contractPNC.model';
 import { EventCF } from './../models/eventCF.model';
 import { EventWC } from './../models/eventWC.model';
@@ -15,8 +16,9 @@ import { Injectable } from '@angular/core';
 })
 export class EventService {
 
-  serverUrl = 'http://localhost:4000/';
+  // serverUrl = 'http://localhost:4000/';
   // serverUrl = 'http://duesbackend-env-1.b6qgyzs5az.us-east-2.elasticbeanstalk.com/';
+  serverUrl = this.global.serverUrl;
 
   private eventNew = false;
   eventNewChanged = new Subject<boolean>();
@@ -75,7 +77,7 @@ export class EventService {
   eventsCfSortedByNameDescendingChanged = new Subject<EventCF[]>();
   private eventsCfSortedByNameDescending: EventCF[] = [];
   
-  constructor(private http: HttpClient, private venueService: VenueService) {}
+  constructor(private http: HttpClient, private venueService: VenueService, private global: GlobalVariables) {}
 
   /*********************************************************************************
    * All Venue EVENTS 

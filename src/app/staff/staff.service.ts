@@ -1,3 +1,4 @@
+import { GlobalVariables } from './../shared/GlobalVariables';
 import { HttpClient } from '@angular/common/http';
 import { Staff } from './../models/staff.model';
 import { Subject } from 'rxjs';
@@ -8,8 +9,9 @@ import { Injectable } from '@angular/core';
 })
 export class StaffService {
   
-  serverUrl = 'http://localhost:4000/';
+  // serverUrl = 'http://localhost:4000/';
   // serverUrl = 'http://duesbackend-env-1.b6qgyzs5az.us-east-2.elasticbeanstalk.com/';
+  serverUrl = this.global.serverUrl;
 
 // All venue staff
   private allStaff: Staff[] = [];
@@ -51,7 +53,7 @@ export class StaffService {
   inactiveCfStaffChanged = new Subject<Staff[]>();
   interestedCfStaffChanged = new Subject<Staff[]>();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private global: GlobalVariables) {}
 
   sortByNameAscending(staff: Staff[]) {
     return staff.sort((val1, val2) => {
