@@ -55,7 +55,20 @@ export class EventDetailComponent implements OnInit {
   onGateListSubmit() {
     let email = this.gateListForm.value['emailGateList'];
     let download = this.gateListForm.value['downloadGateList'];
-    this.excelService.generateGateList(this.event, email, download);
+
+    this.excelService.getStaffForEvent(this.event.idevent).subscribe(res => {
+      this.excelService.generateGateList(this.event, res).subscribe(results => {
+        console.log("Gate list was sent.");
+      })
+    
+    });
+
+    // this.excelService.generateGateList(this.event, email, download).subscribe(res => {
+    //   this.excelService.setData(res);
+    //   this.excelService.styleGateList(this.event);
+    //   this.excelService.saveGateList(this.event, email, download);
+    
+    // });
     this.confirmGateList = false;
 
   }
