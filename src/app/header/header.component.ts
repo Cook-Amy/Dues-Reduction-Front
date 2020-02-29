@@ -1,3 +1,4 @@
+import { AuthService } from './../auth/auth.service';
 import { ServerService } from './../server.service';
 import { Component, OnInit } from '@angular/core';
 import { Venue } from '../models/venue.model';
@@ -10,12 +11,16 @@ import { Venue } from '../models/venue.model';
 export class HeaderComponent implements OnInit {
   venues: Venue[];
 
-  constructor( private serverService: ServerService) { }
+  constructor( private auth: AuthService) { }
 
   ngOnInit() {
     // this.serverService.getVenues().subscribe(data => {
     //   this.venues = data;
     // });
+  }
+
+  onLogout() {
+    this.auth.onLogout();
   }
 
 }

@@ -28,8 +28,11 @@
   </div>
 
   <div class="navbar-nav">
-    <div class="navbar-item login" routerLinkActive="active">
+    <!-- <div class="navbar-item login" routerLinkActive="active">
       <div class="nav-link" routerLink="/auth">Login</div>
+    </div> -->
+    <div class="navbar-item logout">
+      <div class="nav-link" (click)="onLogout()">Logout</div>
     </div>
   </div>
 

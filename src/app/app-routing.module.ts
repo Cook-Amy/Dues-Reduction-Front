@@ -2,10 +2,6 @@ import { EventEditComponent } from './events/event-list/event-edit/event-edit.co
 import { StaffDetailComponent } from './staff/staff-list/staff-detail/staff-detail.component';
 import { EventDetailComponent } from './events/event-list/event-detail/event-detail.component';
 import { VenueStartComponent } from './venues/venue-start/venue-start.component';
-import { VenueContactsComponent } from './venue-contacts/venue-contacts.component';
-import { ReportsComponent } from './reports/reports.component';
-import { DocumentsComponent } from './documents/documents.component';
-import { FormsComponent } from './forms/forms.component';
 import { StaffComponent } from './staff/staff.component';
 import { EventsComponent } from './events/events.component';
 import { AdminPageComponent } from './admin-page/admin-page.component';
@@ -18,7 +14,7 @@ import { AuthComponent } from './auth/auth.component';
 
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: 'home' },
+  { path: '', component: AuthComponent },
   { path: 'home', component: HomeComponent },
 
   { path: 'pnc', component: VenuesComponent, children: [

@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { AuthService } from './auth.service';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
@@ -8,8 +9,10 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./auth.component.css']
 })
 export class AuthComponent implements OnInit {
+  token: any;
   error:string = null;
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService,
+              private router: Router) { }
 
   ngOnInit() {
   }
@@ -18,17 +21,24 @@ export class AuthComponent implements OnInit {
     const email = form.value.inputEmail;
     const password = form.value.inputPassword;
     this.authService.getUser(email, password).subscribe(res => {
-      console.log(res);
+      // console.log(res);
       if(!res) {
         this.error = "Username and/or password are not correct.";
         console.log("Username and/or password are not correct");
       }
       else {
-        this.error = null;
-        console.log("Username and password are correct");
+        const token = res.token;
+        if(token) {
+          this.error = null;
+          this.authService.authenticated.next(true);
+          this.authService.saveUser(res.token, res.user);
+          this.router.navigate(['/home']);
+        }
       }
     });
     form.reset();
   }
+
+
 
 }
