@@ -4,7 +4,7 @@ export class ContractPNC {
   public pncFoodCommission: number;
   public pncFoodCommissionAfterIncrease: number;
   public pncAlcoholCommission: number;
-  public pncAlcoholCommissionAfterIncome: number;
+  public pncAlcoholCommissionAfterIncrease: number;
   public pncFoodTaxRate: number;
   public pncAlcoholTaxRate: number;
   public pncMemberGuarantee: number;
@@ -16,7 +16,7 @@ export class ContractPNC {
      pncFoodCommission: number,     
      pncFoodCommissionAfterIncrease: number,
      pncAlcoholCommission: number,
-     pncAlcoholCommissionAfterIncome: number,
+     pncAlcoholCommissionAfterIncrease: number,
      pncFoodTaxRate: number,
      pncAlcoholTaxRate: number,
      pncMemberGuarantee: number,
@@ -27,7 +27,7 @@ export class ContractPNC {
     this.pncFoodCommission = pncFoodCommission;
     this.pncFoodCommissionAfterIncrease = pncFoodCommissionAfterIncrease;
     this.pncAlcoholCommission = pncAlcoholCommission;
-    this.pncAlcoholCommissionAfterIncome = pncAlcoholCommissionAfterIncome;
+    this.pncAlcoholCommissionAfterIncrease = pncAlcoholCommissionAfterIncrease;
     this.pncFoodTaxRate = pncFoodTaxRate;
     this.pncAlcoholTaxRate = pncAlcoholTaxRate;
     this.pncMemberGuarantee = pncMemberGuarantee;

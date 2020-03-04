@@ -11,3 +11,7 @@ main {
 .card-body {
   text-align: center;
 }
+
+.venuePage {
+  min-height: 400px;
+}

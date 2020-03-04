@@ -23,6 +23,7 @@ export class EventDetailComponent implements OnInit {
   timesheet: Timesheet[] = [];
   getStaff = null;
   eventEdit: Boolean;
+  eventStaffEdit: Boolean;
   confirmDelete = false;
   confirmGateList = false;
   gateListForm: FormGroup;
@@ -35,9 +36,13 @@ export class EventDetailComponent implements OnInit {
 
   ngOnInit() { 
     this.eventEdit = this.eventService.getEventEdit();
+    this.eventStaffEdit = this.eventService.getEventStaffEdit();
     this.eventService.eventEditChanged.subscribe(newEditChanged => {
       this.eventEdit = newEditChanged;
     });
+    this.eventService.eventStaffEditChanged.subscribe(newStaffEditChanged => {
+      this.eventStaffEdit = newStaffEditChanged;
+    })
 
     this.initForm();
   }
@@ -155,11 +160,17 @@ export class EventDetailComponent implements OnInit {
   checkForNullNum(num) {
     if(num == null)
       return 0;
-    else  
+    else  {
+      // console.log("NUM: " + num);
+      // var fixedNum = num.toFixed(2);
+      // console.log("NUM FIXED: " + fixedNum);
       return num;
+    }
   }
 
-  onAddStaff() {}
+  onEditStaff() {
+    this.eventStaffEdit = true;
+  }
 
   onDeleteStaff() {}
 

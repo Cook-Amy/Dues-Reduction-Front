@@ -1,10 +1,10 @@
+import { GlobalVariables } from './../shared/GlobalVariables';
 import { HttpParams, HttpClient } from '@angular/common/http';
 import { EventPNC } from './../models/eventPNC.model';
 import { Injectable } from '@angular/core';
 import { Workbook } from 'exceljs';
 import * as fs from 'file-saver';
 import * as vabLogoFile from './vabLogo.js';
-import { GlobalVariables } from '../shared/GlobalVariables';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +13,7 @@ export class ExcelService {
 
   // serverUrl = 'http://localhost:4000/';
   // serverUrl = 'http://duesbackend-env-1.b6qgyzs5az.us-east-2.elasticbeanstalk.com/';
-  serverUrl = this.global.serverUrl;
+  serverUrl = GlobalVariables.serverUrl;
 
   workbook = new Workbook();
   data = [];

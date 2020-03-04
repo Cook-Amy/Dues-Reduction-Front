@@ -1,6 +1,6 @@
-import { AuthService } from './../auth/auth.service';
+import { AuthService } from '../../auth/auth.service';
 import { Component, OnInit } from '@angular/core';
-import { Venue } from '../models/venue.model';
+import { Venue } from '../../models/venue.model';
 
 @Component({
   selector: 'app-header',

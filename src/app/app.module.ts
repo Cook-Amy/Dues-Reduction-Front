@@ -1,3 +1,4 @@
+import { GlobalVariables } from './shared/GlobalVariables';
 import { StaffService } from './staff/staff.service';
 import { DropdownDirective } from './shared/dropdown.directive';
 import { BrowserModule } from '@angular/platform-browser';
@@ -20,7 +21,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { StaffComponent } from './staff/staff.component';
 import { VenuesComponent } from './venues/venues.component';
-import { HeaderComponent } from './header/header.component';
+import { HeaderComponent } from './shared/header/header.component';
 import { AdminPageComponent } from './admin-page/admin-page.component';
 import { VenueLinksComponent } from './venues/venue-links/venue-links.component';
 import { EventsComponent } from './events/events.component';
@@ -41,6 +42,10 @@ import { AuthComponent } from './auth/auth.component';
 import { EventTableComponent } from './events/event-list/event-table/event-table.component';
 import { StaffTableComponent } from './staff/staff-list/staff-table/staff-table.component';
 import { EventNewComponent } from './events/event-list/event-new/event-new.component';
+import { FooterComponent } from './shared/footer/footer.component';
+import { EventStaffEditComponent } from './events/event-list/event-staff-edit/event-staff-edit.component';
+import { SingleEditLineComponent } from './events/event-list/event-staff-edit/single-edit-line/single-edit-line.component';
+
 
 
 @NgModule({
@@ -70,7 +75,10 @@ import { EventNewComponent } from './events/event-list/event-new/event-new.compo
     AuthComponent,
     EventTableComponent,
     StaffTableComponent,
-    EventNewComponent
+    EventNewComponent,
+    FooterComponent,
+    EventStaffEditComponent,
+    SingleEditLineComponent
   ],
   imports: [
     BrowserModule,
@@ -89,7 +97,7 @@ import { EventNewComponent } from './events/event-list/event-new/event-new.compo
     DlDateTimePickerModule,
     DateTimePickerModule
   ],
-  providers: [StaffService],
+  providers: [GlobalVariables],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

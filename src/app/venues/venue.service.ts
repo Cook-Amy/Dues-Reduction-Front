@@ -11,7 +11,7 @@ export class VenueService {
 
   // serverUrl = 'http://localhost:4000/';
   // serverUrl = 'http://duesbackend-env-1.b6qgyzs5az.us-east-2.elasticbeanstalk.com/';
-  serverUrl = this.global.serverUrl;
+  serverUrl = GlobalVariables.serverUrl;
 
   venuesChanged = new Subject<Venue[]>();
   private venues: Venue[] = [];

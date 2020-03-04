@@ -1,3 +1,4 @@
+import { ContractPNC } from './../../../models/contractPNC.model';
 import { Timesheet } from './../../../models/timesheet.model';
 import { MathService } from './../../math.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -51,8 +52,8 @@ export class EventNewComponent implements OnInit {
       var newEvent = this.createNewPncEvent();
       this.eventService.getContractInfo().subscribe(contract => {
         // new events have no timesheets yet; send an empty array
-        var timesheets: Timesheet[];
-        this.newPncEvent = this.mathService.calculatePncEvent(newEvent, contract, timesheets);
+        var timesheets: Timesheet[] = [];
+        this.newPncEvent = this.mathService.calculatePncEvent(newEvent, contract[0], timesheets);
         this.eventService.setNewPncEvent(this.newPncEvent).subscribe(res => {
           this.allPncEvents.push(this.newPncEvent);
           this.eventService.setEventsPnc(this.allPncEvents);
@@ -70,19 +71,19 @@ export class EventNewComponent implements OnInit {
   }
  
   private initForm() {
-    let eventTitle = "";
+    let eventTitle:string = "";
     let dateTime = this.dateValue;
-    let inputLocation = "S109";
-    let coordinatorAdminAmt = 30;
-    let commBonus = false;
-    let guarantee = false; 
-    let countTotal = false;
-    let closed = false;
-    let totalSales = 0;
-    let alcSales = 0;
-    let bonus = 0;
-    let checkRcvd = 0;
-    let notes = "";
+    let inputLocation:string = "S109";
+    let coordinatorAdminAmt:number = 30;
+    let commBonus:boolean = false;
+    let guarantee:boolean = false; 
+    let countTotal:boolean = false;
+    let closed:boolean = false;
+    let totalSales:number = 0;
+    let alcSales:number = 0;
+    let bonus:number = 0;
+    let checkRcvd:number = 0;
+    let notes:string = "";
 
     this.newEventForm = new FormGroup({
       'eventTitle': new FormControl(eventTitle, Validators.required),
@@ -110,14 +111,14 @@ export class EventNewComponent implements OnInit {
       this.newEventForm.value['eventTitle'],
       true,
       this.newEventForm.value['inputLocation'],
-      this.newEventForm.value['bonus'],
+      parseFloat(this.newEventForm.value['bonus']),
       0,
       0,
-      this.newEventForm.value['checkRcvd'],
+      parseFloat(this.newEventForm.value['checkRcvd']),
       0,
       0,
       0,
-      0,
+      0.2000,
       0,
       0,
       this.newEventForm.value['notes'],
@@ -125,9 +126,9 @@ export class EventNewComponent implements OnInit {
       0,
       this.newEventForm.value['commBonus'],
       this.newEventForm.value['guarantee'],
-      this.newEventForm.value['totalSales'],
-      this.newEventForm.value['alcSales'],
-      this.newEventForm.value['coordinatorAdminAmt'],
+      parseFloat(this.newEventForm.value['totalSales']),
+      parseFloat(this.newEventForm.value['alcSales']),
+      parseFloat(this.newEventForm.value['coordinatorAdminAmt']),
       this.newEventForm.value['countTotal']
     );
     // this.newPncEvent = pncEvent;

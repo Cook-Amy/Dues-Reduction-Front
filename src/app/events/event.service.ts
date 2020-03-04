@@ -18,12 +18,13 @@ export class EventService {
 
   // serverUrl = 'http://localhost:4000/';
   // serverUrl = 'http://duesbackend-env-1.b6qgyzs5az.us-east-2.elasticbeanstalk.com/';
-  serverUrl = this.global.serverUrl;
+  serverUrl = GlobalVariables.serverUrl;
 
   private eventNew = false;
   eventNewChanged = new Subject<boolean>();
   private eventEdit = false;
   eventEditChanged = new Subject<boolean>();
+
 
   private seasons: Season[] = [];
   private currentSeason: Season;
@@ -183,12 +184,15 @@ export class EventService {
   }
 
   // set events
-  setEventsPnc(eventsPnc: EventPNC[]) {
+  setEventsPnc(events: EventPNC[]) {
 
-    if(eventsPnc == null) {
+    if(events == null) {
 
     }
     else {
+
+      var eventsPnc:EventPNC[] = this.fixPncnumbers(events);
+
       // TODO: figure out why sorting isn't working
       // this.eventsPnc = eventsPnc;
       this.eventsPnc = eventsPnc.sort((val1, val2) => {
@@ -247,13 +251,14 @@ export class EventService {
   }
 
   setNewPncEvent(event: EventPNC) {
+
     const params = {
       idevent: event.idevent,
       Date: event.Date,
       Title: event.Title,
       compensated: event.compensated,
       location: event.location,
-      venueBonue: event.venueBonus,
+      venueBonus: event.venueBonus,
       estimatedCheck: event.estimatedCheck,
       estimatedProfit: event.estimatedProfit,
       actualCheck: event.actualCheck,
@@ -284,7 +289,7 @@ export class EventService {
       Title: event.Title,
       compensated: event.compensated,
       location: event.location,
-      venueBonue: event.venueBonus,
+      venueBonus: event.venueBonus,
       estimatedCheck: event.estimatedCheck,
       estimatedProfit: event.estimatedProfit,
       actualCheck: event.actualCheck,
@@ -304,6 +309,7 @@ export class EventService {
       eventCountsTowardsTotal: event.eventCountsTowardsTotal,
       season: this.currentSeason.idSeason
     };
+
     const editEvent = this.http.post(this.serverUrl + 'editPncEvent', params);
     return editEvent;
   }
@@ -324,6 +330,40 @@ export class EventService {
     const params = new HttpParams().set('eventID', id.toString());
     const timesheetReturned = this.http.get<Timesheet[]>(this.serverUrl + 'getTimesheetsForOneEvent', {params});
     return timesheetReturned; 
+  }
+
+  fixPncnumbers(events: EventPNC[]) {
+
+    // console.log('LENGTH: ' + events.length);
+    events.forEach(event => {
+      if(event.venueBonus)
+        event.venueBonus = parseFloat(event.venueBonus.toFixed(2));
+      if(event.estimatedCheck)
+        event.estimatedCheck = parseFloat(event.estimatedCheck.toFixed(2));
+      if(event.estimatedProfit)
+        event.estimatedProfit = parseFloat(event.estimatedProfit.toFixed(2));
+      if(event.actualCheck)
+        event.actualCheck = parseFloat(event.actualCheck.toFixed(2));
+      if(event.payout)
+        event.payout = parseFloat(event.payout.toFixed(2));
+      if(event.discrepancy)
+        event.discrepancy = parseFloat(event.discrepancy.toFixed(2));
+      if(event.actualProfit)
+        event.actualProfit = parseFloat(event.actualProfit.toFixed(2));
+      if(event.tacCut)
+        event.tacCut = parseFloat(event.tacCut.toFixed(2));
+      if(event.drCut)
+        event.drCut = parseFloat(event.drCut.toFixed(2));
+      if(event.coordinatorAdminAmt)
+        event.coordinatorAdminAmt = parseFloat(event.coordinatorAdminAmt.toFixed(2));
+      if(event.totalSales)
+        event.totalSales = parseFloat(event.totalSales.toFixed(2));
+      if(event.alcSales)
+        event.alcSales = parseFloat(event.alcSales.toFixed(2));
+
+    })
+
+    return events;
   }
 
   /*********************************************************************************
@@ -492,5 +532,7 @@ export class EventService {
     this.eventEdit = eventEdit;
     this.eventEditChanged.next(this.eventEdit);
   }
+
+ 
 
 }

@@ -1,9 +1,9 @@
+import { GlobalVariables } from './../shared/GlobalVariables';
 import { Router } from '@angular/router';
 import { SiteUser } from './../models/siteUser.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { GlobalVariables } from '../shared/GlobalVariables';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,7 @@ export class AuthService {
 
   // serverUrl = 'http://localhost:4000/';
   // serverUrl = 'http://duesbackend-env-1.b6qgyzs5az.us-east-2.elasticbeanstalk.com/';
-  serverUrl = this.global.serverUrl;
+  serverUrl = GlobalVariables.serverUrl;
 
   authenticated = new BehaviorSubject(false);
   private currentUser: SiteUser;

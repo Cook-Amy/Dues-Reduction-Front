@@ -24,8 +24,6 @@ export class EventEditComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit() {
-    // this.allPncEvents = this.eventService.getEventsPnc("dateAscending");
-    this.dateValue = this.getToday();
     this.initForm();
   }
 
@@ -44,6 +42,12 @@ export class EventEditComponent implements OnInit {
   private initForm() {
     let eventTitle = this.event.Title;
     let dateTime = this.event.Date;
+    if(!dateTime) {
+      this.dateValue = this.getToday();
+    }
+    else {
+      this.dateValue = new Date(dateTime);
+    }
     let inputLocation = this.event.location;
     let coordinatorAdminAmt = this.event.coordinatorAdminAmt;
     let commBonus = this.event.metCommissionBonus;
@@ -83,7 +87,7 @@ export class EventEditComponent implements OnInit {
       this.updatePncEvent();
       this.eventService.getContractInfo().subscribe(contract => {
         this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
-          this.event = this.mathService.calculatePncEvent(this.event, contract, timesheets);
+          this.event = this.mathService.calculatePncEvent(this.event, contract[0], timesheets);
           this.eventService.editPncEvent(this.event).subscribe(res => {
             this.eventService.getAllEventsPnc().subscribe(events => {
               this.eventService.setEventsPnc(events);
@@ -106,16 +110,17 @@ export class EventEditComponent implements OnInit {
   updatePncEvent() {
     this.event.Title = this.editEventForm.value['eventTitle'];
     this.event.Date = this.editEventForm.value['dateTime'];
+    console.log('date: ' + this.event.Date);
     this.event.location = this.editEventForm.value['inputLocation'];
-    this.event.coordinatorAdminAmt = this.editEventForm.value['coordinatorAdminAmt'];
-    this.event.venueBonus = this.editEventForm.value['bonus'];
-    this.event.actualCheck = this.editEventForm.value['checkRcvd'];
+    this.event.coordinatorAdminAmt = parseFloat(this.editEventForm.value['coordinatorAdminAmt']);
+    this.event.venueBonus = parseFloat(this.editEventForm.value['bonus']);
+    this.event.actualCheck = parseFloat(this.editEventForm.value['checkRcvd']);
     this.event.eventNotes = this.editEventForm.value['notes'];
     this.event.closed = this.editEventForm.value['closed'];
     this.event.metCommissionBonus = this.editEventForm.value['commBonus'];
     this.event.guarantee = this.editEventForm.value['guarantee'];
-    this.event.totalSales = this.editEventForm.value['totalSales'];
-    this.event.alcSales = this.editEventForm.value['alcSales'];
+    this.event.totalSales = parseFloat(this.editEventForm.value['totalSales']);
+    this.event.alcSales = parseFloat(this.editEventForm.value['alcSales']);
     this.event.eventCountsTowardsTotal = this.editEventForm.value['countTotal'];
   }
 

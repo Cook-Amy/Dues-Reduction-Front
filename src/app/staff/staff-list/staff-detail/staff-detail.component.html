@@ -4,18 +4,18 @@
     <tbody>
       <tr>
         <td colspan="3">  
-          <i class="far fa-square" *ngIf="staff.pncExperienced == 0"></i>
-          <i class="far fa-check-square" *ngIf="staff.pncExperienced == 1"></i>
+          <i class="far fa-square" *ngIf="!staff.pncExperienced"></i>
+          <i class="far fa-check-square" *ngIf="staff.pncExperienced"></i>
           Experienced
         </td>
         <td colspan="3">
-          <i class="far fa-square" *ngIf="staff.pncHealthForm == 0"></i>
-          <i class="far fa-check-square" *ngIf="staff.pncHealthForm == 1"></i>
+          <i class="far fa-square" *ngIf="!staff.pncHealthForm"></i>
+          <i class="far fa-check-square" *ngIf="staff.pncHealthForm"></i>
           Health Form
         </td>
         <td colspan="3">
-          <i class="far fa-square" *ngIf="staff.pncWaiver == 0"></i>
-          <i class="far fa-check-square" *ngIf="staff.pncWaiver == 1"></i>
+          <i class="far fa-square" *ngIf="!staff.pncWaiver"></i>
+          <i class="far fa-check-square" *ngIf="staff.pncWaiver"></i>
           Waiver
         </td>
         <td colspan="3">BARS Date: {{ checkForNullString(getDate(staff.pncBars)) }}</td>
