@@ -1,3 +1,4 @@
+import { Job } from './../models/job.model';
 import { GlobalVariables } from './../shared/GlobalVariables';
 import { ContractPNC } from './../models/contractPNC.model';
 import { EventCF } from './../models/eventCF.model';
@@ -24,6 +25,11 @@ export class EventService {
   eventNewChanged = new Subject<boolean>();
   private eventEdit = false;
   eventEditChanged = new Subject<boolean>();
+
+  private eventStaffEdit = false;
+  eventStaffEditChanged = new Subject<boolean>();
+  private eventStaffAdd = false;
+  eventStaffAddChanged = new Subject<boolean>();
 
 
   private seasons: Season[] = [];
@@ -77,6 +83,10 @@ export class EventService {
   private eventsCfSortedByNameAscending: EventCF[] = [];
   eventsCfSortedByNameDescendingChanged = new Subject<EventCF[]>();
   private eventsCfSortedByNameDescending: EventCF[] = [];
+
+  // Timesheets
+  timesheets: Timesheet [];
+  timesheetsChanged = new Subject<Timesheet[]>();
   
   constructor(private http: HttpClient, private venueService: VenueService, private global: GlobalVariables) {}
 
@@ -177,7 +187,6 @@ export class EventService {
   *********************************************************************************/
   // get all PNC events from DB
   getAllEventsPnc() {
-    console.log('CURRENT SEASON: ' + this.currentSeason.idSeason);
     const params = new HttpParams().set('seasonID', this.currentSeason.idSeason.toString());
     const eventsReturned = this.http.get<EventPNC[]>(this.serverUrl + 'getEventsPNC', {params});
     return eventsReturned;
@@ -366,6 +375,11 @@ export class EventService {
     return events;
   }
 
+  getPncJobs() {
+    const getJobs = this.http.get<Job[]>(this.serverUrl + 'getPncJobs');
+    return getJobs;
+  }
+
   /*********************************************************************************
   * WC EVENTS 
   *********************************************************************************/
@@ -512,6 +526,32 @@ export class EventService {
     return timesheetsReturned;
   }
 
+  updateTimesheets(timesheet: Timesheet) {
+    this.timesheets.forEach(ts => {
+      if(ts.idtimesheet == timesheet.idtimesheet) {
+        ts = timesheet;
+      }
+      this.timesheetsChanged.next(this.timesheets);
+    })
+  }
+
+  setTimesheets(timesheets: Timesheet[]) {
+    this.timesheets = timesheets;
+    this.timesheetsChanged.next(this.timesheets);
+  }
+
+  returnTimesheets() {
+    return this.timesheets;
+  }
+
+  updateTimesheetDB(timesheet: Timesheet) {
+    const params = {
+      timesheet: timesheet
+    }
+    const updateDB = this.http.post(this.serverUrl + 'updateOneTimesheet', params);
+    return updateDB;
+  }
+
   /*********************************************************************************
    * OTHER
   *********************************************************************************/
@@ -533,6 +573,22 @@ export class EventService {
     this.eventEditChanged.next(this.eventEdit);
   }
 
- 
+ getEventStaffEdit() {
+   return this.eventStaffEdit;
+ }
+
+ setEventStaffEdit(staffEdit: boolean) {
+   this.eventStaffEdit = staffEdit;
+   this.eventStaffEditChanged.next(this.eventStaffEdit);
+ }
+
+ getEventStaffAdd() {
+   return this.eventStaffAdd;
+ }
+
+ setEventStaffAdd(staffAdd: boolean) {
+   this.eventStaffAdd = staffAdd;
+   this.eventStaffAddChanged.next(this.eventStaffAdd);
+ }
 
 }

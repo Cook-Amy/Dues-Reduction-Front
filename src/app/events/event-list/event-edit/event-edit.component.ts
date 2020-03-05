@@ -110,7 +110,6 @@ export class EventEditComponent implements OnInit {
   updatePncEvent() {
     this.event.Title = this.editEventForm.value['eventTitle'];
     this.event.Date = this.editEventForm.value['dateTime'];
-    console.log('date: ' + this.event.Date);
     this.event.location = this.editEventForm.value['inputLocation'];
     this.event.coordinatorAdminAmt = parseFloat(this.editEventForm.value['coordinatorAdminAmt']);
     this.event.venueBonus = parseFloat(this.editEventForm.value['bonus']);

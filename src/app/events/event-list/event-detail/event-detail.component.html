@@ -113,7 +113,7 @@
           <button class="btn get-staff-btn" (click)="getTimesheetForEvent()">Get Staff</button>
         </div>
         <div *ngIf="getStaff">
-          <div *ngIf="eventStaffEdit == false">
+          <div *ngIf="!eventStaffEdit && !eventStaffAdd">
             <table class="table table-striped table-sm">
               <thead class="thead-dark">
                 <tr>
@@ -129,6 +129,7 @@
                   <th class="align-right">Event Bonus</th>
                   <th class="align-right">Hourly Bonus</th>
                   <th class="align-right">Payout</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
@@ -142,19 +143,45 @@
                   <td class="align-right">{{ checkForNullNum(t.hoursWorked) }}</td>
                   <td class="align-right">{{ checkForNullNum(t.eventBonus) }}</td>
                   <td class="align-right">{{ checkForNullNum(t.hourlyBonus) }}</td>
-                  <!-- <td class="align-right">{{ checkForNullNum(t.shuttleBonus) }}</td>
-                  <td class="align-right">{{ checkForNullNum(t.creditCardTips) }}</td> -->
                   <td class="align-right">{{ checkForNullNum(t.creditAmount) }}</td>
+                  <td>
+                    <button class="btn btn-info" (click)="onEditStaff(t)">Edit</button>
+                  </td>
                 </tr>
               </tbody>
               <tr>
-                <td colspan="4">
-                  <button type="button" class="btn event-btn" (click)="onEditStaff()">Edit Staff</button>
+                <td colspan="12">
+                  <button type="button" class="btn btn-info" (click)="onAddStaff()">Add Staff</button>
+                  &nbsp;&nbsp;
+                  <button class="btn btn-info" (click)="onAddEventBonus()">Add Event Bonus</button>
+                  &nbsp;&nbsp;
+                  <button class="btn btn-info" (click)="onAddHourlyBonus()">Add Hourly Bonus</button>
                 </td>
               </tr>
             </table>
+            <div class="deleteConfirm" *ngIf="addEventBonus">
+              Add Event Bonus to all staff:&nbsp;
+              <input type="number" class="numInput">
+              &nbsp;
+              <button class="btn btn-outline-info" (click)="onEventBonusAdded()">Add</button>
+              &nbsp;
+              <button class="btn btn-outline-info" (click)="onCancelBonus()">Cancel</button>
+            </div>
+            <div class="deleteConfirm" *ngIf="addHourlyBonus">
+              Add Hourly Bonus to all staff:&nbsp;
+              <input type="number" class="numInput">
+              &nbsp;
+              <button class="btn btn-outline-info" (click)="onHourlyBonusAdded()">Add</button>
+              &nbsp;
+              <button class="btn btn-outline-info" (click)="onCancelBonus()">Cancel</button>
+            </div>
           </div>
-          <app-event-staff-edit *ngIf="eventStaffEdit == true" [timesheet]="timesheet"></app-event-staff-edit>
+          <div *ngIf="eventStaffEdit == true">
+            <app-event-staff-edit [timesheet]="editTimesheet" [event]="event"></app-event-staff-edit>
+          </div>
+          <div *ngIf="eventStaffAdd == true">
+            <app-event-staff-add></app-event-staff-add>
+          </div>
         </div>
        
       </div>

@@ -2,7 +2,9 @@ export class Timesheet {
   public idtimesheet: number;
   public firstName: string;
   public lastName: string;
+  public personID: number;
   public jobName: string;
+  public jobID: number;
   public scheduledArrivalTime: string;
   public hourlyRate: number;
   public timeIn: string;
@@ -20,7 +22,9 @@ export class Timesheet {
      idtimesheet: number,
      firstName: string,
      lastName: string,
+     personID: number,
      jobName: string,
+     jobID: number,
      scheduledArrivalTime: string,
      hourlyRate: number,
      timeIn: string,
@@ -37,7 +41,9 @@ export class Timesheet {
     this.idtimesheet = idtimesheet;
     this.firstName = firstName;
     this.lastName = lastName;
+    this.personID = personID;
     this.jobName = jobName;
+    this.jobID = jobID;
     this.scheduledArrivalTime = scheduledArrivalTime;
     if(!this.scheduledArrivalTime) { this.scheduledArrivalTime = '0'; }
     this.hourlyRate = hourlyRate;
@@ -50,7 +56,6 @@ export class Timesheet {
     if(!this.hoursWorked ) { this.hoursWorked = 0; }
     this.shuttleBonus = shuttleBonus;
     if(!this.shuttleBonus ) { this.shuttleBonus = 0; }
-    console.log('shuttle bonus: ' + this.shuttleBonus);
     this.eventBonus = eventBonus; 
     if(!this.eventBonus ) { this.eventBonus = 0; }
     this.hourlyBonus = hourlyBonus;

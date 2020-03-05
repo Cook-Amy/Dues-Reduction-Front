@@ -24,9 +24,15 @@ export class EventDetailComponent implements OnInit {
   getStaff = null;
   eventEdit: Boolean;
   eventStaffEdit: Boolean;
+  eventStaffAdd: Boolean;
+  editTimesheet: Timesheet;
   confirmDelete = false;
   confirmGateList = false;
   gateListForm: FormGroup;
+  addEventBonus = false;
+  addHourlyBonus = false;
+  eventTimeDate: Date;
+  eventID: number;
 
 
   constructor(private eventService: EventService,
@@ -42,7 +48,11 @@ export class EventDetailComponent implements OnInit {
     });
     this.eventService.eventStaffEditChanged.subscribe(newStaffEditChanged => {
       this.eventStaffEdit = newStaffEditChanged;
-    })
+ 
+    });
+    this.eventService.eventStaffAddChanged.subscribe(newStaffAddChanged => {
+      this.eventStaffAdd = newStaffAddChanged;
+    });
 
     this.initForm();
   }
@@ -82,14 +92,16 @@ export class EventDetailComponent implements OnInit {
     if(this.currentVenueID == 1) {
       this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(res => {
         this.getStaff = 1;
-        this.timesheet = res;
-        // console.log("timesheets: " + this.timesheet[1].firstName);
+        this.eventID = this.event.idevent;
+        this.eventService.setTimesheets(res);
+        this.timesheet = this.eventService.returnTimesheets();
       });
     }
 
     else if(this.currentVenueID == 2) {
       this.eventService.getTimesheetForEvent(this.event2.idevent).subscribe(res => {
         this.getStaff = 1;
+        this.eventID = this.event2.idevent;
         this.timesheet = res;
         // console.log("timesheets: " + this.timesheet[1].firstName);
       });
@@ -98,6 +110,7 @@ export class EventDetailComponent implements OnInit {
     if(this.currentVenueID == 3) {
       this.eventService.getTimesheetForEvent(this.event3.idevent).subscribe(res => {
         this.getStaff = 1;
+        this.eventID = this.event3.idevent;
         this.timesheet = res;
         // console.log("timesheets: " + this.timesheet[1].firstName);
       });
@@ -168,12 +181,38 @@ export class EventDetailComponent implements OnInit {
     }
   }
 
-  onEditStaff() {
+  onEditStaff(sheet: Timesheet) {
+    this.editTimesheet = sheet;
     this.eventStaffEdit = true;
   }
 
-  onDeleteStaff() {}
+  
 
-  onAddBonus() {}
+  onAddStaff() {
+    this.eventStaffAdd = true;
+  }
+
+  onAddEventBonus() { 
+    this.addHourlyBonus = false;
+    this.addEventBonus = true; 
+  }
+
+  onAddHourlyBonus() { 
+    this.addEventBonus = false;
+    this.addHourlyBonus = true; 
+  }
+
+  onEventBonusAdded() {
+
+  }
+
+  onHourlyBonusAdded() {
+
+  }
+
+  onCancelBonus() {
+    this.addEventBonus = false;
+    this.addHourlyBonus = false;
+  }
 
 }

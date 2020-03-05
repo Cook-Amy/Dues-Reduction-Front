@@ -153,7 +153,6 @@ export class MathService {
         else if(mins == 45) { hoursWorked += .75; }
       }
       timesheet.hoursWorked = hoursWorked;
-      console.log("HOURS WORKED: " + timesheet.lastName + ": " + hoursWorked);
 
       // bonuses
       var bonus = timesheet.eventBonus;
@@ -172,6 +171,47 @@ export class MathService {
                                 creditCardTips;
       timesheet.creditAmount = totalCredit;
     });
+  }
+
+  calculateOneTimeSheet(timesheet: Timesheet) {
+    
+      // hours worked
+      var hoursWorked = 0;
+      if(timesheet.timeIn != null && timesheet.timeOut != null) {
+        console.log('timeIN/timeOUT not null');
+        var datein = new Date(timesheet.timeIn);
+        var dateout = new Date(timesheet.timeOut);
+        var timein = datein.getTime();
+        var timeout = dateout.getTime();
+        var diff = timeout - timein;
+        hoursWorked = Math.floor(diff / (1000 * 60 * 60));
+        diff -= hoursWorked * (1000 * 60 * 60);
+        var mins = Math.floor(diff / (1000 * 60));
+        if(mins == 15) { hoursWorked += .25; }
+        else if(mins == 30) { hoursWorked  += .5; }
+        else if(mins == 45) { hoursWorked += .75; }
+      }
+      timesheet.hoursWorked = hoursWorked;
+
+      // bonuses
+      var bonus = timesheet.eventBonus;
+      var shuttleBonus = timesheet.shuttleBonus;
+      var hourlyBonus = timesheet.hourlyBonus;
+
+      // credit card tips
+      var creditCardTips = 0;
+      if(timesheet.creditCardTips != null) {
+        creditCardTips = timesheet.creditCardTips;
+      }
+
+      // total credit amount
+      var totalCredit = ((timesheet.hourlyRate + hourlyBonus) * hoursWorked) + 
+                                bonus + shuttleBonus +
+                                creditCardTips;
+      timesheet.creditAmount = totalCredit;
+
+      return timesheet;
+    
   }
 
 }

@@ -1,40 +1,71 @@
-<div>
-  <form [formGroup]="editEventStaffForm" (ngSubmit)="onSubmit()">
 
-    <table class="table table-striped table-sm">
-      <thead class="thead-dark">
-        <tr>
-          <th>Staff</th>
-          <th>Job</th>
-          <th>Rate</th>
-          <th>Scheduled Time</th>
-          <th>Time In</th>
-          <th>Time Out</th>
-          <th class="align-right">Event Bonus</th>
-          <th class="align-right">Hourly Bonus</th>
-          <th>Delete</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let t of timesheet; let i = index">
-          <app-single-edit-line [person]="t" [form]="editEventStaffForm"></app-single-edit-line>
-          <!-- <td>{{ t.lastName }}, {{ t.firstName }}</td>
-          <td><input type="text" class="form-control" id="position+i" formControlName="position+i" value="{{ t.jobName }}"></td>
-          <td><input type="number" class="form-control" id="rate+i" formControlName="rate+i" value="{{ t.hourlyRate }}"></td> -->
-          <!-- <td>{{ checkForNullString(getTime(t.scheduledArrivalTime)) }}</td>
-          <td>{{ checkForNullString(getTime(t.timeIn)) }}</td>
-          <td>{{ checkForNullString(getTime(t.timeOut)) }}</td>
-          <td class="align-right">{{ checkForNullNum(t.hoursWorked) }}</td>
-          <td class="align-right">{{ checkForNullNum(t.eventBonus) }}</td>
-          <td class="align-right">{{ checkForNullNum(t.hourlyBonus) }}</td>
-          <td class="align-right">{{ checkForNullNum(t.creditAmount) }}</td> -->
-        </tr>
-      </tbody>
+  <form [formGroup]="staffEditForm" (ngSubmit)="onSubmit()">
 
-    </table>
+    <div class="form-row">
+      <div class="nameRow">
+        {{ timesheet.lastName }}, {{ timesheet.firstName }}
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-5">
+        <label for="position">Position</label>
+        <select id="position" class="form-control" formControlName="position">
+          <option [value]="timesheet.jobName" [selected]>{{ timesheet.jobName }}</option>
+          <option *ngFor="let job of jobs" [value]="job.jobName">
+            {{ job.jobName }}
+          </option>
+        </select>
+      </div>
+      <div class="form-group col-md-2">
+        <label for="rate">Rate</label>
+        <input type="number" class="form-control" id="rate" value="rate" formControlName="rate">
+      </div>
+      <div class="form-group col-md-2">
+        <label for="eventBonus">Event Bonus</label>
+        <input type="number" class="form-control" id="eventBonus" formControlName="eventBonus" value="eventBonus">
+      </div>
+      <div class="form-group col-md-2">
+        <label for="hourlyBonus">Hourly Bonus</label>
+        <input type="number" class="form-control" id="hourlyBonus" formControlName="hourlyBonus" value="hourlyBonus">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-3">
+        <label for="scheduledArrivalTime">Scheduled Arrival Time</label>
+        <ejs-timepicker class="date-picker" id='scheduledArrivalTime' value="arrivalTime" formControlName="scheduledArrivalTime"></ejs-timepicker>
+      </div>
+      <div class="form-group col-md-3">
+        <label for="timeIn">Time In</label>
+        <ejs-timepicker class="date-picker" id='timeIn' value="timeIn" formControlName="timeIn"></ejs-timepicker>
+      </div>
+      <div class="form-group col-md-3">
+        <label for="timeOut">Time Out</label>
+        <ejs-timepicker class="date-picker" id='timeOut' value="timeOut" formControlName="timeOut"></ejs-timepicker>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="col-md-2">
+        <button class="btn btn-sm btn-danger" (click)="onDelete()">Delete From Event</button>
+      </div>
+      <div class="col-md-4"></div>
+      <div class="col-md-1">
+        <button class="btn btn-info" (click)="onCancelEdit()" type="button">Cancel</button>
+      </div>
+      <div class="col-md-1"></div>
+      <div class="col-md-1">
+        <button class="btn btn-info" type="submit">Save</button>
+      </div>
+    </div>
+   
   </form>
-</div>
-<div>
-  <button class="btn btn-info">Submit</button>
-  <button class="btn btn-info" (click)="onCancelEditStaff()">Cancel</button>
-</div>
+
+    <div *ngIf="askDelete">
+      Are you sure?
+      <button class="btn btn-outline-danger" (click)="onDeleteYes()" type="button">Yes</button>
+      <button class="btn btn-outline-danger" (click)="onDeleteNo()" type="button">No</button>
+    </div>
+
+
