@@ -1,3 +1,4 @@
+import { MathService } from './../../math.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ExcelService } from './../../../createReports/excel.service';
@@ -33,10 +34,13 @@ export class EventDetailComponent implements OnInit {
   addHourlyBonus = false;
   eventTimeDate: Date;
   eventID: number;
+  ebForm: FormGroup;
+  hbForm: FormGroup;
 
 
   constructor(private eventService: EventService,
               private excelService: ExcelService,
+              private mathService: MathService,
               private route: ActivatedRoute,
               private router: Router) { }
 
@@ -54,10 +58,12 @@ export class EventDetailComponent implements OnInit {
       this.eventStaffAdd = newStaffAddChanged;
     });
 
-    this.initForm();
+    this.initForm1();
+    this.initForm2();
+    this.initForm3();
   }
 
-  private initForm() {
+  private initForm1() {
     let emailGateList = true;
     let downloadGateList = false;
     
@@ -67,25 +73,31 @@ export class EventDetailComponent implements OnInit {
     });
   }
 
+  private initForm2() {
+    let ebAmount = 0;
+
+    this.ebForm = new FormGroup({
+      'ebAmount': new FormControl(ebAmount, Validators.required)
+    });
+  }
+
+  private initForm3() {
+    let hbAmount = 0;
+
+    this.hbForm = new FormGroup({
+      'hbAmount': new FormControl(hbAmount, Validators.required)
+    });
+  }
+
   onGateListSubmit() {
     let email = this.gateListForm.value['emailGateList'];
     let download = this.gateListForm.value['downloadGateList'];
 
     this.excelService.getStaffForEvent(this.event.idevent).subscribe(res => {
       this.excelService.generateGateList(this.event, res).subscribe(results => {
-        console.log("Gate list was sent.");
-      })
-    
+      });
     });
-
-    // this.excelService.generateGateList(this.event, email, download).subscribe(res => {
-    //   this.excelService.setData(res);
-    //   this.excelService.styleGateList(this.event);
-    //   this.excelService.saveGateList(this.event, email, download);
-    
-    // });
     this.confirmGateList = false;
-
   }
 
   getTimesheetForEvent() {
@@ -103,7 +115,6 @@ export class EventDetailComponent implements OnInit {
         this.getStaff = 1;
         this.eventID = this.event2.idevent;
         this.timesheet = res;
-        // console.log("timesheets: " + this.timesheet[1].firstName);
       });
     }
 
@@ -112,7 +123,6 @@ export class EventDetailComponent implements OnInit {
         this.getStaff = 1;
         this.eventID = this.event3.idevent;
         this.timesheet = res;
-        // console.log("timesheets: " + this.timesheet[1].firstName);
       });
     }
   }
@@ -156,7 +166,6 @@ export class EventDetailComponent implements OnInit {
     if(hours > 12) {
       hours -= 12;
     }
-    // var min = newDate.getMinutes();
     var min = (newDate.getMinutes() < 10 ? '0' : '') + newDate.getMinutes();
 
     var convertDate = hours + ':' + min + " " + night;
@@ -174,9 +183,6 @@ export class EventDetailComponent implements OnInit {
     if(num == null)
       return 0;
     else  {
-      // console.log("NUM: " + num);
-      // var fixedNum = num.toFixed(2);
-      // console.log("NUM FIXED: " + fixedNum);
       return num;
     }
   }
@@ -185,8 +191,6 @@ export class EventDetailComponent implements OnInit {
     this.editTimesheet = sheet;
     this.eventStaffEdit = true;
   }
-
-  
 
   onAddStaff() {
     this.eventStaffAdd = true;
@@ -203,11 +207,53 @@ export class EventDetailComponent implements OnInit {
   }
 
   onEventBonusAdded() {
+    var eb = this.ebForm.value['ebAmount'];
+    this.timesheet.forEach(ts => {
+      ts.eventBonus += eb;
+    });
 
+    this.mathService.calculateTimeSheets(this.timesheet);
+    this.eventService.setTimesheets(this.timesheet);
+    this.eventService.updateAllTimesheetsInDB(this.timesheet).subscribe(res => {
+      this.eventService.getContractInfo().subscribe(contract => {
+        this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
+          this.event = this.mathService.calculatePncEvent(this.event, contract[0], timesheets);
+          this.eventService.editPncEvent(this.event).subscribe(res => {
+            this.eventService.getAllEventsPnc().subscribe(events => {
+              this.eventService.setEventsPnc(events);
+              this.eventService.setEventStaffEdit(false);
+              // this.router.navigate([], {relativeTo: this.route});
+              this.onCancelBonus();
+            });
+          });
+        });
+      });
+    });
   }
 
   onHourlyBonusAdded() {
+    var hb = this.hbForm.value['hbAmount'];
+    this.timesheet.forEach(ts => {
+      ts.hourlyBonus += hb;
+    });
 
+    this.mathService.calculateTimeSheets(this.timesheet);
+    this.eventService.setTimesheets(this.timesheet);
+    this.eventService.updateAllTimesheetsInDB(this.timesheet).subscribe(res => {
+      this.eventService.getContractInfo().subscribe(contract => {
+        this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
+          this.event = this.mathService.calculatePncEvent(this.event, contract[0], timesheets);
+          this.eventService.editPncEvent(this.event).subscribe(res => {
+            this.eventService.getAllEventsPnc().subscribe(events => {
+              this.eventService.setEventsPnc(events);
+              this.eventService.setEventStaffEdit(false);
+              // this.router.navigate([], {relativeTo: this.route});
+              this.onCancelBonus();
+            });
+          });
+        });
+      });
+    });
   }
 
   onCancelBonus() {

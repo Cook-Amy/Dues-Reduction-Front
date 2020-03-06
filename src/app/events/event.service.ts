@@ -11,6 +11,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Event } from './../models/event.model';
 import { Subject } from 'rxjs';
 import { Injectable } from '@angular/core';
+import { Time } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -550,6 +551,22 @@ export class EventService {
     }
     const updateDB = this.http.post(this.serverUrl + 'updateOneTimesheet', params);
     return updateDB;
+  }
+
+  updateAllTimesheetsInDB(timesheets: Timesheet[]) {
+    const params = { timesheets: timesheets};
+    const updateDB = this.http.post(this.serverUrl + 'updateAllTimesheets', params);
+    return updateDB;
+
+  }
+
+  addTimesheetinDB(timesheet: Timesheet, eventID) {
+    const params = {
+      timesheet: timesheet,
+      eventID: eventID
+    }
+    const addTimesheet = this.http.post<number>(this.serverUrl + 'addTimesheet', params);
+    return addTimesheet;
   }
 
   /*********************************************************************************

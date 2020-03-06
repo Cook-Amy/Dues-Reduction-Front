@@ -159,28 +159,51 @@
                 </td>
               </tr>
             </table>
-            <div class="deleteConfirm" *ngIf="addEventBonus">
-              Add Event Bonus to all staff:&nbsp;
-              <input type="number" class="numInput">
-              &nbsp;
-              <button class="btn btn-outline-info" (click)="onEventBonusAdded()">Add</button>
-              &nbsp;
-              <button class="btn btn-outline-info" (click)="onCancelBonus()">Cancel</button>
+            <div *ngIf="addEventBonus">
+              <form [formGroup]="ebForm" (ngSubmit)="onEventBonusAdded()">
+                <div class="form-row">
+                  <div class="form-group col-md-5">
+                    Add Event Bonus to all staff:
+                  </div>
+                  <div class="form-group col-md-2">
+                    <input type="number" class="numInput form-control" id="ebAmount" formControlName="ebAmount">
+                  </div>
+                  <div class="form-group col-md-2">
+                    <button class="btn btn-outline-info" type="submit">Add</button>
+                  </div>
+                  <div class="form-group col-md-2">
+                    <button class="btn btn-outline-info" type="button" (click)="onCancelBonus()">Cancel</button>
+                  </div>
+                </div>
+              </form>
+             </div>
+
+            <div *ngIf="addHourlyBonus">
+              <form [formGroup]="hbForm" (ngSubmit)="onHourlyBonusAdded()">
+                <div class="form-row">
+                  <div class="form-group col-md-5">
+                    Add Hourly Bonus to all staff:
+                  </div>
+                  <div class="form-group col-md-2">
+                    <input type="number" class="numInput form-control" id="hbAmount" formControlName="hbAmount">
+                  </div>
+                  <div class="form-group col-md-2">
+                    <button class="btn btn-outline-info" type="submit">Add</button>
+                  </div>
+                  <div class="form-group col-md-2">
+                    <button class="btn btn-outline-info" type="button" (click)="onCancelBonus()">Cancel</button>
+                  </div>
+                </div>
+              </form>
             </div>
-            <div class="deleteConfirm" *ngIf="addHourlyBonus">
-              Add Hourly Bonus to all staff:&nbsp;
-              <input type="number" class="numInput">
-              &nbsp;
-              <button class="btn btn-outline-info" (click)="onHourlyBonusAdded()">Add</button>
-              &nbsp;
-              <button class="btn btn-outline-info" (click)="onCancelBonus()">Cancel</button>
-            </div>
+
           </div>
+
           <div *ngIf="eventStaffEdit == true">
             <app-event-staff-edit [timesheet]="editTimesheet" [event]="event"></app-event-staff-edit>
           </div>
           <div *ngIf="eventStaffAdd == true">
-            <app-event-staff-add></app-event-staff-add>
+            <app-event-staff-add [event]="event"></app-event-staff-add>
           </div>
         </div>
        

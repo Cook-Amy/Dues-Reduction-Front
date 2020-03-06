@@ -178,7 +178,6 @@ export class MathService {
       // hours worked
       var hoursWorked = 0;
       if(timesheet.timeIn != null && timesheet.timeOut != null) {
-        console.log('timeIN/timeOUT not null');
         var datein = new Date(timesheet.timeIn);
         var dateout = new Date(timesheet.timeOut);
         var timein = datein.getTime();

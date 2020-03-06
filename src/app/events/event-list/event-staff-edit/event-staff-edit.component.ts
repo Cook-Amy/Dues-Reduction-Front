@@ -41,9 +41,6 @@ export class EventStaffEditComponent implements OnInit {
     this.eventService.getPncJobs().subscribe(jobs => {
       jobs.forEach(job => {
         this.jobs.push(job);
-        // if(job.jobName != this.pos) {
-        //   this.jobs.push(job);
-        // }
       });
     });
 
@@ -144,7 +141,6 @@ export class EventStaffEditComponent implements OnInit {
 
   onDelete() {
     this.askDelete = true;
-    this.eventService.setEventStaffEdit(true);
   }
 
   onDeleteYes() {
