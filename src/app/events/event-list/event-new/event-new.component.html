@@ -1,85 +1,260 @@
 <hr>
-<form [formGroup]="newEventForm" (ngSubmit)="onSubmit()">
 
-  <div class="form-row">
-    <div class="form-group col-md-8">
-      <label for="eventTitle">Title</label>
-      <input type="text" class="form-control" id="eventTitle" formControlName="eventTitle">
+<div *ngIf="currentVenueID == 99">
+  <form [formGroup]="venueForm" (change)="pickVenue()">
+    <div class="form-group">
+      <label for="selectVenue">Choose a Venue</label>
+      <select id="selectVenue" class="form-control" formControlName="selectVenue">
+        <option [value]="1">PNC Arena</option>
+        <option [value]="2">Walnut Creek</option>
+        <option [value]="3">Carter-Finley</option>
+      </select>
     </div>
-    <div class="form-group col-md-4"></div>
-  </div>
+  </form>
+</div>
 
-  <div class="form-row">
-    <div class="form-group col-md-3">
-      <label for="dateTime">Date & Time</label>
-      <ejs-datetimepicker class="date-picker" id='datetimepicker' placeholder='Select a date' [value]='dateValue' formControlName="dateTime"></ejs-datetimepicker>
-    </div>
-    <div class="form-group col-md-3">
-      <label for="inputLocation">Stand Assignment</label>
-      <input type="text" class="form-control" id="inputLocation" placeholder="S109" formControlName="inputLocation">
-    </div>
-    <div class="form-group col-md-3">
-      <label for="coordinatorAdminAmt">Coordinator Payout</label>
-      <input type="number" class="form-control" id="coordinatorAdminAmt" formControlName="coordinatorAdminAmt">
-    </div>
-  </div>
+<!--------------------------------------------------------------------------------------------
+-- PNC new event  
+---------------------------------------------------------------------------------------------->
+<div *ngIf="idVenue == 1">
+  <form [formGroup]="newEventForm" (ngSubmit)="onSubmit()">
 
-  <div class="form-row">
-    <div class="form-group col-md-12">
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" id="commBonus" formControlName="commBonus">
-        <label class="form-check-label" for="commBonus">
-          Met Commission Bonus
-        </label>
+    <div class="form-row">
+      <div class="form-group col-md-8">
+        <label for="eventTitle">Title</label>
+        <input type="text" class="form-control" id="eventTitle" formControlName="eventTitle">
       </div>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" id="guarantee" formControlName="guarantee">
-        <label class="form-check-label" for="guarantee">
-          Guarantee
-        </label>
+      <div class="form-group col-md-4"></div>
+    </div>
+  
+    <div class="form-row">
+      <div class="form-group col-md-3">
+        <label for="dateTime">Date & Time</label>
+        <ejs-datetimepicker class="date-picker" id='datetimepicker' placeholder='Select a date' [value]='dateValue' formControlName="dateTime"></ejs-datetimepicker>
       </div>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" id="countTotal" formControlName="countTotal">
-        <label class="form-check-label" for="countTotal">
-          Counts Towards Total
-        </label>
+      <div class="form-group col-md-3">
+        <label for="inputLocation">Stand Assignment</label>
+        <input type="text" class="form-control" id="inputLocation" placeholder="S109" formControlName="inputLocation">
       </div>
-      <div class="form-check form-check-inline">
-        <input class="form-check-input" type="checkbox" id="closed" formControlName="closed">
-        <label class="form-check-label" for="closed">
-          Closed
-        </label>
+      <div class="form-group col-md-3">
+        <label for="coordinatorAdminAmt">Coordinator Payout</label>
+        <input type="number" class="form-control" id="coordinatorAdminAmt" formControlName="coordinatorAdminAmt">
       </div>
     </div>
-  </div>
+  
+    <div class="form-row">
+      <div class="form-group col-md-12">
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="commBonus" formControlName="commBonus">
+          <label class="form-check-label" for="commBonus">
+            Met Commission Bonus
+          </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="guarantee" formControlName="guarantee">
+          <label class="form-check-label" for="guarantee">
+            Guarantee
+          </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="countTotal" formControlName="countTotal">
+          <label class="form-check-label" for="countTotal">
+            Counts Towards Total
+          </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="closed" formControlName="closed">
+          <label class="form-check-label" for="closed">
+            Closed
+          </label>
+        </div>
+      </div>
+    </div>
+  
+    <div class="form-row">
+      <div class="form-group col-md-2">
+        <label for="totalSalesPnc">Total Sales</label>
+        <input type="text" class="form-control" id="totalSalesPnc" formControlName="totalSalesPnc">
+      </div>
+      <div class="form-group col-md-2">
+        <label for="alcSales">Alcohol Sales</label>
+        <input type="text" class="form-control" id="alcSales"formControlName="alcSales">
+      </div>
+      <div class="form-group col-md-2">
+        <label for="bonus">Venue Bonus</label>
+        <input type="text" class="form-control" id="bonus" formControlName="bonus">
+      </div>
+      <div class="form-group col-md-2">
+        <label for="checkRcvd">Check Recieved</label>
+        <input type="text" class="form-control" id="checkRcvd" formControlName="checkRcvd">
+      </div>
+    </div>
+  
+    <div class="form-row">
+      <div class="form-group col-md-8">
+        <label for="notes">Notes</label>
+        <textarea rows="2" class="form-control" id="notes" formControlName="notes"></textarea>
+      </div>
+    </div>
+  
+  
+    <button class="btn btn-primary" type="button" (click)="onCancel()">Cancel</button>
+    <button class="btn btn-primary" type="submit">Submit</button>
+  </form>
+</div>
 
-  <div class="form-row">
-    <div class="form-group col-md-2">
-      <label for="totalSales">Total Sales</label>
-      <input type="text" class="form-control" id="totalSales" formControlName="totalSales">
-    </div>
-    <div class="form-group col-md-2">
-      <label for="alcSales">Alcohol Sales</label>
-      <input type="text" class="form-control" id="alcSales"formControlName="alcSales">
-    </div>
-    <div class="form-group col-md-2">
-      <label for="bonus">Venue Bonus</label>
-      <input type="text" class="form-control" id="bonus" formControlName="bonus">
-    </div>
-    <div class="form-group col-md-2">
-      <label for="checkRcvd">Check Recieved</label>
-      <input type="text" class="form-control" id="checkRcvd" formControlName="checkRcvd">
-    </div>
-  </div>
+<!--------------------------------------------------------------------------------------------
+-- WC new event  
+---------------------------------------------------------------------------------------------->
+<div *ngIf="idVenue == 2">
+  <form [formGroup]="newEventForm" (ngSubmit)="onSubmit()">
 
-  <div class="form-row">
-    <div class="form-group col-md-8">
-      <label for="notes">Notes</label>
-      <textarea rows="2" class="form-control" id="notes" formControlName="notes"></textarea>
+    <div class="form-row">
+      <div class="form-group col-md-8">
+        <label for="eventTitle">Title</label>
+        <input type="text" class="form-control" id="eventTitle" formControlName="eventTitle">
+      </div>
+      <div class="form-group col-md-4"></div>
     </div>
-  </div>
+  
+    <div class="form-row">
+      <div class="form-group col-md-3">
+        <label for="dateTime">Date & Time</label>
+        <ejs-datetimepicker class="date-picker" id='datetimepicker' placeholder='Select a date' [value]='dateValue' formControlName="dateTime"></ejs-datetimepicker>
+      </div>
+      <div class="form-group col-md-3">
+        <label for="inputLocation">Location</label>
+        <input type="text" class="form-control" id="inputLocation" placeholder="S109" formControlName="inputLocation">
+      </div>
+      <div class="form-group col-md-3">
+        <label for="coordinatorAdminAmt">Coordinator Payout</label>
+        <input type="number" class="form-control" id="coordinatorAdminAmt" formControlName="coordinatorAdminAmt">
+      </div>
+    </div>
+  
+    <div class="form-row">
+      <div class="form-group col-md-12">
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="shuttleBonusBoolWc" formControlName="shuttleBonusBoolWc">
+          <label class="form-check-label" for="shuttleBonusBoolWc">
+            Shuttle Bonus
+          </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="closed" formControlName="closed">
+          <label class="form-check-label" for="closed">
+            Closed
+          </label>
+        </div>
+      </div>
+    </div>
+  
+    <div class="form-row">
+      <div class="form-group col-md-2">
+        <label for="creditCardTips">Credit Card Tips</label>
+        <input type="text" class="form-control" id="creditCardTips" formControlName="creditCardTips">
+      </div>
+      <div class="form-group col-md-2">
+        <label for="shuttleBonusAmountWc">Shuttle Bonus Amount</label>
+        <input type="text" class="form-control" id="shuttleBonusAmountWc" formControlName="shuttleBonusAmountWc">
+      </div>
+      <div class="form-group col-md-2">
+        <label for="bonus">Venue Bonus</label>
+        <input type="text" class="form-control" id="bonus" formControlName="bonus">
+      </div>
+      <div class="form-group col-md-2">
+        <label for="checkRcvd">Check Received</label>
+        <input type="text" class="form-control" id="checkRcvd" formControlName="checkRcvd">
+      </div>
+    </div>
+  
+    <div class="form-row">
+      <div class="form-group col-md-8">
+        <label for="notes">Notes</label>
+        <textarea rows="2" class="form-control" id="notes" formControlName="notes"></textarea>
+      </div>
+    </div>
+  
+  
+    <button class="btn btn-primary" type="button" (click)="onCancel()">Cancel</button>
+    <button class="btn btn-primary" type="submit">Submit</button>
+  </form>
+</div>
 
+<!--------------------------------------------------------------------------------------------
+-- CF new event  
+---------------------------------------------------------------------------------------------->
+<div *ngIf="idVenue == 3">
+  <form [formGroup]="newEventForm" (ngSubmit)="onSubmit()">
 
-  <button class="btn btn-primary" type="button" (click)="onCancel()">Cancel</button>
-  <button class="btn btn-primary" type="submit">Submit</button>
-</form>
+    <div class="form-row">
+      <div class="form-group col-md-8">
+        <label for="eventTitle">Title</label>
+        <input type="text" class="form-control" id="eventTitle" formControlName="eventTitle">
+      </div>
+      <div class="form-group col-md-4"></div>
+    </div>
+  
+    <div class="form-row">
+      <div class="form-group col-md-3">
+        <label for="dateTime">Date & Time</label>
+        <ejs-datetimepicker class="date-picker" id='datetimepicker' placeholder='Select a date' [value]='dateValue' formControlName="dateTime"></ejs-datetimepicker>
+      </div>
+      <div class="form-group col-md-3">
+        <label for="inputLocation">Location</label>
+        <input type="text" class="form-control" id="inputLocation" placeholder="S109" formControlName="inputLocation">
+      </div>
+      <div class="form-group col-md-3">
+        <label for="coordinatorAdminAmt">Coordinator Payout</label>
+        <input type="number" class="form-control" id="coordinatorAdminAmt" formControlName="coordinatorAdminAmt">
+      </div>
+    </div>
+  
+    <div class="form-row">
+      <div class="form-group col-md-12">
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="shuttleBonusBoolCf" formControlName="shuttleBonusBoolCf">
+          <label class="form-check-label" for="shuttleBonusBoolCf">
+            Shuttle Bonus
+          </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="closed" formControlName="closed">
+          <label class="form-check-label" for="closed">
+            Closed
+          </label>
+        </div>
+      </div>
+    </div>
+  
+    <div class="form-row">
+      <div class="form-group col-md-3">
+        <label for="totalSalesCf">Total Sales</label>
+        <input type="text" class="form-control" id="totalSalesCf" formControlName="totalSalesCf">
+      </div>
+      <div class="form-group col-md-3">
+        <label for="shuttleBonusAmountCf">Shuttle Bonus Amount</label>
+        <input type="text" class="form-control" id="shuttleBonusAmountCf" formControlName="shuttleBonusAmountCf">
+      </div>
+      <div class="form-group col-md-3">
+        <label for="bonus">Venue Bonus</label>
+        <input type="text" class="form-control" id="bonus" formControlName="bonus">
+      </div>
+      <div class="form-group col-md-3">
+        <label for="checkRcvd">Check Recieved</label>
+        <input type="text" class="form-control" id="checkRcvd" formControlName="checkRcvd">
+      </div>
+    </div>
+  
+    <div class="form-row">
+      <div class="form-group col-md-8">
+        <label for="notes">Notes</label>
+        <textarea rows="2" class="form-control" id="notes" formControlName="notes"></textarea>
+      </div>
+    </div>
+  
+  
+    <button class="btn btn-primary" type="button" (click)="onCancel()">Cancel</button>
+    <button class="btn btn-primary" type="submit">Submit</button>
+  </form>
+</div>

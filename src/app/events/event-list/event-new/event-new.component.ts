@@ -1,9 +1,8 @@
-import { ContractPNC } from './../../../models/contractPNC.model';
+import { Event } from './../../../models/event.model';
 import { Timesheet } from './../../../models/timesheet.model';
 import { MathService } from './../../math.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EventService } from './../../event.service';
-import { EventPNC } from './../../../models/eventPNC.model';
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
@@ -15,10 +14,14 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class EventNewComponent implements OnInit {
   @Input() currentVenueID: number;
+  @Input() currentSeasonID: number;
   public dateValue: Date;
   newEventForm: FormGroup;
-  newPncEvent: EventPNC;
-  allPncEvents: EventPNC[];
+  venueForm: FormGroup;
+
+  newEvent: Event;
+  allEvents: Event[];
+  idVenue: number;
 
   constructor(private eventService: EventService,
               private mathService: MathService,
@@ -26,13 +29,27 @@ export class EventNewComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit(): void {
-    this.allPncEvents = this.eventService.getEventsPnc("dateAscending");
     this.dateValue = this.getToday();
     this.initForm();
-  }
+    if(this.currentVenueID == 1) {
+      this.allEvents = this.eventService.returnEventsPnc();
+      this.idVenue = 1;
+    }
 
-  getDateValue() {
-    console.log("date: " + this.dateValue);
+    if(this.currentVenueID == 2) {
+      this.allEvents = this.eventService.returnEventsWc();
+      this.idVenue = 2;
+    }
+
+    if(this.currentVenueID == 3) {
+      this.allEvents = this.eventService.returnEventsCf();
+      this.idVenue = 3;
+    }
+
+    if(this.currentVenueID == 99) {
+      this.allEvents = this.eventService.returnEventsAll();
+      this.initVenueForm();
+    }
   }
 
   // set the starting day/time to today's date at 6:00 PM
@@ -47,17 +64,103 @@ export class EventNewComponent implements OnInit {
     return todayDate;
   }
 
+  private initForm() {
+    let eventTitle:string = "";
+    let dateTime = this.dateValue;
+    let inputLocation:string = "S109";
+    let coordinatorAdminAmt:number = 30;
+    let closed:boolean = false;
+    let bonus:number = 0;
+    let checkRcvd:number = 0;
+    let notes:string = "";
+
+    let totalSalesPnc:number = 0;
+    let alcSales:number = 0;
+    let commBonus:boolean = false;
+    let guarantee:boolean = false; 
+    let countTotal:boolean = false;
+
+    let creditCardTips = 0;
+    let shuttleBonusBoolWc = false;
+    let shuttleBonusAmountWc = 10;
+
+    let totalSalesCf:number = 0;
+    let shuttleBonusBoolCf = true;
+    let shuttleBonusAmountCf = 10;
+
+    this.newEventForm = new FormGroup({
+      'eventTitle': new FormControl(eventTitle, Validators.required),
+      'dateTime': new FormControl(dateTime, Validators.required),
+      'coordinatorAdminAmt': new FormControl(coordinatorAdminAmt, Validators.required),
+      'inputLocation': new FormControl(inputLocation, Validators.required),
+      'commBonus': new FormControl(commBonus, Validators.required),
+      'guarantee': new FormControl(guarantee, Validators.required),
+      'countTotal': new FormControl(countTotal, Validators.required),
+      'closed': new FormControl(closed, Validators.required),
+      'totalSalesPnc': new FormControl(totalSalesPnc, Validators.required),
+      'alcSales': new FormControl(alcSales, Validators.required),
+      'bonus': new FormControl(bonus, Validators.required),
+      'checkRcvd': new FormControl(checkRcvd, Validators.required),
+      'notes': new FormControl(notes, Validators.required),
+      'creditCardTips': new FormControl(creditCardTips, Validators.required),
+      'shuttleBonusBoolWc': new FormControl(shuttleBonusBoolWc, Validators.required),
+      'shuttleBonusAmountWc': new FormControl(shuttleBonusAmountWc, Validators.required),
+      'totalSalesCf': new FormControl(totalSalesCf, Validators.required),
+      'shuttleBonusBoolCf': new FormControl(shuttleBonusBoolCf, Validators.required),
+      'shuttleBonusAmountCf': new FormControl(shuttleBonusAmountCf, Validators.required)
+    });
+  }
+
+  initVenueForm() {
+    let selectVenue:number = 0;
+
+    this.venueForm = new FormGroup({
+      'selectVenue': new FormControl(selectVenue, Validators.required)
+    });
+  }
+
+  pickVenue() {
+    this.idVenue = this.venueForm.value['selectVenue'];
+  }
+
   onSubmit() {
-    if(this.currentVenueID == 1) {
-      var newEvent = this.createNewPncEvent();
-      this.eventService.getContractInfo().subscribe(contract => {
+    var event: Event = this.createNewEvent();
+
+    if(this.idVenue == 1) {
+      this.eventService.getPncContractInfo().subscribe(contract => {
         // new events have no timesheets yet; send an empty array
         var timesheets: Timesheet[] = [];
-        this.newPncEvent = this.mathService.calculatePncEvent(newEvent, contract[0], timesheets);
-        this.eventService.setNewPncEvent(this.newPncEvent).subscribe(res => {
-          this.allPncEvents.push(this.newPncEvent);
-          this.eventService.setEventsPnc(this.allPncEvents);
-          this.allPncEvents = this.eventService.getEventsPnc("dateAscending");
+        this.newEvent = this.mathService.calculatePncEvent(event, contract[0], timesheets);
+        this.eventService.setNewEvent(this.newEvent).subscribe(res => {
+          this.allEvents.push(this.newEvent);
+          this.eventService.setAllEvents(this.allEvents);
+          this.allEvents = this.eventService.returnEventsPnc();
+        });
+      });
+    }
+
+    else if(this.idVenue == 2) {
+      this.eventService.getWcContractInfo().subscribe(contract => {
+        // new events have no timesheets yet; send an empty array
+        var timesheets: Timesheet[] = [];
+        this.newEvent = this.mathService.calculateWcEvent(event, contract[0], timesheets);
+        this.eventService.setNewEvent(this.newEvent).subscribe(res => {
+          this.allEvents.push(this.newEvent);
+          this.eventService.setAllEvents(this.allEvents);
+          this.allEvents = this.eventService.returnEventsWc();
+        });
+      });
+    }
+
+    else if(this.idVenue == 1) {
+      this.eventService.getCfContractInfo().subscribe(contract => {
+        // new events have no timesheets yet; send an empty array
+        var timesheets: Timesheet[] = [];
+        this.newEvent = this.mathService.calculateCfEvent(event, contract[0], timesheets);
+        this.eventService.setNewEvent(this.newEvent).subscribe(res => {
+          this.allEvents.push(this.newEvent);
+          this.eventService.setAllEvents(this.allEvents);
+          this.allEvents = this.eventService.returnEventsCf();
         });
       });
     }
@@ -69,69 +172,123 @@ export class EventNewComponent implements OnInit {
     this.eventService.setEventNew(false);
     this.router.navigate([], {relativeTo: this.route});
   }
- 
-  private initForm() {
-    let eventTitle:string = "";
-    let dateTime = this.dateValue;
-    let inputLocation:string = "S109";
-    let coordinatorAdminAmt:number = 30;
-    let commBonus:boolean = false;
-    let guarantee:boolean = false; 
-    let countTotal:boolean = false;
-    let closed:boolean = false;
-    let totalSales:number = 0;
-    let alcSales:number = 0;
-    let bonus:number = 0;
-    let checkRcvd:number = 0;
-    let notes:string = "";
 
-    this.newEventForm = new FormGroup({
-      'eventTitle': new FormControl(eventTitle, Validators.required),
-      'dateTime': new FormControl(dateTime, Validators.required),
-      'coordinatorAdminAmt': new FormControl(coordinatorAdminAmt, Validators.required),
-      'inputLocation': new FormControl(inputLocation, Validators.required),
-      'commBonus': new FormControl(commBonus, Validators.required),
-      'guarantee': new FormControl(guarantee, Validators.required),
-      'countTotal': new FormControl(countTotal, Validators.required),
-      'closed': new FormControl(closed, Validators.required),
-      'totalSales': new FormControl(totalSales, Validators.required),
-      'alcSales': new FormControl(alcSales, Validators.required),
-      'bonus': new FormControl(bonus, Validators.required),
-      'checkRcvd': new FormControl(checkRcvd, Validators.required),
-      'notes': new FormControl(notes, Validators.required)
-    });
+  createNewEvent() {
+    var event: Event;
+
+    if(this.idVenue == 1) {
+      event = new Event (
+        0,
+        this.currentSeasonID,
+        1,
+        this.newEventForm.value['dateTime'],
+        this.newEventForm.value['eventTitle'],
+        true,
+        this.newEventForm.value['inputLocation'],
+        parseFloat(this.newEventForm.value['bonus']),
+        0,
+        0,
+        parseFloat(this.newEventForm.value['checkRcvd']),
+        0,
+        0,
+        0,
+        0.2000,
+        0,
+        0,
+        this.newEventForm.value['notes'],
+        this.newEventForm.value['closed'],
+        this.newEventForm.value['coordinatorAdminAmt'],
+        this.newEventForm.value['totalSalesPnc'],
+        this.newEventForm.value['commBonus'],
+        this.newEventForm.value['guarantee'],
+        parseFloat(this.newEventForm.value['alcSales']),
+        this.newEventForm.value['countTotal'],
+        0,
+        0,
+        false,
+        0,
+        0,
+        false,
+        0,
+        null
+      );
+    }
+    else if(this.idVenue == 2) {
+      event = new Event (
+        0,
+        this.currentSeasonID,
+        2, 
+        this.newEventForm.value['dateTime'],
+        this.newEventForm.value['eventTitle'],
+        true,
+        this.newEventForm.value['inputLocation'],
+        parseFloat(this.newEventForm.value['bonus']),
+        0,
+        0,
+        parseFloat(this.newEventForm.value['checkRcvd']),
+        0,
+        0,
+        0,
+        0.2000,
+        0,
+        0,
+        this.newEventForm.value['notes'],
+        this.newEventForm.value['closed'],
+        parseFloat(this.newEventForm.value['coordinatorAdminAmt']),
+        0,
+        false,
+        false,
+        0,
+        false,
+        parseFloat(this.newEventForm.value['creditCardTips']),
+        30,
+        this.newEventForm.value['shuttleBonusBoolWc'],
+        parseFloat(this.newEventForm.value['shuttleBonusAmountWc']),
+        0,
+        false,
+        0,
+        null
+      );
+    }
+    else if(this.idVenue == 3) {
+      event = new Event (
+        0,
+        this.currentSeasonID,
+        3,
+        this.newEventForm.value['dateTime'],
+        this.newEventForm.value['eventTitle'],
+        true,
+        this.newEventForm.value['inputLocation'],
+        parseFloat(this.newEventForm.value['bonus']),
+        0,
+        0,
+        parseFloat(this.newEventForm.value['checkRcvd']),
+        0,
+        0,
+        0,
+        0.2000,
+        0,
+        0,
+        this.newEventForm.value['notes'],
+        this.newEventForm.value['closed'],
+        parseFloat(this.newEventForm.value['coordinatorAdminAmt']),
+        0,
+        false,
+        false,
+        0,
+        false,
+        0,
+        0,
+        false,
+        0,
+        parseFloat(this.newEventForm.value['totalSalesCf']),
+        this.newEventForm.value['shuttleBonusBoolCf'],
+        parseFloat(this.newEventForm.value['shuttleBonusAmountCf']),
+        '',
+      );
+    }
+    return event;
   }
 
-  createNewPncEvent() {
-    // var pncEvent = new EventPNC(
-    return  new EventPNC(
-      
-      0, 
-      this.newEventForm.value['dateTime'],
-      this.newEventForm.value['eventTitle'],
-      true,
-      this.newEventForm.value['inputLocation'],
-      parseFloat(this.newEventForm.value['bonus']),
-      0,
-      0,
-      parseFloat(this.newEventForm.value['checkRcvd']),
-      0,
-      0,
-      0,
-      0.2000,
-      0,
-      0,
-      this.newEventForm.value['notes'],
-      this.newEventForm.value['closed'],
-      0,
-      this.newEventForm.value['commBonus'],
-      this.newEventForm.value['guarantee'],
-      parseFloat(this.newEventForm.value['totalSales']),
-      parseFloat(this.newEventForm.value['alcSales']),
-      parseFloat(this.newEventForm.value['coordinatorAdminAmt']),
-      this.newEventForm.value['countTotal']
-    );
-    // this.newPncEvent = pncEvent;
-  }
-
+  
 }

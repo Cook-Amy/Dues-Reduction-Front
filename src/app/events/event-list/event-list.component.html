@@ -22,15 +22,16 @@
 </div>
 
 <app-event-new *ngIf="eventNew == true" 
-                [currentVenueID]="currentVenueID">
+                [currentVenueID]="currentVenueID" [currentSeasonID]="currentSeasonID">
 </app-event-new>
 <hr>
 
 
 <!-- Collapsible Table -->
 <app-event-table *ngIf="currentVenueID == 1" [currentVenueID]="currentVenueID" [dataSource]="eventsPNC"></app-event-table>
-<app-event-table *ngIf="currentVenueID == 2" [currentVenueID]="currentVenueID" [dataSource2]="eventsWC"></app-event-table>
-<app-event-table *ngIf="currentVenueID == 3" [currentVenueID]="currentVenueID" [dataSource3]="eventsCF"></app-event-table>
+<app-event-table *ngIf="currentVenueID == 2" [currentVenueID]="currentVenueID" [dataSource]="eventsWC"></app-event-table>
+<app-event-table *ngIf="currentVenueID == 3" [currentVenueID]="currentVenueID" [dataSource]="eventsCF"></app-event-table>
+<app-event-table *ngIf="currentVenueID == 99" [currentVenueID]="currentVenueID" [dataSource]="eventsAll"></app-event-table>
 
 
 

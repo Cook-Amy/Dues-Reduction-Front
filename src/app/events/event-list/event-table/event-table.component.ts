@@ -1,10 +1,8 @@
-import { EventService } from './../../event.service';
-import { VenueService } from './../../../venues/venue.service';
-import { Venue } from './../../../models/venue.model';
+import { Event } from './../../../models/event.model';
+
 import { EventCF } from './../../../models/eventCF.model';
 import { EventWC } from './../../../models/eventWC.model';
 import { EventPNC } from './../../../models/eventPNC.model';
-import { Event } from './../../../models/event.model';
 import { Component, OnInit, Input } from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 
@@ -21,20 +19,12 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
     ]),
   ],
 })
-export class EventTableComponent implements OnInit {
-  // @Input() eventList: Event[];
-  
-  @Input() dataSource: EventPNC[];
-  @Input() dataSource2: EventWC[];
-  @Input() dataSource3: EventCF[];
+export class EventTableComponent implements OnInit {  
+  @Input() dataSource: Event[];
   @Input() currentVenueID: number;
 
   columnsToDisplay = ['Title', 'Date'];
-  expandedElement: any;
-
-  expandedElement1: EventPNC;
-  expandedElement2: EventWC;
-  expandedElement3: EventCF;
+  expandedElement: Event;
   count = 0
 
   constructor() { }

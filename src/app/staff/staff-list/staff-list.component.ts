@@ -1,3 +1,4 @@
+import { ActivatedRoute, Router } from '@angular/router';
 import { VenueService } from './../../venues/venue.service';
 import { Venue } from './../../models/venue.model';
 import { StaffService } from './../staff.service';
@@ -35,115 +36,110 @@ export class StaffListComponent implements OnInit {
   currentVenue: Venue;
   currentVenueID: number;
 
+  staffNew: Boolean;
+  activityLevel: number = 1;
+
   constructor(private staffService: StaffService,
-              private venueService: VenueService) { }
+              private venueService: VenueService,
+              private route: ActivatedRoute,
+              private router: Router) { }
 
   ngOnInit() {
     this.currentVenue = this.venueService.getCurrentVenue();
     this.currentVenueID = this.currentVenue.idvenue;
-    this.getAllStaff(this.currentVenueID);
+    this.getAllStaff();
+
+    this.staffService.allStaffChanged.subscribe(staffChanged => {
+      this.setAllStaff(staffChanged);
+      this.router.navigate([], {relativeTo: this.route});
+    });
+
+    this.staffNew = this.staffService.getStaffNew();
+    this.staffService.staffNewChanged.subscribe(newStaffChanged => {
+      this.staffNew = newStaffChanged;
+    });
   }
 
-  getAllStaff(id) {
-    if(id == 1) {
-      this.staffService.getAllPncStaff().subscribe(allPncStaff => {
-        this.staffService.setAllPncStaff(allPncStaff);
-        this.allPncStaff = this.staffService.returnAllPncStaff();
-        // console.log("1: " + this.allPncStaff[1].Email);
-        // console.log("Results returned from DB for PNC: " + this.allPncStaff.length);
-        this.setOtherStaff(id)
-      });
-    }
-
-    else if(id == 2) {
-      this.staffService.getAllWcStaff().subscribe(allWcStaff => {
-        this.staffService.setAllWcStaff(allWcStaff);
-        this.allWcStaff = this.staffService.returnAllWcStaff();
-        // console.log("Results returned from DB for WC: " + this.allWcStaff.length);
-        this.setOtherStaff(id)
-      });
-    }
-
-    else if(id == 3) {
-      this.staffService.getAllCfStaff().subscribe(allCfStaff => {
-        this.staffService.setAllCfStaff(allCfStaff);
-        this.allCfStaff = this.staffService.returnAllCfStaff();
-        // console.log("Results returned from DB for CF: " + this.allCfStaff.length);
-
-        this.setOtherStaff(id)
-      });
-    }
+  getAllStaff() {
+    this.staffService.getAllStaff().subscribe(allStaff => {
+      this.staffService.setAllStaff(allStaff);
+    });
   }
 
-  setOtherStaff(id) {
-    if(id == 1) {
-      for(var i = 0; i < this.allPncStaff.length; i++) {
-        if(this.allPncStaff[i].pncActive) {
-          this.activePncStaff.push(this.allPncStaff[i]);
-        }
-        if(this.allPncStaff[i].pncInactive) {
-          this.inactivePncStaff.push(this.allPncStaff[i]);
-        }
-        if(this.allPncStaff[i].pncInterested) {
-          this.interestedPncStaff.push(this.allPncStaff[i]);
-        }
-      }
-      this.staffService.setActivePncStaff(this.activePncStaff);
-      this.activePncStaff = this.staffService.returnActivePncStaff();
-      this.setStaff = this.activePncStaff;
-      // console.log("active PNC staff: " + this.activePncStaff.length);
+  setAllStaff(allStaff) {
+    this.staffService.setAllStaffOther(allStaff);
+    this.staffService.setAllPncStaff(allStaff);
+    this.staffService.setAllWcStaff(allStaff);
+    this.staffService.setAllCfStaff(allStaff);
 
-      this.staffService.setInactivePncStaff(this.inactivePncStaff);
-      this.inactivePncStaff = this.staffService.returnInactivePncStaff();
-      this.staffService.setInterestedPncStaff(this.interestedPncStaff);
-      this.interestedPncStaff = this.staffService.returnInterestedPncStaff();
+    this.allStaff = this.staffService.returnAllStaff();
+    this.activeStaff = this.staffService.returnActiveStaff();
+    this.inactiveStaff = this.staffService.returnInactiveStaff();
+    this.interestedStaff = this.staffService.returnInterestedStaff();
+
+    this.allPncStaff = this.staffService.returnAllPncStaff();
+    this.activePncStaff = this.staffService.returnActivePncStaff();
+    this.inactivePncStaff = this.staffService.returnInactivePncStaff();
+    this.interestedPncStaff = this.staffService.returnInterestedPncStaff();
+
+    this.allWcStaff = this.staffService.returnAllWcStaff();
+    this.activeWcStaff = this.staffService.returnActiveWcStaff();
+    this.inactiveWcStaff = this.staffService.returnInactiveWcStaff();
+    this.interestedWcStaff = this.staffService.returnInterestedWcStaff();
+
+    this.allCfStaff = this.staffService.returnAllCfStaff();
+    this.activeCfStaff = this.staffService.returnActiveCfStaff();
+    this.inactiveCfStaff = this.staffService.returnInactiveCfStaff();
+    this.interestedCfStaff = this.staffService.returnInterestedCfStaff();
+
+    if(this.activityLevel == 1) {
+      if(this.currentVenueID == 1) {
+        this.setStaff = this.activePncStaff;
+      }
+      else if(this.currentVenueID == 2) {
+        this.setStaff = this.activeWcStaff;
+      }
+      else if(this.currentVenueID == 3) {
+        this.setStaff = this.activeCfStaff;
+      }
+    }
+    else if(this.activityLevel == 2) {
+      if(this.currentVenueID == 1) {
+        this.setStaff = this.inactivePncStaff;
+      }
+      else if(this.currentVenueID == 2) {
+        this.setStaff = this.inactiveWcStaff;
+      }
+      else if(this.currentVenueID == 3) {
+        this.setStaff = this.inactiveCfStaff;
+      }
+    }
+    else if(this.activityLevel == 3) {
+      if(this.currentVenueID == 1) {
+        this.setStaff = this.interestedPncStaff;
+      }
+      else if(this.currentVenueID == 2) {
+        this.setStaff = this.interestedWcStaff;
+      }
+      else if(this.currentVenueID == 3) {
+        this.setStaff = this.interestedCfStaff;
+      }
+    }
+    else if(this.activityLevel == 4) {
+      if(this.currentVenueID == 1) {
+        this.setStaff = this.allPncStaff;
+      }
+      else if(this.currentVenueID == 2) {
+        this.setStaff = this.allWcStaff;
+      }
+      else if(this.currentVenueID == 3) {
+        this.setStaff = this.allCfStaff;
+      }
     }
 
-    else if(id == 2) {
-      for(var i = 0; i < this.allWcStaff.length; i++) {
-        if(this.allWcStaff[i].wcActive) {
-          this.activeWcStaff.push(this.allWcStaff[i]);
-        }
-        if(this.allWcStaff[i].wcInactive) {
-          this.inactiveWcStaff.push(this.allWcStaff[i]);
-        }
-        if(this.allWcStaff[i].wcInterested) {
-          this.interestedWcStaff.push(this.allWcStaff[i]);
-        }
-      }
-      this.staffService.setActiveWcStaff(this.activeWcStaff);
-      this.activeWcStaff = this.staffService.returnActiveWcStaff();
-      this.setStaff = this.activeWcStaff;
-      // console.log("active WC staff: " + this.activeWcStaff.length);
-
-      this.staffService.setInactiveWcStaff(this.inactiveWcStaff);
-      this.inactiveWcStaff = this.staffService.returnInactiveWcStaff();
-      this.staffService.setInterestedWcStaff(this.interestedWcStaff);
-      this.interestedWcStaff = this.staffService.returnInterestedWcStaff();
-    }
-
-    else if(id == 3) {
-      for(var i = 0; i < this.allCfStaff.length; i++) {
-        if(this.allCfStaff[i].cfActive) {
-          this.activeCfStaff.push(this.allCfStaff[i]);
-        }
-        if(this.allCfStaff[i].cfInactive) {
-          this.inactiveCfStaff.push(this.allCfStaff[i]);
-        }
-        if(this.allCfStaff[i].cfInterested) {
-          this.interestedCfStaff.push(this.allCfStaff[i]);
-        }
-      }
-      this.staffService.setActiveCfStaff(this.activeCfStaff);
-      this.activeCfStaff = this.staffService.returnActiveCfStaff();
-      this.setStaff = this.activeCfStaff;
-      // console.log("active CF staff: " + this.activeCfStaff.length);
-      this.staffService.setInactiveCfStaff(this.inactiveCfStaff);
-      this.inactiveCfStaff = this.staffService.returnInactiveCfStaff();
-      this.staffService.setInterestedCfStaff(this.interestedCfStaff);
-      this.interestedCfStaff = this.staffService.returnInterestedCfStaff();
-    }
   }
+
+ 
 
   changeActive(value) {
     // console.log("value: " + value.activeSelect);
@@ -200,6 +196,10 @@ export class StaffListComponent implements OnInit {
         this.setStaff = this.allCfStaff;
       }
     }
+  }
+
+  onAddStaff() {
+    this.staffNew = true;
   }
 
 }

@@ -1,5 +1,73 @@
+<form [formGroup]="staffEditForm" (ngSubmit)="onSubmit()">
 
-  <form [formGroup]="staffEditForm" (ngSubmit)="onSubmit()">
+  <div class="form-row">
+    <div class="nameRow">
+      {{ timesheet.lastName }}, {{ timesheet.firstName }}
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group col-md-5">
+      <label for="position">Position</label>
+      <select id="position" class="form-control" formControlName="position">
+        <option [value]="timesheet.jobName" [selected]>{{ timesheet.jobName }}</option>
+        <option *ngFor="let job of jobs" [value]="job.jobName">
+          {{ job.jobName }}
+        </option>
+      </select>
+    </div>
+    <div class="form-group col-md-2">
+      <label for="rate">Rate</label>
+      <input type="number" class="form-control" id="rate" value="rate" formControlName="rate">
+    </div>
+    <div class="form-group col-md-2">
+      <label for="eventBonus">Event Bonus</label>
+      <input type="number" class="form-control" id="eventBonus" formControlName="eventBonus" value="eventBonus">
+    </div>
+    <div class="form-group col-md-2">
+      <label for="hourlyBonus">Hourly Bonus</label>
+      <input type="number" class="form-control" id="hourlyBonus" formControlName="hourlyBonus" value="hourlyBonus">
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group col-md-3">
+      <label for="scheduledArrivalTime">Scheduled Arrival Time</label>
+      <ejs-timepicker class="date-picker" id='scheduledArrivalTime' value="arrivalTime" formControlName="scheduledArrivalTime"></ejs-timepicker>
+    </div>
+    <div class="form-group col-md-3">
+      <label for="timeIn">Time In</label>
+      <ejs-timepicker class="date-picker" id='timeIn' value="timeIn" formControlName="timeIn"></ejs-timepicker>
+    </div>
+    <div class="form-group col-md-3">
+      <label for="timeOut">Time Out</label>
+      <ejs-timepicker class="date-picker" id='timeOut' value="timeOut" formControlName="timeOut"></ejs-timepicker>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="col-md-4">
+      <button class="btn btn-sm btn-danger" (click)="onDelete()">Delete From Event</button>
+    </div>
+    <div class="col-md-3"></div>
+    <div class="col-md-1">
+      <button class="btn btn-info" (click)="onCancelEdit()" type="button">Cancel</button>
+    </div>
+    <div class="col-md-1"></div>
+    <div class="col-md-1">
+      <button class="btn btn-info" type="submit">Save</button>
+    </div>
+  </div>
+ 
+</form>
+
+
+
+<!-----------------------------------------------------------------------------------
+-- PNC Staff Edit 
+------------------------------------------------------------------------------------->
+<!-- <div *ngIf="currentVenueID == 1">
+  <form [formGroup]="staffEditForm1" (ngSubmit)="onSubmit()">
 
     <div class="form-row">
       <div class="nameRow">
@@ -67,5 +135,152 @@
       <button class="btn btn-outline-danger" (click)="onDeleteYes()" type="button">Yes</button>
       <button class="btn btn-outline-danger" (click)="onDeleteNo()" type="button">No</button>
     </div>
+</div>   -->
 
+<!-----------------------------------------------------------------------------------
+-- WC Staff Edit 
+------------------------------------------------------------------------------------->
+<!-- <div *ngIf="currentVenueID == 2">
+  <form [formGroup]="staffEditForm2" (ngSubmit)="onSubmit()">
 
+    <div class="form-row">
+      <div class="nameRow">
+        {{ timesheet.lastName }}, {{ timesheet.firstName }}
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-5">
+        <label for="position">Position</label>
+        <select id="position" class="form-control" formControlName="position">
+          <option [value]="timesheet.jobName" [selected]>{{ timesheet.jobName }}</option>
+          <option *ngFor="let job of jobs" [value]="job.jobName">
+            {{ job.jobName }}
+          </option>
+        </select>
+      </div>
+      <div class="form-group col-md-2">
+        <label for="rate">Rate</label>
+        <input type="number" class="form-control" id="rate" value="rate" formControlName="rate">
+      </div>
+      <div class="form-group col-md-2">
+        <label for="eventBonus">Event Bonus</label>
+        <input type="number" class="form-control" id="eventBonus" formControlName="eventBonus" value="eventBonus">
+      </div>
+      <div class="form-group col-md-2">
+        <label for="hourlyBonus">Hourly Bonus</label>
+        <input type="number" class="form-control" id="hourlyBonus" formControlName="hourlyBonus" value="hourlyBonus">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-3">
+        <label for="scheduledArrivalTime">Scheduled Arrival Time</label>
+        <ejs-timepicker class="date-picker" id='scheduledArrivalTime' value="arrivalTime" formControlName="scheduledArrivalTime"></ejs-timepicker>
+      </div>
+      <div class="form-group col-md-3">
+        <label for="timeIn">Time In</label>
+        <ejs-timepicker class="date-picker" id='timeIn' value="timeIn" formControlName="timeIn"></ejs-timepicker>
+      </div>
+      <div class="form-group col-md-3">
+        <label for="timeOut">Time Out</label>
+        <ejs-timepicker class="date-picker" id='timeOut' value="timeOut" formControlName="timeOut"></ejs-timepicker>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="col-md-4">
+        <button class="btn btn-sm btn-danger" (click)="onDelete()">Delete From Event</button>
+      </div>
+      <div class="col-md-3"></div>
+      <div class="col-md-1">
+        <button class="btn btn-info" (click)="onCancelEdit()" type="button">Cancel</button>
+      </div>
+      <div class="col-md-1"></div>
+      <div class="col-md-1">
+        <button class="btn btn-info" type="submit">Save</button>
+      </div>
+    </div>
+   
+  </form>
+
+    <div *ngIf="askDelete">
+      Are you sure?
+      <button class="btn btn-outline-danger" (click)="onDeleteYes()" type="button">Yes</button>
+      <button class="btn btn-outline-danger" (click)="onDeleteNo()" type="button">No</button>
+    </div>
+</div>   -->
+
+<!-----------------------------------------------------------------------------------
+-- CF Staff Edit 
+------------------------------------------------------------------------------------->
+<!-- <div *ngIf="currentVenueID == 3">
+  <form [formGroup]="staffEditForm3" (ngSubmit)="onSubmit()">
+
+    <div class="form-row">
+      <div class="nameRow">
+        {{ timesheet.lastName }}, {{ timesheet.firstName }}
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-5">
+        <label for="position">Position</label>
+        <select id="position" class="form-control" formControlName="position">
+          <option [value]="timesheet.jobName" [selected]>{{ timesheet.jobName }}</option>
+          <option *ngFor="let job of jobs" [value]="job.jobName">
+            {{ job.jobName }}
+          </option>
+        </select>
+      </div>
+      <div class="form-group col-md-2">
+        <label for="rate">Rate</label>
+        <input type="number" class="form-control" id="rate" value="rate" formControlName="rate">
+      </div>
+      <div class="form-group col-md-2">
+        <label for="eventBonus">Event Bonus</label>
+        <input type="number" class="form-control" id="eventBonus" formControlName="eventBonus" value="eventBonus">
+      </div>
+      <div class="form-group col-md-2">
+        <label for="hourlyBonus">Hourly Bonus</label>
+        <input type="number" class="form-control" id="hourlyBonus" formControlName="hourlyBonus" value="hourlyBonus">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-3">
+        <label for="scheduledArrivalTime">Scheduled Arrival Time</label>
+        <ejs-timepicker class="date-picker" id='scheduledArrivalTime' value="arrivalTime" formControlName="scheduledArrivalTime"></ejs-timepicker>
+      </div>
+      <div class="form-group col-md-3">
+        <label for="timeIn">Time In</label>
+        <ejs-timepicker class="date-picker" id='timeIn' value="timeIn" formControlName="timeIn"></ejs-timepicker>
+      </div>
+      <div class="form-group col-md-3">
+        <label for="timeOut">Time Out</label>
+        <ejs-timepicker class="date-picker" id='timeOut' value="timeOut" formControlName="timeOut"></ejs-timepicker>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="col-md-4">
+        <button class="btn btn-sm btn-danger" (click)="onDelete()">Delete From Event</button>
+      </div>
+      <div class="col-md-3"></div>
+      <div class="col-md-1">
+        <button class="btn btn-info" (click)="onCancelEdit()" type="button">Cancel</button>
+      </div>
+      <div class="col-md-1"></div>
+      <div class="col-md-1">
+        <button class="btn btn-info" type="submit">Save</button>
+      </div>
+    </div>
+   
+  </form>
+
+    <div *ngIf="askDelete">
+      Are you sure?
+      <button class="btn btn-outline-danger" (click)="onDeleteYes()" type="button">Yes</button>
+      <button class="btn btn-outline-danger" (click)="onDeleteNo()" type="button">No</button>
+    </div>
+</div>   -->

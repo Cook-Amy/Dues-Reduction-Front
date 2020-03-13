@@ -1,7 +1,7 @@
 <!--------------------------------------------------------------------
   - PNC event details 
 ---------------------------------------------------------------------->
-<div *ngIf="currentVenueID == 1">
+<div *ngIf="idVenue == 1">
   <div *ngIf="eventEdit == false">
     <table class="table table-sm table-responsive">
       <tbody>
@@ -11,7 +11,7 @@
           <td colspan="4"></td>
         </tr>
         <tr>
-          <td colspan="4">Total Sales: ${{ checkForNullNum(event.totalSales) }}</td>
+          <td colspan="4">Total Sales: ${{ checkForNullNum(event.totalSalesPnc) }}</td>
           <td colspan="4">Alc Sales: ${{ checkForNullNum(event.alcSales) }}</td>
           <td colspan="4">Venue Bonus: ${{ checkForNullNum(event.venueBonus) }}</td>
         </tr>
@@ -104,7 +104,6 @@
           </div>
         </div>
       </form>
-
     </div>
 
     <div class="row">
@@ -124,8 +123,6 @@
                   <th>Time In</th>
                   <th>Time Out</th>
                   <th class="align-right">Hrs Worked</th>
-                  <!-- <th class="align-right">Shuttle Bonus</th>
-                  <th class="align-right">CC Tips</th> -->
                   <th class="align-right">Event Bonus</th>
                   <th class="align-right">Hourly Bonus</th>
                   <th class="align-right">Payout</th>
@@ -159,6 +156,7 @@
                 </td>
               </tr>
             </table>
+
             <div *ngIf="addEventBonus">
               <form [formGroup]="ebForm" (ngSubmit)="onEventBonusAdded()">
                 <div class="form-row">
@@ -205,6 +203,7 @@
           <div *ngIf="eventStaffAdd == true">
             <app-event-staff-add [event]="event"></app-event-staff-add>
           </div>
+
         </div>
        
       </div>
@@ -215,246 +214,397 @@
 
 </div>
 
-
 <!--------------------------------------------------------------------
   - WC event details 
 ---------------------------------------------------------------------->
-<div *ngIf="currentVenueID == 2">
-  <table class="table table-sm table-responsive">
-    <tbody>
-      <tr>
-        <td colspan="4">Doors: {{ checkForNullString(getTime(event2.Date)) }}</td>
-        <td colspan="4">Location: {{ checkForNullString(event2.location) }}</td>
-        <td colspan="4"></td>
-      </tr>
-      <tr>
-        <td colspan="4">Credit Card Tips: {{ checkForNullNum(event2.creditCardTips) }}</td>
-        <td colspan="4">Max Credit Card Tips: {{ checkForNullNum(event2.maxCreditCardTips) }}</td>
-        <td colspan="4">Venue Bonus: {{ checkForNullNum(event2.venueBonus) }}</td>
-      </tr>
-      <tr>
-        <td colspan="4">Payout: ${{ checkForNullNum(event2.payout) }}</td>
-        <td colspan="4">Est. Check: ${{ checkForNullNum(event2.estimatedCheck) }}</td>
-        <td colspan="4">Est. Profit: ${{ checkForNullNum(event2.estimatedProfit) }}</td>
-      </tr>
-      <tr>
-        <td colspan="4">Discrepancy: ${{ checkForNullNum(event2.discrepancy) }}</td>
-        <td colspan="4">Actual Check: ${{ checkForNullNum(event2.actualCheck) }}</td>
-        <td colspan="4">Actual Profit: ${{ checkForNullNum(event2.actualProfit) }}</td>
-      </tr>
-      <tr>
-        <td colspan="4">TAC Cut: ${{ checkForNullNum(event2.tacCut) }}</td>
-        <td colspan="4">DR Cut: ${{ checkForNullNum(event2.drCut) }}</td>
-        <td colspan="4">Coordinator Payout: {{ checkForNullNum(event2.coordinatorAdminAmt) }}</td>
-      </tr>
-      <tr>
-        <td colspan="12">Notes: ${{ checkForNullString(event2.eventNotes) }}</td>
-      </tr>
-      <tr>
-        <td colspan="4">  
-          <i class="far fa-square" *ngIf="!event2.closed"></i>
-          <i class="far fa-check-square" *ngIf="event2.closed"></i>
-          Closed
-        </td>
-        <td colspan="4">
-          <i class="far fa-square" *ngIf="!event2.shuttleBonusBool"></i>
-          <i class="far fa-check-square" *ngIf="event2.shuttleBonusBool"></i>
-          Shuttle Bonus
-        </td>
-        <td colspan="4">Shuttle Bonus Amount: {{ checkForNullNum(event2.shuttleBonusAmount) }}</td>
-      </tr>
-      <tr>
-        <td colspan="3">
-          <button type="button" class="btn event-btn" (click)="onEditEvent()">Edit Event</button>
-        </td>
-        <td colspan="3">
-          <button type="button" class="btn event-btn">Delete Event</button>
-        </td>
-        <td colspan="3">
-          <button type="button" class="btn event-btn">Send Gate List</button>
-        </td>
-        <td colspan="3">
-          <button type="button" class="btn event-btn">Send Reminder</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  
-  <div class="row">
-    <div class="col-md-12">
-      <div *ngIf="!getStaff">
-        <button class="btn get-staff-btn" (click)="getTimesheetForEvent()">Get Staff</button>
+<div *ngIf="idVenue == 2">
+  <div *ngIf="eventEdit == false">
+    <table class="table table-sm table-responsive">
+      <tbody>
+        <tr>
+          <td colspan="4">Doors: {{ checkForNullString(getTime(event.Date)) }}</td>
+          <td colspan="4">Location: {{ checkForNullString(event.location) }}</td>
+          <td colspan="4"></td>
+        </tr>
+        <tr>
+          <td colspan="4">Credit Card Tips: {{ checkForNullNum(event.creditCardTips) }}</td>
+          <td colspan="4">Max Credit Card Tips: {{ checkForNullNum(event.maxCreditCardTips) }}</td>
+          <td colspan="4">Venue Bonus: {{ checkForNullNum(event.venueBonus) }}</td>
+        </tr>
+        <tr>
+          <td colspan="4">Payout: ${{ checkForNullNum(event.payout) }}</td>
+          <td colspan="4">Est. Check: ${{ checkForNullNum(event.estimatedCheck) }}</td>
+          <td colspan="4">Est. Profit: ${{ checkForNullNum(event.estimatedProfit) }}</td>
+        </tr>
+        <tr>
+          <td colspan="4">Discrepancy: ${{ checkForNullNum(event.discrepancy) }}</td>
+          <td colspan="4">Actual Check: ${{ checkForNullNum(event.actualCheck) }}</td>
+          <td colspan="4">Actual Profit: ${{ checkForNullNum(event.actualProfit) }}</td>
+        </tr>
+        <tr>
+          <td colspan="4">TAC Cut: ${{ checkForNullNum(event.tacCut) }}</td>
+          <td colspan="4">DR Cut: ${{ checkForNullNum(event.drCut) }}</td>
+          <td colspan="4">Coordinator Payout: {{ checkForNullNum(event.coordinatorAdminAmt) }}</td>
+        </tr>
+        <tr>
+          <td colspan="12">Notes: ${{ checkForNullString(event.eventNotes) }}</td>
+        </tr>
+        <tr>
+          <td colspan="4">  
+            <i class="far fa-square" *ngIf="!event.closed"></i>
+            <i class="far fa-check-square" *ngIf="event.closed"></i>
+            Closed
+          </td>
+          <td colspan="4">
+            <i class="far fa-square" *ngIf="!event.shuttleBonusBool"></i>
+            <i class="far fa-check-square" *ngIf="event.shuttleBonusBool"></i>
+            Shuttle Bonus
+          </td>
+          <td colspan="4">Shuttle Bonus Amount: {{ checkForNullNum(event.shuttleBonusAmountWc) }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <tr>
+      <td colspan="3">
+        <button type="button" class="btn event-btn" (click)="onEditEvent()">Edit Event</button>
+      </td>
+      <td colspan="3">
+        <button type="button" class="btn event-btn" (click)="confirmGateList=false; onDeleteEvent()">Delete Event</button>
+      </td>
+      <td colspan="3">
+        <button type="button" class="btn event-btn" (click)="confirmGateList=true; confirmDelete=false">Send Gate List</button>
+      </td>
+      <td colspan="3">
+        <button type="button" class="btn event-btn">Send Reminder</button>
+      </td>
+    </tr>
+
+    <div class="deleteConfirm" *ngIf="confirmDelete">
+      Are your sure you want to delete this event?&nbsp;
+      <button class="btn btn-outline-danger" (click)="onDeleteNo()">No</button>
+      &nbsp;&nbsp;
+      <button class="btn btn-outline-info" (click)="onDeleteYes()">Yes</button>
+    </div>
+
+    <div class="confirmGateList" *ngIf="confirmGateList">
+      <form [formGroup]="gateListForm" (ngSubmit)="onGateListSubmit()">
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            What do you want to do with the Gate List?
+            &nbsp;
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="emailGateList" formControlName="emailGateList">
+              <label class="form-check-label" for="emailGateList">
+                Email
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="downloadGateList" formControlName="downloadGateList">
+              <label class="form-check-label" for="downloadGateList">
+                Download
+              </label>
+            </div>
+            <button class="btn btn-outline-info" type="submit">Send</button>
+            &nbsp;
+            <button class="btn btn-outline-danger" type="button" (click)="confirmGateList=false">Cancel</button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div *ngIf="!getStaff">
+          <button class="btn get-staff-btn" (click)="getTimesheetForEvent()">Get Staff</button>
+        </div>
+        <div *ngIf="getStaff">
+          <div *ngIf="!eventStaffEdit && !eventStaffAdd">
+            <table class="table table-striped table-sm">
+              <thead class="thead-dark">
+                <tr>
+                  <th>Staff</th>
+                  <th>Job</th>
+                  <th>Rate</th>
+                  <th>Scheduled Time</th>
+                  <th>Time In</th>
+                  <th>Time Out</th>
+                  <th class="align-right">Hrs Worked</th>
+                  <th class="align-right">Shuttle Bonus</th>
+                  <th class="align-right">CC Tips</th>
+                  <th class="align-right">Event Bonus</th>
+                  <th class="align-right">Hourly Bonus</th>
+                  <th class="align-right">Payout</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let t of timesheet">
+                  <td>{{ checkForNullString(t.lastName) }}, {{ checkForNullString(t.firstName) }}</td>
+                  <td>{{ checkForNullString(t.jobName) }}</td>
+                  <td>{{ checkForNullNum(t.hourlyRate) }}</td>
+                  <td>{{ checkForNullString(getTime(t.scheduledArrivalTime)) }}</td>
+                  <td>{{ checkForNullString(getTime(t.timeIn)) }}</td>
+                  <td>{{ checkForNullString(getTime(t.timeOut)) }}</td>
+                  <td class="align-right">{{ checkForNullNum(t.hoursWorked) }}</td>
+                  <td class="align-right">{{ checkForNullNum(t.eventBonus) }}</td>
+                  <td class="align-right">{{ checkForNullNum(t.hourlyBonus) }}</td>
+                  <td class="align-right">{{ checkForNullNum(t.shuttleBonus) }}</td>
+                  <td class="align-right">{{ checkForNullNum(t.creditCardTips) }}</td>
+                  <td class="align-right">{{ checkForNullNum(t.creditAmount) }}</td>
+                  <td>
+                    <button class="btn btn-info" (click)="onEditStaff(t)">Edit</button>
+                  </td>
+                </tr>
+              </tbody>
+              <tr>
+                <td colspan="12">
+                  <button type="button" class="btn btn-info" (click)="onAddStaff()">Add Staff</button>
+                  &nbsp;&nbsp;
+                  <button class="btn btn-info" (click)="onAddEventBonus()">Add Event Bonus</button>
+                  &nbsp;&nbsp;
+                  <button class="btn btn-info" (click)="onAddHourlyBonus()">Add Hourly Bonus</button>
+                </td>
+              </tr>
+            </table>
+
+            <div *ngIf="addEventBonus">
+              <form [formGroup]="ebForm" (ngSubmit)="onEventBonusAdded()">
+                <div class="form-row">
+                  <div class="form-group col-md-5">
+                    Add Event Bonus to all staff:
+                  </div>
+                  <div class="form-group col-md-2">
+                    <input type="number" class="numInput form-control" id="ebAmount" formControlName="ebAmount">
+                  </div>
+                  <div class="form-group col-md-2">
+                    <button class="btn btn-outline-info" type="submit">Add</button>
+                  </div>
+                  <div class="form-group col-md-2">
+                    <button class="btn btn-outline-info" type="button" (click)="onCancelBonus()">Cancel</button>
+                  </div>
+                </div>
+              </form>
+             </div>
+
+             <div *ngIf="addHourlyBonus">
+              <form [formGroup]="hbForm" (ngSubmit)="onHourlyBonusAdded()">
+                <div class="form-row">
+                  <div class="form-group col-md-5">
+                    Add Hourly Bonus to all staff:
+                  </div>
+                  <div class="form-group col-md-2">
+                    <input type="number" class="numInput form-control" id="hbAmount" formControlName="hbAmount">
+                  </div>
+                  <div class="form-group col-md-2">
+                    <button class="btn btn-outline-info" type="submit">Add</button>
+                  </div>
+                  <div class="form-group col-md-2">
+                    <button class="btn btn-outline-info" type="button" (click)="onCancelBonus()">Cancel</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+          </div>
+
+          <div *ngIf="eventStaffEdit == true">
+            <app-event-staff-edit [timesheet]="editTimesheet" [event]="event"></app-event-staff-edit>
+          </div>
+          <div *ngIf="eventStaffAdd == true">
+            <app-event-staff-add [event]="event"></app-event-staff-add>
+          </div>
+ 
+        </div>
+       
       </div>
-      <div *ngIf="getStaff">
-        <table class="table table-striped table-sm">
-          <thead class="thead-dark">
-            <tr>
-              <th>Staff</th>
-              <th>Job</th>
-              <th>Rate</th>
-              <th>Scheduled Time</th>
-              <th>Time In</th>
-              <th>Time Out</th>
-              <th class="align-right">Hrs Worked</th>
-              <th class="align-right">Shuttle Bonus</th>
-              <th class="align-right">CC Tips</th>
-              <th class="align-right">Event Bonus</th>
-              <th class="align-right">Hourly Bonus</th>
-              <th class="align-right">Payout</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let t of timesheet">
-              <td>{{ checkForNullString(t.lastName) }}, {{ checkForNullString(t.firstName) }}</td>
-              <td>{{ checkForNullString(t.jobName) }}</td>
-              <td>{{ checkForNullNum(t.hourlyRate) }}</td>
-              <td>{{ checkForNullString(getTime(t.scheduledArrivalTime)) }}</td>
-              <td>{{ checkForNullString(getTime(t.timeIn)) }}</td>
-              <td>{{ checkForNullString(getTime(t.timeOut)) }}</td>
-              <td class="align-right">{{ checkForNullNum(t.hoursWorked) }}</td>
-              <td class="align-right">{{ checkForNullNum(t.eventBonus) }}</td>
-              <td class="align-right">{{ checkForNullNum(t.hourlyBonus) }}</td>
-              <td class="align-right">{{ checkForNullNum(t.shuttleBonus) }}</td>
-              <td class="align-right">{{ checkForNullNum(t.creditCardTips) }}</td>
-              <td class="align-right">{{ checkForNullNum(t.creditAmount) }}</td>
-            </tr>
-            <tr>
-              <td colspan="4">
-                <button type="button" class="btn event-btn" (click)="onEditEvent()">Add Staff</button>
-              </td>
-              <td colspan="4">
-                <button type="button" class="btn event-btn" (click)="onEditEvent()">Delete Staff</button>
-              </td>
-              <td colspan="4">
-                <button type="button" class="btn event-btn" (click)="onEditEvent()">Add Bonus</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-     
     </div>
   </div>
-</div>
 
+  <app-event-edit *ngIf="eventEdit == true" [currentVenueID]="currentVenueID" [event]="event"></app-event-edit>
+
+</div>
 
 <!--------------------------------------------------------------------
   - CF event details 
 ---------------------------------------------------------------------->
-<div *ngIf="currentVenueID == 3">
-  <table class="table table-sm table-responsive">
-    <tbody>
-      <tr>
-        <td colspan="4">Doors: {{ checkForNullString(getTime(event3.Date)) }}</td>
-        <td colspan="4">Location: {{ checkForNullString(event3.location) }}</td>
-        <td colspan="4"></td>
-      </tr>
-      <tr>
-        <td colspan="4">Total Sales: {{ checkForNullNum(event3.totalSales) }}</td>
-        <td colspan="4">Venue Bonus: {{ checkForNullNum(event3.venueBonus) }}</td>
-      </tr>
-      <tr>
-        <td colspan="4">Payout: ${{ checkForNullNum(event3.payout) }}</td>
-        <td colspan="4">Est. Check: ${{ checkForNullNum(event3.estimatedCheck) }}</td>
-        <td colspan="4">Est. Profit: ${{ checkForNullNum(event3.estimatedProfit) }}</td>
-      </tr>
-      <tr>
-        <td colspan="4">Discrepancy: ${{ checkForNullNum(event3.discrepancy) }}</td>
-        <td colspan="4">Actual Check: ${{ checkForNullNum(event3.actualCheck) }}</td>
-        <td colspan="4">Actual Profit: ${{ checkForNullNum(event3.actualProfit) }}</td>
-      </tr>
-      <tr>
-        <td colspan="4">TAC Cut: ${{ checkForNullNum(event3.tacCut) }}</td>
-        <td colspan="4">DR Cut: ${{ checkForNullNum(event3.drCut) }}</td>
-        <td colspan="4">Coordinator Payout: {{ checkForNullNum(event3.coordinatorAdminAmt) }}</td>
-      </tr>
-      <tr>
-        <td colspan="12">Notes: ${{ checkForNullString(event3.eventNotes) }}</td>
-      </tr>
-      <tr>
-        <td colspan="4">  
-          <i class="far fa-square" *ngIf="!event3.closed"></i>
-          <i class="far fa-check-square" *ngIf="event3.closed"></i>
-          Closed
-        </td>
-        <td colspan="4">
-          <i class="far fa-square" *ngIf="!event3.shuttleBonusBool"></i>
-          <i class="far fa-check-square" *ngIf="event3.shuttleBonusBool"></i>
-          Shuttle Bonus
-        </td>
-        <td colspan="4">Shuttle Bonus Amount: {{ checkForNullNum(event3.shuttleBonusAmount) }}</td>
-      </tr>
-      <tr>
-        <td colspan="3">
-          <button type="button" class="btn event-btn" (click)="onEditEvent()">Edit Event</button>
-        </td>
-        <td colspan="3">
-          <button type="button" class="btn event-btn">Delete Event</button>
-        </td>
-        <td colspan="3">
-          <button type="button" class="btn event-btn">Send Gate List</button>
-        </td>
-        <td colspan="3">
-          <button type="button" class="btn event-btn">Send Reminder</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  
-  <div class="row">
-    <div class="col-md-12">
-      <div *ngIf="!getStaff">
-        <button class="btn get-staff-btn" (click)="getTimesheetForEvent()">Get Staff</button>
-      </div>
-      <div *ngIf="getStaff">
-        <table class="table table-striped table-sm">
-          <thead class="thead-dark">
-            <tr>
-              <th>Staff</th>
-              <th>Job</th>
-              <th>Rate</th>
-              <th>Scheduled Time</th>
-              <th>Time In</th>
-              <th>Time Out</th>
-              <th class="align-right">Hrs Worked</th>
-              <th class="align-right">Shuttle Bonus</th>
-              <th class="align-right">CC Tips</th>
-              <th class="align-right">Event Bonus</th>
-              <th class="align-right">Hourly Bonus</th>
-              <th class="align-right">Payout</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let t of timesheet">
-              <td>{{ checkForNullString(t.lastName) }}, {{ checkForNullString(t.firstName) }}</td>
-              <td>{{ checkForNullString(t.jobName) }}</td>
-              <td>{{ checkForNullNum(t.hourlyRate) }}</td>
-              <td>{{ checkForNullString(getTime(t.scheduledArrivalTime)) }}</td>
-              <td>{{ checkForNullString(getTime(t.timeIn)) }}</td>
-              <td>{{ checkForNullString(getTime(t.timeOut)) }}</td>
-              <td class="align-right">{{ checkForNullNum(t.hoursWorked) }}</td>
-              <td class="align-right">{{ checkForNullNum(t.eventBonus) }}</td>
-              <td class="align-right">{{ checkForNullNum(t.hourlyBonus) }}</td>
-              <td class="align-right">{{ checkForNullNum(t.shuttleBonus) }}</td>
-              <td class="align-right">{{ checkForNullNum(t.creditCardTips) }}</td>
-              <td class="align-right">{{ checkForNullNum(t.creditAmount) }}</td>
-            </tr>
-            <tr>
-              <td colspan="4">
-                <button type="button" class="btn event-btn" (click)="onEditEvent()">Add Staff</button>
-              </td>
-              <td colspan="4">
-                <button type="button" class="btn event-btn" (click)="onEditEvent()">Delete Staff</button>
-              </td>
-              <td colspan="4">
-                <button type="button" class="btn event-btn" (click)="onEditEvent()">Add Bonus</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+<div *ngIf="idVenue == 3">
+  <div *ngIf="eventEdit == false">
+    <table class="table table-sm table-responsive">
+      <tbody>
+        <tr>
+          <td colspan="4">Doors: {{ checkForNullString(getTime(event.Date)) }}</td>
+          <td colspan="4">Location: {{ checkForNullString(event.location) }}</td>
+          <td colspan="4"></td>
+        </tr>
+        <tr>
+          <td colspan="4">Total Sales: {{ checkForNullNum(event.totalSalesCf) }}</td>
+          <td colspan="4">Venue Bonus: {{ checkForNullNum(event.venueBonus) }}</td>
+        </tr>
+        <tr>
+          <td colspan="4">Payout: ${{ checkForNullNum(event.payout) }}</td>
+          <td colspan="4">Est. Check: ${{ checkForNullNum(event.estimatedCheck) }}</td>
+          <td colspan="4">Est. Profit: ${{ checkForNullNum(event.estimatedProfit) }}</td>
+        </tr>
+        <tr>
+          <td colspan="4">Discrepancy: ${{ checkForNullNum(event.discrepancy) }}</td>
+          <td colspan="4">Actual Check: ${{ checkForNullNum(event.actualCheck) }}</td>
+          <td colspan="4">Actual Profit: ${{ checkForNullNum(event.actualProfit) }}</td>
+        </tr>
+        <tr>
+          <td colspan="4">TAC Cut: ${{ checkForNullNum(event.tacCut) }}</td>
+          <td colspan="4">DR Cut: ${{ checkForNullNum(event.drCut) }}</td>
+          <td colspan="4">Coordinator Payout: {{ checkForNullNum(event.coordinatorAdminAmt) }}</td>
+        </tr>
+        <tr>
+          <td colspan="12">Notes: ${{ checkForNullString(event.eventNotes) }}</td>
+        </tr>
+        <tr>
+          <td colspan="4">  
+            <i class="far fa-square" *ngIf="!event.closed"></i>
+            <i class="far fa-check-square" *ngIf="event.closed"></i>
+            Closed
+          </td>
+          <td colspan="4">
+            <i class="far fa-square" *ngIf="!event.shuttleBonusBool"></i>
+            <i class="far fa-check-square" *ngIf="event.shuttleBonusBool"></i>
+            Shuttle Bonus
+          </td>
+          <td colspan="4">Shuttle Bonus Amount: {{ checkForNullNum(event.shuttleBonusAmountCf) }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <tr>
+      <td colspan="3">
+        <button type="button" class="btn event-btn" (click)="onEditEvent()">Edit Event</button>
+      </td>
+      <td colspan="3">
+        <button type="button" class="btn event-btn" (click)="confirmGateList=false; onDeleteEvent()">Delete Event</button>
+      </td>
+      <td colspan="3">
+        <button type="button" class="btn event-btn">Send Reminder</button>
+      </td>
+    </tr>
+
+    <div class="deleteConfirm" *ngIf="confirmDelete">
+      Are your sure you want to delete this event?&nbsp;
+      <button class="btn btn-outline-danger" (click)="onDeleteNo()">No</button>
+      &nbsp;&nbsp;
+      <button class="btn btn-outline-info" (click)="onDeleteYes()">Yes</button>
+    </div>
+    
+    <div class="row">
+      <div class="col-md-12">
+        <div *ngIf="!getStaff">
+          <button class="btn get-staff-btn" (click)="getTimesheetForEvent()">Get Staff</button>
+        </div>
+        <div *ngIf="getStaff">
+          <div *ngIf="!eventStaffEdit && !eventStaffAdd">
+            <table class="table table-striped table-sm">
+              <thead class="thead-dark">
+                <tr>
+                  <th>Staff</th>
+                  <th>Job</th>
+                  <th>Rate</th>
+                  <th>Scheduled Time</th>
+                  <th>Time In</th>
+                  <th>Time Out</th>
+                  <th class="align-right">Hrs Worked</th>
+                  <th class="align-right">Shuttle Bonus</th>
+                  <th class="align-right">CC Tips</th>
+                  <th class="align-right">Event Bonus</th>
+                  <th class="align-right">Hourly Bonus</th>
+                  <th class="align-right">Payout</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let t of timesheet">
+                  <td>{{ checkForNullString(t.lastName) }}, {{ checkForNullString(t.firstName) }}</td>
+                  <td>{{ checkForNullString(t.jobName) }}</td>
+                  <td>{{ checkForNullNum(t.hourlyRate) }}</td>
+                  <td>{{ checkForNullString(getTime(t.scheduledArrivalTime)) }}</td>
+                  <td>{{ checkForNullString(getTime(t.timeIn)) }}</td>
+                  <td>{{ checkForNullString(getTime(t.timeOut)) }}</td>
+                  <td class="align-right">{{ checkForNullNum(t.hoursWorked) }}</td>
+                  <td class="align-right">{{ checkForNullNum(t.eventBonus) }}</td>
+                  <td class="align-right">{{ checkForNullNum(t.hourlyBonus) }}</td>
+                  <td class="align-right">{{ checkForNullNum(t.shuttleBonus) }}</td>
+                  <td class="align-right">{{ checkForNullNum(t.creditCardTips) }}</td>
+                  <td class="align-right">{{ checkForNullNum(t.creditAmount) }}</td>
+                  <td>
+                    <button class="btn btn-info" (click)="onEditStaff(t)">Edit</button>
+                  </td>
+                </tr>
+              </tbody>
+              <tr>
+                <td colspan="12">
+                  <button type="button" class="btn btn-info" (click)="onAddStaff()">Add Staff</button>
+                  &nbsp;&nbsp;
+                  <button class="btn btn-info" (click)="onAddEventBonus()">Add Event Bonus</button>
+                  &nbsp;&nbsp;
+                  <button class="btn btn-info" (click)="onAddHourlyBonus()">Add Hourly Bonus</button>
+                </td>
+              </tr>
+            </table>
+
+            <div *ngIf="addEventBonus">
+              <form [formGroup]="ebForm" (ngSubmit)="onEventBonusAdded()">
+                <div class="form-row">
+                  <div class="form-group col-md-5">
+                    Add Event Bonus to all staff:
+                  </div>
+                  <div class="form-group col-md-2">
+                    <input type="number" class="numInput form-control" id="ebAmount" formControlName="ebAmount">
+                  </div>
+                  <div class="form-group col-md-2">
+                    <button class="btn btn-outline-info" type="submit">Add</button>
+                  </div>
+                  <div class="form-group col-md-2">
+                    <button class="btn btn-outline-info" type="button" (click)="onCancelBonus()">Cancel</button>
+                  </div>
+                </div>
+              </form>
+             </div>
+
+            <div *ngIf="addHourlyBonus">
+              <form [formGroup]="hbForm" (ngSubmit)="onHourlyBonusAdded()">
+                <div class="form-row">
+                  <div class="form-group col-md-5">
+                    Add Hourly Bonus to all staff:
+                  </div>
+                  <div class="form-group col-md-2">
+                    <input type="number" class="numInput form-control" id="hbAmount" formControlName="hbAmount">
+                  </div>
+                  <div class="form-group col-md-2">
+                    <button class="btn btn-outline-info" type="submit">Add</button>
+                  </div>
+                  <div class="form-group col-md-2">
+                    <button class="btn btn-outline-info" type="button" (click)="onCancelBonus()">Cancel</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+          </div>
+   
+          <div *ngIf="eventStaffEdit == true">
+            <app-event-staff-edit [timesheet]="editTimesheet" [event]="event"></app-event-staff-edit>
+          </div>
+          <div *ngIf="eventStaffAdd == true">
+            <app-event-staff-add [event]="event"></app-event-staff-add>
+          </div>
+
+        </div>
+
       </div>
     </div>
   </div>
+
+  <app-event-edit *ngIf="eventEdit == true" [currentVenueID]="currentVenueID" [event]="event"></app-event-edit>
+
+  
 </div>
 
 

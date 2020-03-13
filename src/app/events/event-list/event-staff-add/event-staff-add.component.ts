@@ -1,3 +1,4 @@
+import { Event } from './../../../models/event.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MathService } from './../../math.service';
 import { Staff } from './../../../models/staff.model';
@@ -6,7 +7,6 @@ import { Timesheet } from './../../../models/timesheet.model';
 import { Job } from './../../../models/job.model';
 import { EventService } from './../../event.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { EventPNC } from './../../../models/eventPNC.model';
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
@@ -15,12 +15,13 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./event-staff-add.component.css']
 })
 export class EventStaffAddComponent implements OnInit {
-  @Input() event: EventPNC;
+  @Input() event: Event;
 
   staffAddForm: FormGroup;
   jobs: Job[] = [];
   staff: Staff[] = [];
   timesheet: Timesheet;
+  idVenue: number; 
 
   constructor(private eventService: EventService,
               private staffService: StaffService,
@@ -29,18 +30,47 @@ export class EventStaffAddComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit() {
+    this.idVenue = this.event.venueID;
     this.initForm();
 
-    this.eventService.getPncJobs().subscribe(jobs => {
-      jobs.forEach(job => {
-        this.jobs.push(job);
+    if(this.idVenue == 1) {
+      this.eventService.getPncJobs().subscribe(jobs => {
+        jobs.forEach(job => {
+          this.jobs.push(job);
+        });
       });
-    });
+  
+      this.staffService.getActivePncStaff().subscribe(staff => {
+        this.staffService.setActivePncStaff(staff);
+        this.staff = this.staffService.returnActivePncStaff();
+      });
+    }
 
-    this.staffService.getActivePncStaff().subscribe(staff => {
-      this.staffService.setActivePncStaff(staff);
-      this.staff = this.staffService.returnActivePncStaff();
-    });
+    else if(this.idVenue == 2) {
+      this.eventService.getWcJobs().subscribe(jobs => {
+        jobs.forEach(job => {
+          this.jobs.push(job);
+        });
+      });
+  
+      this.staffService.getActiveWcStaff().subscribe(staff => {
+        this.staffService.setActiveWcStaff(staff);
+        this.staff = this.staffService.returnActiveWcStaff();
+      });
+    }
+
+    else if(this.idVenue == 3) {
+      this.eventService.getCfJobs().subscribe(jobs => {
+        jobs.forEach(job => {
+          this.jobs.push(job);
+        });
+      });
+  
+      this.staffService.getActiveCfStaff().subscribe(staff => {
+        this.staffService.setActiveCfStaff(staff);
+        this.staff = this.staffService.returnActiveCfStaff();
+      });
+    }
 
     this.onChanges();
   }
@@ -94,22 +124,55 @@ export class EventStaffAddComponent implements OnInit {
 
   onSubmit() {
     this.createTimesheet();
+  
     this.timesheet = this.mathService.calculateOneTimeSheet(this.timesheet);
-    this.eventService.updateTimesheets(this.timesheet);
+    this.eventService.addToTimesheets(this.timesheet);
     this.eventService.addTimesheetinDB(this.timesheet, this.event.idevent).subscribe(id => {
       this.timesheet.idtimesheet = id;
-      this.eventService.getContractInfo().subscribe(contract => {
-        this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
-          this.event = this.mathService.calculatePncEvent(this.event, contract[0], timesheets);
-          this.eventService.editPncEvent(this.event).subscribe(res => {
-            this.eventService.getAllEventsPnc().subscribe(events => {
-              this.eventService.setEventsPnc(events);
-              this.eventService.setEventStaffEdit(false);
-              this.router.navigate([], {relativeTo: this.route});
+      if(this.idVenue == 1) {
+        this.eventService.getPncContractInfo().subscribe(contract => {
+          this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
+            this.event = this.mathService.calculatePncEvent(this.event, contract[0], timesheets);
+            this.eventService.editEvent(this.event).subscribe(res => {
+              this.eventService.getAllEvents().subscribe(events => {
+                this.eventService.setAllEvents(events);
+                this.eventService.setEventStaffEdit(false);
+                this.router.navigate([], {relativeTo: this.route});
+              });
             });
           });
         });
-      });
+      }
+
+      else if(this.idVenue == 2) {
+        this.eventService.getWcContractInfo().subscribe(contract => {
+          this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
+            this.event = this.mathService.calculateWcEvent(this.event, contract[0], timesheets);
+            this.eventService.editEvent(this.event).subscribe(res => {
+              this.eventService.getAllEvents().subscribe(events => {
+                this.eventService.setAllEvents(events);
+                this.eventService.setEventStaffEdit(false);
+                this.router.navigate([], {relativeTo: this.route});
+              });
+            });
+          });
+        });
+      }
+
+      else if(this.idVenue == 3) {
+        this.eventService.getCfContractInfo().subscribe(contract => {
+          this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
+            this.event = this.mathService.calculateCfEvent(this.event, contract[0], timesheets);
+            this.eventService.editEvent(this.event).subscribe(res => {
+              this.eventService.getAllEvents().subscribe(events => {
+                this.eventService.setAllEvents(events);
+                this.eventService.setEventStaffEdit(false);
+                this.router.navigate([], {relativeTo: this.route});
+              });
+            });
+          });
+        });
+      }
     });
   }
 
@@ -137,11 +200,6 @@ export class EventStaffAddComponent implements OnInit {
         guar = job.isGuarantee;
       }
     });
-    console.log("position: " + this.staffAddForm.value['position']);
-    console.log("jobID: " + jobID);
-
-    console.log("personID: " + personID);
-    console.log("member: " + this.staffAddForm.value['member']);
 
     this.timesheet = new Timesheet(
       0, 
@@ -151,9 +209,9 @@ export class EventStaffAddComponent implements OnInit {
       this.staffAddForm.value['position'],
       jobID,
       this.staffAddForm.value['scheduledArrivalTime'],
-      this.staffAddForm.value['hourlyRate'],
+      this.staffAddForm.value['rate'],
       this.staffAddForm.value['timeIn'],
-      this.staffAddForm.valueChanges['timeOut'],
+      this.staffAddForm.value['timeOut'],
       0,
       0,
       this.staffAddForm.value['eventBonus'],
@@ -164,5 +222,4 @@ export class EventStaffAddComponent implements OnInit {
       0
     );
   }
-
 }

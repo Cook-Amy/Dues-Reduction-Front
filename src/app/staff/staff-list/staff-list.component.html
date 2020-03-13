@@ -18,10 +18,13 @@
 
   </div>
   <div class="col-md-6">
-    <button class="btn new-event-btn">Add New Staff Member</button>
+    <button class="btn new-event-btn" (click)="onAddStaff()">Add New Staff Member</button>
   </div>
 </div>
 
+<app-staff-new *ngIf="staffNew == true"
+                [currentVenueID]="currentVenueID">
+</app-staff-new>
 <hr>
 
 <!-- Collapsible Table -->

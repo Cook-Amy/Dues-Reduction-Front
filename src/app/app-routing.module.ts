@@ -20,43 +20,26 @@ const routes: Routes = [
   { path: 'pnc', component: VenuesComponent, children: [
     { path: '', component: VenueStartComponent },
     { path: 'events', component: EventsComponent },
-    // { path: 'events', component: EventsComponent, children: [
-    //   { path: 'new', component: EventEditComponent },
-    //   { path: ':id', component: EventDetailComponent },
-    //   { path: ':id/edit', component: EventEditComponent }
-    // ] },
-    { path: 'staff', component: StaffComponent, children: [
-      { path: ':id', component: StaffDetailComponent }
-    ] }
+    { path: 'staff', component: StaffComponent }
    ]},
 
   { path: 'wc', component: VenuesComponent, children: [
     { path: '', component: VenueStartComponent },
     { path: 'events', component: EventsComponent},
-    // { path: 'events', component: EventsComponent, children: [
-    //   { path: 'new', component: EventEditComponent },
-    //   { path: ':id', component: EventDetailComponent },
-    //   { path: ':id/edit', component: EventEditComponent }
-    // ] },
-    { path: 'staff', component: StaffComponent, children: [
-      { path: ':id', component: StaffDetailComponent }
-    ] }
+    { path: 'staff', component: StaffComponent }
    ]},
 
   { path: 'cf', component: VenuesComponent, children: [
     { path: '', component: VenueStartComponent },
     { path: 'events', component: EventsComponent},
-    // { path: 'events', component: EventsComponent, children: [
-    //   { path: 'new', component: EventEditComponent },
-    //   { path: ':id', component: EventDetailComponent },
-    //   { path: ':id/edit', component: EventEditComponent }
-    // ] },
-    { path: 'staff', component: StaffComponent, children: [
-      { path: ':id', component: StaffDetailComponent }
-    ] }
+    { path: 'staff', component: StaffComponent }
    ]},
 
-  { path: 'admin', component: AdminPageComponent },
+  { path: 'admin', component: VenuesComponent, children: [
+    { path: '', component: VenueStartComponent },
+    { path: 'events', component: EventsComponent},
+    { path: 'staff', component: StaffComponent }
+   ]},
 
   { path: 'login', component: AuthComponent }
 ];

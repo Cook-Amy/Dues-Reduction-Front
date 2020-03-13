@@ -1,12 +1,10 @@
+<hr>
+
 <!--------------------------------------------------------------------------------------------
 -- PNC new staff 
 ---------------------------------------------------------------------------------------------->
 <div *ngIf="currentVenueID == 1">
-  <form [formGroup]="editStaffForm1" (ngSubmit)="onSubmit()">
-
-    <div class="form-row staffName">
-      {{ staffPnc.name }}
-    </div>
+  <form [formGroup]="newStaffForm1" (ngSubmit)="onSubmit()">
 
     <div class="form-row">
       <div class="form-group col-md-4">
@@ -91,7 +89,7 @@
 -- WC new staff 
 ---------------------------------------------------------------------------------------------->
 <div *ngIf="currentVenueID == 2">
-  <form [formGroup]="editStaffForm2" (ngSubmit)="onSubmit()">
+  <form [formGroup]="newStaffForm2" (ngSubmit)="onSubmit()">
 
     <div class="form-row">
       <div class="form-group col-md-4">
@@ -159,7 +157,7 @@
 -- CF new staff 
 ---------------------------------------------------------------------------------------------->
 <div *ngIf="currentVenueID == 3">
-  <form [formGroup]="editStaffForm3" (ngSubmit)="onSubmit()">
+  <form [formGroup]="newStaffForm3" (ngSubmit)="onSubmit()">
 
     <div class="form-row">
       <div class="form-group col-md-4">

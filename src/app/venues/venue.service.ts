@@ -47,6 +47,17 @@ export class VenueService {
     }
   }
 
+  setAllVenue() {
+    this.currentVenue = new Venue(
+      99, 
+      "Administrator",
+      "Manage all venues.",
+      "",
+      "",
+      "admin"
+    );
+  }
+
   getCurrentVenue() {
     return this.currentVenue;
   }

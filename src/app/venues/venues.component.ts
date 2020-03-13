@@ -9,7 +9,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./venues.component.css']
 })
 export class VenuesComponent implements OnInit {
-  // public venues: Venue[];
   venueName: string;
   currentVenue: Venue;
   
@@ -19,17 +18,20 @@ export class VenuesComponent implements OnInit {
 
   ngOnInit() {
     const venuePath: string = this.router.url;
-    // console.log("venue path: " + venuePath);
     this.getCurrentVenue(venuePath);
   }
 
   getCurrentVenue(venuePath) {
-    if(this.venueService.getVenuesLength() < 1) {
+    if(venuePath == "/admin"){
+      this.venueService.setAllVenue();
+      this.currentVenue = this.venueService.getCurrentVenue();
+      this.venueName = this.currentVenue.name;
+    }
+    else if(this.venueService.getVenuesLength() < 1) {
       this.venueService.getAllVenues().subscribe(venues => {
         this.venueService.setVenues(venues);
         this.venueService.setCurrentVenue(venuePath);
         this.currentVenue = this.venueService.getCurrentVenue();
-        // console.log("current venue: " + this.currentVenue.idvenue);
         this.venueName = this.currentVenue.name;
       })
     }
@@ -37,7 +39,6 @@ export class VenuesComponent implements OnInit {
       // console.log("already have venues saved.");
       this.venueService.setCurrentVenue(venuePath);
       this.currentVenue = this.venueService.getCurrentVenue();
-      // console.log("current venue 2: " + this.currentVenue.idvenue);
       this.venueName = this.currentVenue.name;
     }
   }

@@ -1,8 +1,7 @@
+import { Event } from './../../../models/event.model';
 import { MathService } from './../../math.service';
-import { Timesheet } from './../../../models/timesheet.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EventService } from './../../event.service';
-import { EventPNC } from './../../../models/eventPNC.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit, Input } from '@angular/core';
 
@@ -12,11 +11,12 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./event-edit.component.css']
 })
 export class EventEditComponent implements OnInit {
-  @Input() event: EventPNC;
+  @Input() event: Event;
   @Input() currentVenueID: number;
+
   public dateValue: Date;
   editEventForm: FormGroup;
-  // allPncEvents: EventPNC[];
+  idVenue: number;
 
   constructor(private eventService: EventService,
               private mathService: MathService,
@@ -24,6 +24,7 @@ export class EventEditComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit() {
+    this.idVenue = this.event.venueID;
     this.initForm();
   }
 
@@ -50,30 +51,45 @@ export class EventEditComponent implements OnInit {
     }
     let inputLocation = this.event.location;
     let coordinatorAdminAmt = this.event.coordinatorAdminAmt;
-    let commBonus = this.event.metCommissionBonus;
-    let guarantee = this.event.guarantee;
-    let countTotal = this.event.eventCountsTowardsTotal;
     let closed = this.event.closed;
-    let totalSales = this.event.totalSales;
-    let alcSales = this.event.alcSales;
     let bonus = this.event.venueBonus;
     let checkRcvd = this.event.actualCheck;
     let notes = this.event.eventNotes;
+
+    let totalSalesPnc = this.event.totalSalesPnc;
+    let commBonus = this.event.metCommissionBonus;
+    let guarantee = this.event.guarantee;
+    let countTotal = this.event.eventCountsTowardsTotal;
+    let alcSales = this.event.alcSales;
+
+    let creditCardTips = this.event.creditCardTips;
+    let shuttleBonusBoolWc = this.event.shuttleBonusBoolWc;
+    let shuttleBonusAmountWc = this.event.shuttleBonusAmountWc;
+
+    let totalSalesCf = this.event.totalSalesCf;
+    let shuttleBonusBoolCf = this.event.shuttleBonusBoolCf;
+    let shuttleBonusAmountCf = this.event.shuttleBonusAmountCf;
     
     this.editEventForm = new FormGroup({
       'eventTitle': new FormControl(eventTitle, Validators.required),
       'dateTime': new FormControl(dateTime, Validators.required),
-      'inputLocation': new FormControl(inputLocation, Validators.required),
       'coordinatorAdminAmt': new FormControl(coordinatorAdminAmt, Validators.required),
+      'inputLocation': new FormControl(inputLocation, Validators.required),
       'commBonus': new FormControl(commBonus, Validators.required),
       'guarantee': new FormControl(guarantee, Validators.required),
       'countTotal': new FormControl(countTotal, Validators.required),
       'closed': new FormControl(closed, Validators.required),
-      'totalSales': new FormControl(totalSales, Validators.required),
+      'totalSalesPnc': new FormControl(totalSalesPnc, Validators.required),
       'alcSales': new FormControl(alcSales, Validators.required),
       'bonus': new FormControl(bonus, Validators.required),
       'checkRcvd': new FormControl(checkRcvd, Validators.required),
-      'notes': new FormControl(notes, Validators.required)
+      'notes': new FormControl(notes, Validators.required),
+      'creditCardTips': new FormControl(creditCardTips, Validators.required),
+      'shuttleBonusBoolWc': new FormControl(shuttleBonusBoolWc, Validators.required),
+      'shuttleBonusAmountWc': new FormControl(shuttleBonusAmountWc, Validators.required),
+      'totalSalesCf': new FormControl(totalSalesCf, Validators.required),
+      'shuttleBonusBoolCf': new FormControl(shuttleBonusBoolCf, Validators.required),
+      'shuttleBonusAmountCf': new FormControl(shuttleBonusAmountCf, Validators.required)
     });
   }
 
@@ -83,31 +99,50 @@ export class EventEditComponent implements OnInit {
   }
 
   onSubmit() {
-    if(this.currentVenueID == 1) {
-      this.updatePncEvent();
-      this.eventService.getContractInfo().subscribe(contract => {
+    this.updateEvent();
+
+    if(this.idVenue == 1) {
+      this.eventService.getPncContractInfo().subscribe(contract => {
         this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
           this.event = this.mathService.calculatePncEvent(this.event, contract[0], timesheets);
-          this.eventService.editPncEvent(this.event).subscribe(res => {
-            this.eventService.getAllEventsPnc().subscribe(events => {
-              this.eventService.setEventsPnc(events);
+          this.eventService.editEvent(this.event).subscribe(res => {
+            this.eventService.getAllEvents().subscribe(events => {
+              this.eventService.setAllEvents(events);
               this.onCancelEdit();
             });
           });
         });
       });
     }
-    else if(this.currentVenueID == 2) {
-
+    else if(this.idVenue == 2) {
+      this.eventService.getWcContractInfo().subscribe(contract => {
+        this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
+          this.event = this.mathService.calculateWcEvent(this.event, contract[0], timesheets);
+          this.eventService.editEvent(this.event).subscribe(res => {
+            this.eventService.getAllEvents().subscribe(events => {
+              this.eventService.setAllEvents(events);
+              this.onCancelEdit();
+            });
+          });
+        });
+      });
     }
-    else if(this.currentVenueID == 3) {
-
+    else if(this.idVenue == 3) {
+      this.eventService.getCfContractInfo().subscribe(contract => {
+        this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
+          this.event = this.mathService.calculateCfEvent(this.event, contract[0], timesheets);
+          this.eventService.editEvent(this.event).subscribe(res => {
+            this.eventService.getAllEvents().subscribe(events => {
+              this.eventService.setAllEvents(events);
+              this.onCancelEdit();
+            });
+          });
+        });
+      });
     }
   }
 
-
-
-  updatePncEvent() {
+  updateEvent() {
     this.event.Title = this.editEventForm.value['eventTitle'];
     this.event.Date = this.editEventForm.value['dateTime'];
     this.event.location = this.editEventForm.value['inputLocation'];
@@ -116,11 +151,25 @@ export class EventEditComponent implements OnInit {
     this.event.actualCheck = parseFloat(this.editEventForm.value['checkRcvd']);
     this.event.eventNotes = this.editEventForm.value['notes'];
     this.event.closed = this.editEventForm.value['closed'];
-    this.event.metCommissionBonus = this.editEventForm.value['commBonus'];
-    this.event.guarantee = this.editEventForm.value['guarantee'];
-    this.event.totalSales = parseFloat(this.editEventForm.value['totalSales']);
-    this.event.alcSales = parseFloat(this.editEventForm.value['alcSales']);
-    this.event.eventCountsTowardsTotal = this.editEventForm.value['countTotal'];
-  }
 
+    if(this.idVenue == 1) {
+      this.event.metCommissionBonus = this.editEventForm.value['commBonus'];
+      this.event.guarantee = this.editEventForm.value['guarantee'];
+      this.event.totalSalesPnc = parseFloat(this.editEventForm.value['totalSalesPnc']);
+      this.event.alcSales = parseFloat(this.editEventForm.value['alcSales']);
+      this.event.eventCountsTowardsTotal = this.editEventForm.value['countTotal'];
+    }
+
+    else if(this.idVenue == 2) {
+      this.event.creditCardTips = parseFloat(this.editEventForm.value['creditCardTips']);
+      this.event.shuttleBonusBoolWc = this.editEventForm.value['shuttleBonusBoolWc'];
+      this.event.shuttleBonusAmountWc = parseFloat(this.editEventForm.value['shuttleBonusAmountWc']);
+    }
+    
+    else if(this.idVenue == 3) {
+      this.event.totalSalesCf = this.editEventForm.value['totalSalesCf'];
+      this.event.shuttleBonusBoolCf = this.editEventForm.value['shuttleBonusBoolCf'];
+      this.event.shuttleBonusAmountCf = parseFloat(this.editEventForm.value['shuttleBonusAmountCf']);
+    }
+  }
 }

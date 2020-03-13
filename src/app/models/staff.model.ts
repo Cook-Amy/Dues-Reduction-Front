@@ -7,7 +7,7 @@ export class Staff {
   public Name: string;
   public Email: string;
   public Phone: string;
-  public tuAccout: string;
+  public tuAccount: string;
 
   public pncActive: boolean;
   public pncInactive: boolean;
@@ -36,7 +36,7 @@ export class Staff {
     Name: string,
     Email: string,
     Phone: string,
-    tuAccout: string,
+    tuAccount: string,
 
     pncActive: boolean,
     pncInactive: boolean,
@@ -51,6 +51,7 @@ export class Staff {
     pncHealthForm: boolean,
     pncExperienced: boolean,
     pncBars: string,
+    pncBarsRefresher: boolean,
     pncWaiver: boolean,
 
     wcTeamTraining: string,
@@ -63,7 +64,7 @@ export class Staff {
     this.Name = Name;
     this.Email = Email;
     this.Phone = Phone;
-    this.tuAccout = tuAccout;
+    this.tuAccount = tuAccount;
 
     this.pncActive = pncActive;
     this.pncInactive = pncInactive;
@@ -78,6 +79,7 @@ export class Staff {
     this.pncHealthForm = pncHealthForm;
     this.pncExperienced = pncExperienced;
     this.pncBars = pncBars;
+    this.pncBarsRefresher = pncBarsRefresher;
     this.pncWaiver = pncWaiver;
     
     this.wcTeamTraining = wcTeamTraining;

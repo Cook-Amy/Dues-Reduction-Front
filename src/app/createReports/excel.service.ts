@@ -1,3 +1,5 @@
+import { Event } from './../models/event.model';
+import { EventWC } from './../models/eventWC.model';
 import { GlobalVariables } from './../shared/GlobalVariables';
 import { HttpParams, HttpClient } from '@angular/common/http';
 import { EventPNC } from './../models/eventPNC.model';
@@ -26,9 +28,16 @@ export class ExcelService {
     return sendGateList;
   }
 
-  generateGateList(event: EventPNC, staff: any) {
+  generatePncGateList(event: Event, staff: any) {
     const params = { event: event, staff: staff };
-    const generateGateList = this.http.post(this.serverUrl + 'sendGateList', params);
+    const generateGateList = this.http.post(this.serverUrl + 'sendPncGateList', params);
+    return generateGateList;
+
+  }
+
+  generateWcGateList(event: Event, staff: any) {
+    const params = { event: event, staff: staff };
+    const generateGateList = this.http.post(this.serverUrl + 'sendWcGateList', params);
     return generateGateList;
 
   }

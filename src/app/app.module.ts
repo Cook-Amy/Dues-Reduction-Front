@@ -13,7 +13,7 @@ import { MatFormFieldModule, MatInputModule } from  '@angular/material';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DlDateTimeDateModule, DlDateTimePickerModule } from 'angular-bootstrap-datetimepicker';
-import { DateTimePickerModule, TimePickerModule } from '@syncfusion/ej2-angular-calendars';
+import { DateTimePickerModule, TimePickerModule, DatePickerModule } from '@syncfusion/ej2-angular-calendars';
 
 
 
@@ -44,8 +44,8 @@ import { StaffTableComponent } from './staff/staff-list/staff-table/staff-table.
 import { EventNewComponent } from './events/event-list/event-new/event-new.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { EventStaffEditComponent } from './events/event-list/event-staff-edit/event-staff-edit.component';
-import { SingleEditLineComponent } from './events/event-list/event-staff-edit/single-edit-line/single-edit-line.component';
 import { EventStaffAddComponent } from './events/event-list/event-staff-add/event-staff-add.component';
+import { StaffNewComponent } from './staff/staff-list/staff-new/staff-new.component';
 
 
 
@@ -79,8 +79,8 @@ import { EventStaffAddComponent } from './events/event-list/event-staff-add/even
     EventNewComponent,
     FooterComponent,
     EventStaffEditComponent,
-    SingleEditLineComponent,
-    EventStaffAddComponent
+    EventStaffAddComponent,
+    StaffNewComponent
   ],
   imports: [
     BrowserModule,
@@ -98,7 +98,8 @@ import { EventStaffAddComponent } from './events/event-list/event-staff-add/even
     DlDateTimeDateModule,
     DlDateTimePickerModule,
     DateTimePickerModule,
-    TimePickerModule
+    TimePickerModule, 
+    DatePickerModule
   ],
   providers: [GlobalVariables],
   bootstrap: [AppComponent]

@@ -1,5 +1,5 @@
+import { Event } from './../../../models/event.model';
 import { ActivatedRoute, Router } from '@angular/router';
-import { EventPNC } from './../../../models/eventPNC.model';
 import { MathService } from './../../math.service';
 import { Job } from './../../../models/job.model';
 import { EventService } from './../../event.service';
@@ -14,20 +14,12 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class EventStaffEditComponent implements OnInit {
   @Input() timesheet: Timesheet;
-  @Input() event: EventPNC;
+  @Input() event: Event;
 
-  name: string;
-  pos: string;
-  rate: number;
-  arrivalTime: string;
-  timeIn: string;
-  timeOut: string;
-  eventBonus: number;
-  hourlyBonus: number;
   askDelete = false;
-
   jobs: Job[] = [];
   staffEditForm: FormGroup;
+  idVenue: number;
 
   constructor(public eventService: EventService,
               public mathService: MathService,
@@ -35,27 +27,32 @@ export class EventStaffEditComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit() {
-    this.setUpTimesheet();
+    this.idVenue = this.event.venueID;
     this.initForm();
-
-    this.eventService.getPncJobs().subscribe(jobs => {
-      jobs.forEach(job => {
-        this.jobs.push(job);
+    if(this.idVenue == 1) {
+      this.eventService.getPncJobs().subscribe(jobs => {
+        jobs.forEach(job => {
+          this.jobs.push(job);
+        });
       });
-    });
+    }
 
+    else if(this.idVenue == 2) {
+      this.eventService.getWcJobs().subscribe(jobs => {
+        jobs.forEach(job => {
+          this.jobs.push(job);
+        });
+      });
+    }
+
+    else if(this.idVenue == 3) {
+      this.eventService.getCfJobs().subscribe(jobs => {
+        jobs.forEach(job => {
+          this.jobs.push(job);
+        });
+      });
+    }
     this.onChanges();
-  }
-
-  setUpTimesheet() {
-    this.name = this.timesheet.lastName + ", " + this.timesheet.firstName;
-    this.pos = this.timesheet.jobName;
-    this.rate = this.timesheet.hourlyRate;
-    this.arrivalTime = this.timesheet.scheduledArrivalTime;
-    this.timeIn = this.timesheet.timeIn;
-    this.timeOut = this.timesheet.timeOut;
-    this.eventBonus = this.timesheet.eventBonus;
-    this.hourlyBonus = this.timesheet.hourlyBonus;
   }
 
   initForm() {
@@ -110,22 +107,55 @@ export class EventStaffEditComponent implements OnInit {
 
   onSubmit() {
     this.updateTimesheet();
+
     this.timesheet = this.mathService.calculateOneTimeSheet(this.timesheet);
     this.eventService.updateTimesheets(this.timesheet);
     // update timesheet in DB
     this.eventService.updateTimesheetDB(this.timesheet).subscribe(res => {
-      this.eventService.getContractInfo().subscribe(contract => {
-        this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
-          this.event = this.mathService.calculatePncEvent(this.event, contract[0], timesheets);
-          this.eventService.editPncEvent(this.event).subscribe(res => {
-            this.eventService.getAllEventsPnc().subscribe(events => {
-              this.eventService.setEventsPnc(events);
-              this.eventService.setEventStaffEdit(false);
-              this.router.navigate([], {relativeTo: this.route});
+      if(this.idVenue == 1) {
+        this.eventService.getPncContractInfo().subscribe(contract => {
+          this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
+            this.event = this.mathService.calculatePncEvent(this.event, contract[0], timesheets);
+            this.eventService.editEvent(this.event).subscribe(res => {
+              this.eventService.getAllEvents().subscribe(events => {
+                this.eventService.setAllEvents(events);
+                this.eventService.setEventStaffEdit(false);
+                this.router.navigate([], {relativeTo: this.route});
+              });
             });
           });
         });
-      });
+      }
+
+      else if(this.idVenue == 2) {
+        this.eventService.getWcContractInfo().subscribe(contract => {
+          this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
+            this.event = this.mathService.calculateWcEvent(this.event, contract[0], timesheets);
+            this.eventService.editEvent(this.event).subscribe(res => {
+              this.eventService.getAllEvents().subscribe(events => {
+                this.eventService.setAllEvents(events);
+                this.eventService.setEventStaffEdit(false);
+                this.router.navigate([], {relativeTo: this.route});
+              });
+            });
+          });
+        });
+      }
+
+      else if(this.idVenue == 3) {
+        this.eventService.getCfContractInfo().subscribe(contract => {
+          this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
+            this.event = this.mathService.calculateCfEvent(this.event, contract[0], timesheets);
+            this.eventService.editEvent(this.event).subscribe(res => {
+              this.eventService.getAllEvents().subscribe(events => {
+                this.eventService.setAllEvents(events);
+                this.eventService.setEventStaffEdit(false);
+                this.router.navigate([], {relativeTo: this.route});
+              });
+            });
+          });
+        });
+      }
     });
   }
 
@@ -140,7 +170,57 @@ export class EventStaffEditComponent implements OnInit {
   }
 
   onDelete() {
-    this.askDelete = true;
+    if(this.idVenue == 1) {
+      this.eventService.deleteTimesheetinDB(this.timesheet.idtimesheet).subscribe(res => {
+        this.eventService.getPncContractInfo().subscribe(contract => {
+          this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
+            this.event = this.mathService.calculatePncEvent(this.event, contract[0], timesheets);
+            this.eventService.editEvent(this.event).subscribe(res => {
+              this.eventService.getAllEvents().subscribe(events => {
+                this.eventService.setAllEvents(events);
+                this.eventService.setEventStaffEdit(false);
+                this.router.navigate([], {relativeTo: this.route});
+              });
+            });
+          });
+        });
+      });
+    }
+
+    else if(this.idVenue == 2) {
+      this.eventService.deleteTimesheetinDB(this.timesheet.idtimesheet).subscribe(res => {
+        this.eventService.getWcContractInfo().subscribe(contract => {
+          this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
+            this.event = this.mathService.calculateWcEvent(this.event, contract[0], timesheets);
+            this.eventService.editEvent(this.event).subscribe(res => {
+              this.eventService.getAllEvents().subscribe(events => {
+                this.eventService.setAllEvents(events);
+                this.eventService.setEventStaffEdit(false);
+                this.router.navigate([], {relativeTo: this.route});
+              });
+            });
+          });
+        });
+      });
+    }
+
+    else if(this.idVenue == 3) {
+      this.eventService.deleteTimesheetinDB(this.timesheet.idtimesheet).subscribe(res => {
+        this.eventService.getCfContractInfo().subscribe(contract => {
+          this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
+            this.event = this.mathService.calculateCfEvent(this.event, contract[0], timesheets);
+            this.eventService.editEvent(this.event).subscribe(res => {
+              this.eventService.getAllEvents().subscribe(events => {
+                this.eventService.setAllEvents(events);
+                this.eventService.setEventStaffEdit(false);
+                this.router.navigate([], {relativeTo: this.route});
+              });
+            });
+          });
+        });
+      });
+    }
+
   }
 
   onDeleteYes() {

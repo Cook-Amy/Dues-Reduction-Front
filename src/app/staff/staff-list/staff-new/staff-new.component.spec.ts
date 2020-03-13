@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SingleEditLineComponent } from './single-edit-line.component';
+import { StaffNewComponent } from './staff-new.component';
 
-describe('SingleEditLineComponent', () => {
-  let component: SingleEditLineComponent;
-  let fixture: ComponentFixture<SingleEditLineComponent>;
+describe('StaffNewComponent', () => {
+  let component: StaffNewComponent;
+  let fixture: ComponentFixture<StaffNewComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SingleEditLineComponent ]
+      declarations: [ StaffNewComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SingleEditLineComponent);
+    fixture = TestBed.createComponent(StaffNewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

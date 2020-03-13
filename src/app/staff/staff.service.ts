@@ -13,6 +13,11 @@ export class StaffService {
   // serverUrl = 'http://duesbackend-env-1.b6qgyzs5az.us-east-2.elasticbeanstalk.com/';
   serverUrl = GlobalVariables.serverUrl;
 
+  private staffNew = false;
+  staffNewChanged = new Subject<boolean>();
+  private staffEdit = false;
+  staffEditChanged = new Subject<boolean>();
+
 // All venue staff
   private allStaff: Staff[] = [];
   private activeStaff: Staff[] = [];
@@ -87,6 +92,7 @@ export class StaffService {
 
   setAllStaff(staff: Staff[]) {
     this.allStaff = this.sortByNameAscending(staff);
+    this.setAllStaffOther(staff);
     if(staff == null) {
 
     }
@@ -95,40 +101,45 @@ export class StaffService {
     }
   }
 
+  setAllStaffOther(staff: Staff[]) {
+    this.setActiveStaff(staff);
+    this.setInactiveStaff(staff);
+    this.setInterestedStaff(staff);
+  }
+
   setActiveStaff(staff: Staff[]) {
     this.activeStaff = this.sortByNameAscending(staff);
-    if(staff == null) {
-
-    }
-    else {
-      this.activeStaffChanged.next(this.activeStaff.slice());
-    }
   }
 
   setInactiveStaff(staff: Staff[]) {
     this.inactiveStaff = this.sortByNameAscending(staff);
-    if(staff == null) {
-
-    }
-    else {
-      this.inactiveStaffChanged.next(this.inactiveStaff.slice());
-    }
   }
 
   setInterestedStaff(staff: Staff[]) {
     this.interestedStaff = this.sortByNameAscending(staff);
-    if(staff == null) {
-
-    }
-    else {
-      this.interestedStaffChanged.next(this.interestedStaff.slice());
-    }
   }
 
   returnAllStaff() { return this.allStaff.slice(); }
   returnActiveStaff() { return this.activeStaff.slice(); }
   returnInactiveStaff() { return this.inactiveStaff.slice(); }
   returnInterestedStaff() { return this.interestedStaff.slice(); }
+
+  addNewStaff(staff: Staff) {
+    this.allStaff.push(staff);
+    this.allStaffChanged.next(this.allStaff.slice());
+  }
+
+  addNewStaffToDB(staff: Staff) {
+    const params = {staff: staff};
+    const addStaff = this.http.post<number>(this.serverUrl + 'addNewStaff', params);
+    return addStaff;
+  }
+
+  updateStaffInDB(staff: Staff) {
+    const params = {staff: staff};
+    const updateStaff = this.http.post(this.serverUrl + "updateStaff", params);
+    return updateStaff;
+  }
 
 
   /*********************************************************************************
@@ -157,11 +168,26 @@ export class StaffService {
 
   setAllPncStaff(staff: Staff[]) {
     this.allPncStaff = this.sortByNameAscending(staff);
+    var temp: Staff[] = [];
+    var temp2: Staff[] = [];
+    var temp3: Staff[] = [];
+    staff.forEach(st => {
+      if(st.pncActive == true) 
+        temp.push(st);
+      if(st.pncInactive == true)
+        temp2.push(st);
+      if(st.pncInterested == true)
+        temp3.push(st);
+    });
+    this.setActivePncStaff(temp);
+    this.setInactivePncStaff(temp2);
+    this.setInterestedPncStaff(temp3);
+    
     if(staff == null) {
 
     }
     else {
-      this.allPncStaffChanged.next(this.allPncStaff.slice());
+      // this.allPncStaffChanged.next(this.allPncStaff.slice());
     }
   }
 
@@ -171,7 +197,7 @@ export class StaffService {
 
     }
     else {
-      this.activePncStaffChanged.next(this.activePncStaff.slice());
+      // this.activePncStaffChanged.next(this.activePncStaff.slice());
     }
   }
 
@@ -181,7 +207,7 @@ export class StaffService {
 
     }
     else {
-      this.inactivePncStaffChanged.next(this.inactivePncStaff.slice());
+      // this.inactivePncStaffChanged.next(this.inactivePncStaff.slice());
     }
   }
 
@@ -191,7 +217,7 @@ export class StaffService {
 
     }
     else {
-      this.interestedPncStaffChanged.next(this.interestedPncStaff.slice());
+      // this.interestedPncStaffChanged.next(this.interestedPncStaff.slice());
     }
   }
 
@@ -200,7 +226,10 @@ export class StaffService {
   returnInactivePncStaff() { return this.inactivePncStaff.slice(); }
   returnInterestedPncStaff() { return this.interestedPncStaff.slice(); }
 
-
+  addNewPncStaff(staff: Staff) {
+    this.allPncStaff.push(staff);
+    this.allPncStaffChanged.next(this.allPncStaff.slice());
+  }
 
   /*********************************************************************************
    * WC STAFF
@@ -228,11 +257,26 @@ export class StaffService {
 
   setAllWcStaff(staff: Staff[]) {
     this.allWcStaff = this.sortByNameAscending(staff);
+    var temp: Staff[] = [];
+    var temp2: Staff[] = [];
+    var temp3: Staff[] = [];
+    staff.forEach(st => {
+      if(st.wcActive == true) 
+        temp.push(st);
+      if(st.wcInactive == true)
+        temp2.push(st);
+      if(st.wcInterested == true)
+        temp3.push(st);
+    });
+    this.setActiveWcStaff(temp);
+    this.setInactiveWcStaff(temp2);
+    this.setInterestedWcStaff(temp3);
+
     if(staff == null) {
 
     }
     else {
-      this.allWcStaffChanged.next(this.allWcStaff.slice());
+      // this.allWcStaffChanged.next(this.allWcStaff.slice());
     }
   }
 
@@ -242,7 +286,7 @@ export class StaffService {
 
     }
     else {
-      this.activeWcStaffChanged.next(this.activeWcStaff.slice());
+      // this.activeWcStaffChanged.next(this.activeWcStaff.slice());
     }
   }
 
@@ -252,7 +296,7 @@ export class StaffService {
 
     }
     else {
-      this.inactiveWcStaffChanged.next(this.inactiveWcStaff.slice());
+      // this.inactiveWcStaffChanged.next(this.inactiveWcStaff.slice());
     }
   }
 
@@ -262,7 +306,7 @@ export class StaffService {
 
     }
     else {
-      this.interestedWcStaffChanged.next(this.interestedWcStaff.slice());
+      // this.interestedWcStaffChanged.next(this.interestedWcStaff.slice());
     }
   }
 
@@ -299,11 +343,26 @@ export class StaffService {
 
   setAllCfStaff(staff: Staff[]) {
     this.allCfStaff = this.sortByNameAscending(staff);
+    var temp: Staff[] = [];
+    var temp2: Staff[] = [];
+    var temp3: Staff[] = [];
+    staff.forEach(st => {
+      if(st.cfActive == true) 
+        temp.push(st);
+      if(st.cfInactive == true)
+        temp2.push(st);
+      if(st.cfInterested == true)
+        temp3.push(st);
+    });
+    this.setActiveCfStaff(temp);
+    this.setInactiveCfStaff(temp2);
+    this.setInterestedCfStaff(temp3);
+
     if(staff == null) {
 
     }
     else {
-      this.allCfStaffChanged.next(this.allCfStaff.slice());
+      // this.allCfStaffChanged.next(this.allCfStaff.slice());
     }
   }
 
@@ -313,7 +372,7 @@ export class StaffService {
 
     }
     else {
-      this.activeCfStaffChanged.next(this.activeCfStaff.slice());
+      // this.activeCfStaffChanged.next(this.activeCfStaff.slice());
     }
   }
 
@@ -323,7 +382,7 @@ export class StaffService {
 
     }
     else {
-      this.inactiveCfStaffChanged.next(this.inactiveCfStaff.slice());
+      // this.inactiveCfStaffChanged.next(this.inactiveCfStaff.slice());
     }
   }
 
@@ -333,7 +392,7 @@ export class StaffService {
 
     }
     else {
-      this.interestedCfStaffChanged.next(this.interestedCfStaff.slice());
+      // this.interestedCfStaffChanged.next(this.interestedCfStaff.slice());
     }
   }
 
@@ -341,4 +400,27 @@ export class StaffService {
   returnActiveCfStaff() { return this.activeCfStaff.slice(); }
   returnInactiveCfStaff() { return this.inactiveCfStaff.slice(); }
   returnInterestedCfStaff() { return this.interestedCfStaff.slice(); }
+
+  /*********************************************************************************
+    * OTHER
+  *********************************************************************************/
+  getStaffNew() {
+    return this.staffNew;
+  }
+
+  setstaffNew(staffNew: boolean) {
+    this.staffNew = staffNew;
+    this.staffNewChanged.next(this.staffNew);
+  }
+
+  getstaffEdit() {
+    return this.staffEdit;
+  }
+
+  setstaffEdit(staffEdit: boolean) {
+    this.staffEdit = staffEdit;
+    this.staffEditChanged.next(this.staffEdit);
+  }
+
 }
+

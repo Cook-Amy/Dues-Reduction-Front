@@ -1,7 +1,7 @@
 import { StaffService } from './../../staff.service';
 import { Staff } from './../../../models/staff.model';
 import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-staff-detail',
@@ -14,9 +14,16 @@ export class StaffDetailComponent implements OnInit {
   @Input() staff3: Staff;
   @Input() currentVenueID: number;
 
+  staffEdit: Boolean;
+
   constructor(private staffService: StaffService, private route: ActivatedRoute) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.staffEdit = this.staffService.getstaffEdit();
+    this.staffService.staffEditChanged.subscribe(editChanged => {
+      this.staffEdit = editChanged;
+    });
+   }
 
   getDate(date) {
     if(date == null) {
@@ -50,6 +57,10 @@ export class StaffDetailComponent implements OnInit {
   }
 
   onEditStaff() {
+    this.staffEdit = true;
+  }
+
+  onChangeStatus() {
     
   }
 }

@@ -1,5 +1,9 @@
+import { Event } from './../models/event.model';
+import { ContractCF } from './../models/contractCF.model';
+import { EventCF } from './../models/eventCF.model';
+import { ContractWC } from './../models/contractWC.model';
+import { EventWC } from './../models/eventWC.model';
 import { Timesheet } from './../models/timesheet.model';
-import { Staff } from './../models/staff.model';
 import { ContractPNC } from './../models/contractPNC.model';
 import { EventPNC } from './../models/eventPNC.model';
 import { Injectable } from '@angular/core';
@@ -11,49 +15,35 @@ export class MathService {
 
   constructor() { }
 
-  calculatePncEvent(event: EventPNC, contract: ContractPNC, timesheets: Timesheet[]) {
+  calculatePncEvent(event: Event, contract: ContractPNC, timesheets: Timesheet[]) {
     // calculate totalPayout
     var totalPayout = 0;
-    timesheets.forEach(timesheet => {
+    if(timesheets) {
+      timesheets.forEach(timesheet => {
  
-      totalPayout += timesheet.creditAmount;
-    });
+        totalPayout += timesheet.creditAmount;
+      });
+    }
     event.payout = totalPayout;
 
     // get commission rates
-    // console.log("CONTRACT COMM FOOD RATE: " + contract.pncFoodCommissionAfterIncrease + " and " + contract.pncFoodCommission);
-    // console.log("CONTRACT ALC FOOD RATE: " + contract.pncAlcoholCommissionAfterIncrease + " and " + contract.pncAlcoholCommission); 
-
     var commFoodRate = event.metCommissionBonus ? contract.pncFoodCommissionAfterIncrease : contract.pncFoodCommission;
     var commAlcRate = event.metCommissionBonus ? contract.pncAlcoholCommissionAfterIncrease : contract.pncAlcoholCommission;
-    // console.log("COMM FOOD RATE: " + commFoodRate);
-    // console.log("COMM ALC RATE: " + commAlcRate);
-    
-
+  
     // get food and alcohol sales amounts
     var alcSales = event.alcSales;
-    var foodSales = event.totalSales - event.alcSales;
-    // console.log("ALC SALES: " + alcSales);
-    // console.log("FOOD SALES: " + foodSales);
-
+    var foodSales = event.totalSalesPnc - event.alcSales;
 
     // calculate tax
     var taxOnFood = foodSales * (contract.pncFoodTaxRate - 1);
     var taxOnAlc = alcSales * (contract.pncAlcoholTaxRate - 1);
-    // console.log("TAX ON FOOD: " + contract.pncFoodTaxRate + " , " + taxOnFood);
-    // console.log("TAX ON ALC: " + contract.pncAlcoholTaxRate + " , " + taxOnAlc);
-
 
     // get total sales amounts
     var totalFoodSales = foodSales - taxOnFood;
     var totalAlcSales = alcSales - taxOnAlc;
-    // console.log("TOTAL ALC SALES: " + totalAlcSales);
-    // console.log("TOTAL FOOD SALES: " + totalFoodSales);
-
-
+  
     // estimated check
     var estCheck = (totalFoodSales * commFoodRate) + (totalAlcSales * commAlcRate);
-    // console.log("EST CHECK 1: " + estCheck);
 
         // guarantee is only checked if there is a payout
         // guarantee applies to cashiers only
@@ -65,18 +55,13 @@ export class MathService {
         }
       }
       var guar = contract.pncMemberGuarantee * guarCount;
-      // console.log("GUARANTEE: " + guar);
       if(guar > estCheck) {
         estCheck = guar;
-    // console.log("EST CHECK 2: " + estCheck);
 
       }
     }
 
     estCheck += event.venueBonus;
-    // console.log("Venue bonus: " + event.venueBonus);
-    // console.log("EST CHECK 3: " + estCheck);
-
 
       // add other positions to estimate 
       // applies to Stand Leader and Cooks
@@ -85,19 +70,14 @@ export class MathService {
       pncPay += timesheets[i].venuePay;
     }
     estCheck += pncPay;
-    // console.log("EST CHECK 4: " + estCheck);
     
     event.estimatedCheck = estCheck;
-
 
     // if we have a payout, we can calculate estimated profit, actual profit, and discrepancy
     if(totalPayout > 0) {
       // calculate estimated profit
       var estProfit = (estCheck * (1 - event.tacPct)) - totalPayout - event.coordinatorAdminAmt;
-      // console.log("tacPCT: " + event.tacPct);
-      // console.log('coordinator amt: ' + event.coordinatorAdminAmt);
       event.estimatedProfit = estProfit;
-      // console.log("ESTIMATED PROFIT: " + estProfit);
 
       // get actual profit and discrepancy if check has been received
       if(event.actualCheck > 0) {
@@ -105,10 +85,6 @@ export class MathService {
         var drCut = event.actualCheck * (1 - event.tacPct);
         var actProfit = drCut - totalPayout - event.coordinatorAdminAmt;
         var discrepancy = event.actualCheck - estCheck;
-        // console.log("TAC CUT: " + tacCut);
-        // console.log("DR CUT: " + drCut);
-        // console.log("ACTUAL PROFIT: " + actProfit);
-        // console.log("DISCREPANCY: " + discrepancy);
 
         event.tacCut = tacCut;
         event.drCut = drCut;
@@ -133,9 +109,74 @@ export class MathService {
     return event;
   }
 
+  calculateWcEvent(event: Event, contract: ContractWC, timesheets: Timesheet[]) {
+    return event;
+  }
+
+  calculateCfEvent(event: Event, contract: ContractCF, timesheets: Timesheet[]) {
+     // calculate totalPayout
+     var totalPayout = 0;
+     if(timesheets) {
+      timesheets.forEach(timesheet => {
+  
+        totalPayout += timesheet.creditAmount;
+      });
+     }
+     event.payout = totalPayout;
+   
+     // get sales amounts
+     var sales = event.totalSalesCf;
+ 
+     // calculate tax
+     var tax = sales * (contract.cfTaxRate - 1);
+ 
+     // get total sales amounts
+     var totalSales = sales - tax;
+   
+     // estimated check
+     var estCheck = totalSales * contract.cfCommission;
+ 
+     estCheck += event.venueBonus;
+     event.estimatedCheck = estCheck;
+ 
+     // if we have a payout, we can calculate estimated profit, actual profit, and discrepancy
+     if(totalPayout > 0) {
+       // calculate estimated profit
+       var estProfit = (estCheck * (1 - event.tacPct)) - totalPayout - event.coordinatorAdminAmt;
+       event.estimatedProfit = estProfit;
+ 
+       // get actual profit and discrepancy if check has been received
+       if(event.actualCheck > 0) {
+         var tacCut = event.actualCheck * event.tacPct;
+         var drCut = event.actualCheck * (1 - event.tacPct);
+         var actProfit = drCut - totalPayout - event.coordinatorAdminAmt;
+         var discrepancy = event.actualCheck - estCheck;
+ 
+         event.tacCut = tacCut;
+         event.drCut = drCut;
+         event.actualProfit = actProfit;
+         event.discrepancy = discrepancy;
+       }
+       else {
+         event.tacCut = 0;
+         event.drCut = 0;
+         event.actualProfit = 0;
+         event.discrepancy = 0;
+       }
+     }
+     else {
+       event.estimatedProfit = 0; 
+       event.tacCut = 0;
+       event.drCut = 0;
+       event.actualProfit = 0;
+       event.discrepancy = 0;
+     }
+ 
+     return event;
+  }
+
   calculateTimeSheets(timesheets: Timesheet[]) {
     // calculate individual timesheets
-    // var totalPayout = 0;
     timesheets.forEach(timesheet => {
       // hours worked
       var hoursWorked = 0;
@@ -209,10 +250,10 @@ export class MathService {
                                 creditCardTips;
       timesheet.creditAmount = totalCredit;
 
-      return timesheet;
-    
-  }
+      // TODO: Round total credit up to nearest dollar amount
 
+      return timesheet;
+  }
 }
 
 

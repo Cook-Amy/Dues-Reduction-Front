@@ -1,8 +1,9 @@
 
 export class Event {
+  // all events
   public idevent: number;
   public seasonID: number;
-  public venue: string;
+  public venueID: number;
   public Date: string;
   public Title: string;
   public compensated: Boolean;
@@ -19,33 +20,69 @@ export class Event {
   public drCut: number;
   public eventNotes: string;
   public closed: Boolean;
-  public eventcol: number;
+  public coordinatorAdminAmt: number;
+
+  // pnc events
+  public totalSalesPnc: number;
+  public metCommissionBonus: Boolean;
+  public guarantee: Boolean;
+  public alcSales: number;
+  public eventCountsTowardsTotal: Boolean;
+
+  // wc events
+  public creditCardTips: number;
+  public maxCreditCardTips: number;
+  public shuttleBonusBoolWc: Boolean;
+  public shuttleBonusAmountWc: number;
+
+  // cf events
+  public totalSalesCf: number;
+  public shuttleBonusBoolCf: Boolean;
+  public shuttleBonusAmountCf: number;
+  public shuttleLocation: string;
 
   constructor(
-    idevent: number,
-    seasonID: number,
-    venue: string,
-    Date: string,
-    Title: string,
-    compensated: Boolean,
-    location: string,
-    venueBonus: number,
-    estimatedCheck: number,
-    estimatedProfit: number,
-    actualCheck: number,
-    payout: number,
-    discrepancy: number,
-    actualProfit: number,
-    tacPct: number,
-    tacCut: number,
-    drCut: number,
-    eventNotes: string,
-    closed: Boolean,
-    eventcol: number,
-      ){
+     idevent: number,
+     seasonID: number,
+     venueID: number,
+     Date: string,
+     Title: string,
+     compensated: Boolean,
+     location: string,
+     venueBonus: number,
+     estimatedCheck: number,
+     estimatedProfit: number,
+     actualCheck: number,
+     payout: number,
+     discrepancy: number,
+     actualProfit: number,
+     tacPct: number,
+     tacCut: number,
+     drCut: number,
+     eventNotes: string,
+     closed: Boolean,
+     coordinatorAdminAmt: number,
+
+     totalSalesPnc: number,
+     metCommissionBonus: Boolean,
+     guarantee: Boolean,
+     alcSales: number,
+     eventCountsTowardsTotal: Boolean,
+
+     creditCardTips: number,
+     maxCreditCardTips: number,
+     shuttleBonusBoolWc: Boolean,
+     shuttleBonusAmountWc: number,
+
+     totalSalesCf: number,
+     shuttleBonusBoolCf: Boolean,
+     shuttleBonusAmountCf: number,
+     shuttleLocation: string
+
+  ) {
     this.idevent = idevent;
     this.seasonID = seasonID;
-    this.venue = venue;
+    this.venueID = venueID;
     this.Date = Date;
     this.Title = Title;
     this.compensated = compensated;
@@ -62,7 +99,22 @@ export class Event {
     this.drCut = drCut;
     this.eventNotes = eventNotes;
     this.closed = closed;
-    this.eventcol = eventcol;
-  }
+    this.coordinatorAdminAmt = coordinatorAdminAmt;
 
+    this.totalSalesPnc = totalSalesPnc;
+    this.metCommissionBonus = metCommissionBonus;
+    this.guarantee = guarantee;
+    this.alcSales = alcSales;
+    this.eventCountsTowardsTotal = eventCountsTowardsTotal;
+
+    this.creditCardTips = creditCardTips;
+    this.maxCreditCardTips = maxCreditCardTips;
+    this.shuttleBonusBoolWc = shuttleBonusBoolWc;
+    this.shuttleBonusAmountWc = shuttleBonusAmountWc;
+
+    this.totalSalesCf = totalSalesCf;
+    this.shuttleBonusBoolCf = shuttleBonusBoolCf;
+    this.shuttleBonusAmountCf = shuttleBonusAmountCf;
+    this.shuttleLocation = shuttleLocation;
+  }
 }
