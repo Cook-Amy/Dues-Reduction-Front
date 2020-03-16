@@ -1,4 +1,3 @@
-import { ActivatedRoute, Router } from '@angular/router';
 import { StaffService } from './../../staff.service';
 import { Staff } from './../../../models/staff.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -14,6 +13,7 @@ export class StaffNewComponent implements OnInit {
   newStaffForm1: FormGroup;
   newStaffForm2: FormGroup;
   newStaffForm3: FormGroup;
+  newStaffForm99: FormGroup;
   newStaff: Staff;
   dateValue: Date;
 
@@ -39,26 +39,25 @@ export class StaffNewComponent implements OnInit {
 
   setStaff: Staff[] = [];
 
-  constructor(private staffService: StaffService,
-              private route: ActivatedRoute,
-              private router: Router) { }
+  constructor(private staffService: StaffService) { }
 
   ngOnInit() {
     this.dateValue = this.getToday();
 
     if(this.currentVenueID == 1) {
-      // this.allStaff = this.staffService.returnAllPncStaff();
       this.initForm1();
     }
 
-    if(this.currentVenueID == 2) {
-      // this.allStaff = this.staffService.returnAllWcStaff();
+    else if(this.currentVenueID == 2) {
       this.initForm2();
     }
 
-    if(this.currentVenueID == 3) {
-      // this.allStaff = this.staffService.returnAllCfStaff();
+    else if(this.currentVenueID == 3) {
       this.initForm3();
+    }
+
+    else if(this.currentVenueID == 99) {
+      this.initForm99();
     }
   }
 
@@ -145,6 +144,51 @@ export class StaffNewComponent implements OnInit {
     });
   }
 
+  private initForm99() {
+    let name: string = "";
+    let firstName: string = "";
+    let lastName: string = "";
+    let email: string = "";
+    let phone: string = "";
+    let tuAccount: string = "";
+
+    let active1 = false;
+    let active2 = false;
+    let active3 = false;
+
+    // pnc stuff
+    let pncHealthForm = false;
+    let pncExperienced = false;
+    let pncBars: string = "";
+    let pncBarsRefresher = false;
+    let pncWaiver = false;
+
+    // wc stuff
+    let wcTeamTraining: string = "";
+
+    // cf stuff
+    let cfAlcoholTraining: string = "";
+
+    this.newStaffForm99 = new FormGroup({
+      'name': new FormControl(name, Validators.required),
+      'firstName': new FormControl(firstName, Validators.required),
+      'lastName': new FormControl(lastName, Validators.required),
+      'email': new FormControl(email, Validators.required),
+      'phone': new FormControl(phone, Validators.required),
+      'tuAccount': new FormControl(tuAccount, Validators.required),
+      'active1': new FormControl(active1, Validators.required),
+      'active2': new FormControl(active2, Validators.required),
+      'active3': new FormControl(active3, Validators.required),
+      'pncHealthForm': new FormControl(pncHealthForm, Validators.required),
+      'pncExperienced': new FormControl(pncExperienced, Validators.required),
+      'pncBars': new FormControl(pncBars, Validators.required),
+      'pncBarsRefresher': new FormControl(pncBarsRefresher, Validators.required),
+      'pncWaiver': new FormControl(pncWaiver, Validators.required),
+      'wcTeamTraining': new FormControl(wcTeamTraining, Validators.required),
+      'cfAlcoholTraining': new FormControl(cfAlcoholTraining, Validators.required)
+    });
+  }
+
   onSubmit() {
     var newStaff: Staff = this.createNewStaff();
     this.staffService.addNewStaffToDB(newStaff).subscribe(id => {
@@ -153,28 +197,11 @@ export class StaffNewComponent implements OnInit {
         this.staffService.setAllStaff(allStaff);
         this.onCancel();
       });
-      // this.staffService.addNewStaff(newStaff);
-      // if(this.currentVenueID == 1) {
-        // this.staffService.getAllPncStaff().subscribe(allStaff => {
-        //   this.staffService.setAllPncStaff(allStaff);
-        //   this.allPncStaff = this.staffService.returnAllPncStaff();
-        //   this.setOtherStaff(this.currentVenueID);
-          // this.onCancel();
-        //   this.router.navigate([], {relativeTo: this.route});
-        // });
-      // }
-      // else if(this.currentVenueID == 2) {
-        // this.onCancel();
-      // }
-      // else if(this.currentVenueID == 3) {
-        // this.onCancel();
-      // }
     });
   }
 
   onCancel() {
     this.staffService.setstaffNew(false);
-    // this.router.navigate([], {relativeTo: this.route});
   }
 
   createNewStaff() {
@@ -317,6 +344,94 @@ export class StaffNewComponent implements OnInit {
         false,
         null,
         this.newStaffForm3.value['cfAlcoholTrianing']
+      );
+    }
+
+    if(this.currentVenueID == 99){
+      var status1 = this.newStaffForm99.value['active1'];
+      var active1;
+      var inactive1;
+      var interested1;
+      if(status1 == "pncActive") {
+        active1 = true;
+        inactive1 = false;
+        interested1 = false;
+      }
+      if(status1 == "pncInactive") {
+        active1 = false;
+        inactive1 = true;
+        interested1 = false;
+      }
+      if(status1 == "pncInterested") {
+        active1 = false;
+        inactive1 = false;
+        interested1 = true;
+      }
+
+      var status2 = this.newStaffForm99.value['active2'];
+      var active2;
+      var inactive2;
+      var interested2;
+      if(status2 == "wcActive") {
+        active2 = true;
+        inactive2 = false;
+        interested2 = false;
+      }
+      if(status2 == "wcInactive") {
+        active2 = false;
+        inactive2 = true;
+        interested2 = false;
+      }
+      if(status2 == "wcInterested") {
+        active2 = false;
+        inactive2 = false;
+        interested2 = true;
+      }
+
+      var status3 = this.newStaffForm99.value['active3'];
+      var active3;
+      var inactive3;
+      var interested3;
+      if(status3 == "cfActive") {
+        active3 = true;
+        inactive3 = false;
+        interested3 = false;
+      }
+      if(status3 == "cfInactive") {
+        active3 = false;
+        inactive3 = true;
+        interested3 = false;
+      }
+      if(status3 == "cfInterested") {
+        active3 = false;
+        inactive3 = false;
+        interested3 = true;
+      }
+
+      newStaff = new Staff(
+        0,
+        this.newStaffForm99.value['firstName'],
+        this.newStaffForm99.value['lastName'],
+        this.newStaffForm99.value['name'],
+        this.newStaffForm99.value['email'],
+        this.newStaffForm99.value['phone'],
+        this.newStaffForm99.value['tuAccount'],
+        active1,
+        inactive1,
+        interested1,
+        active2,
+        inactive2,
+        interested2,
+        active3,
+        inactive3,
+        interested3,
+        this.newStaffForm99.value['pncHealthForm'],
+        this.newStaffForm99.value['pncExperienced'],
+        this.newStaffForm99.value['pncBars'],
+        false,
+        this.newStaffForm99.value['pncWaiver'],
+        this.newStaffForm99.value['wcTeamTraining'],
+        this.newStaffForm99.value['cfAlcoholTrianing']
       );
     }
     return newStaff;

@@ -1,0 +1,30 @@
+<div class="col-md-12">
+  <!-- Calendar info found here: https://fullcalendar.io/docs/angular -->
+  <full-calendar 
+      *ngIf="currentVenueID == 99"
+      default-View="dayGridMonth" 
+      [events]="calendarEventsAll" 
+      [plugins]="calendarPlugins">
+  </full-calendar>
+
+  <full-calendar 
+    *ngIf="currentVenueID == 1"
+    default-View="dayGridMonth" 
+    [events]="calendarEventsPnc" 
+    [plugins]="calendarPlugins">
+  </full-calendar>
+
+  <full-calendar 
+    *ngIf="currentVenueID == 2"
+    default-View="dayGridMonth" 
+    [events]="calendarEventsWc" 
+    [plugins]="calendarPlugins">
+  </full-calendar>
+
+  <full-calendar 
+    *ngIf="currentVenueID == 3"
+    default-View="dayGridMonth" 
+    [events]="calendarEventsCf" 
+    [plugins]="calendarPlugins">
+  </full-calendar>
+</div> 

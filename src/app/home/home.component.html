@@ -6,7 +6,7 @@
   <!-- Example row of columns -->
   <div class="row">
     
-    <div class="col-md-4">
+    <!-- <div class="col-md-4">
       <div class="h4">Coordinators</div>
       <table class="table table-sm">
         <tbody>
@@ -28,12 +28,9 @@
           </tr>
         </tbody>
       </table>
-    </div>
+    </div> -->
 
-    <div class="col-md-8">
-      <!-- Calendar info found here: https://fullcalendar.io/docs/angular -->
-      <full-calendar default-View="dayGridMonth" [plugins]="calendarPlugins"></full-calendar>
-    </div> <!-- col-md-2 -->
+    <app-calendar [currentVenueID]="99"></app-calendar>
 
   </div> <!-- row -->
 

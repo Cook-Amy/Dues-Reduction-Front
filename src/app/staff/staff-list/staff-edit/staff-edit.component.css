@@ -3,3 +3,10 @@
   font-weight: bold;
   margin: 8px 10px 8px 10px;
 }
+
+.removeConfirm {
+  /* margin-left: 200px; */
+  color: maroon;
+  font-weight: bold;
+  font-size: 18px;
+}

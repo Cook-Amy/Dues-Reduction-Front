@@ -35,6 +35,8 @@ export class StaffListComponent implements OnInit {
 
   currentVenue: Venue;
   currentVenueID: number;
+  allVenues: Venue[] = [];
+  showVenue: number;
 
   staffNew: Boolean;
   activityLevel: number = 1;
@@ -45,8 +47,10 @@ export class StaffListComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit() {
+    this.allVenues = this.venueService.returnAllVenues();
     this.currentVenue = this.venueService.getCurrentVenue();
     this.currentVenueID = this.currentVenue.idvenue;
+    this.showVenue = this.currentVenueID;
     this.getAllStaff();
 
     this.staffService.allStaffChanged.subscribe(staffChanged => {
@@ -93,47 +97,59 @@ export class StaffListComponent implements OnInit {
     this.interestedCfStaff = this.staffService.returnInterestedCfStaff();
 
     if(this.activityLevel == 1) {
-      if(this.currentVenueID == 1) {
+      if(this.showVenue == 1) {
         this.setStaff = this.activePncStaff;
       }
-      else if(this.currentVenueID == 2) {
+      else if(this.showVenue == 2) {
         this.setStaff = this.activeWcStaff;
       }
-      else if(this.currentVenueID == 3) {
+      else if(this.showVenue == 3) {
         this.setStaff = this.activeCfStaff;
+      }
+      else if(this.showVenue == 99) {
+        this.setStaff = this.activeStaff;
       }
     }
     else if(this.activityLevel == 2) {
-      if(this.currentVenueID == 1) {
+      if(this.showVenue == 1) {
         this.setStaff = this.inactivePncStaff;
       }
-      else if(this.currentVenueID == 2) {
+      else if(this.showVenue == 2) {
         this.setStaff = this.inactiveWcStaff;
       }
-      else if(this.currentVenueID == 3) {
+      else if(this.showVenue == 3) {
         this.setStaff = this.inactiveCfStaff;
+      }
+      else if(this.showVenue == 99) {
+        this.setStaff = this.inactiveStaff;
       }
     }
     else if(this.activityLevel == 3) {
-      if(this.currentVenueID == 1) {
+      if(this.showVenue == 1) {
         this.setStaff = this.interestedPncStaff;
       }
-      else if(this.currentVenueID == 2) {
+      else if(this.showVenue == 2) {
         this.setStaff = this.interestedWcStaff;
       }
-      else if(this.currentVenueID == 3) {
+      else if(this.showVenue == 3) {
         this.setStaff = this.interestedCfStaff;
+      }
+      else if(this.showVenue == 99) {
+        this.setStaff = this.interestedStaff;
       }
     }
     else if(this.activityLevel == 4) {
-      if(this.currentVenueID == 1) {
+      if(this.showVenue == 1) {
         this.setStaff = this.allPncStaff;
       }
-      else if(this.currentVenueID == 2) {
+      else if(this.showVenue == 2) {
         this.setStaff = this.allWcStaff;
       }
-      else if(this.currentVenueID == 3) {
+      else if(this.showVenue == 3) {
         this.setStaff = this.allCfStaff;
+      }
+      else if(this.showVenue == 99) {
+        this.setStaff = this.allStaff;
       }
     }
 
@@ -146,55 +162,98 @@ export class StaffListComponent implements OnInit {
 
     // Activity level set to active
     if(value.activeSelect == 1) {
-      if(this.currentVenueID == 1) {
+      if(this.showVenue == 1) {
         this.setStaff = this.activePncStaff;
       }
-      else if(this.currentVenueID == 2) {
+      else if(this.showVenue == 2) {
         this.setStaff = this.activeWcStaff;
       } 
-      else if(this.currentVenueID == 3) {
+      else if(this.showVenue == 3) {
         this.setStaff = this.activeCfStaff;
+      }
+      else if(this.showVenue == 99) {
+        this.setStaff = this.activeStaff;
       }
     }
 
     // Activity level set to inactive
     if(value.activeSelect == 2) {
-      if(this.currentVenueID == 1) {
+      if(this.showVenue == 1) {
         this.setStaff = this.inactivePncStaff;
       }
-      else if(this.currentVenueID == 2) {
+      else if(this.showVenue == 2) {
         this.setStaff = this.inactiveWcStaff;
       } 
-      else if(this.currentVenueID == 3) {
+      else if(this.showVenue == 3) {
         this.setStaff = this.inactiveCfStaff;
+      }
+      else if(this.showVenue == 99) {
+        this.setStaff = this.inactiveStaff;
       }
     }
 
     // Activity level set to interested
     if(value.activeSelect == 3) {
-      if(this.currentVenueID == 1) {
+      if(this.showVenue == 1) {
         this.setStaff = this.interestedPncStaff;
       }
-      else if(this.currentVenueID == 2) {
+      else if(this.showVenue == 2) {
         this.setStaff = this.interestedWcStaff;
       } 
-      else if(this.currentVenueID == 3) {
+      else if(this.showVenue == 3) {
         this.setStaff = this.interestedCfStaff;
+      }
+      else if(this.showVenue == 99) {
+        this.setStaff = this.interestedStaff;
       }
     }
 
 
     // Activity level set to all
     if(value.activeSelect == 4) {
-      if(this.currentVenueID == 1) {
+      if(this.showVenue == 1) {
         this.setStaff = this.allPncStaff;
       }
-      else if(this.currentVenueID == 2) {
+      else if(this.showVenue == 2) {
         this.setStaff = this.allWcStaff;
       } 
-      else if(this.currentVenueID == 3) {
+      else if(this.showVenue == 3) {
         this.setStaff = this.allCfStaff;
       }
+      else if(this.showVenue = 99) {
+        this.setStaff = this.allStaff;
+      }
+    }
+  }
+
+  changeVenue(change) {
+    if(change.venueSelect == 1) {
+      this.showVenue = 1;
+      this.allStaff = this.staffService.returnAllPncStaff();
+      this.activeStaff = this.staffService.returnActivePncStaff();
+      this.inactiveStaff = this.staffService.returnInactivePncStaff();
+      this.interestedStaff = this.staffService.returnInterestedPncStaff();
+    }
+    else if(change.venueSelect == 2) {
+      this.showVenue = 2;
+      this.allStaff = this.staffService.returnAllWcStaff();
+      this.activeStaff = this.staffService.returnActiveWcStaff();
+      this.inactiveStaff = this.staffService.returnInactiveWcStaff();
+      this.interestedStaff = this.staffService.returnInterestedWcStaff();
+    }
+    else if(change.venueSelect == 3) {
+      this.showVenue = 3;
+      this.allStaff = this.staffService.returnAllCfStaff();
+      this.activeStaff = this.staffService.returnActiveCfStaff();
+      this.inactiveStaff = this.staffService.returnInactiveCfStaff();
+      this.interestedStaff = this.staffService.returnInterestedCfStaff();
+    }
+    else if(change.venueSelect == 99) {
+      this.showVenue = 99;
+      this.allStaff = this.staffService.returnAllStaff();
+      this.activeStaff = this.staffService.returnActiveStaff();
+      this.inactiveStaff = this.staffService.returnInactiveStaff();
+      this.interestedStaff = this.staffService.returnInterestedStaff();
     }
   }
 

@@ -1,3 +1,4 @@
+import { Staff } from './../models/staff.model';
 import { Event } from './../models/event.model';
 import { EventWC } from './../models/eventWC.model';
 import { GlobalVariables } from './../shared/GlobalVariables';
@@ -24,18 +25,18 @@ export class ExcelService {
 
   getStaffForEvent(eventID: number) {
     const params = new HttpParams().set('eventID', eventID.toString());
-    const sendGateList = this.http.get(this.serverUrl + 'getStaffForEvent', {params})
+    const sendGateList = this.http.get<Staff[]>(this.serverUrl + 'getStaffForEvent', {params})
     return sendGateList;
   }
 
-  generatePncGateList(event: Event, staff: any) {
+  generatePncGateList(event: Event, staff: Staff[]) {
     const params = { event: event, staff: staff };
     const generateGateList = this.http.post(this.serverUrl + 'sendPncGateList', params);
     return generateGateList;
 
   }
 
-  generateWcGateList(event: Event, staff: any) {
+  generateWcGateList(event: Event, staff: Staff[]) {
     const params = { event: event, staff: staff };
     const generateGateList = this.http.post(this.serverUrl + 'sendWcGateList', params);
     return generateGateList;

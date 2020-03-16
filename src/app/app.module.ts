@@ -46,6 +46,7 @@ import { FooterComponent } from './shared/footer/footer.component';
 import { EventStaffEditComponent } from './events/event-list/event-staff-edit/event-staff-edit.component';
 import { EventStaffAddComponent } from './events/event-list/event-staff-add/event-staff-add.component';
 import { StaffNewComponent } from './staff/staff-list/staff-new/staff-new.component';
+import { CalendarComponent } from './calendar/calendar.component';
 
 
 
@@ -80,7 +81,8 @@ import { StaffNewComponent } from './staff/staff-list/staff-new/staff-new.compon
     FooterComponent,
     EventStaffEditComponent,
     EventStaffAddComponent,
-    StaffNewComponent
+    StaffNewComponent,
+    CalendarComponent
   ],
   imports: [
     BrowserModule,

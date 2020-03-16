@@ -23,9 +23,13 @@ export class VenuesComponent implements OnInit {
 
   getCurrentVenue(venuePath) {
     if(venuePath == "/admin"){
-      this.venueService.setAllVenue();
-      this.currentVenue = this.venueService.getCurrentVenue();
-      this.venueName = this.currentVenue.name;
+      this.venueService.getAllVenues().subscribe(venues => {
+        this.venueService.setVenues(venues);
+        this.venueService.setAllVenue();
+        this.currentVenue = this.venueService.getCurrentVenue();
+        this.venueName = this.currentVenue.name;
+      })
+      
     }
     else if(this.venueService.getVenuesLength() < 1) {
       this.venueService.getAllVenues().subscribe(venues => {

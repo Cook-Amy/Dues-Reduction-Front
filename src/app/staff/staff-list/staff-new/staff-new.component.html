@@ -220,3 +220,154 @@
     <button class="btn btn-primary" type="submit">Submit</button>
   </form>
 </div>
+
+
+<!--------------------------------------------------------------------------------------------
+-- All Venue new staff 
+---------------------------------------------------------------------------------------------->
+<div *ngIf="currentVenueID == 99">
+  <form [formGroup]="newStaffForm99" (ngSubmit)="onSubmit()">
+
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <label for="firstName">First Name</label>
+        <input type="text" class="form-control" id="firstName" formControlName="firstName">
+      </div>
+      <div class="form-group col-md-4">
+        <label for="lastName">Last Name</label>
+        <input type="text" class="form-control" id="lastName" formControlName="lastName">
+      </div>
+      <div class="form-group col-md-4">
+        <label for="tu Account">TeamUnify Account</label>
+        <input type="text" class="form-control" id="tuAccount" formControlName="tuAccount">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <label for="email">Email</label>
+        <input type="text" class="form-control" id="email" formControlName="email">
+      </div>
+      <div class="form-group col-md-4">
+        <label for="phone">Phone #</label>
+        <input type="text" class="form-control" id="phone" formControlName="phone" placeholder="555-123-1234">
+      </div>
+    </div>
+
+    <div class="form-row">PNC ARENA</div>
+    <div class="form-row">
+      <div class="col-md-2">Status: </div>
+      <div class="form-group col-md-8">
+        <div class="form-check form-check-inline">
+          <input type="radio" class="form-check-input" id="pncActive" formControlName="active1" value="pncActive">
+          <label class="form-check-label" for="pncActive">
+            Active
+          </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input type="radio" class="form-check-input" id="pncInactive" formControlName="active1" value="pncInactive">
+          <label class="form-check-label" for="pncInactive">
+            Inactive
+          </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input type="radio" class="form-check-input" id="pncInterested" formControlName="active1"  value="pncInterested">
+          <label class="form-check-label" for="pncInterested">
+            Interested
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-3">
+        <label for="pncBars">Bars Date</label>
+        <ejs-datepicker class="date-picker" id="pncBars" [value]="dateValue" formControlName="pncBars"></ejs-datepicker>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-12">
+        <div class="form-check form-check-inline">
+          <input type="checkbox" class="form-check-input" id="pncExperienced" formControlName="pncExperienced">
+          <label for="pncExperienced" class="form-check-label">Experienced</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input type="checkbox" class="form-check-input" id="pncHealthForm" formControlName="pncHealthForm">
+          <label for="pncHealthForm" class="form-check-label">Health Form</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input type="checkbox" class="form-check-input" id="pncWaiver" formControlName="pncWaiver">
+          <label for="pncWaiver" class="form-check-label">Waiver</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">WALNUT CREEK</div>
+    <div class="form-row">
+      <div class="col-md-2">Status: </div>
+      <div class="form-group col-md-8">
+        <div class="form-check form-check-inline">
+          <input type="radio" class="form-check-input" id="wcActive" formControlName="active2" value="wcActive">
+          <label class="form-check-label" for="wcActive">
+            Active
+          </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input type="radio" class="form-check-input" id="wcInactive" formControlName="active2" value="wcInactive">
+          <label class="form-check-label" for="wcInactive">
+            Inactive
+          </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input type="radio" class="form-check-input" id="wcInterested" formControlName="active2" value="wcInterested">
+          <label class="form-check-label" for="wcInterested">
+            Interested
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-3">
+        <label for="wcTeamTraining">Team Training Date</label>
+        <ejs-datepicker class="date-picker" id="wcTeamTraining" [value]="dateValue" formControlName="wcTeamTraining"></ejs-datepicker>
+      </div>
+    </div>
+
+    <div class="form-row">CARTER-FINLEY STADIUM</div>
+    <div class="form-row">
+      <div class="col-md-2">Status: </div>
+      <div class="form-group col-md-8">
+        <div class="form-check form-check-inline">
+          <input type="radio" class="form-check-input" id="cfActive" formControlName="active3" value="cfActive">
+          <label class="form-check-label" for="cfActive">
+            Active
+          </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input type="radio" class="form-check-input" id="cfInactive" formControlName="active3" value="cfInactive">
+          <label class="form-check-label" for="cfInactive">
+            Inactive
+          </label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input type="radio" class="form-check-input" id="cfInterested" formControlName="active3" value="cfInterested">
+          <label class="form-check-label" for="cfInterested">
+            Interested
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-3">
+        <label for="cfAlcoholTraining">Alcohol Training Date</label>
+        <ejs-datepicker class="date-picker" id="cfAlcoholTraining" [value]="dateValue" formControlName="cfAlcoholTraining"></ejs-datepicker>
+      </div>
+    </div>
+
+    <button class="btn btn-primary" type="button" (click)="onCancel()">Cancel</button>
+    <button class="btn btn-primary" type="submit">Submit</button>
+  </form>
+</div>

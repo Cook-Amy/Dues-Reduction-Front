@@ -141,6 +141,11 @@ export class StaffService {
     return updateStaff;
   }
 
+  removeStaffInDB(staff: Staff) {
+    const params = {staff: staff};
+    const removeStaff = this.http.post(this.serverUrl + "removeStaff", params);
+    return removeStaff;
+  }
 
   /*********************************************************************************
    * PNC STAFF

@@ -92,7 +92,9 @@ export class EventDetailComponent implements OnInit {
 
     this.excelService.getStaffForEvent(this.event.idevent).subscribe(staff => {
       if(this.currentVenueID == 1) {
-        this.excelService.generatePncGateList(this.event, staff).subscribe(results => { });
+        this.excelService.generatePncGateList(this.event, staff).subscribe(results => {
+          console.log("gate list result: " + results);
+         });
       }
       else if(this.currentVenueID == 2) {
         this.excelService.generateWcGateList(this.event, staff). subscribe(results => { });

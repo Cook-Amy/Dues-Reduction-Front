@@ -10,9 +10,8 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class StaffDetailComponent implements OnInit {
   @Input() staff: Staff;
-  @Input() staff2: Staff;
-  @Input() staff3: Staff;
   @Input() currentVenueID: number;
+  @Input() showVenue: number;
 
   staffEdit: Boolean;
 

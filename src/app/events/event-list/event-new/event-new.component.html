@@ -2,8 +2,8 @@
 
 <div *ngIf="currentVenueID == 99">
   <form [formGroup]="venueForm" (change)="pickVenue()">
-    <div class="form-group">
-      <label for="selectVenue">Choose a Venue</label>
+    <div class="form-group col-md-4">
+      <label for="selectVenue">Add New Event to Venue:</label>
       <select id="selectVenue" class="form-control" formControlName="selectVenue">
         <option [value]="1">PNC Arena</option>
         <option [value]="2">Walnut Creek</option>
@@ -72,19 +72,19 @@
     </div>
   
     <div class="form-row">
-      <div class="form-group col-md-2">
+      <div class="form-group col-md-3">
         <label for="totalSalesPnc">Total Sales</label>
         <input type="text" class="form-control" id="totalSalesPnc" formControlName="totalSalesPnc">
       </div>
-      <div class="form-group col-md-2">
+      <div class="form-group col-md-3">
         <label for="alcSales">Alcohol Sales</label>
         <input type="text" class="form-control" id="alcSales"formControlName="alcSales">
       </div>
-      <div class="form-group col-md-2">
+      <div class="form-group col-md-3">
         <label for="bonus">Venue Bonus</label>
         <input type="text" class="form-control" id="bonus" formControlName="bonus">
       </div>
-      <div class="form-group col-md-2">
+      <div class="form-group col-md-3">
         <label for="checkRcvd">Check Recieved</label>
         <input type="text" class="form-control" id="checkRcvd" formControlName="checkRcvd">
       </div>
@@ -150,19 +150,19 @@
     </div>
   
     <div class="form-row">
-      <div class="form-group col-md-2">
+      <div class="form-group col-md-3">
         <label for="creditCardTips">Credit Card Tips</label>
         <input type="text" class="form-control" id="creditCardTips" formControlName="creditCardTips">
       </div>
-      <div class="form-group col-md-2">
+      <div class="form-group col-md-3">
         <label for="shuttleBonusAmountWc">Shuttle Bonus Amount</label>
         <input type="text" class="form-control" id="shuttleBonusAmountWc" formControlName="shuttleBonusAmountWc">
       </div>
-      <div class="form-group col-md-2">
+      <div class="form-group col-md-3">
         <label for="bonus">Venue Bonus</label>
         <input type="text" class="form-control" id="bonus" formControlName="bonus">
       </div>
-      <div class="form-group col-md-2">
+      <div class="form-group col-md-3">
         <label for="checkRcvd">Check Received</label>
         <input type="text" class="form-control" id="checkRcvd" formControlName="checkRcvd">
       </div>

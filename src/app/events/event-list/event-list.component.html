@@ -1,10 +1,10 @@
 <!--  Seasons dropdown -->
 
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-4">
 
-    <form #seasonForm="ngForm" (change)="changeSeason(seasonForm.value)">
-      <div class="form-group">
+    <form #seasonForm="ngForm" >
+      <div class="form-group" (change)="changeSeason(seasonForm.value)">
         <label for="seasonSelect">Seasons</label>
         <select ngModel name="seasonSelect" id="seasonSelect" class="form-control">
           <option *ngFor="let seasonElement of seasons" [value]="seasonElement.idSeason">
@@ -12,11 +12,24 @@
           </option>
         </select>
       </div>
+
+      <div *ngIf="currentVenueID == 99">
+        <div class="form-group" (change)="changeVenue(seasonForm.value)">
+          <label for="venueSelect">Venues</label>
+          <select ngModel name="venueSelect" id="venueSelect" class="form-control">
+            <option [value]="99">All venues</option>
+            <option *ngFor="let v of allVenues" [value]="v.idvenue">
+              {{ v.name }}
+            </option>
+          </select>
+        </div>
+      </div>
     </form>
 
 
   </div>
-  <div class="col-md-6">
+  <div class="col-md-3"></div>
+  <div class="col-md-4">
     <button class="btn new-event-btn" (click)="addNewEvent()">Add New Event</button>
   </div>
 </div>

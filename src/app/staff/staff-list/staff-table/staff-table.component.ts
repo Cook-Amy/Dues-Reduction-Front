@@ -18,15 +18,11 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 export class StaffTableComponent implements OnInit {
 
     @Input() dataSource: Staff[];
-    @Input() dataSource2: Staff[];
-    @Input() dataSource3: Staff[];
     @Input() currentVenueID: number;
+    @Input() showVenue: number;
 
     columnsToDisplay = ['Name', 'Email', 'Phone'];
     expandedElement: any;
-    expandedElement1: any;
-    expandedElement2: any;
-    expandedElement3: any;
     
   constructor() { }
 

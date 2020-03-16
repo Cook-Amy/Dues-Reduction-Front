@@ -84,7 +84,7 @@ export class EventService {
   timesheets: Timesheet[] = [];
   timesheetsChanged = new Subject<Timesheet[]>();
   
-  constructor(private http: HttpClient, private venueService: VenueService, private global: GlobalVariables) {}
+  constructor(private http: HttpClient) {}
 
   sortByDateAscending(events: Event[]) {
     return events.sort((val1, val2) => {

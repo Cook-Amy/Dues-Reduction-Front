@@ -62,5 +62,9 @@ export class VenueService {
     return this.currentVenue;
   }
 
+  returnAllVenues() {
+    return this.venues;
+  }
+
 
 }

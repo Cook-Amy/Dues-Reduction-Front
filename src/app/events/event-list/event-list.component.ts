@@ -21,6 +21,7 @@ export class EventListComponent implements OnInit {
   seasons: Season[] = [];
   currentSeason: Season;
   currentSeasonID: number;
+  allVenues: Venue[] = [];
   currentVenue: Venue;
   currentVenueID: number;
 
@@ -33,6 +34,8 @@ export class EventListComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit() {
+    this.allVenues = this.venueService.returnAllVenues();
+
     this.eventService.getSeasons().subscribe(res => {
       this.eventService.setSeasons(res);
       this.seasons = res;
@@ -85,115 +88,23 @@ export class EventListComponent implements OnInit {
     this.getEvents();
   }
 
+  changeVenue(change) {
+    if(change.venueSelect == 1) {
+      this.eventsAll = this.eventService.returnEventsPnc();
+    }
+    else if(change.venueSelect == 2) {
+      this.eventsAll = this.eventService.returnEventsWc();
+    }
+    else if(change.venueSelect == 3) {
+      this.eventsAll = this.eventService.returnEventsCf();
+    }
+    else if(change.venueSelect == 99) {
+      this.eventsAll = this.eventService.returnEventsAll();
+    }
+  }
+
   addNewEvent() {
     this.eventNew = true;
   }
 }
-
-// old way
-// ngOnInit() {
-//   this.eventService.getSeasons().subscribe(res => {
-//     this.eventService.setSeasons(res);
-//     this.seasons = res;
-//     this.eventService.setCurrentSeason(this.seasons[this.seasons.length - 2]);
-//     this.currentSeason = this.eventService.getCurrentSeason();
-//     this.currentVenue = this.venueService.getCurrentVenue();
-//     this.currentVenueID = this.currentVenue.idvenue;
-//     this.getEvents();
-//   });
-
-//   this.eventNew = this.eventService.getEventNew();
-//   this.eventService.eventNewChanged.subscribe(newEventChanged => {
-//     this.eventNew = newEventChanged;
-//   });
-
-//   this.eventService.eventsPncSortedByDateAscendingChanged.subscribe(events => {
-//     this.eventsPNC = events;
-//     this.router.navigate([], {relativeTo: this.route});
-//   });
-
-//   this.eventService.eventsWcSortedByDateAscendingChanged.subscribe(events => {
-//     this.eventsWC = events;
-//     this.router.navigate([], {relativeTo: this.route});
-//   });
-
-//   this.eventService.eventsCfSortedByDateAscendingChanged.subscribe(events => {
-//     this.eventsCF = events;
-//     this.router.navigate([], {relativeTo: this.route});
-//   });
-// }
-
-// getEvents() {
-//   var venueID = this.currentVenueID;
-//   if(venueID == 1) {
-//     this.eventService.getAllEventsPnc().subscribe(eventsPNC => {
-//       this.eventService.setEventsPnc(eventsPNC);
-//       this.sort = "dateAscending";
-//       this.eventService.eventsPncSortedByDateAscendingChanged.subscribe(events => {
-//         this.eventsPNC = events;
-//       });
-//     });
-//   }
-
-//   else if(venueID == 2) {
-//     this.eventService.getAllEventsWc().subscribe(eventsWC => {
-//       this.eventService.setEventsWc(eventsWC);
-//       this.sort = "dateAscending";
-//       this.eventService.eventsWcSortedByDateAscendingChanged.subscribe(events => {
-//         this.eventsWC = events;
-//       });
-//     });
-//   }
-
-//   else if(venueID == 3) {
-//     this.eventService.getAllEventsCf().subscribe(eventsCF => {
-//       this.eventService.setEventsCf(eventsCF);
-//       this.sort = "dateAscending";
-//       this.eventService.eventsCfSortedByDateAscendingChanged.subscribe(events => {
-//         this.eventsCF = events;
-//       });
-//     });
-//   }
-
-//   else if(venueID == 99) {
-//     this.eventService.getAllEventsPnc().subscribe(eventsPnc => {
-//       this.eventService.setEventsPnc(eventsPnc);
-//       this.eventsAll = this.eventService.getEventsPncSortedByDateDescending();
-//       console.log("all events: " + this.eventsAll.length);
-//       this.eventService.getAllEventsWc().subscribe(eventsWc => {
-//         this.eventService.setEventsWc(eventsWc);
-//         var temp: any[] = [];
-//         temp = this.eventService.getEventsWcSortedByDateDescending();
-//         temp.forEach(t => {
-//           this.eventsAll.push(t);
-//         });
-//       console.log("all events: " + this.eventsAll.length);
-//       this.eventService.getAllEventsCf().subscribe(eventsCf => {
-//         this.eventService.setEventsCf(eventsCf);
-//         var temp2: any[] = [];
-//         temp2 = this.eventService.getEventsCfSortedByDateDescending();
-//         temp2.forEach(t => {
-//           this.eventsAll.push(t);
-//         });
-//       });
-//       });
-//     });
-//   }
-// }
-
-// changeSeason(change) {
-//   if(change.seasonSelect == 999) {
-//     this.eventService.setCurrentSeason(this.seasons[this.seasons.length - 1]);
-//   }
-//   else {
-//     this.eventService.setCurrentSeason(this.seasons[change.seasonSelect - 1]);
-//   }
-//   this.currentSeason = this.eventService.getCurrentSeason();
-//   this.getEvents();
-// }
-
-// addNewEvent() {
-//   this.eventNew = true;
-// }
-// }
 
