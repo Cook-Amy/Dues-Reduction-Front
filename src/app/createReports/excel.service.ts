@@ -21,7 +21,7 @@ export class ExcelService {
   workbook = new Workbook();
   data = [];
 
-  constructor(private http: HttpClient, private global: GlobalVariables) { }
+  constructor(private http: HttpClient) { }
 
   getStaffForEvent(eventID: number) {
     const params = new HttpParams().set('eventID', eventID.toString());

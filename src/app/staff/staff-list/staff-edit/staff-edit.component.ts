@@ -90,6 +90,10 @@ removeStaffConfirm: Boolean = false;
     let pncBarsRefresher = this.staff.pncBarsRefresher;
     let pncWaiver = this.staff.pncWaiver;
 
+    let active1 = this.status1;
+    let active2 = this.status2;
+    let active3 = this.status3;
+
     this.editStaffForm1 = new FormGroup({
       'firstName': new FormControl(firstName, Validators.required),
       'lastName': new FormControl(lastName, Validators.required),
@@ -101,7 +105,10 @@ removeStaffConfirm: Boolean = false;
       'pncExperienced': new FormControl(pncExperienced, Validators.required),
       'pncBars': new FormControl(pncBars, Validators.required),
       'pncBarsRefresher': new FormControl(pncBarsRefresher, Validators.required),
-      'pncWaiver': new FormControl(pncWaiver, Validators.required)
+      'pncWaiver': new FormControl(pncWaiver, Validators.required),
+      'active1': new FormControl(active1, Validators.required),
+      'active2': new FormControl(active2, Validators.required),
+      'active3': new FormControl(active3, Validators.required)
     });
   }
 
@@ -119,6 +126,10 @@ removeStaffConfirm: Boolean = false;
     }
     else { this.dateValue = new Date(wcTeamTraining); }
 
+    let active1 = this.status1;
+    let active2 = this.status2;
+    let active3 = this.status3;
+
     this.editStaffForm2 = new FormGroup({
       'firstName': new FormControl(firstName, Validators.required),
       'lastName': new FormControl(lastName, Validators.required),
@@ -126,7 +137,10 @@ removeStaffConfirm: Boolean = false;
       'phone': new FormControl(phone, Validators.required),
       'tuAccount': new FormControl(tuAccount, Validators.required),
       'active': new FormControl(active, Validators.required),
-      'wcTeamTraining': new FormControl(wcTeamTraining, Validators.required)
+      'wcTeamTraining': new FormControl(wcTeamTraining, Validators.required),
+      'active1': new FormControl(active1, Validators.required),
+      'active2': new FormControl(active2, Validators.required),
+      'active3': new FormControl(active3, Validators.required)
     });
   }
 
@@ -144,6 +158,10 @@ removeStaffConfirm: Boolean = false;
     }
     else { this.dateValue = new Date(cfAlcoholTraining); }
 
+    let active1 = this.status1;
+    let active2 = this.status2;
+    let active3 = this.status3;
+
     this.editStaffForm3 = new FormGroup({
       'firstName': new FormControl(firstName, Validators.required),
       'lastName': new FormControl(lastName, Validators.required),
@@ -151,7 +169,10 @@ removeStaffConfirm: Boolean = false;
       'phone': new FormControl(phone, Validators.required),
       'tuAccount': new FormControl(tuAccount, Validators.required),
       'active': new FormControl(active, Validators.required),
-      'cfAlcoholTraining': new FormControl(cfAlcoholTraining, Validators.required)
+      'cfAlcoholTraining': new FormControl(cfAlcoholTraining, Validators.required),
+      'active1': new FormControl(active1, Validators.required),
+      'active2': new FormControl(active2, Validators.required),
+      'active3': new FormControl(active3, Validators.required)
     });
   }
 

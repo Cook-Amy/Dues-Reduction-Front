@@ -74,7 +74,7 @@
             <button type="button" class="btn event-btn">Send Email</button>
           </td> -->
           <td colspan="3">
-            <button type="button" class="btn event-btn">Credit Summary</button>
+            <button type="button" class="btn event-btn" (click)="onCreditSummary()">Credit Summary</button>
           </td>
         </tr>
       </tbody>
@@ -82,6 +82,46 @@
   </div>
   
   <app-staff-edit *ngIf="staffEdit == true" [staff]="staff" [showVenue]="showVenue" [currentVenueID]="currentVenueID"></app-staff-edit>
+
+  <div *ngIf="creditSummaryMsg">
+    <form [formGroup]="summaryForm" (ngSubmit)="onCreateCreditSummary()">
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          <label for="startDate">Choose Start Date:</label>
+          <ejs-datepicker class="date-picker" id='startDate' placeholder='Select a date' [value]='dateValue' formControlName="startDate"></ejs-datepicker>
+        </div>
+        <div class="form-group col-md-3">
+          <label for="endDate">Choose End Date:</label>
+          <ejs-datepicker class="date-picker" id='endDate' placeholder='Select a date' [value]='dateValue' formControlName="endDate"></ejs-datepicker>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-12">
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" id="emailSummary1" formControlName="emailSummary1">
+            <label for="emailSummary1" class="form-check-label">Send email to member</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" id="emailSummary2" formControlName="emailSummary2">
+            <label for="emailSummary2" class="form-check-label">Send email to coordinator</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" id="downloadSummary" formControlName="downloadSummary">
+            <label for="downloadSummary" class="form-check-label">Download Summary</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-md-4">
+          <button class="btn btn-info" type="button" (click)="onCancelCreditSummary()">Cancel</button>
+        </div>
+        <div class="col-md-4">
+          <button class="btn btn-info" type="submit">Create Report</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
 </div>
 
 <!--------------------------------------------------------------------------------------------
@@ -139,13 +179,52 @@
             <button type="button" class="btn event-btn">Send Email</button>
           </td> -->
           <td colspan="3">
-            <button type="button" class="btn event-btn">Credit Summary</button>
+            <button type="button" class="btn event-btn" (click)="onCreditSummary()">Credit Summary</button>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
   <app-staff-edit *ngIf="staffEdit == true" [staff]="staff" [showVenue]="showVenue" [currentVenueID]="currentVenueID"></app-staff-edit>
+
+  <div *ngIf="creditSummaryMsg">
+    <form [formGroup]="summaryForm2" (ngSubmit)="onCreateCreditSummary()">
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          <label for="startDate">Choose Start Date:</label>
+          <ejs-datepicker class="date-picker" id='startDate' placeholder='Select a date' [value]='dateValue' formControlName="startDate"></ejs-datepicker>
+        </div>
+        <div class="form-group col-md-3">
+          <label for="endDate">Choose End Date:</label>
+          <ejs-datepicker class="date-picker" id='endDate' placeholder='Select a date' [value]='dateValue' formControlName="endDate"></ejs-datepicker>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-12">
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" id="emailSummary1" formControlName="emailSummary1">
+            <label for="emailSummary1" class="form-check-label">Send email to member</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" id="emailSummary2" formControlName="emailSummary2">
+            <label for="emailSummary2" class="form-check-label">Send email to coordinator</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" id="downloadSummary" formControlName="downloadSummary">
+            <label for="downloadSummary" class="form-check-label">Download Summary</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-md-4">
+          <button class="btn btn-info" type="button" (click)="onCancelCreditSummary()">Cancel</button>
+        </div>
+        <div class="col-md-4">
+          <button class="btn btn-info" type="submit">Create Report</button>
+        </div>
+      </div>
+    </form>
+  </div>
   
 </div>
 
@@ -191,7 +270,7 @@
             <button type="button" class="btn event-btn">Send Email</button>
           </td> -->
           <td colspan="3">
-            <button type="button" class="btn event-btn">Credit Summary</button>
+            <button type="button" class="btn event-btn" (click)="onCreditSummary()">Credit Summary</button>
           </td>
         </tr>
       </tbody>
@@ -199,6 +278,45 @@
   </div>
 
   <app-staff-edit *ngIf="staffEdit == true" [staff]="staff" [showVenue]="showVenue" [currentVenueID]="currentVenueID"></app-staff-edit>
+
+  <div *ngIf="creditSummaryMsg">
+    <form [formGroup]="summaryForm3" (ngSubmit)="onCreateCreditSummary()">
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          <label for="startDate">Choose Start Date:</label>
+          <ejs-datepicker class="date-picker" id='startDate' placeholder='Select a date' [value]='dateValue' formControlName="startDate"></ejs-datepicker>
+        </div>
+        <div class="form-group col-md-3">
+          <label for="endDate">Choose End Date:</label>
+          <ejs-datepicker class="date-picker" id='endDate' placeholder='Select a date' [value]='dateValue' formControlName="endDate"></ejs-datepicker>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-12">
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" id="emailSummary1" formControlName="emailSummary1">
+            <label for="emailSummary1" class="form-check-label">Send email to member</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" id="emailSummary2" formControlName="emailSummary2">
+            <label for="emailSummary2" class="form-check-label">Send email to coordinator</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" id="downloadSummary" formControlName="downloadSummary">
+            <label for="downloadSummary" class="form-check-label">Download Summary</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-md-4">
+          <button class="btn btn-info" type="button" (click)="onCancelCreditSummary()">Cancel</button>
+        </div>
+        <div class="col-md-4">
+          <button class="btn btn-info" type="submit">Create Report</button>
+        </div>
+      </div>
+    </form>
+  </div>
 
 </div>
 
@@ -350,7 +468,7 @@
             <button type="button" class="btn event-btn">Send Email</button>
           </td> -->
           <td colspan="3">
-            <button type="button" class="btn event-btn">Credit Summary</button>
+            <button type="button" class="btn event-btn" (click)="onCreditSummary()">Credit Summary</button>
           </td>
         </tr>
       </tbody>
@@ -358,4 +476,44 @@
   </div>
   
   <app-staff-edit *ngIf="staffEdit == true" [staff]="staff" [showVenue]="showVenue" [currentVenueID]="currentVenueID"></app-staff-edit>
+
+  <div *ngIf="creditSummaryMsg">
+    <form [formGroup]="summaryForm4" (ngSubmit)="onCreateCreditSummary()">
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          <label for="startDate">Choose Start Date:</label>
+          <ejs-datepicker class="date-picker" id='startDate' placeholder='Select a date' [value]='dateValue' formControlName="startDate"></ejs-datepicker>
+        </div>
+        <div class="form-group col-md-3">
+          <label for="endDate">Choose End Date:</label>
+          <ejs-datepicker class="date-picker" id='endDate' placeholder='Select a date' [value]='dateValue' formControlName="endDate"></ejs-datepicker>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-12">
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" id="emailSummary1" formControlName="emailSummary1">
+            <label for="emailSummary1" class="form-check-label">Send email to member</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" id="emailSummary2" formControlName="emailSummary2">
+            <label for="emailSummary2" class="form-check-label">Send email to coordinator</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" id="downloadSummary" formControlName="downloadSummary">
+            <label for="downloadSummary" class="form-check-label">Download Summary</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-md-4">
+          <button class="btn btn-info" type="button" (click)="onCancelCreditSummary()">Cancel</button>
+        </div>
+        <div class="col-md-4">
+          <button class="btn btn-info" type="submit">Create Report</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
 </div>

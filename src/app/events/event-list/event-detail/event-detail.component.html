@@ -59,17 +59,14 @@
     </table>
 
     <tr>
-      <td colspan="3">
+      <td colspan="4">
         <button type="button" class="btn event-btn" (click)="onEditEvent()">Edit Event</button>
       </td>
-      <td colspan="3">
+      <td colspan="4">
         <button type="button" class="btn event-btn" (click)="confirmGateList=false; onDeleteEvent()">Delete Event</button>
       </td>
-      <td colspan="3">
+      <td colspan="4">
         <button type="button" class="btn event-btn" (click)="confirmGateList=true; confirmDelete=false">Send Gate List</button>
-      </td>
-      <td colspan="3">
-        <button type="button" class="btn event-btn">Send Reminder</button>
       </td>
     </tr>
 
@@ -112,7 +109,7 @@
           <button class="btn get-staff-btn" (click)="getTimesheetForEvent()">Get Staff</button>
         </div>
         <div *ngIf="getStaff">
-          <div *ngIf="!eventStaffEdit && !eventStaffAdd">
+          <div *ngIf="!eventStaffEdit && !eventStaffAdd && !reminderInfo">
             <table class="table table-striped table-sm">
               <thead class="thead-dark">
                 <tr>
@@ -146,16 +143,22 @@
                   </td>
                 </tr>
               </tbody>
-              <tr>
-                <td colspan="12">
-                  <button type="button" class="btn btn-info" (click)="onAddStaff()">Add Staff</button>
-                  &nbsp;&nbsp;
-                  <button class="btn btn-info" (click)="onAddEventBonus()">Add Event Bonus</button>
-                  &nbsp;&nbsp;
-                  <button class="btn btn-info" (click)="onAddHourlyBonus()">Add Hourly Bonus</button>
-                </td>
-              </tr>
             </table>
+
+            <tr>
+              <td colspan="3">
+                <button type="button" class="btn btn-info" (click)="onAddStaff()">Add Staff Member</button>
+              </td>
+              <td colspan="3">
+                <button class="btn btn-info" (click)="onAddEventBonus()">Add Event Bonus</button>
+              </td>
+              <td colspan="3">
+                <button class="btn btn-info" (click)="onAddHourlyBonus()">Add Hourly Bonus</button>
+              </td>
+              <td colspan="3">
+                <button type="button" class="btn btn-info" (click)="onSendReminder()">Send Reminder</button>
+              </td>
+            </tr>
 
             <div *ngIf="addEventBonus">
               <form [formGroup]="ebForm" (ngSubmit)="onEventBonusAdded()">
@@ -194,7 +197,43 @@
                 </div>
               </form>
             </div>
+          </div> <!-- *ngIf="!eventStaffEdit && !eventStaffAdd && !reminderInfo" -->
 
+          <div *ngIf="!eventStaffEdit && !eventStaffAdd && reminderInfo">
+              <table class="table table-striped table-sm">
+                <thead class="thead-dark">
+                  <tr>
+                    <th>
+                        <input type="checkbox" [(ngModel)]="masterSelected" name="list_name" value="m1" (change)="checkUncheckAll()">
+                    </th>
+                    <th>Staff</th>
+                    <th>Job</th>
+                    <th>Last Reminder</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of checklist">
+                    <td>
+                        <input type="checkbox" [(ngModel)]="item.isSelected" name="list_name" value={{item.id}} (change)="isAllSelected()" >
+                    </td>
+                    <td>{{ checkForNullString(item.name) }}</td>
+                    <td>{{ checkForNullString(item.jobName) }}</td>
+                    <td>00-00-0000</td>
+                  </tr>
+                </tbody>
+              </table>
+
+                <!-- TODO: Insert editable text for reminder email -->
+
+              <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-2">
+                  <button class="btn btn-info" type="button" (click)="onCancelReminder()">Cancel</button>
+                </div>
+                <div class="col-md-2">
+                  <button class="btn btn-info" type="button" (click)="onSubmitReminder()">Send</button>
+                </div>
+              </div>
           </div>
 
           <div *ngIf="eventStaffEdit == true">
@@ -203,11 +242,10 @@
           <div *ngIf="eventStaffAdd == true">
             <app-event-staff-add [event]="event"></app-event-staff-add>
           </div>
-
-        </div>
+        </div> <!-- *ngIf==getStaff -->
        
-      </div>
-    </div>
+      </div> <!-- col-md-12 -->
+    </div> <!-- row -->
   </div>
  
   <app-event-edit *ngIf="eventEdit == true" [currentVenueID]="currentVenueID" [event]="event"></app-event-edit>
@@ -266,17 +304,14 @@
     </table>
 
     <tr>
-      <td colspan="3">
+      <td colspan="4">
         <button type="button" class="btn event-btn" (click)="onEditEvent()">Edit Event</button>
       </td>
-      <td colspan="3">
+      <td colspan="4">
         <button type="button" class="btn event-btn" (click)="confirmGateList=false; onDeleteEvent()">Delete Event</button>
       </td>
-      <td colspan="3">
+      <td colspan="4">
         <button type="button" class="btn event-btn" (click)="confirmGateList=true; confirmDelete=false">Send Gate List</button>
-      </td>
-      <td colspan="3">
-        <button type="button" class="btn event-btn">Send Reminder</button>
       </td>
     </tr>
 
@@ -319,7 +354,7 @@
           <button class="btn get-staff-btn" (click)="getTimesheetForEvent()">Get Staff</button>
         </div>
         <div *ngIf="getStaff">
-          <div *ngIf="!eventStaffEdit && !eventStaffAdd">
+          <div *ngIf="!eventStaffEdit && !eventStaffAdd && !reminderInfo">
             <table class="table table-striped table-sm">
               <thead class="thead-dark">
                 <tr>
@@ -357,16 +392,22 @@
                   </td>
                 </tr>
               </tbody>
-              <tr>
-                <td colspan="12">
-                  <button type="button" class="btn btn-info" (click)="onAddStaff()">Add Staff</button>
-                  &nbsp;&nbsp;
-                  <button class="btn btn-info" (click)="onAddEventBonus()">Add Event Bonus</button>
-                  &nbsp;&nbsp;
-                  <button class="btn btn-info" (click)="onAddHourlyBonus()">Add Hourly Bonus</button>
-                </td>
-              </tr>
             </table>
+
+            <tr>
+              <td colspan="3">
+                <button type="button" class="btn btn-info" (click)="onAddStaff()">Add Staff Member</button>
+              </td>
+              <td colspan="3">
+                <button class="btn btn-info" (click)="onAddEventBonus()">Add Event Bonus</button>
+              </td>
+              <td colspan="3">
+                <button class="btn btn-info" (click)="onAddHourlyBonus()">Add Hourly Bonus</button>
+              </td>
+              <td colspan="3">
+                <button type="button" class="btn btn-info" (click)="onSendReminder()">Send Reminder</button>
+              </td>
+            </tr>
 
             <div *ngIf="addEventBonus">
               <form [formGroup]="ebForm" (ngSubmit)="onEventBonusAdded()">
@@ -405,8 +446,45 @@
                 </div>
               </form>
             </div>
+          </div> <!-- *ngIf="!eventStaffEdit && !eventStaffAdd && !reminderInfo" -->
 
-          </div>
+
+          <div *ngIf="!eventStaffEdit && !eventStaffAdd && reminderInfo">
+            <table class="table table-striped table-sm">
+              <thead class="thead-dark">
+                <tr>
+                  <th>
+                      <input type="checkbox" [(ngModel)]="masterSelected" name="list_name" value="m1" (change)="checkUncheckAll()">
+                  </th>
+                  <th>Staff</th>
+                  <th>Job</th>
+                  <th>Last Reminder</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of checklist">
+                  <td>
+                      <input type="checkbox" [(ngModel)]="item.isSelected" name="list_name" value={{item.id}} (change)="isAllSelected()" >
+                  </td>
+                  <td>{{ checkForNullString(item.name) }}</td>
+                  <td>{{ checkForNullString(item.jobName) }}</td>
+                  <td>00-00-0000</td>
+                </tr>
+              </tbody>
+            </table>
+
+              <!-- TODO: Insert editable text for reminder email -->
+
+            <div class="row">
+              <div class="col-md-2"></div>
+              <div class="col-md-2">
+                <button class="btn btn-info" type="button" (click)="onCancelReminder()">Cancel</button>
+              </div>
+              <div class="col-md-2">
+                <button class="btn btn-info" type="button" (click)="onSubmitReminder()">Send</button>
+              </div>
+            </div>
+        </div>
 
           <div *ngIf="eventStaffEdit == true">
             <app-event-staff-edit [timesheet]="editTimesheet" [event]="event"></app-event-staff-edit>
@@ -414,11 +492,10 @@
           <div *ngIf="eventStaffAdd == true">
             <app-event-staff-add [event]="event"></app-event-staff-add>
           </div>
- 
-        </div>
+        </div> <!-- *ngIf==getStaff -->
        
-      </div>
-    </div>
+      </div> <!-- col-md-12 -->
+    </div> <!-- row -->
   </div>
 
   <app-event-edit *ngIf="eventEdit == true" [currentVenueID]="currentVenueID" [event]="event"></app-event-edit>
@@ -476,14 +553,11 @@
     </table>
 
     <tr>
-      <td colspan="3">
+      <td colspan="4">
         <button type="button" class="btn event-btn" (click)="onEditEvent()">Edit Event</button>
       </td>
-      <td colspan="3">
+      <td colspan="4">
         <button type="button" class="btn event-btn" (click)="confirmGateList=false; onDeleteEvent()">Delete Event</button>
-      </td>
-      <td colspan="3">
-        <button type="button" class="btn event-btn">Send Reminder</button>
       </td>
     </tr>
 
@@ -500,7 +574,7 @@
           <button class="btn get-staff-btn" (click)="getTimesheetForEvent()">Get Staff</button>
         </div>
         <div *ngIf="getStaff">
-          <div *ngIf="!eventStaffEdit && !eventStaffAdd">
+          <div *ngIf="!eventStaffEdit && !eventStaffAdd && !reminderInfo">
             <table class="table table-striped table-sm">
               <thead class="thead-dark">
                 <tr>
@@ -538,16 +612,22 @@
                   </td>
                 </tr>
               </tbody>
-              <tr>
-                <td colspan="12">
-                  <button type="button" class="btn btn-info" (click)="onAddStaff()">Add Staff</button>
-                  &nbsp;&nbsp;
-                  <button class="btn btn-info" (click)="onAddEventBonus()">Add Event Bonus</button>
-                  &nbsp;&nbsp;
-                  <button class="btn btn-info" (click)="onAddHourlyBonus()">Add Hourly Bonus</button>
-                </td>
-              </tr>
             </table>
+
+            <tr>
+              <td colspan="3">
+                <button type="button" class="btn btn-info" (click)="onAddStaff()">Add Staff Member</button>
+              </td>
+              <td colspan="3">
+                <button class="btn btn-info" (click)="onAddEventBonus()">Add Event Bonus</button>
+              </td>
+              <td colspan="3">
+                <button class="btn btn-info" (click)="onAddHourlyBonus()">Add Hourly Bonus</button>
+              </td>
+              <td colspan="3">
+                <button type="button" class="btn btn-info" (click)="onSendReminder()">Send Reminder</button>
+              </td>
+            </tr>
 
             <div *ngIf="addEventBonus">
               <form [formGroup]="ebForm" (ngSubmit)="onEventBonusAdded()">
@@ -586,20 +666,55 @@
                 </div>
               </form>
             </div>
-
-          </div>
+          </div> <!-- *ngIf="!eventStaffEdit && !eventStaffAdd && !reminderInfo" -->
    
+          <div *ngIf="!eventStaffEdit && !eventStaffAdd && reminderInfo">
+            <table class="table table-striped table-sm">
+              <thead class="thead-dark">
+                <tr>
+                  <th>
+                      <input type="checkbox" [(ngModel)]="masterSelected" name="list_name" value="m1" (change)="checkUncheckAll()">
+                  </th>
+                  <th>Staff</th>
+                  <th>Job</th>
+                  <th>Last Reminder</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of checklist">
+                  <td>
+                      <input type="checkbox" [(ngModel)]="item.isSelected" name="list_name" value={{item.id}} (change)="isAllSelected()" >
+                  </td>
+                  <td>{{ checkForNullString(item.name) }}</td>
+                  <td>{{ checkForNullString(item.jobName) }}</td>
+                  <td>00-00-0000</td>
+                </tr>
+              </tbody>
+            </table>
+
+              <!-- TODO: Insert editable text for reminder email -->
+
+            <div class="row">
+              <div class="col-md-2"></div>
+              <div class="col-md-2">
+                <button class="btn btn-info" type="button" (click)="onCancelReminder()">Cancel</button>
+              </div>
+              <div class="col-md-2">
+                <button class="btn btn-info" type="button" (click)="onSubmitReminder()">Send</button>
+              </div>
+            </div>
+          </div>
+
           <div *ngIf="eventStaffEdit == true">
             <app-event-staff-edit [timesheet]="editTimesheet" [event]="event"></app-event-staff-edit>
           </div>
           <div *ngIf="eventStaffAdd == true">
             <app-event-staff-add [event]="event"></app-event-staff-add>
           </div>
-
-        </div>
-
-      </div>
-    </div>
+        </div> <!-- *ngIf==getStaff -->
+       
+      </div> <!-- col-md-12 -->
+    </div> <!-- row -->
   </div>
 
   <app-event-edit *ngIf="eventEdit == true" [currentVenueID]="currentVenueID" [event]="event"></app-event-edit>
