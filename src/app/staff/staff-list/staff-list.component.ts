@@ -1,3 +1,5 @@
+import { MonthReportService } from './../../createReports/month-report.service';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { VenueService } from './../../venues/venue.service';
 import { Venue } from './../../models/venue.model';
@@ -38,15 +40,20 @@ export class StaffListComponent implements OnInit {
   allVenues: Venue[] = [];
   showVenue: number;
 
-  staffNew: Boolean;
+  staffNew: Boolean = true;
   activityLevel: number = 1;
+
+  monthlyReportMsg: Boolean;
+  monthlyReportForm: FormGroup;
 
   constructor(private staffService: StaffService,
               private venueService: VenueService,
+              private monthReportService: MonthReportService,
               private route: ActivatedRoute,
               private router: Router) { }
 
   ngOnInit() {
+    this.initForm();
     this.allVenues = this.venueService.returnAllVenues();
     this.currentVenue = this.venueService.getCurrentVenue();
     this.currentVenueID = this.currentVenue.idvenue;
@@ -61,6 +68,22 @@ export class StaffListComponent implements OnInit {
     this.staffNew = this.staffService.getStaffNew();
     this.staffService.staffNewChanged.subscribe(newStaffChanged => {
       this.staffNew = newStaffChanged;
+    });
+  }
+
+  private initForm() {
+    let month = "";
+    let year = "";
+    let emailReport1 = false;
+    let emailReport2 = false;
+    let downloadReport = false;
+
+    this.monthlyReportForm = new FormGroup ({
+      'month': new FormControl(month, Validators.required),
+      'year': new FormControl(year, Validators.required),
+      'emailReport1': new FormControl(emailReport1, Validators.required),
+      'emailReport2': new FormControl(emailReport2, Validators.required),
+      'downloadReport': new FormControl(downloadReport, Validators.required)
     });
   }
 
@@ -258,7 +281,44 @@ export class StaffListComponent implements OnInit {
   }
 
   onAddStaff() {
+    this.monthlyReportMsg = false;
     this.staffNew = true;
   }
 
+  onCreateMonthlyReport() {
+    this.staffNew = false;
+    this.monthlyReportMsg = true;
+  }
+
+  onCancelMonthlyReport() {
+    this.monthlyReportMsg = false;
+  }
+
+  onSendMonthlyReport() {
+    console.log("onSend() called");
+    var month = this.monthlyReportForm.value['month'];
+    var year = this.monthlyReportForm.value['year'];
+
+    var startDate = new Date();
+    startDate.setMonth(month - 1);
+    startDate.setFullYear(year);
+    startDate.setDate(1);
+    startDate.setHours(0);
+    startDate.setMinutes(0);
+    startDate.setSeconds(0);
+
+    var endDate = new Date();
+    endDate.setMonth(month - 1);
+    endDate.setFullYear(year);
+    endDate.setDate(31);
+    endDate.setHours(0);
+    endDate.setMinutes(0);
+    endDate.setSeconds(0);
+
+    this.monthReportService.getMonthReportData(startDate, endDate).subscribe(data => {
+      this.onCancelMonthlyReport();
+    })
+  }
+
 }
+

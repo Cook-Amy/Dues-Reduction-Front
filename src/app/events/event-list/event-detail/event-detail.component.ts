@@ -3,7 +3,7 @@ import { Event } from './../../../models/event.model';
 import { MathService } from './../../math.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@angular/forms';
-import { ExcelService } from './../../../createReports/excel.service';
+import { GateListService } from '../../../createReports/gateList.service';
 import { Timesheet } from './../../../models/timesheet.model';
 import { EventService } from './../../event.service';
 import { Component, OnInit, Input } from '@angular/core';
@@ -39,7 +39,7 @@ export class EventDetailComponent implements OnInit {
   masterSelected: boolean; 
 
   constructor(private eventService: EventService,
-              private excelService: ExcelService,
+              private gateListService: GateListService,
               private mathService: MathService,
               private emailService: EmailService) { }
 
@@ -94,14 +94,14 @@ export class EventDetailComponent implements OnInit {
     let email = this.gateListForm.value['emailGateList'];
     let download = this.gateListForm.value['downloadGateList'];
 
-    this.excelService.getStaffForEvent(this.event.idevent).subscribe(staff => {
+    this.gateListService.getStaffForEvent(this.event.idevent).subscribe(staff => {
       if(this.currentVenueID == 1) {
-        this.excelService.generatePncGateList(this.event, staff).subscribe(results => {
+        this.gateListService.generatePncGateList(this.event, staff).subscribe(results => {
           console.log("gate list result: " + results);
          });
       }
       else if(this.currentVenueID == 2) {
-        this.excelService.generateWcGateList(this.event, staff). subscribe(results => { });
+        this.gateListService.generateWcGateList(this.event, staff). subscribe(results => { });
       }
     })
     this.confirmGateList = false;

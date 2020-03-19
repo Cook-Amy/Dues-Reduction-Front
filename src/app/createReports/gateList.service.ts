@@ -1,9 +1,9 @@
-import { Staff } from './../models/staff.model';
-import { Event } from './../models/event.model';
-import { EventWC } from './../models/eventWC.model';
-import { GlobalVariables } from './../shared/GlobalVariables';
+import { Staff } from '../models/staff.model';
+import { Event } from '../models/event.model';
+import { EventWC } from '../models/eventWC.model';
+import { GlobalVariables } from '../shared/GlobalVariables';
 import { HttpParams, HttpClient } from '@angular/common/http';
-import { EventPNC } from './../models/eventPNC.model';
+import { EventPNC } from '../models/eventPNC.model';
 import { Injectable } from '@angular/core';
 import { Workbook } from 'exceljs';
 import * as fs from 'file-saver';
@@ -12,7 +12,7 @@ import * as vabLogoFile from './vabLogo.js';
 @Injectable({
   providedIn: 'root'
 })
-export class ExcelService {
+export class GateListService {
 
   // serverUrl = 'http://localhost:4000/';
   // serverUrl = 'http://duesbackend-env-1.b6qgyzs5az.us-east-2.elasticbeanstalk.com/';
