@@ -78,6 +78,7 @@ export class EventListComponent implements OnInit {
 
   changeSeason(change) {
     if(change.seasonSelect == 999) {
+      console.log("season changed to all");
       this.eventService.setCurrentSeason(this.seasons[this.seasons.length - 1]);
     }
     else {
@@ -85,6 +86,7 @@ export class EventListComponent implements OnInit {
     }
     this.currentSeason = this.eventService.getCurrentSeason();
     this.currentSeasonID = this.currentSeason.idSeason;
+    console.log("season id: " + this.currentSeasonID);
     this.getEvents();
   }
 

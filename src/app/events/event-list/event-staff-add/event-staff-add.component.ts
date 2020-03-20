@@ -22,6 +22,7 @@ export class EventStaffAddComponent implements OnInit {
   staff: Staff[] = [];
   timesheet: Timesheet;
   idVenue: number; 
+  interval: number = 15;
 
   constructor(private eventService: EventService,
               private staffService: StaffService,
@@ -124,7 +125,6 @@ export class EventStaffAddComponent implements OnInit {
 
   onSubmit() {
     this.createTimesheet();
-  
     this.timesheet = this.mathService.calculateOneTimeSheet(this.timesheet);
     this.eventService.addToTimesheets(this.timesheet);
     this.eventService.addTimesheetinDB(this.timesheet, this.event.idevent).subscribe(id => {
@@ -133,7 +133,7 @@ export class EventStaffAddComponent implements OnInit {
         this.eventService.getPncContractInfo().subscribe(contract => {
           this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
             this.event = this.mathService.calculatePncEvent(this.event, contract[0], timesheets);
-            this.eventService.editEvent(this.event).subscribe(res => {
+            this.eventService.editEvent(this.event, this.idVenue).subscribe(res => {
               this.eventService.getAllEvents().subscribe(events => {
                 this.eventService.setAllEvents(events);
                 this.eventService.setEventStaffEdit(false);
@@ -148,7 +148,7 @@ export class EventStaffAddComponent implements OnInit {
         this.eventService.getWcContractInfo().subscribe(contract => {
           this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
             this.event = this.mathService.calculateWcEvent(this.event, contract[0], timesheets);
-            this.eventService.editEvent(this.event).subscribe(res => {
+            this.eventService.editEvent(this.event, this.idVenue).subscribe(res => {
               this.eventService.getAllEvents().subscribe(events => {
                 this.eventService.setAllEvents(events);
                 this.eventService.setEventStaffEdit(false);
@@ -163,7 +163,7 @@ export class EventStaffAddComponent implements OnInit {
         this.eventService.getCfContractInfo().subscribe(contract => {
           this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
             this.event = this.mathService.calculateCfEvent(this.event, contract[0], timesheets);
-            this.eventService.editEvent(this.event).subscribe(res => {
+            this.eventService.editEvent(this.event, this.idVenue).subscribe(res => {
               this.eventService.getAllEvents().subscribe(events => {
                 this.eventService.setAllEvents(events);
                 this.eventService.setEventStaffEdit(false);

@@ -14,6 +14,8 @@
         </select>
       </div>
 
+      <!-- TODO: Add option to filter by job title -->
+
       <div class="form-group" *ngIf="currentVenueID == 99" (change)="changeVenue(activeForm.value)">
         <label for="venueSelect">Venue</label>
         <select ngModel name="venueSelect" id="venueSelect" class="form-control">

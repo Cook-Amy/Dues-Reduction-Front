@@ -67,8 +67,10 @@ export class MathService {
       // add other positions to estimate 
       // applies to Stand Leader and Cooks
     var pncPay = 0;
-    for(var i = 0; i < timesheets.length; i++) {
-      pncPay += timesheets[i].venuePay;
+    if(timesheets) {
+      for(var i = 0; i < timesheets.length; i++) {
+        pncPay += timesheets[i].venuePay;
+      }
     }
     estCheck += pncPay;
     

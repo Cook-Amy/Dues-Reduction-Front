@@ -11,24 +11,24 @@
           <td colspan="4"></td>
         </tr>
         <tr>
-          <td colspan="4">Total Sales: ${{ checkForNullNum(event.totalSalesPnc) }}</td>
-          <td colspan="4">Alc Sales: ${{ checkForNullNum(event.alcSales) }}</td>
-          <td colspan="4">Venue Bonus: ${{ checkForNullNum(event.venueBonus) }}</td>
+          <td colspan="4">Total Sales: ${{ (checkForNullNum(event.totalSalesPnc)).toFixed(2) }}</td>
+          <td colspan="4">Alc Sales: ${{ (checkForNullNum(event.alcSales)).toFixed(2) }}</td>
+          <td colspan="4">Venue Bonus: ${{ (checkForNullNum(event.venueBonus)).toFixed(2) }}</td>
         </tr>
         <tr>
-          <td colspan="4">Payout: ${{ checkForNullNum(event.payout) }}</td>
-          <td colspan="4">Est. Check: ${{ checkForNullNum(event.estimatedCheck) }}</td>
-          <td colspan="4">Est. Profit: ${{ checkForNullNum(event.estimatedProfit) }}</td>
+          <td colspan="4">Payout: ${{ (checkForNullNum(event.payout)).toFixed(2) }}</td>
+          <td colspan="4">Est. Check: ${{ (checkForNullNum(event.estimatedCheck)).toFixed(2) }}</td>
+          <td colspan="4">Est. Profit: ${{ (checkForNullNum(event.estimatedProfit)).toFixed(2) }}</td>
         </tr>
         <tr>
-          <td colspan="4">Discrepancy: ${{ checkForNullNum(event.discrepancy) }}</td>
-          <td colspan="4">Actual Check: ${{ checkForNullNum(event.actualCheck) }}</td>
-          <td colspan="4">Actual Profit: ${{ checkForNullNum(event.actualProfit) }}</td>
+          <td colspan="4">Discrepancy: ${{ (checkForNullNum(event.discrepancy)).toFixed(2) }}</td>
+          <td colspan="4">Actual Check: ${{ (checkForNullNum(event.actualCheck)).toFixed(2) }}</td>
+          <td colspan="4">Actual Profit: ${{ (checkForNullNum(event.actualProfit)).toFixed(2) }}</td>
         </tr>
         <tr>
-          <td colspan="4">TAC Cut: ${{ checkForNullNum(event.tacCut) }}</td>
-          <td colspan="4">DR Cut: ${{ checkForNullNum(event.drCut) }}</td>
-          <td colspan="4">Coordinator Payout: ${{ checkForNullNum(event.coordinatorAdminAmt) }}</td>
+          <td colspan="4">TAC Cut: ${{ (checkForNullNum(event.tacCut)).toFixed(2) }}</td>
+          <td colspan="4">DR Cut: ${{ (checkForNullNum(event.drCut)).toFixed(2) }}</td>
+          <td colspan="4">Coordinator Payout: ${{ (checkForNullNum(event.coordinatorAdminAmt)).toFixed(2) }}</td>
         </tr>
         <tr>
           <td colspan="12">Notes: {{ checkForNullString(event.eventNotes) }}</td>
@@ -265,24 +265,24 @@
           <td colspan="4"></td>
         </tr>
         <tr>
-          <td colspan="4">Credit Card Tips: {{ checkForNullNum(event.creditCardTips) }}</td>
-          <td colspan="4">Max Credit Card Tips: {{ checkForNullNum(event.maxCreditCardTipAmount) }}</td>
-          <td colspan="4">Venue Bonus: {{ checkForNullNum(event.venueBonus) }}</td>
+          <td colspan="4">Credit Card Tips: {{ (checkForNullNum(event.creditCardTips)).toFixed(2) }}</td>
+          <td colspan="4">Max Credit Card Tips: {{ (checkForNullNum(event.maxCreditCardTipAmount)).toFixed(2) }}</td>
+          <td colspan="4">Venue Bonus: {{ (checkForNullNum(event.venueBonus)).toFixed(2) }}</td>
         </tr>
         <tr>
-          <td colspan="4">Payout: ${{ checkForNullNum(event.payout) }}</td>
-          <td colspan="4">Est. Check: ${{ checkForNullNum(event.estimatedCheck) }}</td>
-          <td colspan="4">Est. Profit: ${{ checkForNullNum(event.estimatedProfit) }}</td>
+          <td colspan="4">Payout: ${{ (checkForNullNum(event.payout)).toFixed(2) }}</td>
+          <td colspan="4">Est. Check: ${{ (checkForNullNum(event.estimatedCheck)).toFixed(2) }}</td>
+          <td colspan="4">Est. Profit: ${{ (checkForNullNum(event.estimatedProfit)).toFixed(2) }}</td>
         </tr>
         <tr>
-          <td colspan="4">Discrepancy: ${{ checkForNullNum(event.discrepancy) }}</td>
-          <td colspan="4">Actual Check: ${{ checkForNullNum(event.actualCheck) }}</td>
-          <td colspan="4">Actual Profit: ${{ checkForNullNum(event.actualProfit) }}</td>
+          <td colspan="4">Discrepancy: ${{ (checkForNullNum(event.discrepancy)).toFixed(2) }}</td>
+          <td colspan="4">Actual Check: ${{ (checkForNullNum(event.actualCheck)).toFixed(2) }}</td>
+          <td colspan="4">Actual Profit: ${{ (checkForNullNum(event.actualProfit)).toFixed(2) }}</td>
         </tr>
         <tr>
-          <td colspan="4">TAC Cut: ${{ checkForNullNum(event.tacCut) }}</td>
-          <td colspan="4">DR Cut: ${{ checkForNullNum(event.drCut) }}</td>
-          <td colspan="4">Coordinator Payout: {{ checkForNullNum(event.coordinatorAdminAmt) }}</td>
+          <td colspan="4">TAC Cut: ${{ (checkForNullNum(event.tacCut)).toFixed(2) }}</td>
+          <td colspan="4">DR Cut: ${{ (checkForNullNum(event.drCut)).toFixed(2) }}</td>
+          <td colspan="4">Coordinator Payout: {{ (checkForNullNum(event.coordinatorAdminAmt)).toFixed(2) }}</td>
         </tr>
         <tr>
           <td colspan="12">Notes: ${{ checkForNullString(event.eventNotes) }}</td>
@@ -298,7 +298,7 @@
             <i class="far fa-check-square" *ngIf="event.shuttleBonusBool"></i>
             Shuttle Bonus
           </td>
-          <td colspan="4">Shuttle Bonus Amount: {{ checkForNullNum(event.shuttleBonusAmountWc) }}</td>
+          <td colspan="4">Shuttle Bonus Amount: {{ (checkForNullNum(event.shuttleBonusAmountWc)).toFixed(2) }}</td>
         </tr>
       </tbody>
     </table>
@@ -515,23 +515,23 @@
           <td colspan="4"></td>
         </tr>
         <tr>
-          <td colspan="4">Total Sales: {{ checkForNullNum(event.totalSalesCf) }}</td>
-          <td colspan="4">Venue Bonus: {{ checkForNullNum(event.venueBonus) }}</td>
+          <td colspan="4">Total Sales: {{ (checkForNullNum(event.totalSalesCf)).toFixed(2) }}</td>
+          <td colspan="4">Venue Bonus: {{ (checkForNullNum(event.venueBonus)).toFixed(2) }}</td>
         </tr>
         <tr>
-          <td colspan="4">Payout: ${{ checkForNullNum(event.payout) }}</td>
-          <td colspan="4">Est. Check: ${{ checkForNullNum(event.estimatedCheck) }}</td>
-          <td colspan="4">Est. Profit: ${{ checkForNullNum(event.estimatedProfit) }}</td>
+          <td colspan="4">Payout: ${{ (checkForNullNum(event.payout)).toFixed(2) }}</td>
+          <td colspan="4">Est. Check: ${{ (checkForNullNum(event.estimatedCheck)).toFixed(2) }}</td>
+          <td colspan="4">Est. Profit: ${{ (checkForNullNum(event.estimatedProfit)).toFixed(2) }}</td>
         </tr>
         <tr>
-          <td colspan="4">Discrepancy: ${{ checkForNullNum(event.discrepancy) }}</td>
-          <td colspan="4">Actual Check: ${{ checkForNullNum(event.actualCheck) }}</td>
-          <td colspan="4">Actual Profit: ${{ checkForNullNum(event.actualProfit) }}</td>
+          <td colspan="4">Discrepancy: ${{ (checkForNullNum(event.discrepancy)).toFixed(2) }}</td>
+          <td colspan="4">Actual Check: ${{ (checkForNullNum(event.actualCheck)).toFixed(2) }}</td>
+          <td colspan="4">Actual Profit: ${{ (checkForNullNum(event.actualProfit)).toFixed(2) }}</td>
         </tr>
         <tr>
-          <td colspan="4">TAC Cut: ${{ checkForNullNum(event.tacCut) }}</td>
-          <td colspan="4">DR Cut: ${{ checkForNullNum(event.drCut) }}</td>
-          <td colspan="4">Coordinator Payout: {{ checkForNullNum(event.coordinatorAdminAmt) }}</td>
+          <td colspan="4">TAC Cut: ${{ (checkForNullNum(event.tacCut)).toFixed(2) }}</td>
+          <td colspan="4">DR Cut: ${{ (checkForNullNum(event.drCut)).toFixed(2) }}</td>
+          <td colspan="4">Coordinator Payout: {{ (checkForNullNum(event.coordinatorAdminAmt)).toFixed(2) }}</td>
         </tr>
         <tr>
           <td colspan="12">Notes: ${{ checkForNullString(event.eventNotes) }}</td>
@@ -547,7 +547,7 @@
             <i class="far fa-check-square" *ngIf="event.shuttleBonusBool"></i>
             Shuttle Bonus
           </td>
-          <td colspan="4">Shuttle Bonus Amount: {{ checkForNullNum(event.shuttleBonusAmountCf) }}</td>
+          <td colspan="4">Shuttle Bonus Amount: {{ (checkForNullNum(event.shuttleBonusAmountCf)).toFixed(2) }}</td>
         </tr>
       </tbody>
     </table>

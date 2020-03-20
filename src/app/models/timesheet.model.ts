@@ -45,13 +45,11 @@ export class Timesheet {
     this.jobName = jobName;
     this.jobID = jobID;
     this.scheduledArrivalTime = scheduledArrivalTime;
-    if(!this.scheduledArrivalTime) { this.scheduledArrivalTime = '0'; }
+    // if(!this.scheduledArrivalTime) { this.scheduledArrivalTime = '0'; }
     this.hourlyRate = hourlyRate;
     if(!this.hourlyRate ) { this.hourlyRate = 0; }
     this.timeIn = timeIn;
-    if(!this.timeIn ) { this.timeIn = '0'; }
     this.timeOut = timeOut;
-    if(!this.timeOut ) { this.timeOut = '0'; }
     this.hoursWorked = hoursWorked;
     if(!this.hoursWorked ) { this.hoursWorked = 0; }
     this.shuttleBonus = shuttleBonus;

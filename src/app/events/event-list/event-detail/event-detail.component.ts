@@ -123,15 +123,16 @@ export class EventDetailComponent implements OnInit {
       this.eventID = this.event.idevent;
       this.eventService.setTimesheets(res);
       this.timesheet = this.eventService.returnTimesheets();
-      this.timesheet.forEach(ts => {
-        this.checklist.push({
-          id: ts.idtimesheet,
-          name: ts.lastName + ", " + ts.firstName,
-          jobName: ts.jobName,
-          isSelected: false
+      if(this.timesheet) {
+        this.timesheet.forEach(ts => {
+          this.checklist.push({
+            id: ts.idtimesheet,
+            name: ts.lastName + ", " + ts.firstName,
+            jobName: ts.jobName,
+            isSelected: false
+          });
         });
-      });
-      
+      }
     });
   }
 
@@ -226,7 +227,7 @@ export class EventDetailComponent implements OnInit {
         this.eventService.getPncContractInfo().subscribe(contract => {
           this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
             this.event = this.mathService.calculatePncEvent(this.event, contract[0], timesheets);
-            this.eventService.editEvent(this.event).subscribe(res => {
+            this.eventService.editEvent(this.event, this.currentVenueID).subscribe(res => {
               this.eventService.getAllEvents().subscribe(events => {
                 this.eventService.setAllEvents(events);
                 this.eventService.setEventStaffEdit(false);
@@ -242,7 +243,7 @@ export class EventDetailComponent implements OnInit {
         this.eventService.getWcContractInfo().subscribe(contract => {
           this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
             this.event = this.mathService.calculateWcEvent(this.event, contract[0], timesheets);
-            this.eventService.editEvent(this.event).subscribe(res => {
+            this.eventService.editEvent(this.event, this.currentVenueID).subscribe(res => {
               this.eventService.getAllEvents().subscribe(events => {
                 this.eventService.setAllEvents(events);
                 this.eventService.setEventStaffEdit(false);
@@ -258,7 +259,7 @@ export class EventDetailComponent implements OnInit {
         this.eventService.getCfContractInfo().subscribe(contract => {
           this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
             this.event = this.mathService.calculateCfEvent(this.event, contract[0], timesheets);
-            this.eventService.editEvent(this.event).subscribe(res => {
+            this.eventService.editEvent(this.event, this.currentVenueID).subscribe(res => {
               this.eventService.getAllEvents().subscribe(events => {
                 this.eventService.setAllEvents(events);
                 this.eventService.setEventStaffEdit(false);
@@ -285,7 +286,7 @@ export class EventDetailComponent implements OnInit {
         this.eventService.getPncContractInfo().subscribe(contract => {
           this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
             this.event = this.mathService.calculatePncEvent(this.event, contract[0], timesheets);
-            this.eventService.editEvent(this.event).subscribe(res => {
+            this.eventService.editEvent(this.event, this.currentVenueID).subscribe(res => {
               this.eventService.getAllEvents().subscribe(events => {
                 this.eventService.setAllEvents(events);
                 this.eventService.setEventStaffEdit(false);
@@ -301,7 +302,7 @@ export class EventDetailComponent implements OnInit {
         this.eventService.getWcContractInfo().subscribe(contract => {
           this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
             this.event = this.mathService.calculateWcEvent(this.event, contract[0], timesheets);
-            this.eventService.editEvent(this.event).subscribe(res => {
+            this.eventService.editEvent(this.event, this.currentVenueID).subscribe(res => {
               this.eventService.getAllEvents().subscribe(events => {
                 this.eventService.setAllEvents(events);
                 this.eventService.setEventStaffEdit(false);
@@ -317,7 +318,7 @@ export class EventDetailComponent implements OnInit {
         this.eventService.getCfContractInfo().subscribe(contract => {
           this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
             this.event = this.mathService.calculateCfEvent(this.event, contract[0], timesheets);
-            this.eventService.editEvent(this.event).subscribe(res => {
+            this.eventService.editEvent(this.event, this.currentVenueID).subscribe(res => {
               this.eventService.getAllEvents().subscribe(events => {
                 this.eventService.setAllEvents(events);
                 this.eventService.setEventStaffEdit(false);
@@ -345,6 +346,8 @@ export class EventDetailComponent implements OnInit {
   }
 
   onSubmitReminder() {
+    // TODO: log last reminder date
+
     this.getCheckedItemList();
     var list = this.checkedList;
 

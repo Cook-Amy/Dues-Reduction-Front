@@ -33,15 +33,15 @@
   <div class="form-row">
     <div class="form-group col-md-3">
       <label for="scheduledArrivalTime">Scheduled Arrival Time</label>
-      <ejs-timepicker class="date-picker" id='scheduledArrivalTime' value="arrivalTime" formControlName="scheduledArrivalTime"></ejs-timepicker>
+      <ejs-timepicker class="date-picker" id='scheduledArrivalTime' value="arrivalTime" [step]="interval" formControlName="scheduledArrivalTime"></ejs-timepicker>
     </div>
     <div class="form-group col-md-3">
       <label for="timeIn">Time In</label>
-      <ejs-timepicker class="date-picker" id='timeIn' value="timeIn" formControlName="timeIn"></ejs-timepicker>
+      <ejs-timepicker class="date-picker" id='timeIn' value="timeIn" [step]="interval" formControlName="timeIn"></ejs-timepicker>
     </div>
     <div class="form-group col-md-3">
       <label for="timeOut">Time Out</label>
-      <ejs-timepicker class="date-picker" id='timeOut' value="timeOut" formControlName="timeOut"></ejs-timepicker>
+      <ejs-timepicker class="date-picker" id='timeOut' value="timeOut" [step]="interval" formControlName="timeOut"></ejs-timepicker>
     </div>
   </div>
 

@@ -87,6 +87,7 @@ export class EventService {
   constructor(private http: HttpClient) {}
 
   sortByDateAscending(events: Event[]) {
+    if(!events) { events = []; }
     return events.sort((val1, val2) => {
       return <any>new Date(val1.Date) - <any>new Date(val2.Date);
     });
@@ -115,7 +116,10 @@ export class EventService {
       if(event.coordinatorAdminAmt)
         event.coordinatorAdminAmt = parseFloat(event.coordinatorAdminAmt.toFixed(2));
       if(event.totalSalesPnc)
+      {
         event.totalSalesPnc = parseFloat(event.totalSalesPnc.toFixed(2));
+
+      }
       if(event.totalSalesCf)
         event.totalSalesCf = parseFloat(event.totalSalesCf.toFixed(2));
       if(event.alcSales)
@@ -186,8 +190,8 @@ export class EventService {
     return deleteEvent;
   }
 
-  editEvent(event: Event) {
-    const params = { event: event };
+  editEvent(event: Event, eventID: number) {
+    const params = { event: event, eventID: eventID };
 
     const editEvent = this.http.post(this.serverUrl + 'editEvent', params);
     return editEvent;

@@ -67,6 +67,7 @@ export class EventEditComponent implements OnInit {
     let creditCardTips = this.event.creditCardTips;
     let shuttleBonusBoolWc = this.event.shuttleBonusBoolWc;
     let shuttleBonusAmountWc = this.event.shuttleBonusAmountWc;
+    if(!shuttleBonusAmountWc) { shuttleBonusAmountWc = 0 };
 
     let totalSalesCf = this.event.totalSalesCf;
     let shuttleBonusBoolCf = this.event.shuttleBonusBoolCf;
@@ -105,10 +106,11 @@ export class EventEditComponent implements OnInit {
     this.updateEvent();
 
     if(this.idVenue == 1) {
+      console.log("PNC event being edited");
       this.eventService.getPncContractInfo().subscribe(contract => {
         this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
           this.event = this.mathService.calculatePncEvent(this.event, contract[0], timesheets);
-          this.eventService.editEvent(this.event).subscribe(res => {
+          this.eventService.editEvent(this.event, this.idVenue).subscribe(res => {
             this.eventService.getAllEvents().subscribe(events => {
               this.eventService.setAllEvents(events);
               this.onCancelEdit();
@@ -122,7 +124,7 @@ export class EventEditComponent implements OnInit {
         this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
           if(!timesheets) {timesheets = [];}
           this.event = this.mathService.calculateWcEvent(this.event, contract[0], timesheets);
-          this.eventService.editEvent(this.event).subscribe(res => {
+          this.eventService.editEvent(this.event, this.idVenue).subscribe(res => {
             this.eventService.getAllEvents().subscribe(events => {
               this.eventService.setAllEvents(events);
               var timesheets: Timesheet[] = this.eventService.returnTimesheets();
@@ -143,7 +145,7 @@ export class EventEditComponent implements OnInit {
       this.eventService.getCfContractInfo().subscribe(contract => {
         this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
           this.event = this.mathService.calculateCfEvent(this.event, contract[0], timesheets);
-          this.eventService.editEvent(this.event).subscribe(res => {
+          this.eventService.editEvent(this.event, this.idVenue).subscribe(res => {
             this.eventService.getAllEvents().subscribe(events => {
               this.eventService.setAllEvents(events);
               this.onCancelEdit();
@@ -174,7 +176,13 @@ export class EventEditComponent implements OnInit {
 
     else if(this.idVenue == 2) {
       this.event.creditCardTips = parseFloat(this.editEventForm.value['creditCardTips']);
-      this.event.shuttleBonusBoolWc = this.editEventForm.value['shuttleBonusBoolWc'];
+      var shuttleBool = this.editEventForm.value['shuttleBonusBoolWc'];
+      if(shuttleBool) {
+        this.event.shuttleBonusBoolWc = true;
+      }
+      else{
+        this.event.shuttleBonusBoolWc = false;
+      }
       this.event.shuttleBonusAmountWc = parseFloat(this.editEventForm.value['shuttleBonusAmountWc']);
       this.event.estimatedCheck = parseFloat(this.editEventForm.value['estCheck']);
     }

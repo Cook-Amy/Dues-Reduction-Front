@@ -20,6 +20,7 @@ export class EventStaffEditComponent implements OnInit {
   jobs: Job[] = [];
   staffEditForm: FormGroup;
   idVenue: number;
+  interval: number = 15;
 
   constructor(public eventService: EventService,
               public mathService: MathService,
@@ -116,7 +117,7 @@ export class EventStaffEditComponent implements OnInit {
         this.eventService.getPncContractInfo().subscribe(contract => {
           this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
             this.event = this.mathService.calculatePncEvent(this.event, contract[0], timesheets);
-            this.eventService.editEvent(this.event).subscribe(res => {
+            this.eventService.editEvent(this.event, this.idVenue).subscribe(res => {
               this.eventService.getAllEvents().subscribe(events => {
                 this.eventService.setAllEvents(events);
                 this.eventService.setEventStaffEdit(false);
@@ -131,7 +132,7 @@ export class EventStaffEditComponent implements OnInit {
         this.eventService.getWcContractInfo().subscribe(contract => {
           this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
             this.event = this.mathService.calculateWcEvent(this.event, contract[0], timesheets);
-            this.eventService.editEvent(this.event).subscribe(res => {
+            this.eventService.editEvent(this.event, this.idVenue).subscribe(res => {
               this.eventService.getAllEvents().subscribe(events => {
                 this.eventService.setAllEvents(events);
                 this.eventService.setEventStaffEdit(false);
@@ -146,7 +147,7 @@ export class EventStaffEditComponent implements OnInit {
         this.eventService.getCfContractInfo().subscribe(contract => {
           this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
             this.event = this.mathService.calculateCfEvent(this.event, contract[0], timesheets);
-            this.eventService.editEvent(this.event).subscribe(res => {
+            this.eventService.editEvent(this.event, this.idVenue).subscribe(res => {
               this.eventService.getAllEvents().subscribe(events => {
                 this.eventService.setAllEvents(events);
                 this.eventService.setEventStaffEdit(false);
@@ -175,7 +176,7 @@ export class EventStaffEditComponent implements OnInit {
         this.eventService.getPncContractInfo().subscribe(contract => {
           this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
             this.event = this.mathService.calculatePncEvent(this.event, contract[0], timesheets);
-            this.eventService.editEvent(this.event).subscribe(res => {
+            this.eventService.editEvent(this.event, this.idVenue).subscribe(res => {
               this.eventService.getAllEvents().subscribe(events => {
                 this.eventService.setAllEvents(events);
                 this.eventService.setEventStaffEdit(false);
@@ -192,7 +193,7 @@ export class EventStaffEditComponent implements OnInit {
         this.eventService.getWcContractInfo().subscribe(contract => {
           this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
             this.event = this.mathService.calculateWcEvent(this.event, contract[0], timesheets);
-            this.eventService.editEvent(this.event).subscribe(res => {
+            this.eventService.editEvent(this.event, this.idVenue).subscribe(res => {
               this.eventService.getAllEvents().subscribe(events => {
                 this.eventService.setAllEvents(events);
                 this.eventService.setEventStaffEdit(false);
@@ -209,7 +210,7 @@ export class EventStaffEditComponent implements OnInit {
         this.eventService.getCfContractInfo().subscribe(contract => {
           this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
             this.event = this.mathService.calculateCfEvent(this.event, contract[0], timesheets);
-            this.eventService.editEvent(this.event).subscribe(res => {
+            this.eventService.editEvent(this.event, this.idVenue).subscribe(res => {
               this.eventService.getAllEvents().subscribe(events => {
                 this.eventService.setAllEvents(events);
                 this.eventService.setEventStaffEdit(false);

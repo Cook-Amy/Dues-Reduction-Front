@@ -30,25 +30,28 @@ export class EventNewComponent implements OnInit {
 
   ngOnInit(): void {
     this.dateValue = this.getToday();
-    this.initForm();
     if(this.currentVenueID == 1) {
       this.allEvents = this.eventService.returnEventsPnc();
       this.idVenue = 1;
+      this.initForm();
     }
 
     if(this.currentVenueID == 2) {
       this.allEvents = this.eventService.returnEventsWc();
       this.idVenue = 2;
+      this.initForm();
     }
 
     if(this.currentVenueID == 3) {
       this.allEvents = this.eventService.returnEventsCf();
       this.idVenue = 3;
+      this.initForm();
     }
 
     if(this.currentVenueID == 99) {
       this.allEvents = this.eventService.returnEventsAll();
       this.initVenueForm();
+      this.initForm();
     }
   }
 
@@ -70,6 +73,9 @@ export class EventNewComponent implements OnInit {
     let inputLocation:string = "";
     if(this.idVenue == 1){
       inputLocation = "S109";
+    }
+    if(this.idVenue == 3) {
+      inputLocation = "Beer2";
     }
     let coordinatorAdminAmt:number = 30;
     let closed:boolean = false;
@@ -128,11 +134,11 @@ export class EventNewComponent implements OnInit {
 
   pickVenue() {
     this.idVenue = this.venueForm.value['selectVenue'];
+    this.initForm();
   }
 
   onSubmit() {
     var event: Event = this.createNewEvent();
-    console.log("max cc : " + event.maxCreditCardTipAmount);
 
     if(this.idVenue == 1) {
       this.eventService.getPncContractInfo().subscribe(contract => {
@@ -165,7 +171,7 @@ export class EventNewComponent implements OnInit {
       });
     }
 
-    else if(this.idVenue == 1) {
+    else if(this.idVenue == 3) {
       this.eventService.getCfContractInfo().subscribe(contract => {
         // new events have no timesheets yet; send an empty array
         var timesheets: Timesheet[] = [];
@@ -211,7 +217,7 @@ export class EventNewComponent implements OnInit {
         this.newEventForm.value['notes'],
         this.newEventForm.value['closed'],
         this.newEventForm.value['coordinatorAdminAmt'],
-        this.newEventForm.value['totalSalesPnc'],
+        parseFloat(this.newEventForm.value['totalSalesPnc']),
         this.newEventForm.value['commBonus'],
         this.newEventForm.value['guarantee'],
         parseFloat(this.newEventForm.value['alcSales']),
