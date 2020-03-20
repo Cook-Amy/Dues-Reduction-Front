@@ -1,3 +1,4 @@
+import { Timesheet } from './../../../models/timesheet.model';
 import { Event } from './../../../models/event.model';
 import { MathService } from './../../math.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -62,6 +63,7 @@ export class EventEditComponent implements OnInit {
     let countTotal = this.event.eventCountsTowardsTotal;
     let alcSales = this.event.alcSales;
 
+    let estCheck = this.event.estimatedCheck;
     let creditCardTips = this.event.creditCardTips;
     let shuttleBonusBoolWc = this.event.shuttleBonusBoolWc;
     let shuttleBonusAmountWc = this.event.shuttleBonusAmountWc;
@@ -82,6 +84,7 @@ export class EventEditComponent implements OnInit {
       'totalSalesPnc': new FormControl(totalSalesPnc, Validators.required),
       'alcSales': new FormControl(alcSales, Validators.required),
       'bonus': new FormControl(bonus, Validators.required),
+      'estCheck': new FormControl(estCheck, Validators.required),
       'checkRcvd': new FormControl(checkRcvd, Validators.required),
       'notes': new FormControl(notes, Validators.required),
       'creditCardTips': new FormControl(creditCardTips, Validators.required),
@@ -117,11 +120,20 @@ export class EventEditComponent implements OnInit {
     else if(this.idVenue == 2) {
       this.eventService.getWcContractInfo().subscribe(contract => {
         this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
+          if(!timesheets) {timesheets = [];}
           this.event = this.mathService.calculateWcEvent(this.event, contract[0], timesheets);
           this.eventService.editEvent(this.event).subscribe(res => {
             this.eventService.getAllEvents().subscribe(events => {
               this.eventService.setAllEvents(events);
-              this.onCancelEdit();
+              var timesheets: Timesheet[] = this.eventService.returnTimesheets();
+              if(timesheets.length > 0) {
+                this.eventService.updateAllTimesheetsInDB(timesheets).subscribe(x => {
+                  this.onCancelEdit();
+                })
+              }
+              else {
+                this.onCancelEdit();
+              }
             });
           });
         });
@@ -164,6 +176,7 @@ export class EventEditComponent implements OnInit {
       this.event.creditCardTips = parseFloat(this.editEventForm.value['creditCardTips']);
       this.event.shuttleBonusBoolWc = this.editEventForm.value['shuttleBonusBoolWc'];
       this.event.shuttleBonusAmountWc = parseFloat(this.editEventForm.value['shuttleBonusAmountWc']);
+      this.event.estimatedCheck = parseFloat(this.editEventForm.value['estCheck']);
     }
     
     else if(this.idVenue == 3) {

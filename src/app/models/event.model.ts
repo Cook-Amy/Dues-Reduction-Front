@@ -31,7 +31,7 @@ export class Event {
 
   // wc events
   public creditCardTips: number;
-  public maxCreditCardTips: number;
+  public maxCreditCardTipAmount: number;
   public shuttleBonusBoolWc: Boolean;
   public shuttleBonusAmountWc: number;
 
@@ -70,7 +70,7 @@ export class Event {
      eventCountsTowardsTotal: Boolean,
 
      creditCardTips: number,
-     maxCreditCardTips: number,
+     maxCreditCardTipAmount: number,
      shuttleBonusBoolWc: Boolean,
      shuttleBonusAmountWc: number,
 
@@ -108,7 +108,7 @@ export class Event {
     this.eventCountsTowardsTotal = eventCountsTowardsTotal;
 
     this.creditCardTips = creditCardTips;
-    this.maxCreditCardTips = maxCreditCardTips;
+    this.maxCreditCardTipAmount = maxCreditCardTipAmount;
     this.shuttleBonusBoolWc = shuttleBonusBoolWc;
     this.shuttleBonusAmountWc = shuttleBonusAmountWc;
 

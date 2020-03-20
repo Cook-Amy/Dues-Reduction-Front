@@ -95,15 +95,25 @@ export class EventDetailComponent implements OnInit {
     let download = this.gateListForm.value['downloadGateList'];
 
     this.gateListService.getStaffForEvent(this.event.idevent).subscribe(staff => {
-      if(this.currentVenueID == 1) {
-        this.gateListService.generatePncGateList(this.event, staff).subscribe(results => {
-          console.log("gate list result: " + results);
-         });
+      if(email) {
+        if(this.currentVenueID == 1) {
+          this.gateListService.generatePncGateList(this.event, staff).subscribe(results => {
+            console.log("gate list result: " + results);
+           });
+        }
+        else if(this.currentVenueID == 2) {
+          this.gateListService.generateWcGateList(this.event, staff). subscribe(results => { });
+        }
       }
-      else if(this.currentVenueID == 2) {
-        this.gateListService.generateWcGateList(this.event, staff). subscribe(results => { });
+      if(download) {
+        if(this.currentVenueID == 1) {
+          // this.gateListService.downloadPncGateList(this.event, staff);
+        }
+        else if(this.currentVenueID == 2) {
+
+        }
       }
-    })
+    });
     this.confirmGateList = false;
   }
 

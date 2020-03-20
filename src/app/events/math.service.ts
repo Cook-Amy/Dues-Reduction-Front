@@ -1,3 +1,4 @@
+import { EventService } from './event.service';
 import { Event } from './../models/event.model';
 import { ContractCF } from './../models/contractCF.model';
 import { EventCF } from './../models/eventCF.model';
@@ -13,7 +14,7 @@ import { Injectable } from '@angular/core';
 })
 export class MathService {
 
-  constructor() { }
+  constructor(private eventService: EventService) { }
 
   calculatePncEvent(event: Event, contract: ContractPNC, timesheets: Timesheet[]) {
     // calculate totalPayout
@@ -110,6 +111,50 @@ export class MathService {
   }
 
   calculateWcEvent(event: Event, contract: ContractWC, timesheets: Timesheet[]) {
+    // calculate tips per person
+    var tipAmountPerPerson = 0;
+    var totNumberOfWorkers = timesheets.length;
+    if(totNumberOfWorkers > 0 && event.creditCardTips > 0) {
+      var ccTipsToDistribute = event.creditCardTips * (1 - event.tacPct);
+      tipAmountPerPerson = ccTipsToDistribute / totNumberOfWorkers;
+      tipAmountPerPerson = Math.min(event.maxCreditCardTipAmount, tipAmountPerPerson);
+    }
+
+    // update Timesheets
+    var totalPayout = 0;
+    timesheets.forEach(ts => {
+     // shuttle bonus
+      if(event.shuttleBonusAmountWc > 0) {
+       ts.shuttleBonus = event.shuttleBonusAmountWc;
+     } 
+     else {
+       ts.shuttleBonus = 0;
+     }
+
+     // cc tip amount
+     ts.creditCardTips = tipAmountPerPerson;
+
+     // update credit amount
+     ts.creditAmount = ts.eventBonus + 
+                        ts.shuttleBonus +
+                        ((ts.hourlyRate + ts.hourlyBonus) * ts.hoursWorked) +
+                        ts.creditCardTips;
+                  
+      totalPayout += ts.creditAmount;
+    });
+    this.eventService.setTimesheets(timesheets);
+
+    // total Payout
+    event.payout = totalPayout;
+
+    // estimated check and actual check both entered by coordinator
+    event.discrepancy = event.estimatedCheck - event.actualCheck;
+
+    event.estimatedProfit = (event.estimatedCheck * (1 - event.tacPct)) - event.payout - event.coordinatorAdminAmt;
+    event.tacCut = event.actualCheck * event.tacPct;
+    event.drCut = event.actualCheck * (1 - event.tacPct);
+    event.actualProfit = (event.actualCheck * (1 - event.tacPct)) - event.payout - event.coordinatorAdminAmt;
+
     return event;
   }
 
@@ -171,6 +216,8 @@ export class MathService {
        event.actualProfit = 0;
        event.discrepancy = 0;
      }
+
+     // TODO: Add shuttle bonus to timesheets
  
      return event;
   }

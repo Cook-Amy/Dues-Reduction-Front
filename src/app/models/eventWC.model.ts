@@ -20,7 +20,7 @@ export class EventWC {
   public shuttleBonusBool: Boolean;
   public shuttleBonusAmount: number;
   public creditCardTips: number;
-  public maxCreditCardTips: number;
+  public maxCreditCardTipAmount: number;
   public coordinatorAdminAmt: number;
 
   constructor(
@@ -45,7 +45,7 @@ export class EventWC {
      shuttleBonusBool: Boolean,
      shuttleBonusAmount: number,
      creditCardTips: number,
-     maxCreditCardTips: number,
+     maxCreditCardTipAmount: number,
      coordinatorAdminAmt: number
   ) {
     this.idevent = idevent;
@@ -69,7 +69,7 @@ export class EventWC {
     this.shuttleBonusBool = shuttleBonusBool;
     this.shuttleBonusAmount = shuttleBonusAmount;
     this.creditCardTips = creditCardTips;
-    this.maxCreditCardTips = maxCreditCardTips;
+    this.maxCreditCardTipAmount = maxCreditCardTipAmount;
     this.coordinatorAdminAmt = coordinatorAdminAmt;
   }
 }

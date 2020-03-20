@@ -23,6 +23,8 @@ export class GateListService {
 
   constructor(private http: HttpClient) { }
 
+
+  // Email gate list
   getStaffForEvent(eventID: number) {
     const params = new HttpParams().set('eventID', eventID.toString());
     const sendGateList = this.http.get<Staff[]>(this.serverUrl + 'getStaffForEvent', {params})
@@ -43,10 +45,13 @@ export class GateListService {
 
   }
 
-  // generateGateList(event: EventPNC, email: boolean, download: boolean) {
-  //   const params = new HttpParams().set('eventID', event.idevent.toString());
-  //   const sendGateList = this.http.get(this.serverUrl + 'getStaffForEvent', {params})
-  //   return sendGateList;
+
+
+
+// Download gate list
+
+  // downloadPncGateList(event: Event, staff: Staff[]) {
+    
   // }
 
   // setData(results) {

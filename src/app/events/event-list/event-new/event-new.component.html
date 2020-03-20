@@ -124,7 +124,7 @@
       </div>
       <div class="form-group col-md-3">
         <label for="inputLocation">Location</label>
-        <input type="text" class="form-control" id="inputLocation" placeholder="S109" formControlName="inputLocation">
+        <input type="text" class="form-control" id="inputLocation" formControlName="inputLocation">
       </div>
       <div class="form-group col-md-3">
         <label for="coordinatorAdminAmt">Coordinator Payout</label>
@@ -152,19 +152,26 @@
     <div class="form-row">
       <div class="form-group col-md-3">
         <label for="creditCardTips">Credit Card Tips</label>
-        <input type="text" class="form-control" id="creditCardTips" formControlName="creditCardTips">
+        <input type="number" class="form-control" id="creditCardTips" formControlName="creditCardTips">
       </div>
       <div class="form-group col-md-3">
-        <label for="shuttleBonusAmountWc">Shuttle Bonus Amount</label>
-        <input type="text" class="form-control" id="shuttleBonusAmountWc" formControlName="shuttleBonusAmountWc">
+        <label for="estCheck">Estimated Check</label>
+        <input type="text" class="form-control" id="estCheck" formControlName="estCheck">
+      </div>
+      <div class="form-group col-md-3">
+        <label for="checkRcvd">Check Recieved</label>
+        <input type="text" class="form-control" id="checkRcvd" formControlName="checkRcvd">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-3">
+        <label for="shuttleBonusAmountWc">Shuttle Bonus</label>
+        <input type="number" class="form-control" id="shuttleBonusAmountWc" formControlName="shuttleBonusAmountWc">
       </div>
       <div class="form-group col-md-3">
         <label for="bonus">Venue Bonus</label>
         <input type="text" class="form-control" id="bonus" formControlName="bonus">
-      </div>
-      <div class="form-group col-md-3">
-        <label for="checkRcvd">Check Received</label>
-        <input type="text" class="form-control" id="checkRcvd" formControlName="checkRcvd">
       </div>
     </div>
   
@@ -202,7 +209,7 @@
       </div>
       <div class="form-group col-md-3">
         <label for="inputLocation">Location</label>
-        <input type="text" class="form-control" id="inputLocation" placeholder="S109" formControlName="inputLocation">
+        <input type="text" class="form-control" id="inputLocation" placeholder="Beer2" formControlName="inputLocation">
       </div>
       <div class="form-group col-md-3">
         <label for="coordinatorAdminAmt">Coordinator Payout</label>

@@ -67,7 +67,10 @@ export class EventNewComponent implements OnInit {
   private initForm() {
     let eventTitle:string = "";
     let dateTime = this.dateValue;
-    let inputLocation:string = "S109";
+    let inputLocation:string = "";
+    if(this.idVenue == 1){
+      inputLocation = "S109";
+    }
     let coordinatorAdminAmt:number = 30;
     let closed:boolean = false;
     let bonus:number = 0;
@@ -80,9 +83,12 @@ export class EventNewComponent implements OnInit {
     let guarantee:boolean = false; 
     let countTotal:boolean = false;
 
+    let estCheck = 0;
     let creditCardTips = 0;
     let shuttleBonusBoolWc = false;
     let shuttleBonusAmountWc = 10;
+
+    //  TODO: Get rid of Shuttle Bonus Bool - it is too confusing. have just shuttle bonus amount.
 
     let totalSalesCf:number = 0;
     let shuttleBonusBoolCf = true;
@@ -100,6 +106,7 @@ export class EventNewComponent implements OnInit {
       'totalSalesPnc': new FormControl(totalSalesPnc, Validators.required),
       'alcSales': new FormControl(alcSales, Validators.required),
       'bonus': new FormControl(bonus, Validators.required),
+      'estCheck': new FormControl(estCheck, Validators.required),
       'checkRcvd': new FormControl(checkRcvd, Validators.required),
       'notes': new FormControl(notes, Validators.required),
       'creditCardTips': new FormControl(creditCardTips, Validators.required),
@@ -125,6 +132,7 @@ export class EventNewComponent implements OnInit {
 
   onSubmit() {
     var event: Event = this.createNewEvent();
+    console.log("max cc : " + event.maxCreditCardTipAmount);
 
     if(this.idVenue == 1) {
       this.eventService.getPncContractInfo().subscribe(contract => {
@@ -148,6 +156,11 @@ export class EventNewComponent implements OnInit {
           this.allEvents.push(this.newEvent);
           this.eventService.setAllEvents(this.allEvents);
           this.allEvents = this.eventService.returnEventsWc();
+          var timesheets: Timesheet[] = this.eventService.returnTimesheets();
+          if(timesheets.length > 0) {
+            this.eventService.updateAllTimesheetsInDB(timesheets).subscribe(x => {
+            })
+          }
         });
       });
     }
@@ -223,7 +236,7 @@ export class EventNewComponent implements OnInit {
         true,
         this.newEventForm.value['inputLocation'],
         parseFloat(this.newEventForm.value['bonus']),
-        0,
+        parseFloat(this.newEventForm.value['estCheck']),
         0,
         parseFloat(this.newEventForm.value['checkRcvd']),
         0,

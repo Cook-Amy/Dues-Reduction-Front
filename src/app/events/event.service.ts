@@ -126,8 +126,8 @@ export class EventService {
         event.shuttleBonusAmountCf = parseFloat(event.shuttleBonusAmountCf.toFixed(2));
       if(event.creditCardTips)
         event.creditCardTips = parseFloat(event.creditCardTips.toFixed(2));
-      if(event.maxCreditCardTips)
-        event.maxCreditCardTips = parseFloat(event.maxCreditCardTips.toFixed(2));
+      if(event.maxCreditCardTipAmount)
+        event.maxCreditCardTipAmount = parseFloat(event.maxCreditCardTipAmount.toFixed(2));
     });
 
     return events;
