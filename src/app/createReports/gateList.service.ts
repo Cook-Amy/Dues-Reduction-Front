@@ -31,16 +31,16 @@ export class GateListService {
     return sendGateList;
   }
 
-  generatePncGateList(event: Event, staff: Staff[]) {
-    const params = { event: event, staff: staff };
-    const generateGateList = this.http.post(this.serverUrl + 'sendPncGateList', params);
+  generatePncGateList(event: Event, staff: Staff[], email: boolean, download: boolean) {
+    const params = { event: event, staff: staff, email: email, download: download };
+    const generateGateList = this.http.post(this.serverUrl + 'sendPncGateList', params, {responseType: 'blob'});
     return generateGateList;
 
   }
 
-  generateWcGateList(event: Event, staff: Staff[]) {
-    const params = { event: event, staff: staff };
-    const generateGateList = this.http.post(this.serverUrl + 'sendWcGateList', params);
+  generateWcGateList(event: Event, staff: Staff[], email: boolean, download: boolean) {
+    const params = { event: event, staff: staff, email: email, download: download };
+    const generateGateList = this.http.post(this.serverUrl + 'sendWcGateList', params, {responseType: 'blob'});
     return generateGateList;
 
   }

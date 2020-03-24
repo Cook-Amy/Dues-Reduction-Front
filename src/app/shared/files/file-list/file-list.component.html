@@ -1,0 +1,33 @@
+
+<h1>Your files</h1>
+<ul *ngIf="currentVenueID == 1" >
+  <li *ngFor="let fileName of fileListPnc$ | async" >
+    {{ fileName }}&nbsp;&nbsp;
+    <span (click)="download(fileName)">download</span>&nbsp;&nbsp;
+    <span (click)="remove(fileName)">remove</span>
+  </li>
+</ul>
+
+<ul *ngIf="currentVenueID == 2" >
+  <li *ngFor="let fileName of fileListWc$ | async" >
+    {{ fileName }}&nbsp;&nbsp;
+    <span (click)="download(fileName)">download</span>&nbsp;&nbsp;
+    <span (click)="remove(fileName)">remove</span>
+  </li>
+</ul>
+
+<ul *ngIf="currentVenueID == 3" >
+  <li *ngFor="let fileName of fileListCf$ | async" >
+    {{ fileName }}&nbsp;&nbsp;
+    <span (click)="download(fileName)">download</span>&nbsp;&nbsp;
+    <span (click)="remove(fileName)">remove</span>
+  </li>
+</ul>
+
+<ul *ngIf="currentVenueID == 99" >
+  <li *ngFor="let fileName of fileListAdmin$ | async" >
+    {{ fileName }}&nbsp;&nbsp;
+    <span (click)="download(fileName)">download</span>&nbsp;&nbsp;
+    <span (click)="remove(fileName)">remove</span>
+  </li>
+</ul>

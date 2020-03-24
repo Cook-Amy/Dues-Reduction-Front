@@ -2,3 +2,9 @@
   background-color: #0579AE;
   color: white;
 }
+
+.howToSendMsg {
+  color: maroon;
+  font-weight: bold;
+  font-size: 18px;
+}

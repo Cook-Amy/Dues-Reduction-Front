@@ -37,6 +37,7 @@ export class EventDetailComponent implements OnInit {
   checklist: any[] = [];
   checkedList: any[];
   masterSelected: boolean; 
+  noStaffMsg: boolean = false;
 
   constructor(private eventService: EventService,
               private gateListService: GateListService,
@@ -94,27 +95,32 @@ export class EventDetailComponent implements OnInit {
     let email = this.gateListForm.value['emailGateList'];
     let download = this.gateListForm.value['downloadGateList'];
 
-    this.gateListService.getStaffForEvent(this.event.idevent).subscribe(staff => {
-      if(email) {
-        if(this.currentVenueID == 1) {
-          this.gateListService.generatePncGateList(this.event, staff).subscribe(results => {
-            console.log("gate list result: " + results);
-           });
+    if(email || download) {
+      this.gateListService.getStaffForEvent(this.event.idevent).subscribe(staff => {
+        if(!staff) {
+          this.confirmGateList = false;
+          this.noStaffMsg = true;
         }
-        else if(this.currentVenueID == 2) {
-          this.gateListService.generateWcGateList(this.event, staff). subscribe(results => { });
+        else {
+          if(this.currentVenueID == 1) {
+            this.gateListService.generatePncGateList(this.event, staff, email, download).subscribe(results => {
+              if(download) {
+                window.open(window.URL.createObjectURL(results));
+              }
+              this.confirmGateList = false; 
+             });
+          }
+          else if(this.currentVenueID == 2) {
+            this.gateListService.generateWcGateList(this.event, staff, email, download). subscribe(results => {
+              if(download) {
+                window.open(window.URL.createObjectURL(results));
+              }
+             this.confirmGateList = false; 
+             });
+          }
         }
-      }
-      if(download) {
-        if(this.currentVenueID == 1) {
-          // this.gateListService.downloadPncGateList(this.event, staff);
-        }
-        else if(this.currentVenueID == 2) {
-
-        }
-      }
     });
-    this.confirmGateList = false;
+    }
   }
 
   getTimesheetForEvent() {
@@ -393,4 +399,7 @@ export class EventDetailComponent implements OnInit {
     }
   }
 
+  onOkNoStaff() {
+    this.noStaffMsg = false;
+  }
 }

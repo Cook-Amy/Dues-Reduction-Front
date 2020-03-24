@@ -10,9 +10,9 @@ export class MonthReportService {
 
   constructor(private http: HttpClient) { }
 
-  getMonthReportData(startDate, endDate) {
-    var params = {startDate: startDate, endDate: endDate};
-    var getData = this.http.post(this.serverUrl + 'getMonthReportData', params);
+  getMonthReportData(startDate, endDate, email1, email2, download) {
+    var params = {startDate: startDate, endDate: endDate, email1: email1, email2: email2, download: download};
+    var getData = this.http.post(this.serverUrl + 'getMonthReportData', params, {responseType: 'blob'});
     return getData;
   }
 }

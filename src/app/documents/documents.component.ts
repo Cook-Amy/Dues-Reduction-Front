@@ -1,3 +1,5 @@
+import { Observable } from 'rxjs';
+import { FileService } from './../shared/files/file.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,7 +9,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DocumentsComponent implements OnInit {
 
-  constructor() { }
+  public displayLoader: Observable<boolean> = this.fileService.isLoading();
+
+  constructor(private fileService: FileService) { }
 
   ngOnInit() {
   }

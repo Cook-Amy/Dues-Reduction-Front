@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { GlobalVariables } from './../shared/GlobalVariables';
 import { Injectable } from '@angular/core';
 
@@ -12,7 +12,9 @@ export class CreditSummaryService {
 
   generateCreditSummary(specs) {
     const params = {specs: specs};
-    const generateSummary = this.http.post(this.serverUrl + "generateCreditSummary", params);
+    const generateSummary = this.http.post(this.serverUrl + "generateCreditSummary", params, {responseType: 'blob'});
     return generateSummary;
   }
 }
+
+

@@ -45,6 +45,7 @@ export class StaffListComponent implements OnInit {
 
   monthlyReportMsg: Boolean;
   monthlyReportForm: FormGroup;
+  howToSendMsg: boolean = false;
 
   constructor(private staffService: StaffService,
               private venueService: VenueService,
@@ -295,29 +296,40 @@ export class StaffListComponent implements OnInit {
   }
 
   onSendMonthlyReport() {
-    console.log("onSend() called");
-    var month = this.monthlyReportForm.value['month'];
-    var year = this.monthlyReportForm.value['year'];
-
-    var startDate = new Date();
-    startDate.setMonth(month - 1);
-    startDate.setFullYear(year);
-    startDate.setDate(1);
-    startDate.setHours(0);
-    startDate.setMinutes(0);
-    startDate.setSeconds(0);
-
-    var endDate = new Date();
-    endDate.setMonth(month - 1);
-    endDate.setFullYear(year);
-    endDate.setDate(31);
-    endDate.setHours(0);
-    endDate.setMinutes(0);
-    endDate.setSeconds(0);
-
-    this.monthReportService.getMonthReportData(startDate, endDate).subscribe(data => {
-      this.onCancelMonthlyReport();
-    })
+    var email1 = this.monthlyReportForm.value['emailReport1'];
+    var email2 = this.monthlyReportForm.value['emailReport2'];
+    var download = this.monthlyReportForm.value['downloadReport'];
+    if(!email1 && !email2 && !download) {
+      this.howToSendMsg = true;
+    }
+    else {
+      this.howToSendMsg = false;
+      var month = this.monthlyReportForm.value['month'];
+      var year = this.monthlyReportForm.value['year'];
+  
+      var startDate = new Date();
+      startDate.setMonth(month - 1);
+      startDate.setFullYear(year);
+      startDate.setDate(1);
+      startDate.setHours(0);
+      startDate.setMinutes(0);
+      startDate.setSeconds(0);
+  
+      var endDate = new Date();
+      endDate.setMonth(month - 1);
+      endDate.setFullYear(year);
+      endDate.setDate(31);
+      endDate.setHours(0);
+      endDate.setMinutes(0);
+      endDate.setSeconds(0);
+  
+      this.monthReportService.getMonthReportData(startDate, endDate, email1, email2, download).subscribe(data => {
+        if(download) {
+          window.open(window.URL.createObjectURL(data));
+        }
+        this.onCancelMonthlyReport();
+      });
+    }
   }
 
 }

@@ -16,3 +16,9 @@
 .align-right {
   text-align: right;
 }
+
+.creditMsg {
+  color: maroon;
+  font-weight: bold;
+  font-size: 18px;
+}

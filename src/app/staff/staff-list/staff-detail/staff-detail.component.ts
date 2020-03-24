@@ -22,6 +22,7 @@ export class StaffDetailComponent implements OnInit {
   summaryForm2: FormGroup;
   summaryForm3: FormGroup;
   summaryForm4: FormGroup;
+  showCreateReportMsg: boolean = false;
 
   constructor(private staffService: StaffService, 
               private creditSummaryService: CreditSummaryService) { }
@@ -174,12 +175,19 @@ export class StaffDetailComponent implements OnInit {
         download: this.summaryForm.value['downloadSummary']
       };
   
-      // TODO: Implement email and/or download capability
+      if(!summarySpecs.email1 && !summarySpecs.email2 && !summarySpecs.download) {
+        this.showCreateReportMsg = true;
+      }
   
-  
-      this.creditSummaryService.generateCreditSummary(summarySpecs).subscribe(res => {
-        this.onCancelCreditSummary();
-      });
+      else{
+        this.showCreateReportMsg = false;
+        this.creditSummaryService.generateCreditSummary(summarySpecs).subscribe(res => {
+          if(summarySpecs.download) {
+            window.open(window.URL.createObjectURL(res));
+          }
+          this.onCancelCreditSummary();
+        });
+      }
     }
 
     else if(this.currentVenueID == 2) {
@@ -196,12 +204,20 @@ export class StaffDetailComponent implements OnInit {
         download: this.summaryForm2.value['downloadSummary']
       };
   
-      // TODO: Implement email and/or download capability
+      if(!summarySpecs2.email1 && !summarySpecs2.email2 && !summarySpecs2.download) {
+        this.showCreateReportMsg = true;
+      }
   
-  
-      this.creditSummaryService.generateCreditSummary(summarySpecs2).subscribe(res => {
-        this.onCancelCreditSummary();
-      });
+      else {
+        this.showCreateReportMsg = false;
+        this.creditSummaryService.generateCreditSummary(summarySpecs2).subscribe(res => {
+          if(summarySpecs2.download) {
+            window.open(window.URL.createObjectURL(res));
+          }
+          this.onCancelCreditSummary();
+        });
+      }
+
     }
 
     else if(this.currentVenueID == 3) {
@@ -218,12 +234,19 @@ export class StaffDetailComponent implements OnInit {
         download: this.summaryForm3.value['downloadSummary']
       };
   
-      // TODO: Implement email and/or download capability
-  
-  
-      this.creditSummaryService.generateCreditSummary(summarySpecs3).subscribe(res => {
-        this.onCancelCreditSummary();
-      });
+      if(!summarySpecs3.email1 && !summarySpecs3.email2 && !summarySpecs3.download) {
+        this.showCreateReportMsg = true;
+      }
+
+      else {
+        this.showCreateReportMsg = false;
+        this.creditSummaryService.generateCreditSummary(summarySpecs3).subscribe(res => {
+          if(summarySpecs3.download) {
+            window.open(window.URL.createObjectURL(res));
+          }
+          this.onCancelCreditSummary();
+        });
+      }
     }
 
     else if(this.currentVenueID == 99) {
@@ -240,12 +263,19 @@ export class StaffDetailComponent implements OnInit {
         download: this.summaryForm4.value['downloadSummary']
       };
   
-      // TODO: Implement email and/or download capability
+      if(!summarySpecs3.email1 && !summarySpecs3.email2 && !summarySpecs3.download) {
+        this.showCreateReportMsg = true;
+      }
   
-  
-      this.creditSummaryService.generateCreditSummary(summarySpecs4).subscribe(res => {
-        this.onCancelCreditSummary();
-      });
+      else {
+        this.showCreateReportMsg = false;
+        this.creditSummaryService.generateCreditSummary(summarySpecs4).subscribe(res => {
+          if(summarySpecs4.download) {
+            window.open(window.URL.createObjectURL(res));
+          }
+          this.onCancelCreditSummary();
+        });
+      }
     }
   }
 }

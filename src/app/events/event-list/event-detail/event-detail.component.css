@@ -27,3 +27,9 @@
 .numInput {
   width: 60px;
 }
+
+.noStaffMsg {
+  color: maroon;
+  font-weight: bold;
+  font-size: 18px;
+}
