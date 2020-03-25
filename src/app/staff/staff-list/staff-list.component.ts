@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { MonthReportService } from './../../createReports/month-report.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -51,7 +52,8 @@ export class StaffListComponent implements OnInit {
               private venueService: VenueService,
               private monthReportService: MonthReportService,
               private route: ActivatedRoute,
-              private router: Router) { }
+              private router: Router,
+              private toastr: ToastrService) { }
 
   ngOnInit() {
     this.initForm();
@@ -324,6 +326,12 @@ export class StaffListComponent implements OnInit {
       endDate.setSeconds(0);
   
       this.monthReportService.getMonthReportData(startDate, endDate, email1, email2, download).subscribe(data => {
+        if(email1 || email2) {
+            this.toastr.success("Monthly Report was emailed.", "SUCCESS!", {
+              closeButton: true,
+              timeOut: 3000
+            });
+        }
         if(download) {
           window.open(window.URL.createObjectURL(data));
         }

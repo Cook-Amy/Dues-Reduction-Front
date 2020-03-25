@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { CreditSummaryService } from './../../../createReports/credit-summary.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { StaffService } from './../../staff.service';
@@ -25,7 +26,8 @@ export class StaffDetailComponent implements OnInit {
   showCreateReportMsg: boolean = false;
 
   constructor(private staffService: StaffService, 
-              private creditSummaryService: CreditSummaryService) { }
+              private creditSummaryService: CreditSummaryService,
+              private toastr: ToastrService) { }
 
   ngOnInit() {
     this.dateValue = this.getToday();
@@ -182,6 +184,12 @@ export class StaffDetailComponent implements OnInit {
       else{
         this.showCreateReportMsg = false;
         this.creditSummaryService.generateCreditSummary(summarySpecs).subscribe(res => {
+          if(summarySpecs.email1 || summarySpecs.email2) {
+            this.toastr.success("Credit Summary was emailed.", "SUCCESS!", {
+              closeButton: true,
+              timeOut: 3000
+            });
+          }
           if(summarySpecs.download) {
             window.open(window.URL.createObjectURL(res));
           }
@@ -211,6 +219,12 @@ export class StaffDetailComponent implements OnInit {
       else {
         this.showCreateReportMsg = false;
         this.creditSummaryService.generateCreditSummary(summarySpecs2).subscribe(res => {
+          if(summarySpecs2.email1 || summarySpecs2.email2) {
+            this.toastr.success("Credit Summary was emailed.", "SUCCESS!", {
+              closeButton: true,
+              timeOut: 3000
+            });
+          }
           if(summarySpecs2.download) {
             window.open(window.URL.createObjectURL(res));
           }
@@ -241,6 +255,12 @@ export class StaffDetailComponent implements OnInit {
       else {
         this.showCreateReportMsg = false;
         this.creditSummaryService.generateCreditSummary(summarySpecs3).subscribe(res => {
+          if(summarySpecs3.email1 || summarySpecs3.email2) {
+            this.toastr.success("Credit Summary was emailed.", "SUCCESS!", {
+              closeButton: true,
+              timeOut: 3000
+            });
+          }
           if(summarySpecs3.download) {
             window.open(window.URL.createObjectURL(res));
           }
@@ -270,6 +290,12 @@ export class StaffDetailComponent implements OnInit {
       else {
         this.showCreateReportMsg = false;
         this.creditSummaryService.generateCreditSummary(summarySpecs4).subscribe(res => {
+          if(summarySpecs4.email1 || summarySpecs4.email2) {
+            this.toastr.success("Credit Summary was emailed.", "SUCCESS!", {
+              closeButton: true,
+              timeOut: 3000
+            });
+          }
           if(summarySpecs4.download) {
             window.open(window.URL.createObjectURL(res));
           }

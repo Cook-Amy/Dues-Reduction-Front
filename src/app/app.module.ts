@@ -14,6 +14,8 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DlDateTimeDateModule, DlDateTimePickerModule } from 'angular-bootstrap-datetimepicker';
 import { DateTimePickerModule, TimePickerModule, DatePickerModule } from '@syncfusion/ej2-angular-calendars';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 
 
@@ -101,7 +103,9 @@ import { CalendarComponent } from './calendar/calendar.component';
     DlDateTimePickerModule,
     DateTimePickerModule,
     TimePickerModule, 
-    DatePickerModule
+    DatePickerModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [GlobalVariables],
   bootstrap: [AppComponent]

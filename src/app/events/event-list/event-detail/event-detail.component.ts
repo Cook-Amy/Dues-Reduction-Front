@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { EmailService } from './../../../email/email.service';
 import { Event } from './../../../models/event.model';
 import { MathService } from './../../math.service';
@@ -42,7 +43,8 @@ export class EventDetailComponent implements OnInit {
   constructor(private eventService: EventService,
               private gateListService: GateListService,
               private mathService: MathService,
-              private emailService: EmailService) { }
+              private emailService: EmailService,
+              private toastr: ToastrService) { }
 
   ngOnInit() { 
     this.masterSelected = false;
@@ -104,6 +106,12 @@ export class EventDetailComponent implements OnInit {
         else {
           if(this.currentVenueID == 1) {
             this.gateListService.generatePncGateList(this.event, staff, email, download).subscribe(results => {
+              if(email) {
+                this.toastr.success("Gate List was emailed.", "SUCCESS!", {
+                  closeButton: true,
+                  timeOut: 3000
+                });
+              }
               if(download) {
                 window.open(window.URL.createObjectURL(results));
               }
@@ -112,6 +120,12 @@ export class EventDetailComponent implements OnInit {
           }
           else if(this.currentVenueID == 2) {
             this.gateListService.generateWcGateList(this.event, staff, email, download). subscribe(results => {
+              if(email) {
+                this.toastr.success("Gate List was emailed.", "SUCCESS!", {
+                  closeButton: true,
+                  timeOut: 3000
+                });
+              }
               if(download) {
                 window.open(window.URL.createObjectURL(results));
               }
@@ -359,18 +373,30 @@ export class EventDetailComponent implements OnInit {
 
     if(this.idVenue == 1) {
       this.emailService.sendPncReminderEmail(list, this.event.idevent).subscribe(res => {
+          this.toastr.success("Event reminder was emailed.", "SUCCESS!", {
+            closeButton: true,
+            timeOut: 3000
+          });
         this.onCancelReminder();
       });
     }
 
     else if(this.idVenue == 2) {
       this.emailService.sendWcReminderEmail(list, this.event.idevent).subscribe(res => {
+        this.toastr.success("Event reminder was emailed.", "SUCCESS!", {
+          closeButton: true,
+          timeOut: 3000
+        });
         this.onCancelReminder();
       });
     }
 
     else if(this.idVenue == 3) {
       this.emailService.sendCfReminderEmail(list, this.event.idevent).subscribe(res => {
+        this.toastr.success("Event reminder was emailed.", "SUCCESS!", {
+          closeButton: true,
+          timeOut: 3000
+        });
         this.onCancelReminder();
       });
     }
