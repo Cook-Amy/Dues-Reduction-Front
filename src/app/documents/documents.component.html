@@ -1,5 +1,84 @@
-<app-file-list></app-file-list>
-<app-file-uploader></app-file-uploader>
+<div *ngIf="currentVenueID == 1">
+  <h1>PNC Files</h1>
+</div>
 
-<!-- <img src="https://raw.githubusercontent.com/maciejtreder/angular-and-nodejs-data/step2/src/assets/loader.gif" *ngIf="displayLoader | async" /> -->
+<div *ngIf="currentVenueID == 2">
+  <h1>Walnut Creek Files</h1>
+</div>
+
+<div *ngIf="currentVenueID == 3">
+  <h1>Carter Finley Files</h1>
+</div>
+
+<div *ngIf="currentVenueID == 99">
+  <h1>Admin Files</h1>
+</div>
+
+  <!-- add new file -->
+  <div *ngIf="!newFileInfo">
+    <button class="btn-btn-info" (click)='addNewFile()'>Add New File</button>
+  </div>
+
+  <div *ngIf="newFileInfo">
+    <form [formGroup]="newFileForm">
+      <div class="form-row">
+        <div class="form-group col-md-8">
+          <label for="name">Name of File</label>
+          <input type="text" class="form-control" id="name" formControlName="name">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-8">
+          <label for="link">Link to File Location</label>
+          <input type="text" class="form-control" id="link" formControlName="link">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-8">
+          <label for="description">Description of File</label>
+          <textarea class="form-control" id="description" formControlName="description" placeholder="Optional"></textarea>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-md-2"></div>
+        <div class="col-md-2">
+          <button class="btn btn-info" (click)="onCancel()">Cancel</button>
+        </div>
+        <div class="col-md-2">
+          <button class="btn btn-info" (click)="onSave()">Save</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <hr>
+
+  <!-- list of files -->
+  <!-- <div class="list-group list-group-flush">
+    <div *ngFor="let file of fileList">
+      <a href="{{file.Link}}" class="list-group-item list-group-item-action" target="_blank">
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1">{{ file.Name }}</h5>
+        </div>
+        <p class="mb-1">{{ checkForNull(file.description) }}</p>
+      </a>
+      <span>
+        <button class="btn-btn-info" (click)="removeFile(file.idlink)">Remove</button>
+      </span>
+    </div>
+  </div> -->
+
+  <table class="table table-striped table-sm">
+    <tr *ngFor="let file of fileList">
+      <a href="{{file.Link}}" target="_blank">
+        <td class="fileName">{{ file.Name }}</td>
+        <td class="fileDescription">{{ checkForNull(file.description) }}</td>
+      </a>
+      <td>
+        <button class="btn-btn-info" (click)="removeFile(file.idlink)">Remove</button>
+      </td>
+    </tr>
+  </table>
+
+
 

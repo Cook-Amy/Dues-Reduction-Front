@@ -47,8 +47,6 @@ import { EventStaffEditComponent } from './events/event-list/event-staff-edit/ev
 import { EventStaffAddComponent } from './events/event-list/event-staff-add/event-staff-add.component';
 import { StaffNewComponent } from './staff/staff-list/staff-new/staff-new.component';
 import { CalendarComponent } from './calendar/calendar.component';
-import { FileUploaderComponent } from './shared/files/file-uploader/file-uploader.component';
-import { FileListComponent } from './shared/files/file-list/file-list.component';
 
 
 
@@ -84,9 +82,7 @@ import { FileListComponent } from './shared/files/file-list/file-list.component'
     EventStaffEditComponent,
     EventStaffAddComponent,
     StaffNewComponent,
-    CalendarComponent,
-    FileUploaderComponent,
-    FileListComponent
+    CalendarComponent
   ],
   imports: [
     BrowserModule,

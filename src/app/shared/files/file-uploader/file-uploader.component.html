@@ -1,5 +1,0 @@
-<h1>Upload file</h1>
-<form [formGroup]="fileUploadForm" (ngSubmit)="onSubmit()">
-  <input type="file" (change)="onFileChange($event)" />
-  <input type="submit" [disabled]="fileUploadForm.invalid" value="upload" />
-</form>

@@ -1,0 +1,20 @@
+.fileName {
+  min-width: 250px;
+  color: darkblue;
+  font-size: 25px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.fileDescription {
+  color: black;
+  text-decoration: none;
+}
+
+tr:hover {
+  background-color: lightblue;
+}
+
+a:hover {
+  text-decoration: none;
+}
