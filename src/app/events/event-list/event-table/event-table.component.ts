@@ -1,8 +1,4 @@
 import { Event } from './../../../models/event.model';
-
-import { EventCF } from './../../../models/eventCF.model';
-import { EventWC } from './../../../models/eventWC.model';
-import { EventPNC } from './../../../models/eventPNC.model';
 import { Component, OnInit, Input } from '@angular/core';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 
