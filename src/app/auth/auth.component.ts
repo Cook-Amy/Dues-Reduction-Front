@@ -31,7 +31,7 @@ export class AuthComponent implements OnInit {
         if(token) {
           this.error = null;
           this.authService.authenticated.next(true);
-          this.authService.saveUser(res.token, res.user);
+          this.authService.saveUser(res.token, res.user[0]);
           this.router.navigate(['/home']);
         }
       }

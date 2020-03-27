@@ -1,3 +1,4 @@
+import { SettingsComponent } from './user/settings.component';
 import { DocumentsComponent } from './documents/documents.component';
 import { VenueStartComponent } from './venues/venue-start/venue-start.component';
 import { StaffComponent } from './staff/staff.component';
@@ -42,7 +43,9 @@ const routes: Routes = [
     { path: 'documents', component: DocumentsComponent }
    ]},
 
-  { path: 'login', component: AuthComponent }
+  { path: 'login', component: AuthComponent },
+
+  { path: 'settings', component: SettingsComponent }
 ];
 
 @NgModule({

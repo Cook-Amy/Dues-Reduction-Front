@@ -8,9 +8,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class StaffService {
-  
-  // serverUrl = 'http://localhost:4000/';
-  // serverUrl = 'http://duesbackend-env-1.b6qgyzs5az.us-east-2.elasticbeanstalk.com/';
+
   serverUrl = GlobalVariables.serverUrl;
 
   private staffNew = false;

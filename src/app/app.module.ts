@@ -49,6 +49,7 @@ import { EventStaffEditComponent } from './events/event-list/event-staff-edit/ev
 import { EventStaffAddComponent } from './events/event-list/event-staff-add/event-staff-add.component';
 import { StaffNewComponent } from './staff/staff-list/staff-new/staff-new.component';
 import { CalendarComponent } from './calendar/calendar.component';
+import { SettingsComponent } from './user/settings.component';
 
 
 
@@ -84,7 +85,8 @@ import { CalendarComponent } from './calendar/calendar.component';
     EventStaffEditComponent,
     EventStaffAddComponent,
     StaffNewComponent,
-    CalendarComponent
+    CalendarComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,

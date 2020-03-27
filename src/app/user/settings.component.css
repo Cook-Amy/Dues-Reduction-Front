@@ -1,0 +1,19 @@
+.pageSetting {
+  min-height: 400px;
+}
+
+main {
+  max-width: 600px;
+  margin: auto;
+  margin-top: 100px;
+
+}
+
+.settingSection {
+  margin-bottom: 40px;
+}
+
+label {
+  font-size: 18px;
+  text-align: right;
+}

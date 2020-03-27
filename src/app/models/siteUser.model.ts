@@ -6,6 +6,8 @@ export class SiteUser {
   public lastName: string;
   public phone: string;
   public permission: number;
+  public personalEmail: string;
+  public titansEmail: string;
 
   constructor( 
      userID: number,
@@ -13,7 +15,9 @@ export class SiteUser {
      firstName: string,
      lastName: string,
      phone: string,
-     permission: number
+     permission: number,
+     personalEmail: string,
+     titansEmail: string
   ) {
     this.userID = userID;
     this.userName = userName;
@@ -21,5 +25,7 @@ export class SiteUser {
     this.lastName = lastName;
     this.phone = phone;
     this.permission = permission;
+    this.personalEmail = personalEmail;
+    this.titansEmail = titansEmail;
   }
 }

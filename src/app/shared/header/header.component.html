@@ -1,4 +1,5 @@
 
+
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
   <a href="#" class="navbar-brand">
     <img src="../assets/images/TitansTeam.jpg" alt="Titans logo"></a>
@@ -27,14 +28,27 @@
     </ul>
   </div>
 
-  <div class="navbar-nav">
-    <!-- <div class="navbar-item login" routerLinkActive="active">
-      <div class="nav-link" routerLink="/auth">Login</div>
-    </div> -->
+  <!-- <div class="navbar-nav">
     <div class="navbar-item logout">
       <div class="nav-link" (click)="onLogout()">Logout</div>
     </div>
-  </div>
+  </div> -->
 
+  <div class="navbar-nav">
+    <div class="navbar-item dropdown">
+      <a class="nav-link dropdown-toggle" 
+          id="navbarDrowpdownUser" 
+          role="button" 
+          data-toggle="dropdown" 
+          aria-haspopup="true" 
+          aria-expanded="false">
+        Welcome {{ currentUser.firstName }}
+      </a>
+      <div class="dropdown-menu" aria-labelledby="navbarDropdownUser">
+        <a class="dropdown-item" routerLink="/settings">Settings</a>
+        <a class="dropdown-item" (click)="onLogout()">Logout</a>
+      </div>
+    </div>
+  </div>
 
 </nav>

@@ -60,6 +60,8 @@ export class AuthService {
       null,
       null,
       null,
+      null,
+      null,
       null
     )
     return clearUser;
@@ -73,5 +75,13 @@ export class AuthService {
     var token = authinfo.token;
     this.authenticated.next(true);
     return true;
+  }
+
+  getCurrentUser() {
+    return this.currentUser;
+  }
+
+  changeCurrentUserSettings(user: SiteUser) {
+    this.currentUser = user;
   }
 }

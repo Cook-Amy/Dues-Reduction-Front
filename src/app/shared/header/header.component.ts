@@ -1,3 +1,4 @@
+import { SiteUser } from './../../models/siteUser.model';
 import { AuthService } from '../../auth/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Venue } from '../../models/venue.model';
@@ -9,10 +10,13 @@ import { Venue } from '../../models/venue.model';
 })
 export class HeaderComponent implements OnInit {
   venues: Venue[];
+  currentUser: SiteUser;
 
   constructor( private auth: AuthService) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.currentUser = this.auth.getCurrentUser();
+  }
 
   onLogout() {
     this.auth.onLogout();
