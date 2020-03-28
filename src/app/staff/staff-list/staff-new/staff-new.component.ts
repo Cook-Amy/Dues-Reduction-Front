@@ -248,8 +248,11 @@ export class StaffNewComponent implements OnInit {
         this.newStaffForm1.value['pncBars'],
         false,
         this.newStaffForm1.value['pncWaiver'],
+        false, false, false, false, false, false,
         null,
-        null
+        false, false, false, false, false,
+        null,
+        false, false, false
       );
     }
 
@@ -295,8 +298,11 @@ export class StaffNewComponent implements OnInit {
         null,
         false,
         false,
+        false, false, false, false, false, false,
         this.newStaffForm2.value['wcTeamTraining'],
-        null
+        false, false, false, false, false,
+        null,
+        false, false, false
       );
     }
 
@@ -342,8 +348,11 @@ export class StaffNewComponent implements OnInit {
         null,
         false,
         false,
+        false, false, false, false, false, false,
         null,
-        this.newStaffForm3.value['cfAlcoholTrianing']
+        false, false, false, false, false,
+        this.newStaffForm3.value['cfAlcoholTrianing'],
+        false, false, false
       );
     }
 
@@ -430,8 +439,11 @@ export class StaffNewComponent implements OnInit {
         this.newStaffForm99.value['pncBars'],
         false,
         this.newStaffForm99.value['pncWaiver'],
+        false, false, false, false, false, false,
         this.newStaffForm99.value['wcTeamTraining'],
-        this.newStaffForm99.value['cfAlcoholTrianing']
+        false, false, false, false, false,
+        this.newStaffForm99.value['cfAlcoholTrianing'],
+        false, false, false
       );
     }
     return newStaff;

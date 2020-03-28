@@ -92,7 +92,8 @@ export class StaffListComponent implements OnInit {
 
   getAllStaff() {
     this.staffService.getAllStaff().subscribe(allStaff => {
-      this.staffService.setAllStaff(allStaff);
+      var staff: Staff[] = this.staffService.formatAllStaffResults(allStaff);
+      this.staffService.setAllStaff(staff);
     });
   }
 

@@ -69,7 +69,7 @@ export class StaffService {
   *********************************************************************************/
   // Get all staff
   getAllStaff() {
-    const staffReturned = this.http.get<Staff[]>(this.serverUrl + 'getAllStaff');
+    const staffReturned = this.http.get<any[]>(this.serverUrl + 'getAllStaff');
     return staffReturned;
   }
 
@@ -86,6 +86,83 @@ export class StaffService {
   getInterestedStaff() {
     const staffReturned = this.http.get<Staff[]>(this.serverUrl + 'getInterestedStaff');
     return staffReturned;
+  }
+
+  formatAllStaffResults(allStaff) {
+    var staff: Staff[] = [];
+
+    var staffResult = allStaff['staffResult'];
+    var trainingResult = allStaff['trainingResult'];
+
+    // create new staff with staffResults
+    for(var i = 0; i < staffResult.length; i++) {
+      var newStaff = new Staff(
+        staffResult[i].idperson,
+        staffResult[i].firstName, 
+        staffResult[i].lastName,
+        staffResult[i].Name,
+        staffResult[i].Email,
+        staffResult[i].Phone,
+        staffResult[i].tuAccount,
+        staffResult[i].pncActive,
+        staffResult[i].pncInactive,
+        staffResult[i].pncInterested,
+        staffResult[i].wcActive,
+        staffResult[i].wcInactive,
+        staffResult[i].wcInterested,
+        staffResult[i].cfActive,
+        staffResult[i].cfInactive,
+        staffResult[i].cfInterested,
+        staffResult[i].pncHealthForm,
+        staffResult[i].pncExperienced,
+        staffResult[i].pncBars,
+        staffResult[i].pncBarsRefresher,
+        staffResult[i].pncWaiver,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        staffResult[i].wcTeamTraining,
+        false,
+        false,
+        false,
+        false,
+        false,
+        staffResult[i].cfAlcolholTraining,
+        false,
+        false,
+        false
+      );
+      staff.push(newStaff);
+    }
+
+    // check if training is returned for each staff
+    for(var j = 0; j < staff.length; j++) {
+      for(var m = 0; m < trainingResult.length; m++) {
+        if(trainingResult[m].personID == staff[j].idperson) {
+          switch(trainingResult[m].idjobs) {
+            case 1: staff[j].wcStandLeader = true; break;
+            case 2: staff[j].wcMoveStockOut = true; break;
+            case 4: staff[j].pncStandLeader = true; break;
+            case 6: staff[j].pncGroupLeader = true; break;
+            case 7: staff[j].pncHeadCook = true; break;
+            case 8: staff[j].pncRegister = true; break;
+            case 9: staff[j].wcFinalStandPrep = true; break;
+            case 10: staff[j].wcSales = true; break;
+            case 11: staff[j].pncAssistantCook = true; break;
+            case 12: staff[j].wcContainerBarLead = true; break;
+            case 13: staff[j].cfLeader = true; break;
+            case 14: staff[j].cfStaff = true; break;
+            case 15: staff[j].pncBeerCart = true; break;
+            case 19: staff[j].cfAssistantLeader = true; break;
+          }
+        }
+      }
+    }
+
+    return staff;
   }
 
   setAllStaff(staff: Staff[]) {

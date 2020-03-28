@@ -24,10 +24,24 @@ export class Staff {
   public pncBars: string;
   public pncBarsRefresher: boolean;
   public pncWaiver: boolean;
+  public pncStandLeader: boolean;
+  public pncGroupLeader: boolean;
+  public pncHeadCook: boolean;
+  public pncRegister: boolean;
+  public pncAssistantCook: boolean;
+  public pncBeerCart: boolean;
 
   public wcTeamTraining: string;
+  public wcStandLeader: boolean;
+  public wcMoveStockOut: boolean;
+  public wcContainerBarLead: boolean;
+  public wcFinalStandPrep: boolean;
+  public wcSales: boolean;
 
   public cfAlcoholTraining: string;
+  public cfLeader: boolean;
+  public cfAssistantLeader: boolean;
+  public cfStaff: boolean;
 
   constructor(
     idperson: number,
@@ -53,10 +67,24 @@ export class Staff {
     pncBars: string,
     pncBarsRefresher: boolean,
     pncWaiver: boolean,
+    pncStandLeader: boolean,
+    pncGroupLeader: boolean,
+    pncHeadCook: boolean,
+    pncRegister: boolean,
+    pncAssistantCook: boolean,
+    pncBeerCart: boolean,
 
     wcTeamTraining: string,
+    wcStandLeader: boolean,
+    wcMoveStockOut: boolean,
+    wcContainerBarLead: boolean,
+    wcFinalStandPrep: boolean,
+    wcSales: boolean,
 
     cfAlcoholTraining: string,
+    cfLeader: boolean,
+    cfAssistantLeader: boolean,
+    cfStaff: boolean,
   ) {
     this.idperson = idperson;
     this.firstName = firstName;
@@ -81,9 +109,23 @@ export class Staff {
     this.pncBars = pncBars;
     this.pncBarsRefresher = pncBarsRefresher;
     this.pncWaiver = pncWaiver;
-    
+    this.pncStandLeader = pncStandLeader;
+    this.pncGroupLeader = pncGroupLeader;
+    this.pncHeadCook = pncHeadCook;
+    this.pncRegister = pncRegister;
+    this.pncAssistantCook = pncAssistantCook;
+    this.pncBeerCart = pncBeerCart;
+
     this.wcTeamTraining = wcTeamTraining;
+    this.wcStandLeader = wcStandLeader;
+    this.wcMoveStockOut = wcMoveStockOut;
+    this.wcContainerBarLead = wcContainerBarLead;
+    this.wcFinalStandPrep = wcFinalStandPrep;
+    this.wcSales = wcSales;
 
     this.cfAlcoholTraining = cfAlcoholTraining;
+    this.cfLeader = cfLeader;
+    this.cfAssistantLeader = cfAssistantLeader;
+    this.cfStaff = cfStaff;
   }
 }

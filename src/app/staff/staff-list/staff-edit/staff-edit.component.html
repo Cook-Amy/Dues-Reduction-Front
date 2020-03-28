@@ -82,6 +82,40 @@
       </div>
     </div>
 
+    <div class="form-row">
+      <div class="form-group col-md-12">
+        <div class="form-check form-check-inline">
+          <input type="checkbox" class="form-check-input" id="pncStandLeader" formControlName="pncStandLeader">
+          <label for="pncStandLeader" class="form-check-label">Stand Leader</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input type="checkbox" class="form-check-input" id="pncGroupLeader" formControlName="pncGroupLeader">
+          <label for="pncGroupLeader" class="form-check-label">Group Leader</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input type="checkbox" class="form-check-input" id="pncRegister" formControlName="pncRegister">
+          <label for="pncRegister" class="form-check-label">Register</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-12">
+        <div class="form-check form-check-inline">
+          <input type="checkbox" class="form-check-input" id="pncHeadCook" formControlName="pncHeadCook">
+          <label for="pncHeadCook" class="form-check-label">Head Cook</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input type="checkbox" class="form-check-input" id="pncAssistantCook" formControlName="pncAssistantCook">
+          <label for="pncAssistantCook" class="form-check-label">Assistant Cook</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input type="checkbox" class="form-check-input" id="pncBeerCart" formControlName="pncBeerCart">
+          <label for="pncBeerCart" class="form-check-label">BeerCart</label>
+        </div>
+      </div>
+    </div>
+
     <button class="btn btn-primary" type="button" (click)="onCancel()">Cancel</button>
     <button class="btn btn-primary" type="submit">Submit</button>
   </form>
@@ -154,6 +188,36 @@
       </div>
     </div>
 
+    <div class="form-row">
+      <div class="form-group col-md-12">
+        <div class="form-check form-check-inline">
+          <input type="checkbox" class="form-check-input" id="wcStandLeader" formControlName="wcStandLeader">
+          <label for="wcStandLeader" class="form-check-label">Stand Leader</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input type="checkbox" class="form-check-input" id="wcContainerBarLead" formControlName="wcContainerBarLead">
+          <label for="wcContainerBarLead" class="form-check-label">Container Bar Lead</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input type="checkbox" class="form-check-input" id="wcSales" formControlName="wcSales">
+          <label for="wcSales" class="form-check-label">Sales</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-12">
+        <div class="form-check form-check-inline">
+          <input type="checkbox" class="form-check-input" id="wcMoveOutStock" formControlName="wcMoveOutStock">
+          <label for="wcMoveOutStock" class="form-check-label">Move Out Stock</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input type="checkbox" class="form-check-input" id="wcFinalStandPrep" formControlName="wcFinalStandPrep">
+          <label for="wcFinalStandPrep" class="form-check-label">Final Stand Prep</label>
+        </div>
+      </div>
+    </div>
+
     <button class="btn btn-primary" type="button" (click)="onCancel()">Cancel</button>
     <button class="btn btn-primary" type="submit">Submit</button>
   </form>
@@ -223,6 +287,23 @@
       <div class="form-group col-md-3">
         <label for="cfAlcoholTraining">Alcohol Training Date</label>
         <ejs-datepicker class="date-picker" id="cfAlcoholTraining" [value]="dateValue" formControlName="cfAlcoholTraining"></ejs-datepicker>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-12">
+        <div class="form-check form-check-inline">
+          <input type="checkbox" class="form-check-input" id="cfLeader" formControlName="cfLeader">
+          <label for="cfLeader" class="form-check-label">Leader</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input type="checkbox" class="form-check-input" id="cfAssistantLeader" formControlName="cfAssistantLeader">
+          <label for="cfAssistantLeader" class="form-check-label">Assistant Leader</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input type="checkbox" class="form-check-input" id="cfStaff" formControlName="cfStaff">
+          <label for="cfStaff" class="form-check-label">Staff</label>
+        </div>
       </div>
     </div>
 

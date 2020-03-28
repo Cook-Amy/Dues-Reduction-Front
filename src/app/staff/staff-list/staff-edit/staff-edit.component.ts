@@ -94,6 +94,13 @@ removeStaffConfirm: Boolean = false;
     let active2 = this.status2;
     let active3 = this.status3;
 
+    let pncStandLeader = this.staff.pncStandLeader;
+    let pncGroupLeader = this.staff.pncGroupLeader;
+    let pncHeadCook = this.staff.pncHeadCook;
+    let pncRegister = this.staff.pncRegister;
+    let pncAssistantCook = this.staff.pncAssistantCook;
+    let pncBeerCart = this.staff.pncBeerCart;
+
     this.editStaffForm1 = new FormGroup({
       'firstName': new FormControl(firstName, Validators.required),
       'lastName': new FormControl(lastName, Validators.required),
@@ -108,7 +115,13 @@ removeStaffConfirm: Boolean = false;
       'pncWaiver': new FormControl(pncWaiver, Validators.required),
       'active1': new FormControl(active1, Validators.required),
       'active2': new FormControl(active2, Validators.required),
-      'active3': new FormControl(active3, Validators.required)
+      'active3': new FormControl(active3, Validators.required),
+      'pncStandLeader': new FormControl(pncStandLeader, Validators.required),
+      'pncGroupLeader': new FormControl(pncGroupLeader, Validators.required),
+      'pncHeadCook': new FormControl(pncHeadCook, Validators.required),
+      'pncRegister': new FormControl(pncRegister, Validators.required),
+      'pncAssistantCook': new FormControl(pncAssistantCook, Validators.required),
+      'pncBeerCart': new FormControl(pncBeerCart, Validators.required)
     });
   }
 
@@ -130,6 +143,12 @@ removeStaffConfirm: Boolean = false;
     let active2 = this.status2;
     let active3 = this.status3;
 
+    let wcStandLeader = this.staff.wcStandLeader;
+    let wcMoveStockOut = this.staff.wcMoveStockOut;
+    let wcContainerBarLead = this.staff.wcContainerBarLead;
+    let wcFinalStandPrep = this.staff.wcFinalStandPrep;
+    let wcSales = this.staff.wcSales;
+
     this.editStaffForm2 = new FormGroup({
       'firstName': new FormControl(firstName, Validators.required),
       'lastName': new FormControl(lastName, Validators.required),
@@ -140,7 +159,12 @@ removeStaffConfirm: Boolean = false;
       'wcTeamTraining': new FormControl(wcTeamTraining, Validators.required),
       'active1': new FormControl(active1, Validators.required),
       'active2': new FormControl(active2, Validators.required),
-      'active3': new FormControl(active3, Validators.required)
+      'active3': new FormControl(active3, Validators.required),
+      'wcStandLeader': new FormControl(wcStandLeader, Validators.required),
+      'wcMoveStockOut': new FormControl(wcMoveStockOut, Validators.required),
+      'wcContainerBarLead': new FormControl(wcContainerBarLead, Validators.required),
+      'wcFinalStandPrep': new FormControl(wcFinalStandPrep, Validators.required),
+      'wcSales': new FormControl(wcSales, Validators.required)
     });
   }
 
@@ -162,6 +186,10 @@ removeStaffConfirm: Boolean = false;
     let active2 = this.status2;
     let active3 = this.status3;
 
+    let cfLeader = this.staff.cfLeader;
+    let cfAssistantLeader = this.staff.cfAssistantLeader;
+    let cfStaff = this.staff.cfStaff;
+
     this.editStaffForm3 = new FormGroup({
       'firstName': new FormControl(firstName, Validators.required),
       'lastName': new FormControl(lastName, Validators.required),
@@ -172,7 +200,10 @@ removeStaffConfirm: Boolean = false;
       'cfAlcoholTraining': new FormControl(cfAlcoholTraining, Validators.required),
       'active1': new FormControl(active1, Validators.required),
       'active2': new FormControl(active2, Validators.required),
-      'active3': new FormControl(active3, Validators.required)
+      'active3': new FormControl(active3, Validators.required),
+      'cfLeader': new FormControl(cfLeader, Validators.required),
+      'cfAssistantLeader': new FormControl(cfAssistantLeader, Validators.required),
+      'cfStaff': new FormControl(cfStaff, Validators.required)
     });
   }
 
@@ -198,6 +229,12 @@ removeStaffConfirm: Boolean = false;
     else { this.dateValue = new Date(pncBars); }
     let pncBarsRefresher = this.staff.pncBarsRefresher;
     let pncWaiver = this.staff.pncWaiver;
+    let pncStandLeader = this.staff.pncStandLeader;
+    let pncGroupLeader = this.staff.pncGroupLeader;
+    let pncHeadCook = this.staff.pncHeadCook;
+    let pncRegister = this.staff.pncRegister;
+    let pncAssistantCook = this.staff.pncAssistantCook;
+    let pncBeerCart = this.staff.pncBeerCart;
 
     // WC stuff
     let wcTeamTraining: string = this.staff.wcTeamTraining;
@@ -206,6 +243,11 @@ removeStaffConfirm: Boolean = false;
       this.dateValue2 = this.getToday();
     }
     else { this.dateValue2 = new Date(wcTeamTraining); }
+    let wcStandLeader = this.staff.wcStandLeader;
+    let wcMoveStockOut = this.staff.wcMoveStockOut;
+    let wcContainerBarLead = this.staff.wcContainerBarLead;
+    let wcFinalStandPrep = this.staff.wcFinalStandPrep;
+    let wcSales = this.staff.wcSales;
 
     // CF stuff
     let cfAlcoholTraining: string = this.staff.cfAlcoholTraining;
@@ -214,6 +256,9 @@ removeStaffConfirm: Boolean = false;
       this.dateValue3 = this.getToday();
     }
     else { this.dateValue3 = new Date(cfAlcoholTraining); }
+    let cfLeader = this.staff.cfLeader;
+    let cfAssistantLeader = this.staff.cfAssistantLeader;
+    let cfStaff = this.staff.cfStaff;
 
     this.editStaffForm99 = new FormGroup({
       'firstName': new FormControl(firstName, Validators.required),
@@ -230,7 +275,21 @@ removeStaffConfirm: Boolean = false;
       'pncBarsRefresher': new FormControl(pncBarsRefresher, Validators.required),
       'pncWaiver': new FormControl(pncWaiver, Validators.required),
       'wcTeamTraining': new FormControl(wcTeamTraining, Validators.required),
-      'cfAlcoholTraining': new FormControl(cfAlcoholTraining, Validators.required)
+      'cfAlcoholTraining': new FormControl(cfAlcoholTraining, Validators.required),
+      'pncStandLeader': new FormControl(pncStandLeader, Validators.required),
+      'pncGroupLeader': new FormControl(pncGroupLeader, Validators.required),
+      'pncHeadCook': new FormControl(pncHeadCook, Validators.required),
+      'pncRegister': new FormControl(pncRegister, Validators.required),
+      'pncAssistantCook': new FormControl(pncAssistantCook, Validators.required),
+      'pncBeerCart': new FormControl(pncBeerCart, Validators.required),
+      'wcStandLeader': new FormControl(wcStandLeader, Validators.required),
+      'wcMoveStockOut': new FormControl(wcMoveStockOut, Validators.required),
+      'wcContainerBarLead': new FormControl(wcContainerBarLead, Validators.required),
+      'wcFinalStandPrep': new FormControl(wcFinalStandPrep, Validators.required),
+      'wcSales': new FormControl(wcSales, Validators.required),
+      'cfLeader': new FormControl(cfLeader, Validators.required),
+      'cfAssistantLeader': new FormControl(cfAssistantLeader, Validators.required),
+      'cfStaff': new FormControl(cfStaff, Validators.required)
     });
   }
 
@@ -250,7 +309,8 @@ removeStaffConfirm: Boolean = false;
 
     this.staffService.updateStaffInDB(this.staff).subscribe(res => {
       this.staffService.getAllStaff().subscribe(staff => {
-        this.staffService.setAllStaff(staff);
+        var formattedStaff: Staff[] = this.staffService.formatAllStaffResults(staff);
+        this.staffService.setAllStaff(formattedStaff);
         this.onCancel();
       });
     });
@@ -295,6 +355,12 @@ removeStaffConfirm: Boolean = false;
     this.staff.pncBars = this.editStaffForm1.value['pncBars'];
     this.staff.pncBarsRefresher = this.editStaffForm1.value['pncBarsRefresher'];
     this.staff.pncWaiver = this.editStaffForm1.value['pncWaiver'];
+    this.staff.pncStandLeader = this.editStaffForm1.value['pncStandLeader'];
+    this.staff.pncGroupLeader = this.editStaffForm1.value['pncGroupLeader'];
+    this.staff.pncHeadCook = this.editStaffForm1.value['pncHeadCook'];
+    this.staff.pncRegister = this.editStaffForm1.value['pncRegister'];
+    this.staff.pncAssistantCook = this.editStaffForm1.value['pncAssistantCook'];
+    this.staff.pncBeerCart = this.editStaffForm1.value['pncBeerCart'];
   }
 
   updateStaffWc() {
@@ -327,6 +393,11 @@ removeStaffConfirm: Boolean = false;
     this.staff.wcInactive = inactive;
     this.staff.wcInterested = interested;
     this.staff.wcTeamTraining = this.editStaffForm2.value['wcTeamTraining'];
+    this.staff.wcStandLeader = this.editStaffForm2.value['wcStandLeader'];
+    this.staff.wcMoveStockOut = this.editStaffForm2.value['wcMoveStockOut'];
+    this.staff.wcContainerBarLead = this.editStaffForm2.value['wcContainerBarLead'];
+    this.staff.wcFinalStandPrep = this.editStaffForm2.value['wcFinalStandPrep'];
+    this.staff.wcSales = this.editStaffForm2.value['wcSales'];
   }
 
   updateStaffCf() {
@@ -359,6 +430,9 @@ removeStaffConfirm: Boolean = false;
     this.staff.cfInactive = inactive;
     this.staff.cfInterested = interested;
     this.staff.cfAlcoholTraining = this.editStaffForm3.value['cfAlcoholTraining'];
+    this.staff.cfLeader = this.editStaffForm3.value['cfLeader'];
+    this.staff.cfAssistantLeader = this.editStaffForm3.value['cfAssistantLeader'];
+    this.staff.cfStaff = this.editStaffForm3.value['cfStaff'];
   }
 
   updateStaffAll() {
@@ -428,6 +502,7 @@ removeStaffConfirm: Boolean = false;
     this.staff.tuAccount = this.editStaffForm99.value['tuAccount'];
     this.staff.Email = this.editStaffForm99.value['email'];
     this.staff.Phone = this.editStaffForm99.value['phone'];
+
     this.staff.pncActive = active1;
     this.staff.pncInactive = inactive1;
     this.staff.pncInterested = interested1;
@@ -436,14 +511,30 @@ removeStaffConfirm: Boolean = false;
     this.staff.pncBars = this.editStaffForm99.value['pncBars'];
     this.staff.pncBarsRefresher = this.editStaffForm99.value['pncBarsRefresher'];
     this.staff.pncWaiver = this.editStaffForm99.value['pncWaiver'];
+    this.staff.pncStandLeader = this.editStaffForm1.value['pncStandLeader'];
+    this.staff.pncGroupLeader = this.editStaffForm1.value['pncGroupLeader'];
+    this.staff.pncHeadCook = this.editStaffForm1.value['pncHeadCook'];
+    this.staff.pncRegister = this.editStaffForm1.value['pncRegister'];
+    this.staff.pncAssistantCook = this.editStaffForm1.value['pncAssistantCook'];
+    this.staff.pncBeerCart = this.editStaffForm1.value['pncBeerCart'];
+
     this.staff.wcActive = active2;
     this.staff.wcInactive = inactive2;
     this.staff.wcInterested = interested2;
     this.staff.wcTeamTraining = this.editStaffForm99.value['wcTeamTraining'];
+    this.staff.wcStandLeader = this.editStaffForm2.value['wcStandLeader'];
+    this.staff.wcMoveStockOut = this.editStaffForm2.value['wcMoveStockOut'];
+    this.staff.wcContainerBarLead = this.editStaffForm2.value['wcContainerBarLead'];
+    this.staff.wcFinalStandPrep = this.editStaffForm2.value['wcFinalStandPrep'];
+    this.staff.wcSales = this.editStaffForm2.value['wcSales'];
+
     this.staff.cfActive = active3;
     this.staff.cfInactive = inactive3;
     this.staff.cfInterested = interested3;
     this.staff.cfAlcoholTraining = this.editStaffForm99.value['cfAlcoholTraining'];
+    this.staff.cfLeader = this.editStaffForm3.value['cfLeader'];
+    this.staff.cfAssistantLeader = this.editStaffForm3.value['cfAssistantLeader'];
+    this.staff.cfStaff = this.editStaffForm3.value['cfStaff'];
   }
 
   onRemoveStaff() {
