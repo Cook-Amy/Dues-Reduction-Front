@@ -11,10 +11,13 @@ import { NgForm } from '@angular/forms';
 export class AuthComponent implements OnInit {
   token: any;
   error:string = null;
+  imgPath: any;
+
   constructor(private authService: AuthService,
               private router: Router) { }
 
   ngOnInit() {
+    this.imgPath = this.authService.logoPath + 'TitansTeam.jpg';
   }
 
   onLogin(form: NgForm) {

@@ -2,7 +2,7 @@
 
 <div class="text-center">
   <form class="form-signin" (submit)="onLogin(loginForm)" #loginForm="ngForm">
-    <img class="mb-4" src="../assets/images/TitansTeam.jpg" alt="" width="250">
+    <img class="mb-4" src="{{imgPath}}" alt="" width="250">
     <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
 
     <div class="alert alert-danger" *ngIf="error">

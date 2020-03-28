@@ -11,10 +11,12 @@ import { Venue } from '../../models/venue.model';
 export class HeaderComponent implements OnInit {
   venues: Venue[];
   currentUser: SiteUser;
+  imgPath: any;
 
   constructor( private auth: AuthService) { }
 
   ngOnInit() {
+    this.imgPath = this.auth.logoPath + "TitansTeam.jpg";
     this.currentUser = this.auth.getCurrentUser();
   }
 

@@ -10,9 +10,8 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class AuthService {
 
-  // serverUrl = 'http://localhost:4000/';
-  // serverUrl = 'http://duesbackend-env-1.b6qgyzs5az.us-east-2.elasticbeanstalk.com/';
   serverUrl = GlobalVariables.serverUrl;
+  logoPath = this.serverUrl + "images/";
 
   authenticated = new BehaviorSubject(false);
   private currentUser: SiteUser;
