@@ -29,6 +29,12 @@ export class AuthService {
     this.currentUser = user;
     localStorage.setItem('token', token);
     localStorage.setItem('userName', user.userName);
+    localStorage.setItem('userID', this.currentUser.userID.toString());
+    localStorage.setItem('firstName', this.currentUser.firstName);
+    localStorage.setItem('lastName', this.currentUser.lastName);
+    localStorage.setItem('phone', this.currentUser.phone);
+    localStorage.setItem('personalEmail', this.currentUser.personalEmail);
+    localStorage.setItem('titansEmail', this.currentUser.titansEmail);
 
   }
 
@@ -42,6 +48,16 @@ export class AuthService {
   returnUser() {
     const token = localStorage.getItem('token');
     const username = localStorage.getItem('userName');
+    this.currentUser = new SiteUser(
+      Number(localStorage.getItem('userID')),
+      localStorage.getItem('userName'),
+      localStorage.getItem('firstName'),
+      localStorage.getItem('lastName'),
+      localStorage.getItem('phone'),
+      1,
+      localStorage.getItem('personalEmail'),
+      localStorage.getItem('titansEmail')
+    )
     if(!token) {
       return;
     }

@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { SettingsService } from './settings.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -18,7 +19,8 @@ export class SettingsComponent implements OnInit {
 
   constructor(private auth: AuthService,
               private settings: SettingsService,
-              private toastr: ToastrService) { }
+              private toastr: ToastrService,
+              private router: Router) { }
 
   ngOnInit() {
     this.currentUser = this.auth.getCurrentUser();
@@ -87,6 +89,7 @@ export class SettingsComponent implements OnInit {
 
   onCancelChanges() {
     this.initForm();
+    this.router.navigate(['/home']);
   }
 
   cannotBeNull(input: string) {

@@ -35,11 +35,11 @@ export class CalendarService {
         this.calendarEventsPnc.push(ev);
       }
       if(ev.venueID == 2 && ev.date) {
-        ev.color = "#ECC6D9";
+        ev.color = "#BF80FF";
         this.calendarEventsWc.push(ev);
       }
       if(ev.venueID == 3 && ev.date) {
-        ev.color = "#99FF99";
+        ev.color = "#66CC99";
         this.calendarEventsCf.push(ev);}
     });
   }

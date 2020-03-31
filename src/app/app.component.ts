@@ -20,6 +20,9 @@ export class AppComponent implements OnInit {
     if(!this.isLoggedIn) {
       this.router.navigate(['']);
     }
+    else{
+      this.router.navigate(['/home']);
+    }
   }
 
 }
