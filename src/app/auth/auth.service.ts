@@ -21,7 +21,6 @@ export class AuthService {
   getUser(email: string, password: string) {
     const authData = {email: email, password: password};
     const authReturned = this.http.post<{token: string, user: SiteUser}>(this.serverUrl + 'login', authData);
-    // console.log("authReturned: " + authReturned);
     return authReturned;
   }
 

@@ -53,32 +53,29 @@
 
   <hr>
 
-  <!-- list of files -->
-  <!-- <div class="list-group list-group-flush">
-    <div *ngFor="let file of fileList">
-      <a href="{{file.Link}}" class="list-group-item list-group-item-action" target="_blank">
-        <div class="d-flex w-100 justify-content-between">
-          <h5 class="mb-1">{{ file.Name }}</h5>
-        </div>
-        <p class="mb-1">{{ checkForNull(file.description) }}</p>
-      </a>
-      <span>
-        <button class="btn-btn-info" (click)="removeFile(file.idlink)">Remove</button>
-      </span>
-    </div>
-  </div> -->
+  <div *ngIf="!confirmDeleteMsg">
+    <table class="table table-striped table-sm">
+      <tr *ngFor="let file of fileList">
+        <a href="{{file.Link}}" target="_blank">
+          <td class="fileName">{{ file.Name }}</td>
+          <td class="fileDescription">{{ checkForNull(file.description) }}</td>
+        </a>
+        <td>
+          <button class="btn-btn-info" (click)="removeFile(file.idlink, file.Name)">Remove</button>
+        </td>
+      </tr>
+    </table>
+  </div>
 
-  <table class="table table-striped table-sm">
-    <tr *ngFor="let file of fileList">
-      <a href="{{file.Link}}" target="_blank">
-        <td class="fileName">{{ file.Name }}</td>
-        <td class="fileDescription">{{ checkForNull(file.description) }}</td>
-      </a>
-      <td>
-        <button class="btn-btn-info" (click)="removeFile(file.idlink)">Remove</button>
-      </td>
-    </tr>
-  </table>
+  <div *ngIf="confirmDeleteMsg" class="confirmDelete">
+    Are your sure you want to delete <span class="documentName">{{documentNameToDelete}}</span> ?
+    <div class="btnRow">
+      <button class="btn btn-lg btn-outline-danger" (click)="onDeleteNo()">No</button>
+      &nbsp;&nbsp;
+      <button class="btn btn-lg btn-outline-info" (click)="onDeleteYes()">Yes</button>
+    </div>
+  </div>
+
 
 
 

@@ -1,5 +1,4 @@
 import { Router } from '@angular/router';
-import { VenueService } from './../venue.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({

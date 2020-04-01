@@ -5,7 +5,6 @@ import { Job } from './../models/job.model';
 import { GlobalVariables } from './../shared/GlobalVariables';
 import { ContractPNC } from './../models/contractPNC.model';
 import { Timesheet } from './../models/timesheet.model';
-import { VenueService } from './../venues/venue.service';
 import { Season } from 'src/app/models/season.model';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Subject } from 'rxjs';

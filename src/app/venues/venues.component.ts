@@ -40,7 +40,6 @@ export class VenuesComponent implements OnInit {
       })
     }
     else {
-      // console.log("already have venues saved.");
       this.venueService.setCurrentVenue(venuePath);
       this.currentVenue = this.venueService.getCurrentVenue();
       this.venueName = this.currentVenue.name;

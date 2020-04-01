@@ -104,9 +104,9 @@ export class EventEditComponent implements OnInit {
 
   onSubmit() {
     this.updateEvent();
+// TODO: why won't event update save on first attempt?
 
     if(this.idVenue == 1) {
-      console.log("PNC event being edited");
       this.eventService.getPncContractInfo().subscribe(contract => {
         this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
           this.event = this.mathService.calculatePncEvent(this.event, contract[0], timesheets);

@@ -318,7 +318,6 @@ removeStaffConfirm: Boolean = false;
 
   onCancel() {
     this.staffService.setstaffEdit(false);
-    // this.router.navigate([], {relativeTo: this.route});
   }
 
   updateStaffPnc() {
@@ -548,7 +547,8 @@ removeStaffConfirm: Boolean = false;
   onRemoveYes() {
     this.staffService.removeStaffInDB(this.staff).subscribe(res => {
       this.staffService.getAllStaff().subscribe(staff => {
-        this.staffService.setAllStaff(staff);
+        var formattedStaff: Staff[] = this.staffService.formatAllStaffResults(staff);
+        this.staffService.setAllStaff(formattedStaff);
         this.onCancel();
       });
     });

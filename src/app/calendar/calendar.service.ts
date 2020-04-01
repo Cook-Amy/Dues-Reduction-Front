@@ -1,6 +1,5 @@
 import { CalendarEvent } from './../models/calendar.model';
 import { HttpClient } from '@angular/common/http';
-import { Event } from './../models/event.model';
 import { GlobalVariables } from './../shared/GlobalVariables';
 import { Injectable } from '@angular/core';
 

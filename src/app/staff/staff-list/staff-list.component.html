@@ -4,6 +4,17 @@
   <div class="col-md-4">
 
     <form #activeForm="ngForm">
+
+      <div class="form-group" *ngIf="currentVenueID == 99" (change)="changeVenue(activeForm.value)">
+        <label for="venueSelect">Venue</label>
+        <select ngModel name="venueSelect" id="venueSelect" class="form-control">
+          <option [value]="99" selected>All venues</option>
+          <option *ngFor="let v of allVenues" [value]="v.idvenue">
+            {{ v.name }}
+          </option>
+        </select>
+      </div>
+      
       <div class="form-group" (change)="changeActive(activeForm.value)">
         <label for="activeSelect">Active Level</label>
         <select ngModel name="activeSelect" id="activeSelect" class="form-control">
@@ -16,15 +27,6 @@
 
       <!-- TODO: Add option to filter by job title -->
 
-      <div class="form-group" *ngIf="currentVenueID == 99" (change)="changeVenue(activeForm.value)">
-        <label for="venueSelect">Venue</label>
-        <select ngModel name="venueSelect" id="venueSelect" class="form-control">
-          <option [value]="99" selected>All venues</option>
-          <option *ngFor="let v of allVenues" [value]="v.idvenue">
-            {{ v.name }}
-          </option>
-        </select>
-      </div>
     </form>
   </div>
 

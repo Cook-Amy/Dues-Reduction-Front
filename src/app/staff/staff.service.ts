@@ -56,7 +56,7 @@ export class StaffService {
   inactiveCfStaffChanged = new Subject<Staff[]>();
   interestedCfStaffChanged = new Subject<Staff[]>();
 
-  constructor(private http: HttpClient, private global: GlobalVariables) {}
+  constructor(private http: HttpClient) {}
 
   sortByNameAscending(staff: Staff[]) {
     return staff.sort((val1, val2) => {

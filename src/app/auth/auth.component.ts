@@ -24,10 +24,8 @@ export class AuthComponent implements OnInit {
     const email = form.value.inputEmail;
     const password = form.value.inputPassword;
     this.authService.getUser(email, password).subscribe(res => {
-      // console.log(res);
       if(!res) {
         this.error = "Username and/or password are not correct.";
-        console.log("Username and/or password are not correct");
       }
       else {
         const token = res.token;

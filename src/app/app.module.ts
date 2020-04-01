@@ -1,5 +1,4 @@
 import { GlobalVariables } from './shared/GlobalVariables';
-import { StaffService } from './staff/staff.service';
 import { DropdownDirective } from './shared/dropdown.directive';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -24,17 +23,12 @@ import { HomeComponent } from './home/home.component';
 import { StaffComponent } from './staff/staff.component';
 import { VenuesComponent } from './venues/venues.component';
 import { HeaderComponent } from './shared/header/header.component';
-import { AdminPageComponent } from './admin-page/admin-page.component';
 import { VenueLinksComponent } from './venues/venue-links/venue-links.component';
 import { EventsComponent } from './events/events.component';
 import { VenueContactsComponent } from './venue-contacts/venue-contacts.component';
-import { FormsComponent } from './forms/forms.component';
 import { DocumentsComponent } from './documents/documents.component';
-import { ReportsComponent } from './reports/reports.component';
 import { EventListComponent } from './events/event-list/event-list.component';
-import { EventItemComponent } from './events/event-list/event-item/event-item.component';
 import { StaffListComponent } from './staff/staff-list/staff-list.component';
-import { StaffItemComponent } from './staff/staff-list/staff-item/staff-item.component';
 import { EventDetailComponent } from './events/event-list/event-detail/event-detail.component';
 import { StaffDetailComponent } from './staff/staff-list/staff-detail/staff-detail.component';
 import { StaffEditComponent } from './staff/staff-list/staff-edit/staff-edit.component';
@@ -60,17 +54,12 @@ import { SettingsComponent } from './user/settings.component';
     StaffComponent,
     VenuesComponent,
     HeaderComponent,
-    AdminPageComponent,
     VenueLinksComponent,
     EventsComponent,
     VenueContactsComponent,
-    FormsComponent,
     DocumentsComponent,
-    ReportsComponent,
     EventListComponent,
-    EventItemComponent,
     StaffListComponent,
-    StaffItemComponent,
     EventDetailComponent,
     StaffDetailComponent,
     StaffEditComponent,

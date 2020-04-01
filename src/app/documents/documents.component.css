@@ -1,5 +1,5 @@
 .fileName {
-  min-width: 250px;
+  min-width: 300px;
   color: darkblue;
   font-size: 25px;
   font-weight: bold;
@@ -17,4 +17,19 @@ tr:hover {
 
 a:hover {
   text-decoration: none;
+}
+
+.confirmDelete {
+  margin-left: 100px;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.documentName {
+  font-size: 25px;
+  color: maroon;
+}
+
+.btnRow {
+  margin-left: 100px;
 }

@@ -92,8 +92,8 @@ export class StaffListComponent implements OnInit {
 
   getAllStaff() {
     this.staffService.getAllStaff().subscribe(allStaff => {
-      var staff: Staff[] = this.staffService.formatAllStaffResults(allStaff);
-      this.staffService.setAllStaff(staff);
+      var formattedStaff: Staff[] = this.staffService.formatAllStaffResults(allStaff);
+      this.staffService.setAllStaff(formattedStaff);
     });
   }
 
@@ -179,13 +179,9 @@ export class StaffListComponent implements OnInit {
         this.setStaff = this.allStaff;
       }
     }
-
   }
-
  
-
   changeActive(value) {
-    // console.log("value: " + value.activeSelect);
 
     // Activity level set to active
     if(value.activeSelect == 1) {
@@ -254,6 +250,7 @@ export class StaffListComponent implements OnInit {
   }
 
   changeVenue(change) {
+    console.log("venue change: " + change.venueSelect);
     if(change.venueSelect == 1) {
       this.showVenue = 1;
       this.allStaff = this.staffService.returnAllPncStaff();

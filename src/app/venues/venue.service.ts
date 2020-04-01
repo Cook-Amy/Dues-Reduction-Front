@@ -9,15 +9,13 @@ import { Injectable } from '@angular/core';
 })
 export class VenueService {
 
-  // serverUrl = 'http://localhost:4000/';
-  // serverUrl = 'http://duesbackend-env-1.b6qgyzs5az.us-east-2.elasticbeanstalk.com/';
   serverUrl = GlobalVariables.serverUrl;
 
   venuesChanged = new Subject<Venue[]>();
   private venues: Venue[] = [];
   private currentVenue: Venue;
 
-  constructor(private http: HttpClient, private global: GlobalVariables) { }
+  constructor(private http: HttpClient) { }
 
   getAllVenues() {
     return this.http.get<Venue[]>(this.serverUrl + 'venues');

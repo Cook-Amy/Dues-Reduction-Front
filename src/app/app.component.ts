@@ -1,4 +1,4 @@
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from './auth/auth.service';
 
 import { Component, OnInit } from '@angular/core';
@@ -13,7 +13,8 @@ export class AppComponent implements OnInit {
   isLoggedIn: boolean = false;
 
   constructor(private auth: AuthService,
-              private router: Router) { }
+              private router: Router,
+              private route: ActivatedRoute,) { }
 
   ngOnInit() {
     this.isLoggedIn = this.auth.autoAuthUser();

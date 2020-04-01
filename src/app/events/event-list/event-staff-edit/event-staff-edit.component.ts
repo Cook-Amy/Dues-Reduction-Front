@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { Event } from './../../../models/event.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MathService } from './../../math.service';
@@ -21,11 +22,13 @@ export class EventStaffEditComponent implements OnInit {
   staffEditForm: FormGroup;
   idVenue: number;
   interval: number = 15;
+  deleteConfirm = false;
 
   constructor(public eventService: EventService,
               public mathService: MathService,
               private route: ActivatedRoute,
-              private router: Router) { }
+              private router: Router,
+              private toastr: ToastrService) { }
 
   ngOnInit() {
     this.idVenue = this.event.venueID;
@@ -170,7 +173,16 @@ export class EventStaffEditComponent implements OnInit {
     this.timesheet.timeOut = this.staffEditForm.value['timeOut'];
   }
 
-  onDelete() {
+
+  onDeleteConfirm() {
+    this.deleteConfirm = true;
+  }
+
+  onDeleteNo() {
+    this.deleteConfirm = false;
+  }
+
+  onDeleteYes() {
     if(this.idVenue == 1) {
       this.eventService.deleteTimesheetinDB(this.timesheet.idtimesheet).subscribe(res => {
         this.eventService.getPncContractInfo().subscribe(contract => {
@@ -221,15 +233,6 @@ export class EventStaffEditComponent implements OnInit {
         });
       });
     }
-
-  }
-
-  onDeleteYes() {
-
-  }
-
-  onDeleteNo() {
-    this.askDelete = false;
   }
 
 }

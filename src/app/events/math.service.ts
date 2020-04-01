@@ -1,12 +1,9 @@
 import { EventService } from './event.service';
 import { Event } from './../models/event.model';
 import { ContractCF } from './../models/contractCF.model';
-import { EventCF } from './../models/eventCF.model';
 import { ContractWC } from './../models/contractWC.model';
-import { EventWC } from './../models/eventWC.model';
 import { Timesheet } from './../models/timesheet.model';
 import { ContractPNC } from './../models/contractPNC.model';
-import { EventPNC } from './../models/eventPNC.model';
 import { Injectable } from '@angular/core';
 
 @Injectable({

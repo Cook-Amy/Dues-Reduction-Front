@@ -82,6 +82,7 @@ export class SettingsComponent implements OnInit {
           closeButton: true,
           timeOut: 4000
         });
+        this.router.navigate(['/home']);
       });
     }
 

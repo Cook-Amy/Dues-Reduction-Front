@@ -15,6 +15,9 @@ export class DocumentsComponent implements OnInit {
   fileList: FileLink[];
   newFileInfo: Boolean = false;
   newFileForm: FormGroup;
+  documentNameToDelete: string = "";
+  documentIdToDelete: number = 0;
+  confirmDeleteMsg = false;
 
   constructor(private venueService: VenueService,
               private documentService: DocumentService) { }
@@ -46,9 +49,21 @@ export class DocumentsComponent implements OnInit {
       return string;
   }
 
-  removeFile(fileID) {
-    this.documentService.removeFile(fileID, this.currentVenueID).subscribe(list => {
+  removeFile(fileID, fileName) {
+    this.documentNameToDelete = fileName;
+    this.documentIdToDelete = fileID;
+    this.confirmDeleteMsg = true;
+
+  }
+
+  onDeleteNo() {
+    this.confirmDeleteMsg = false;
+  }
+
+  onDeleteYes() {
+    this.documentService.removeFile(this.documentIdToDelete, this.currentVenueID).subscribe(list => {
       this.fileList = this.sortList(list);
+      this.confirmDeleteMsg = false;
     });
   }
 
