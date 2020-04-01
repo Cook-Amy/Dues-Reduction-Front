@@ -14,6 +14,7 @@ export class StaffEditComponent implements OnInit {
 @Input() currentVenueID: number;
 @Input() showVenue: number;
 
+allTuAccounts: any[];
 editStaffForm1: FormGroup;
 editStaffForm2: FormGroup;
 editStaffForm3: FormGroup;
@@ -30,6 +31,8 @@ removeStaffConfirm: Boolean = false;
   constructor(private staffService: StaffService) { }
 
   ngOnInit() {
+    this.allTuAccounts = this.staffService.returnAllTuAccounts();
+
     if(this.currentVenueID == 1) {
       if(this.staff.pncActive) {this.status1 = "pncActive";}
       else if(this.staff.pncInactive) {this.status1 = "pncInactive";}
@@ -552,5 +555,9 @@ removeStaffConfirm: Boolean = false;
         this.onCancel();
       });
     });
+  }
+
+  onAccountChange() {
+
   }
 }

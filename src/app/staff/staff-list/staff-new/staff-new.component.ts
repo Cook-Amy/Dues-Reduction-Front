@@ -16,6 +16,7 @@ export class StaffNewComponent implements OnInit {
   newStaffForm99: FormGroup;
   newStaff: Staff;
   dateValue: Date;
+  allTuAccounts: any[];
 
   allStaff: Staff[] = [];
   activeStaff: Staff[] = [];
@@ -43,6 +44,7 @@ export class StaffNewComponent implements OnInit {
 
   ngOnInit() {
     this.dateValue = this.getToday();
+    this.allTuAccounts = this.staffService.returnAllTuAccounts();
 
     if(this.currentVenueID == 1) {
       this.initForm1();

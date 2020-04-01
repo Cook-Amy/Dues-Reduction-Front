@@ -16,8 +16,13 @@
         <input type="text" class="form-control" id="lastName" formControlName="lastName">
       </div>
       <div class="form-group col-md-4">
-        <label for="tu Account">TeamUnify Account</label>
-        <input type="text" class="form-control" id="tuAccount" formControlName="tuAccount">
+        <label for="tuAccount">TeamUnify Account</label>
+          <input type="text" list="tuAccount"  class="form-control" placeholder="Type or Choose Account" formControlName="tuAccount">
+        <datalist id="tuAccount">
+          <option *ngFor="let account of allTuAccounts" [value]="account.accountName">
+            {{ account.accountName }}
+          </option>
+        </datalist>
       </div>
     </div>
 

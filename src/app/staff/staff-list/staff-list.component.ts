@@ -94,6 +94,9 @@ export class StaffListComponent implements OnInit {
     this.staffService.getAllStaff().subscribe(allStaff => {
       var formattedStaff: Staff[] = this.staffService.formatAllStaffResults(allStaff);
       this.staffService.setAllStaff(formattedStaff);
+      this.staffService.getAllTuAccounts().subscribe(tuAccounts => {
+        this.staffService.setAllTuAccounts(tuAccounts);
+      });
     });
   }
 

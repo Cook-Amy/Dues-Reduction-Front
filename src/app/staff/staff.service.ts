@@ -56,11 +56,21 @@ export class StaffService {
   inactiveCfStaffChanged = new Subject<Staff[]>();
   interestedCfStaffChanged = new Subject<Staff[]>();
 
+  // TU Accounts
+  private allTuAccounts: any[] = [];
+  allTuAccountsChanged = new Subject<any[]>();
+
   constructor(private http: HttpClient) {}
 
   sortByNameAscending(staff: Staff[]) {
     return staff.sort((val1, val2) => {
       return (<any>val1.lastName > <any>val2.lastName) ? 1 : -1;
+    });
+  }
+
+  sortAnyByNameAscending(arr: any[]) {
+    return arr.sort((val1, val2) => {
+      return (<any>val1.accountName > <any>val2.accountName) ? 1: -1;
     });
   }
 
@@ -480,6 +490,24 @@ export class StaffService {
   returnActiveCfStaff() { return this.activeCfStaff.slice(); }
   returnInactiveCfStaff() { return this.inactiveCfStaff.slice(); }
   returnInterestedCfStaff() { return this.interestedCfStaff.slice(); }
+
+
+  /*********************************************************************************
+  * TU Accounts
+  *********************************************************************************/
+  getAllTuAccounts() {
+    const getAccounts = this.http.get<any[]>(this.serverUrl + 'getAllTuAccounts');
+    return getAccounts;
+  }
+
+  setAllTuAccounts(tuAccounts: any[]) {
+    this.allTuAccounts = this.sortAnyByNameAscending(tuAccounts);
+    this.allTuAccountsChanged.next(this.allTuAccounts);
+  }
+
+  returnAllTuAccounts() {
+    return this.allTuAccounts.slice();
+  }
 
   /*********************************************************************************
     * OTHER
