@@ -1,3 +1,4 @@
+import { AuthService } from './../auth/auth.service';
 import { Staff } from '../models/staff.model';
 import { Event } from '../models/event.model';
 import { GlobalVariables } from '../shared/GlobalVariables';
@@ -15,7 +16,7 @@ export class GateListService {
   workbook = new Workbook();
   data = [];
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private auth: AuthService) { }
 
 
   // Email gate list
@@ -26,14 +27,18 @@ export class GateListService {
   }
 
   generatePncGateList(event: Event, staff: Staff[], email: boolean, download: boolean) {
-    const params = { event: event, staff: staff, email: email, download: download };
+    var userID = this.auth.getCurrentUser().userID;
+    var userName = this.auth.getCurrentUser().firstName + " " + this.auth.getCurrentUser().lastName; 
+    const params = { event: event, staff: staff, email: email, download: download, userID: userID, userName: userName };
     const generateGateList = this.http.post(this.serverUrl + 'sendPncGateList', params, {responseType: 'blob'});
     return generateGateList;
 
   }
 
   generateWcGateList(event: Event, staff: Staff[], email: boolean, download: boolean) {
-    const params = { event: event, staff: staff, email: email, download: download };
+    var userID = this.auth.getCurrentUser().userID;
+    var userName = this.auth.getCurrentUser().firstName + " " + this.auth.getCurrentUser().lastName;
+    const params = { event: event, staff: staff, email: email, download: download, userID: userID, userName: userName };
     const generateGateList = this.http.post(this.serverUrl + 'sendWcGateList', params, {responseType: 'blob'});
     return generateGateList;
 
