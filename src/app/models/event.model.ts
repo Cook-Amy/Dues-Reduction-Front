@@ -32,12 +32,10 @@ export class Event {
   // wc events
   public creditCardTips: number;
   public maxCreditCardTipAmount: number;
-  public shuttleBonusBoolWc: Boolean;
   public shuttleBonusAmountWc: number;
 
   // cf events
   public totalSalesCf: number;
-  public shuttleBonusBoolCf: Boolean;
   public shuttleBonusAmountCf: number;
   public shuttleLocation: string;
 
@@ -71,11 +69,9 @@ export class Event {
 
      creditCardTips: number,
      maxCreditCardTipAmount: number,
-     shuttleBonusBoolWc: Boolean,
      shuttleBonusAmountWc: number,
 
      totalSalesCf: number,
-     shuttleBonusBoolCf: Boolean,
      shuttleBonusAmountCf: number,
      shuttleLocation: string
 
@@ -109,11 +105,9 @@ export class Event {
 
     this.creditCardTips = creditCardTips;
     this.maxCreditCardTipAmount = maxCreditCardTipAmount;
-    this.shuttleBonusBoolWc = shuttleBonusBoolWc;
     this.shuttleBonusAmountWc = shuttleBonusAmountWc;
 
     this.totalSalesCf = totalSalesCf;
-    this.shuttleBonusBoolCf = shuttleBonusBoolCf;
     this.shuttleBonusAmountCf = shuttleBonusAmountCf;
     this.shuttleLocation = shuttleLocation;
   }

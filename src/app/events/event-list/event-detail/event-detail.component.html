@@ -308,12 +308,8 @@
             <i class="far fa-check-square" *ngIf="event.closed"></i>
             Closed
           </td>
-          <td colspan="4">
-            <i class="far fa-square" *ngIf="!event.shuttleBonusBoolWc"></i>
-            <i class="far fa-check-square" *ngIf="event.shuttleBonusBoolWc"></i>
-            Shuttle Bonus
-          </td>
           <td colspan="4">Shuttle Bonus Amount: {{ (checkForNullNum(event.shuttleBonusAmountWc)).toFixed(2) }}</td>
+          <td></td>
         </tr>
       </tbody>
     </table>
@@ -572,12 +568,8 @@
             <i class="far fa-check-square" *ngIf="event.closed"></i>
             Closed
           </td>
-          <td colspan="4">
-            <i class="far fa-square" *ngIf="!event.shuttleBonusBoolCf"></i>
-            <i class="far fa-check-square" *ngIf="event.shuttleBonusBoolCf"></i>
-            Shuttle Bonus
-          </td>
           <td colspan="4">Shuttle Bonus Amount: {{ (checkForNullNum(event.shuttleBonusAmountCf)).toFixed(2) }}</td>
+          <td></td>
         </tr>
       </tbody>
     </table>

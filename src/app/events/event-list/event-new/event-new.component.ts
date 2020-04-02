@@ -91,13 +91,9 @@ export class EventNewComponent implements OnInit {
 
     let estCheck = 0;
     let creditCardTips = 0;
-    let shuttleBonusBoolWc = false;
-    let shuttleBonusAmountWc = 10;
-
-    //  TODO: Get rid of Shuttle Bonus Bool - it is too confusing. have just shuttle bonus amount.
+    let shuttleBonusAmountWc = 0;
 
     let totalSalesCf:number = 0;
-    let shuttleBonusBoolCf = true;
     let shuttleBonusAmountCf = 10;
 
     this.newEventForm = new FormGroup({
@@ -116,10 +112,8 @@ export class EventNewComponent implements OnInit {
       'checkRcvd': new FormControl(checkRcvd, Validators.required),
       'notes': new FormControl(notes, Validators.required),
       'creditCardTips': new FormControl(creditCardTips, Validators.required),
-      'shuttleBonusBoolWc': new FormControl(shuttleBonusBoolWc, Validators.required),
       'shuttleBonusAmountWc': new FormControl(shuttleBonusAmountWc, Validators.required),
       'totalSalesCf': new FormControl(totalSalesCf, Validators.required),
-      'shuttleBonusBoolCf': new FormControl(shuttleBonusBoolCf, Validators.required),
       'shuttleBonusAmountCf': new FormControl(shuttleBonusAmountCf, Validators.required)
     });
   }
@@ -224,10 +218,8 @@ export class EventNewComponent implements OnInit {
         this.newEventForm.value['countTotal'],
         0,
         0,
-        false,
         0,
         0,
-        false,
         0,
         null
       );
@@ -261,10 +253,8 @@ export class EventNewComponent implements OnInit {
         false,
         parseFloat(this.newEventForm.value['creditCardTips']),
         30,
-        this.newEventForm.value['shuttleBonusBoolWc'],
         parseFloat(this.newEventForm.value['shuttleBonusAmountWc']),
         0,
-        false,
         0,
         null
       );
@@ -298,10 +288,8 @@ export class EventNewComponent implements OnInit {
         false,
         0,
         0,
-        false,
         0,
         parseFloat(this.newEventForm.value['totalSalesCf']),
-        this.newEventForm.value['shuttleBonusBoolCf'],
         parseFloat(this.newEventForm.value['shuttleBonusAmountCf']),
         '',
       );

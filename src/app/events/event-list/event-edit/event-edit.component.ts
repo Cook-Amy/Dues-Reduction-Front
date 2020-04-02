@@ -65,12 +65,10 @@ export class EventEditComponent implements OnInit {
 
     let estCheck = this.event.estimatedCheck;
     let creditCardTips = this.event.creditCardTips;
-    let shuttleBonusBoolWc = this.event.shuttleBonusBoolWc;
     let shuttleBonusAmountWc = this.event.shuttleBonusAmountWc;
     if(!shuttleBonusAmountWc) { shuttleBonusAmountWc = 0 };
 
     let totalSalesCf = this.event.totalSalesCf;
-    let shuttleBonusBoolCf = this.event.shuttleBonusBoolCf;
     let shuttleBonusAmountCf = this.event.shuttleBonusAmountCf;
     
     this.editEventForm = new FormGroup({
@@ -89,10 +87,8 @@ export class EventEditComponent implements OnInit {
       'checkRcvd': new FormControl(checkRcvd, Validators.required),
       'notes': new FormControl(notes, Validators.required),
       'creditCardTips': new FormControl(creditCardTips, Validators.required),
-      'shuttleBonusBoolWc': new FormControl(shuttleBonusBoolWc, Validators.required),
       'shuttleBonusAmountWc': new FormControl(shuttleBonusAmountWc, Validators.required),
       'totalSalesCf': new FormControl(totalSalesCf, Validators.required),
-      'shuttleBonusBoolCf': new FormControl(shuttleBonusBoolCf, Validators.required),
       'shuttleBonusAmountCf': new FormControl(shuttleBonusAmountCf, Validators.required)
     });
   }
@@ -176,20 +172,12 @@ export class EventEditComponent implements OnInit {
 
     else if(this.idVenue == 2) {
       this.event.creditCardTips = parseFloat(this.editEventForm.value['creditCardTips']);
-      var shuttleBool = this.editEventForm.value['shuttleBonusBoolWc'];
-      if(shuttleBool) {
-        this.event.shuttleBonusBoolWc = true;
-      }
-      else{
-        this.event.shuttleBonusBoolWc = false;
-      }
       this.event.shuttleBonusAmountWc = parseFloat(this.editEventForm.value['shuttleBonusAmountWc']);
       this.event.estimatedCheck = parseFloat(this.editEventForm.value['estCheck']);
     }
     
     else if(this.idVenue == 3) {
       this.event.totalSalesCf = this.editEventForm.value['totalSalesCf'];
-      this.event.shuttleBonusBoolCf = this.editEventForm.value['shuttleBonusBoolCf'];
       this.event.shuttleBonusAmountCf = parseFloat(this.editEventForm.value['shuttleBonusAmountCf']);
     }
   }
