@@ -1,33 +1,68 @@
-<!-- Activity Level dropdown -->
 
 <div class="row">
-  <div class="col-md-4">
+  <div class="col-md-5">
 
-    <form #activeForm="ngForm">
+    <form [formGroup]="activeForm">
 
-      <div class="form-group" *ngIf="currentVenueID == 99" (change)="changeVenue(activeForm.value)">
-        <label for="venueSelect">Venue</label>
-        <select ngModel name="venueSelect" id="venueSelect" class="form-control">
-          <option [value]="99" selected>All venues</option>
-          <option *ngFor="let v of allVenues" [value]="v.idvenue">
-            {{ v.name }}
-          </option>
-        </select>
+<!-- Venue Level Select -->
+
+      <div *ngIf="currentVenueID == 99">
+        <div class="form-row">
+          <div class="col-md-3">Venue:</div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-9" (change)="changeStaffList()">
+            <div class="form-check form-check-inline">
+              <input type="radio" class="form-check-input" id="99" formControlName="venueSelect" value="99">
+              <label class="form-check-label" for="99">ALL</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input type="radio" class="form-check-input" id="1" formControlName="venueSelect" value="1">
+              <label class="form-check-label" for="1">PNC</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input type="radio" class="form-check-input" id="2" formControlName="venueSelect" value="2">
+              <label class="form-check-label" for="2">WC</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input type="radio" class="form-check-input" id="3" formControlName="venueSelect" value="3">
+              <label class="form-check-label" for="3">CF</label>
+            </div>
+          </div>
+        </div>
       </div>
-      
-      <div class="form-group" (change)="changeActive(activeForm.value)">
-        <label for="activeSelect">Active Level</label>
-        <select ngModel name="activeSelect" id="activeSelect" class="form-control">
-          <option [value]="1" selected>Active</option>
-          <option [value]="2">Inactive</option>
-          <option [value]="3">Interested</option>
-          <option [value]="4">All</option>
-        </select>
+
+
+<!-- Activity Level Select -->
+
+      <div class="form-row">
+        <div class="col-md-5">Active Status:</div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-12" (change)=changeStaffList()>
+          <div class="form-check form-check-inline">
+            <input type="radio" class="form-check-input" id="1" formControlName="activeSelect" value="1">
+            <label for="1" class="form-check-label" selected>Active</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="radio" class="form-check-input" id="2" formControlName="activeSelect" value="2">
+            <label for="2" class="form-check-label">Inactive</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="radio" class="form-check-input" id="3" formControlName="activeSelect" value="3">
+            <label for="3" class="form-check-label">Interested</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="radio" class="form-check-input" id="4" formControlName="activeSelect" value="4">
+            <label for="4" class="form-check-label">All</label>
+          </div>
+        </div>
       </div>
 
       <!-- TODO: Add option to filter by job title -->
 
     </form>
+
   </div>
 
   <div class="col-md-3"></div>
