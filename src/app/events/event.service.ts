@@ -115,10 +115,7 @@ export class EventService {
       if(event.coordinatorAdminAmt)
         event.coordinatorAdminAmt = parseFloat(event.coordinatorAdminAmt.toFixed(2));
       if(event.totalSalesPnc)
-      {
         event.totalSalesPnc = parseFloat(event.totalSalesPnc.toFixed(2));
-
-      }
       if(event.totalSalesCf)
         event.totalSalesCf = parseFloat(event.totalSalesCf.toFixed(2));
       if(event.alcSales)
@@ -150,6 +147,7 @@ export class EventService {
   setAllEvents(events: Event[]) {
     this.eventsAll = this.sortByDateAscending(events);
     this.eventsAll = this.fixEventNumbers(this.eventsAll);
+
     this.setVenueEvents(this.eventsAll);
     if(events == null) {}
     else {
@@ -199,7 +197,7 @@ export class EventService {
   setNewEvent(event: Event) {
 
       const params = {event: event};
-      const eventSaved = this.http.post(this.serverUrl + 'setNewEvent', params);
+      const eventSaved = this.http.post<number>(this.serverUrl + 'setNewEvent', params);
       return eventSaved;
   }
   

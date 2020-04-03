@@ -139,7 +139,8 @@ export class EventNewComponent implements OnInit {
         // new events have no timesheets yet; send an empty array
         var timesheets: Timesheet[] = [];
         this.newEvent = this.mathService.calculatePncEvent(event, contract[0], timesheets);
-        this.eventService.setNewEvent(this.newEvent).subscribe(res => {
+        this.eventService.setNewEvent(this.newEvent).subscribe(id => {
+          this.newEvent.idevent = id;
           this.allEvents.push(this.newEvent);
           this.eventService.setAllEvents(this.allEvents);
           this.allEvents = this.eventService.returnEventsPnc();

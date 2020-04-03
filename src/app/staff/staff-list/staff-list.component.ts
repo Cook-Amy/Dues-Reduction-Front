@@ -253,7 +253,6 @@ export class StaffListComponent implements OnInit {
   }
 
   changeVenue(change) {
-    console.log("venue change: " + change.venueSelect);
     if(change.venueSelect == 1) {
       this.showVenue = 1;
       this.allStaff = this.staffService.returnAllPncStaff();
