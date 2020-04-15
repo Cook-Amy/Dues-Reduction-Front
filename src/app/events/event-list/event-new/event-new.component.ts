@@ -91,10 +91,8 @@ export class EventNewComponent implements OnInit {
 
     let estCheck = 0;
     let creditCardTips = 0;
-    let shuttleBonusAmountWc = 0;
 
     let totalSalesCf:number = 0;
-    let shuttleBonusAmountCf = 10;
 
     this.newEventForm = new FormGroup({
       'eventTitle': new FormControl(eventTitle, Validators.required),
@@ -112,9 +110,7 @@ export class EventNewComponent implements OnInit {
       'checkRcvd': new FormControl(checkRcvd, Validators.required),
       'notes': new FormControl(notes, Validators.required),
       'creditCardTips': new FormControl(creditCardTips, Validators.required),
-      'shuttleBonusAmountWc': new FormControl(shuttleBonusAmountWc, Validators.required),
-      'totalSalesCf': new FormControl(totalSalesCf, Validators.required),
-      'shuttleBonusAmountCf': new FormControl(shuttleBonusAmountCf, Validators.required)
+      'totalSalesCf': new FormControl(totalSalesCf, Validators.required)
     });
   }
 
@@ -153,7 +149,8 @@ export class EventNewComponent implements OnInit {
         // new events have no timesheets yet; send an empty array
         var timesheets: Timesheet[] = [];
         this.newEvent = this.mathService.calculateWcEvent(event, contract[0], timesheets);
-        this.eventService.setNewEvent(this.newEvent).subscribe(res => {
+        this.eventService.setNewEvent(this.newEvent).subscribe(id => {
+          this.newEvent.idevent = id;
           this.allEvents.push(this.newEvent);
           this.eventService.setAllEvents(this.allEvents);
           this.allEvents = this.eventService.returnEventsWc();
@@ -171,7 +168,8 @@ export class EventNewComponent implements OnInit {
         // new events have no timesheets yet; send an empty array
         var timesheets: Timesheet[] = [];
         this.newEvent = this.mathService.calculateCfEvent(event, contract[0], timesheets);
-        this.eventService.setNewEvent(this.newEvent).subscribe(res => {
+        this.eventService.setNewEvent(this.newEvent).subscribe(id => {
+          this.newEvent.idevent = id;
           this.allEvents.push(this.newEvent);
           this.eventService.setAllEvents(this.allEvents);
           this.allEvents = this.eventService.returnEventsCf();
@@ -254,7 +252,7 @@ export class EventNewComponent implements OnInit {
         false,
         parseFloat(this.newEventForm.value['creditCardTips']),
         30,
-        parseFloat(this.newEventForm.value['shuttleBonusAmountWc']),
+        0,
         0,
         0,
         null
@@ -291,7 +289,7 @@ export class EventNewComponent implements OnInit {
         0,
         0,
         parseFloat(this.newEventForm.value['totalSalesCf']),
-        parseFloat(this.newEventForm.value['shuttleBonusAmountCf']),
+        0,
         '',
       );
     }

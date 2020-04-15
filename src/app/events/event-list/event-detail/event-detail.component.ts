@@ -27,10 +27,12 @@ export class EventDetailComponent implements OnInit {
   confirmDelete = false;
   confirmGateList = false;
   gateListForm: FormGroup;
+  addShuttleBonus = false;
   addEventBonus = false;
   addHourlyBonus = false;
   eventTimeDate: Date;
   eventID: number;
+  sbForm: FormGroup;
   ebForm: FormGroup;
   hbForm: FormGroup;
   reminderInfo = false;
@@ -64,6 +66,7 @@ export class EventDetailComponent implements OnInit {
     this.initForm1();
     this.initForm2();
     this.initForm3();
+    this.initForm4();
   }
 
   private initForm1() {
@@ -89,6 +92,13 @@ export class EventDetailComponent implements OnInit {
 
     this.hbForm = new FormGroup({
       'hbAmount': new FormControl(hbAmount, Validators.required)
+    });
+  }
+
+  private initForm4() {
+    let sbAmount = 0;
+    this.sbForm = new FormGroup({
+      'sbAmount': new FormControl(sbAmount, Validators.required)
     });
   }
 
@@ -223,14 +233,83 @@ export class EventDetailComponent implements OnInit {
     this.eventStaffAdd = true;
   }
 
+  onAddShuttleBonus() {
+    this.addHourlyBonus = false;
+    this.addEventBonus = false;
+    this.addShuttleBonus = true;
+
+  }
+
   onAddEventBonus() { 
     this.addHourlyBonus = false;
+    this.addShuttleBonus = false;
     this.addEventBonus = true; 
   }
 
   onAddHourlyBonus() { 
     this.addEventBonus = false;
+    this.addShuttleBonus = false;
     this.addHourlyBonus = true; 
+  }
+
+  onShuttleBonusAdded() {
+    var sb = this.sbForm.value['sbAmount'];
+    this.timesheet.forEach(ts => {
+      ts.shuttleBonus += sb;
+    });
+
+    this.mathService.calculateTimeSheets(this.timesheet);
+    this.eventService.setTimesheets(this.timesheet);
+    this.eventService.updateAllTimesheetsInDB(this.timesheet).subscribe(res => {
+
+      if(this.currentVenueID == 1) {
+        this.eventService.getPncContractInfo().subscribe(contract => {
+          this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
+            this.event = this.mathService.calculatePncEvent(this.event, contract[0], timesheets);
+            this.eventService.editEvent(this.event, this.currentVenueID).subscribe(res => {
+              this.eventService.getAllEvents().subscribe(events => {
+                this.eventService.setAllEvents(events);
+                this.eventService.setEventStaffEdit(false);
+                // this.router.navigate([], {relativeTo: this.route});
+                this.onCancelBonus();
+              });
+            });
+          });
+        });
+      }
+
+      else if(this.currentVenueID == 2) {
+        this.eventService.getWcContractInfo().subscribe(contract => {
+          this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
+            this.event = this.mathService.calculateWcEvent(this.event, contract[0], timesheets);
+            this.eventService.editEvent(this.event, this.currentVenueID).subscribe(res => {
+              this.eventService.getAllEvents().subscribe(events => {
+                this.eventService.setAllEvents(events);
+                this.eventService.setEventStaffEdit(false);
+                // this.router.navigate([], {relativeTo: this.route});
+                this.onCancelBonus();
+              });
+            });
+          });
+        });
+      }
+
+      else if(this.currentVenueID == 3) {
+        this.eventService.getCfContractInfo().subscribe(contract => {
+          this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
+            this.event = this.mathService.calculateCfEvent(this.event, contract[0], timesheets);
+            this.eventService.editEvent(this.event, this.currentVenueID).subscribe(res => {
+              this.eventService.getAllEvents().subscribe(events => {
+                this.eventService.setAllEvents(events);
+                this.eventService.setEventStaffEdit(false);
+                // this.router.navigate([], {relativeTo: this.route});
+                this.onCancelBonus();
+              });
+            });
+          });
+        });
+      }
+    });
   }
 
   onEventBonusAdded() {
@@ -242,6 +321,7 @@ export class EventDetailComponent implements OnInit {
     this.mathService.calculateTimeSheets(this.timesheet);
     this.eventService.setTimesheets(this.timesheet);
     this.eventService.updateAllTimesheetsInDB(this.timesheet).subscribe(res => {
+
       if(this.currentVenueID == 1) {
         this.eventService.getPncContractInfo().subscribe(contract => {
           this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
@@ -352,6 +432,7 @@ export class EventDetailComponent implements OnInit {
   }
 
   onCancelBonus() {
+    this.addShuttleBonus = false;
     this.addEventBonus = false;
     this.addHourlyBonus = false;
   }

@@ -12,7 +12,7 @@
   </div>
 
   <div class="form-row">
-    <div class="form-group col-md-5">
+    <div class="form-group col-md-4">
       <label for="position">Position</label>
       <select id="position" class="form-control" formControlName="position">
         <option *ngFor="let job of jobs" [value]="job.jobName">
@@ -23,6 +23,10 @@
     <div class="form-group col-md-2">
       <label for="rate">Rate</label>
       <input type="number" class="form-control" id="rate" value="rate" formControlName="rate">
+    </div>
+    <div *ngIf="idVenue != 1" class="form-group col-md-2">
+      <label for="shuttleBonus">Shuttle Bonus</label>
+      <input type="number" class="form-control" id="shuttleBonus" formControlName="shuttleBonus" value="shuttleBonus">
     </div>
     <div class="form-group col-md-2">
       <label for="eventBonus">Event Bonus</label>

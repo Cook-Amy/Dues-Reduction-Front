@@ -133,17 +133,6 @@
     </div>
   
     <div class="form-row">
-      <div class="form-group col-md-12">
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="checkbox" id="closed" formControlName="closed">
-          <label class="form-check-label" for="closed">
-            Closed
-          </label>
-        </div>
-      </div>
-    </div>
-  
-    <div class="form-row">
       <div class="form-group col-md-3">
         <label for="creditCardTips">Credit Card Tips</label>
         <input type="number" class="form-control" id="creditCardTips" formControlName="creditCardTips">
@@ -156,16 +145,20 @@
         <label for="checkRcvd">Check Recieved</label>
         <input type="text" class="form-control" id="checkRcvd" formControlName="checkRcvd">
       </div>
+      <div class="form-group col-md-3">
+        <label for="bonus">Venue Bonus</label>
+        <input type="text" class="form-control" id="bonus" formControlName="bonus">
+      </div>
     </div>
 
     <div class="form-row">
       <div class="form-group col-md-3">
-        <label for="shuttleBonusAmountWc">Shuttle Bonus</label>
-        <input type="number" class="form-control" id="shuttleBonusAmountWc" formControlName="shuttleBonusAmountWc">
-      </div>
-      <div class="form-group col-md-3">
-        <label for="bonus">Venue Bonus</label>
-        <input type="text" class="form-control" id="bonus" formControlName="bonus">
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="closed" formControlName="closed">
+          <label class="form-check-label" for="closed">
+            Closed
+          </label>
+        </div>
       </div>
     </div>
   
@@ -212,24 +205,9 @@
     </div>
   
     <div class="form-row">
-      <div class="form-group col-md-12">
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="checkbox" id="closed" formControlName="closed">
-          <label class="form-check-label" for="closed">
-            Closed
-          </label>
-        </div>
-      </div>
-    </div>
-  
-    <div class="form-row">
       <div class="form-group col-md-3">
         <label for="totalSalesCf">Total Sales</label>
         <input type="text" class="form-control" id="totalSalesCf" formControlName="totalSalesCf">
-      </div>
-      <div class="form-group col-md-3">
-        <label for="shuttleBonusAmountCf">Shuttle Bonus Amount</label>
-        <input type="text" class="form-control" id="shuttleBonusAmountCf" formControlName="shuttleBonusAmountCf">
       </div>
       <div class="form-group col-md-3">
         <label for="bonus">Venue Bonus</label>
@@ -238,6 +216,17 @@
       <div class="form-group col-md-3">
         <label for="checkRcvd">Check Recieved</label>
         <input type="text" class="form-control" id="checkRcvd" formControlName="checkRcvd">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-12">
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="closed" formControlName="closed">
+          <label class="form-check-label" for="closed">
+            Closed
+          </label>
+        </div>
       </div>
     </div>
   

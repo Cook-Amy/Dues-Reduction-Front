@@ -14,7 +14,7 @@ export class SettingsService {
 
   changeSettings(user: SiteUser) {
     var params = {user: user};
-    var changeSettings = this.http.post(this.serverUrl + "changeSettings", params);
+    var changeSettings = this.http.post<{username: string}>(this.serverUrl + "changeSettings", params);
     return changeSettings;
   }
 }

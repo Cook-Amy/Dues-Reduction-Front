@@ -16,6 +16,8 @@ export class SettingsComponent implements OnInit {
   currentUser: SiteUser;
   userForm: FormGroup;
   validMsg: boolean = false;
+  usernameMsg: boolean = false;
+  newUsername: string;
 
   constructor(private auth: AuthService,
               private settings: SettingsService,
@@ -67,7 +69,10 @@ export class SettingsComponent implements OnInit {
     }
 
     else {
+      var oldUsername = this.currentUser.userName;
+      this.newUsername = this.userForm.value['userName'];
       this.validMsg = false;
+      this.usernameMsg = false;
       this.currentUser.firstName = this.userForm.value['firstName'];
       this.currentUser.lastName = this.userForm.value['lastName'];
       this.currentUser.phone = this.userForm.value['phone'];
@@ -76,13 +81,20 @@ export class SettingsComponent implements OnInit {
       this.currentUser.userName = this.userForm.value['userName'];
   
       this.settings.changeSettings(this.currentUser).subscribe(res => {
-        this.auth.changeCurrentUserSettings(this.currentUser);
-        this.initForm();
-        this.toastr.success("Your settings have been changed.", "SUCCESS!", {
-          closeButton: true,
-          timeOut: 4000
-        });
-        this.router.navigate(['/home']);
+        if(res.username) {
+          this.usernameMsg = true;
+          this.currentUser.userName = oldUsername;
+          // this.initForm();
+        }
+        else {
+          this.auth.changeCurrentUserSettings(this.currentUser);
+          this.initForm();
+          this.toastr.success("Your settings have been changed.", "SUCCESS!", {
+            closeButton: true,
+            timeOut: 4000
+          });
+          this.router.navigate(['/home']);
+        }
       });
     }
 

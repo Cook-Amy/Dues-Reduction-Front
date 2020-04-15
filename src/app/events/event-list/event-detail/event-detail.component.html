@@ -3,6 +3,7 @@
 ---------------------------------------------------------------------->
 <div *ngIf="idVenue == 1">
   <div *ngIf="eventEdit == false">
+
     <table class="table table-sm table-responsive">
       <tbody>
         <tr>
@@ -308,8 +309,8 @@
             <i class="far fa-check-square" *ngIf="event.closed"></i>
             Closed
           </td>
-          <td colspan="4">Shuttle Bonus Amount: {{ (checkForNullNum(event.shuttleBonusAmountWc)).toFixed(2) }}</td>
-          <td></td>
+          <td colspan="4"></td>
+          <td colspan="4"></td>
         </tr>
       </tbody>
     </table>
@@ -408,10 +409,10 @@
                   <td>{{ checkForNullString(getTime(t.timeIn)) }}</td>
                   <td>{{ checkForNullString(getTime(t.timeOut)) }}</td>
                   <td class="align-right">{{ checkForNullNum(t.hoursWorked) }}</td>
-                  <td class="align-right">{{ checkForNullNum(t.eventBonus) }}</td>
-                  <td class="align-right">{{ checkForNullNum(t.hourlyBonus) }}</td>
                   <td class="align-right">{{ checkForNullNum(t.shuttleBonus) }}</td>
                   <td class="align-right">{{ checkForNullNum(t.creditCardTips) }}</td>
+                  <td class="align-right">{{ checkForNullNum(t.eventBonus) }}</td>
+                  <td class="align-right">{{ checkForNullNum(t.hourlyBonus) }}</td>
                   <td class="align-right">{{ checkForNullNum(t.creditAmount) }}</td>
                   <td>
                     <button class="btn btn-info" (click)="onEditStaff(t)">Edit</button>
@@ -424,16 +425,38 @@
               <td colspan="3">
                 <button type="button" class="btn btn-info" (click)="onAddStaff()">Add Staff Member</button>
               </td>
-              <td colspan="3">
+              <td colspan="2">
+                <button class="btn btn-info" (click)="onAddShuttleBonus()">Add Shuttle Bonus</button>
+              </td>
+              <td colspan="2">
                 <button class="btn btn-info" (click)="onAddEventBonus()">Add Event Bonus</button>
               </td>
-              <td colspan="3">
+              <td colspan="2">
                 <button class="btn btn-info" (click)="onAddHourlyBonus()">Add Hourly Bonus</button>
               </td>
               <td colspan="3">
                 <button type="button" class="btn btn-info" (click)="onSendReminder()">Send Reminder</button>
               </td>
             </tr>
+
+            <div *ngIf="addShuttleBonus">
+              <form [formGroup]="sbForm" (ngSubmit)="onShuttleBonusAdded()">
+                <div class="form-row">
+                  <div class="form-group col-md-5">
+                    Add Shuttle Bonus to all staff:
+                  </div>
+                  <div class="form-group col-md-2">
+                    <input type="number" class="numInput form-control" id="sbAmount" formControlName="sbAmount">
+                  </div>
+                  <div class="form-group col-md-2">
+                    <button class="btn btn-outline-info" type="submit">Add</button>
+                  </div>
+                  <div class="form-group col-md-2">
+                    <button class="btn btn-outline-info" type="button" (click)="onCancelBonus()">Cancel</button>
+                  </div>
+                </div>
+              </form>
+             </div>
 
             <div *ngIf="addEventBonus">
               <form [formGroup]="ebForm" (ngSubmit)="onEventBonusAdded()">
@@ -568,7 +591,7 @@
             <i class="far fa-check-square" *ngIf="event.closed"></i>
             Closed
           </td>
-          <td colspan="4">Shuttle Bonus Amount: {{ (checkForNullNum(event.shuttleBonusAmountCf)).toFixed(2) }}</td>
+          <td colspan="4"></td>
           <td></td>
         </tr>
       </tbody>
@@ -608,7 +631,6 @@
                   <th>Time Out</th>
                   <th class="align-right">Hrs Worked</th>
                   <th class="align-right">Shuttle Bonus</th>
-                  <th class="align-right">CC Tips</th>
                   <th class="align-right">Event Bonus</th>
                   <th class="align-right">Hourly Bonus</th>
                   <th class="align-right">Payout</th>
@@ -624,10 +646,9 @@
                   <td>{{ checkForNullString(getTime(t.timeIn)) }}</td>
                   <td>{{ checkForNullString(getTime(t.timeOut)) }}</td>
                   <td class="align-right">{{ checkForNullNum(t.hoursWorked) }}</td>
+                  <td class="align-right">{{ checkForNullNum(t.shuttleBonus) }}</td>
                   <td class="align-right">{{ checkForNullNum(t.eventBonus) }}</td>
                   <td class="align-right">{{ checkForNullNum(t.hourlyBonus) }}</td>
-                  <td class="align-right">{{ checkForNullNum(t.shuttleBonus) }}</td>
-                  <td class="align-right">{{ checkForNullNum(t.creditCardTips) }}</td>
                   <td class="align-right">{{ checkForNullNum(t.creditAmount) }}</td>
                   <td>
                     <button class="btn btn-info" (click)="onEditStaff(t)">Edit</button>
@@ -640,16 +661,38 @@
               <td colspan="3">
                 <button type="button" class="btn btn-info" (click)="onAddStaff()">Add Staff Member</button>
               </td>
-              <td colspan="3">
+              <td colspan="2">
+                <button class="btn btn-info" (click)="onAddShuttleBonus()">Add Shuttle Bonus</button>
+              </td>
+              <td colspan="2">
                 <button class="btn btn-info" (click)="onAddEventBonus()">Add Event Bonus</button>
               </td>
-              <td colspan="3">
+              <td colspan="2">
                 <button class="btn btn-info" (click)="onAddHourlyBonus()">Add Hourly Bonus</button>
               </td>
               <td colspan="3">
                 <button type="button" class="btn btn-info" (click)="onSendReminder()">Send Reminder</button>
               </td>
             </tr>
+
+            <div *ngIf="addShuttleBonus">
+              <form [formGroup]="sbForm" (ngSubmit)="onShuttleBonusAdded()">
+                <div class="form-row">
+                  <div class="form-group col-md-5">
+                    Add Shuttle Bonus to all staff:
+                  </div>
+                  <div class="form-group col-md-2">
+                    <input type="number" class="numInput form-control" id="sbAmount" formControlName="sbAmount">
+                  </div>
+                  <div class="form-group col-md-2">
+                    <button class="btn btn-outline-info" type="submit">Add</button>
+                  </div>
+                  <div class="form-group col-md-2">
+                    <button class="btn btn-outline-info" type="button" (click)="onCancelBonus()">Cancel</button>
+                  </div>
+                </div>
+              </form>
+             </div>
 
             <div *ngIf="addEventBonus">
               <form [formGroup]="ebForm" (ngSubmit)="onEventBonusAdded()">

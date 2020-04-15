@@ -9,18 +9,17 @@
       {{ error }}
     </div>
 
-    <label for="inputEmail" class="sr-only">Email address</label>
-    <input type="email" 
+    <label for="inputEmail" class="sr-only">Username</label>
+    <input type="text" 
           id="inputEmail" 
           name="inputEmail" 
           #inputEmail="ngModel"
           ngModel 
           class="form-control" 
-          placeholder="Email address" 
-          required 
-          email
+          placeholder="Username" 
+          required
           autofocus>
-      <div class="alert alert-danger" *ngIf="inputEmail.touched && !inputEmail.valid">Email is required</div>
+      <div class="alert alert-danger" *ngIf="inputEmail.touched && !inputEmail.valid">Username is required</div>
       
     <label for="inputPassword" class="sr-only">Password</label>
     <input type="password" 

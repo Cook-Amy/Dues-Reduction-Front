@@ -65,6 +65,7 @@ export class EventStaffEditComponent implements OnInit {
     let scheduledArrivalTime = this.timesheet.scheduledArrivalTime;
     let timeIn = this.timesheet.timeIn;
     let timeOut = this.timesheet.timeOut;
+    let shuttleBonus = this.timesheet.shuttleBonus;
     let eventBonus = this.timesheet.eventBonus;
     let hourlyBonus = this.timesheet.hourlyBonus;
 
@@ -74,6 +75,7 @@ export class EventStaffEditComponent implements OnInit {
       'scheduledArrivalTime': new FormControl(scheduledArrivalTime, Validators.required),
       'timeIn': new FormControl(timeIn, Validators.required),
       'timeOut': new FormControl(timeOut, Validators.required),
+      'shuttleBonus': new FormControl(shuttleBonus, Validators.required),
       'eventBonus': new FormControl(eventBonus, Validators.required),
       'hourlyBonus': new FormControl(hourlyBonus, Validators.required)
     });
@@ -166,6 +168,7 @@ export class EventStaffEditComponent implements OnInit {
   updateTimesheet() {
     this.timesheet.jobName = this.staffEditForm.value['position'];
     this.timesheet.hourlyRate = this.staffEditForm.value['rate'];
+    this.timesheet.shuttleBonus = this.staffEditForm.value['shuttleBonus'];
     this.timesheet.eventBonus = this.staffEditForm.value['eventBonus'];
     this.timesheet.hourlyBonus = this.staffEditForm.value['hourlyBonus'];
     this.timesheet.scheduledArrivalTime = this.staffEditForm.value['scheduledArrivalTime'];

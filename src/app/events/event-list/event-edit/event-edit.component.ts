@@ -51,25 +51,22 @@ export class EventEditComponent implements OnInit {
       this.dateValue = new Date(dateTime);
     }
     let inputLocation = this.event.location;
-    let coordinatorAdminAmt = this.event.coordinatorAdminAmt;
+    let coordinatorAdminAmt = this.checkForNullNum(this.event.coordinatorAdminAmt);
     let closed = this.event.closed;
-    let bonus = this.event.venueBonus;
-    let checkRcvd = this.event.actualCheck;
+    let bonus = this.checkForNullNum(this.event.venueBonus);
+    let checkRcvd = this.checkForNullNum(this.event.actualCheck);
     let notes = this.event.eventNotes;
 
-    let totalSalesPnc = this.event.totalSalesPnc;
+    let totalSalesPnc = this.checkForNullNum(this.event.totalSalesPnc);
     let commBonus = this.event.metCommissionBonus;
     let guarantee = this.event.guarantee;
     let countTotal = this.event.eventCountsTowardsTotal;
-    let alcSales = this.event.alcSales;
+    let alcSales = this.checkForNullNum(this.event.alcSales);
 
-    let estCheck = this.event.estimatedCheck;
-    let creditCardTips = this.event.creditCardTips;
-    let shuttleBonusAmountWc = this.event.shuttleBonusAmountWc;
-    if(!shuttleBonusAmountWc) { shuttleBonusAmountWc = 0 };
+    let estCheck = this.checkForNullNum(this.event.estimatedCheck);
+    let creditCardTips = this.checkForNullNum(this.event.creditCardTips);
 
-    let totalSalesCf = this.event.totalSalesCf;
-    let shuttleBonusAmountCf = this.event.shuttleBonusAmountCf;
+    let totalSalesCf = this.checkForNullNum(this.event.totalSalesCf);
     
     this.editEventForm = new FormGroup({
       'eventTitle': new FormControl(eventTitle, Validators.required),
@@ -87,10 +84,16 @@ export class EventEditComponent implements OnInit {
       'checkRcvd': new FormControl(checkRcvd, Validators.required),
       'notes': new FormControl(notes, Validators.required),
       'creditCardTips': new FormControl(creditCardTips, Validators.required),
-      'shuttleBonusAmountWc': new FormControl(shuttleBonusAmountWc, Validators.required),
-      'totalSalesCf': new FormControl(totalSalesCf, Validators.required),
-      'shuttleBonusAmountCf': new FormControl(shuttleBonusAmountCf, Validators.required)
+      'totalSalesCf': new FormControl(totalSalesCf, Validators.required)
     });
+  }
+
+  checkForNullNum(num) {
+    if(num == null)
+      return num;
+    else  {
+      return num.toFixed(2);
+    }
   }
 
   onCancelEdit() {
@@ -100,7 +103,6 @@ export class EventEditComponent implements OnInit {
 
   onSubmit() {
     this.updateEvent();
-// TODO: why won't event update save on first attempt?
 
     if(this.idVenue == 1) {
       this.eventService.getPncContractInfo().subscribe(contract => {
@@ -123,7 +125,9 @@ export class EventEditComponent implements OnInit {
           this.eventService.editEvent(this.event, this.idVenue).subscribe(res => {
             this.eventService.getAllEvents().subscribe(events => {
               this.eventService.setAllEvents(events);
-              var timesheets: Timesheet[] = this.eventService.returnTimesheets();
+              var timesheets: Timesheet[] = this.mathService.timesheets;
+              for(var i = 0; i < timesheets.length; i++) {
+              }
               if(timesheets.length > 0) {
                 this.eventService.updateAllTimesheetsInDB(timesheets).subscribe(x => {
                   this.onCancelEdit();
@@ -172,13 +176,11 @@ export class EventEditComponent implements OnInit {
 
     else if(this.idVenue == 2) {
       this.event.creditCardTips = parseFloat(this.editEventForm.value['creditCardTips']);
-      this.event.shuttleBonusAmountWc = parseFloat(this.editEventForm.value['shuttleBonusAmountWc']);
       this.event.estimatedCheck = parseFloat(this.editEventForm.value['estCheck']);
     }
     
     else if(this.idVenue == 3) {
       this.event.totalSalesCf = this.editEventForm.value['totalSalesCf'];
-      this.event.shuttleBonusAmountCf = parseFloat(this.editEventForm.value['shuttleBonusAmountCf']);
     }
   }
 }

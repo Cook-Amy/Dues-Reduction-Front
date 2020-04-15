@@ -45,7 +45,6 @@ export class Timesheet {
     this.jobName = jobName;
     this.jobID = jobID;
     this.scheduledArrivalTime = scheduledArrivalTime;
-    // if(!this.scheduledArrivalTime) { this.scheduledArrivalTime = '0'; }
     this.hourlyRate = hourlyRate;
     if(!this.hourlyRate ) { this.hourlyRate = 0; }
     this.timeIn = timeIn;

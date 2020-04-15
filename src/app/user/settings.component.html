@@ -1,6 +1,10 @@
 <div>
   <app-header></app-header>
 </div>
+
+
+<!-- TODO: Verify username is not already chosen -->
+
 <main role="main" class="pageSetting">
   <form [formGroup]="userForm">
 
@@ -75,6 +79,10 @@
 
     <div class="alert alert-danger" *ngIf="validMsg">
       Please fill in all fields. 
+    </div>
+
+    <div class="alert alert-danger" *ngIf="usernameMsg">
+      Username "<strong>{{ newUsername }}</strong>" is already in use. Please choose a different one.
     </div>
 
     <div class="form-row">

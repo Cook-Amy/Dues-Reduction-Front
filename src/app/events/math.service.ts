@@ -11,6 +11,8 @@ import { Injectable } from '@angular/core';
 })
 export class MathService {
 
+  timesheets: Timesheet[] = [];
+
   constructor(private eventService: EventService) { }
 
   calculatePncEvent(event: Event, contract: ContractPNC, timesheets: Timesheet[]) {
@@ -122,26 +124,20 @@ export class MathService {
     // update Timesheets
     var totalPayout = 0;
     timesheets.forEach(ts => {
-     // shuttle bonus
-      if(event.shuttleBonusAmountWc > 0) {
-       ts.shuttleBonus = event.shuttleBonusAmountWc;
-     } 
-     else {
-       ts.shuttleBonus = 0;
-     }
 
      // cc tip amount
      ts.creditCardTips = tipAmountPerPerson;
 
      // update credit amount
-     ts.creditAmount = ts.eventBonus + 
+     ts.creditAmount = Math.ceil(ts.eventBonus + 
                         ts.shuttleBonus +
                         ((ts.hourlyRate + ts.hourlyBonus) * ts.hoursWorked) +
-                        ts.creditCardTips;
+                        ts.creditCardTips);
                   
       totalPayout += ts.creditAmount;
     });
-    this.eventService.setTimesheets(timesheets);
+    // this.eventService.setTimesheets(timesheets);
+    this.timesheets = timesheets;
 
     // total Payout
     event.payout = totalPayout;
@@ -215,8 +211,6 @@ export class MathService {
        event.actualProfit = 0;
        event.discrepancy = 0;
      }
-
-     // TODO: Add shuttle bonus to timesheets
  
      return event;
   }
@@ -256,7 +250,7 @@ export class MathService {
       var totalCredit = ((timesheet.hourlyRate + hourlyBonus) * hoursWorked) + 
                                 bonus + shuttleBonus +
                                 creditCardTips;
-      timesheet.creditAmount = totalCredit;
+      timesheet.creditAmount = Math.ceil(totalCredit);
     });
   }
 
@@ -294,9 +288,9 @@ export class MathService {
       var totalCredit = ((timesheet.hourlyRate + hourlyBonus) * hoursWorked) + 
                                 bonus + shuttleBonus +
                                 creditCardTips;
-      timesheet.creditAmount = totalCredit;
+      // timesheet.creditAmount = totalCredit;
+      timesheet.creditAmount = Math.ceil(totalCredit);
 
-      // TODO: Round total credit up to nearest dollar amount
 
       return timesheet;
   }

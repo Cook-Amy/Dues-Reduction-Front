@@ -83,6 +83,7 @@ export class EventStaffAddComponent implements OnInit {
     let scheduledArrivalTime: Date;
     let timeIn: Date;
     let timeOut: Date;
+    let shuttleBonus: number;
     let eventBonus: number;
     let hourlyBonus: number;
 
@@ -93,6 +94,7 @@ export class EventStaffAddComponent implements OnInit {
       'scheduledArrivalTime': new FormControl(scheduledArrivalTime, Validators.required),
       'timeIn': new FormControl(timeIn, Validators.required),
       'timeOut': new FormControl(timeOut, Validators.required),
+      'shuttleBonus': new FormControl(shuttleBonus, Validators.required),
       'eventBonus': new FormControl(eventBonus, Validators.required),
       'hourlyBonus': new FormControl(hourlyBonus, Validators.required)
     });
@@ -213,7 +215,7 @@ export class EventStaffAddComponent implements OnInit {
       this.staffAddForm.value['timeIn'],
       this.staffAddForm.value['timeOut'],
       0,
-      0,
+      this.staffAddForm.value['shuttleBonus'],
       this.staffAddForm.value['eventBonus'],
       this.staffAddForm.value['hourlyBonus'],
       0,
