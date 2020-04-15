@@ -221,7 +221,8 @@ export class EventStaffAddComponent implements OnInit {
       0,
       0,
       guar,
-      0
+      0,
+      null
     );
   }
 }

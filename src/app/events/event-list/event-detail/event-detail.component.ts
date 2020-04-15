@@ -1,3 +1,4 @@
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { EmailService } from './../../../email/email.service';
 import { Event } from './../../../models/event.model';
@@ -45,7 +46,9 @@ export class EventDetailComponent implements OnInit {
               private gateListService: GateListService,
               private mathService: MathService,
               private emailService: EmailService,
-              private toastr: ToastrService) { }
+              private toastr: ToastrService,
+              private route: ActivatedRoute,
+              private router: Router) { }
 
   ngOnInit() { 
     this.masterSelected = false;
@@ -158,6 +161,7 @@ export class EventDetailComponent implements OnInit {
             id: ts.idtimesheet,
             name: ts.lastName + ", " + ts.firstName,
             jobName: ts.jobName,
+            lastReminder: ts.lastReminder,
             isSelected: false
           });
         });
@@ -222,6 +226,13 @@ export class EventDetailComponent implements OnInit {
     else  {
       return num;
     }
+  }
+
+  checkForNullReminder(rm) {
+    if(rm == null)
+      return '----';
+    else 
+      return rm;
   }
 
   onEditStaff(sheet: Timesheet) {
@@ -437,6 +448,23 @@ export class EventDetailComponent implements OnInit {
     this.addHourlyBonus = false;
   }
 
+  getReminderDate(date) {
+    if(date == null) {
+      return "----";
+    }
+    else {
+      var newDate: Date = new Date(date);
+  
+      if(newDate.getDate()) {
+        var convertDate = (newDate.getMonth() + 1) + '-' + newDate.getDate() + '-' + newDate.getFullYear();
+        return convertDate;
+      } 
+      else {
+        return date;
+      }
+    }
+  }
+
   onSendReminder() {
     this.reminderInfo = true;
   }
@@ -457,7 +485,11 @@ export class EventDetailComponent implements OnInit {
             closeButton: true,
             timeOut: 3000
           });
-        this.onCancelReminder();
+        this.eventService.getAllEvents().subscribe(events => {
+          this.eventService.setAllEvents(events);
+          this.eventService.setEventStaffEdit(false);
+          this.onCancelReminder();
+        });
       });
     }
 
@@ -467,7 +499,11 @@ export class EventDetailComponent implements OnInit {
           closeButton: true,
           timeOut: 3000
         });
-        this.onCancelReminder();
+        this.eventService.getAllEvents().subscribe(events => {
+          this.eventService.setAllEvents(events);
+          this.eventService.setEventStaffEdit(false);
+          this.onCancelReminder();
+        });
       });
     }
 
@@ -477,7 +513,11 @@ export class EventDetailComponent implements OnInit {
           closeButton: true,
           timeOut: 3000
         });
-        this.onCancelReminder();
+        this.eventService.getAllEvents().subscribe(events => {
+          this.eventService.setAllEvents(events);
+          this.eventService.setEventStaffEdit(false);
+          this.onCancelReminder();
+        });
       });
     }
   }

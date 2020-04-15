@@ -224,7 +224,7 @@
                     </th>
                     <th>Staff</th>
                     <th>Job</th>
-                    <!-- <th>Last Reminder</th> -->
+                    <th>Last Reminder</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -234,7 +234,7 @@
                     </td>
                     <td>{{ checkForNullString(item.name) }}</td>
                     <td>{{ checkForNullString(item.jobName) }}</td>
-                    <!-- <td>00-00-0000</td> -->
+                    <td>{{ checkForNullReminder(getReminderDate(item.lastReminder)) }}</td>
                   </tr>
                 </tbody>
               </table>
@@ -507,7 +507,7 @@
                   </th>
                   <th>Staff</th>
                   <th>Job</th>
-                  <!-- <th>Last Reminder</th> -->
+                  <th>Last Reminder</th>
                 </tr>
               </thead>
               <tbody>
@@ -517,7 +517,7 @@
                   </td>
                   <td>{{ checkForNullString(item.name) }}</td>
                   <td>{{ checkForNullString(item.jobName) }}</td>
-                  <!-- <td>00-00-0000</td> -->
+                  <td>{{ checkForNullReminder(getReminderDate(item.lastReminder)) }}</td>
                 </tr>
               </tbody>
             </table>
@@ -742,7 +742,7 @@
                   </th>
                   <th>Staff</th>
                   <th>Job</th>
-                  <!-- <th>Last Reminder</th> -->
+                  <th>Last Reminder</th>
                 </tr>
               </thead>
               <tbody>
@@ -752,7 +752,7 @@
                   </td>
                   <td>{{ checkForNullString(item.name) }}</td>
                   <td>{{ checkForNullString(item.jobName) }}</td>
-                  <!-- <td>00-00-0000</td> -->
+                  <td>{{ checkForNullReminder(getReminderDate(item.lastReminder)) }}</td>
                 </tr>
               </tbody>
             </table>
