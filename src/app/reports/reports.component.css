@@ -1,0 +1,11 @@
+.report-btn {
+  min-width: 200px;
+  background-color: #0579AE;
+  color: white;
+}
+
+.summaryMsg {
+  color: maroon;
+  font-weight: bold;
+  font-size: 18px;
+}

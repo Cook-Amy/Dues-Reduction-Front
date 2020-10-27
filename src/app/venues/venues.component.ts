@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 export class VenuesComponent implements OnInit {
   venueName: string;
   currentVenue: Venue;
+  idVenue = 0;
   
 
   constructor(private venueService: VenueService,
@@ -28,6 +29,11 @@ export class VenuesComponent implements OnInit {
         this.venueService.setAllVenue();
         this.currentVenue = this.venueService.getCurrentVenue();
         this.venueName = this.currentVenue.name;
+        this.idVenue = this.currentVenue.idvenue;
+        if(this.idVenue == null)
+        {
+          this.idVenue = 0;
+        }
       })
       
     }
@@ -37,6 +43,11 @@ export class VenuesComponent implements OnInit {
         this.venueService.setCurrentVenue(venuePath);
         this.currentVenue = this.venueService.getCurrentVenue();
         this.venueName = this.currentVenue.name;
+        this.idVenue = this.currentVenue.idvenue;
+        if(this.idVenue == null)
+        {
+          this.idVenue = 0;
+        }
       })
     }
     else {

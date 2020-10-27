@@ -42,6 +42,8 @@ export class EventListComponent implements OnInit {
       this.eventService.setCurrentSeason(this.seasons[this.seasons.length - 2]);
       this.currentSeason = this.eventService.getCurrentSeason();
       this.currentSeasonID = this.currentSeason.idSeason;
+      console.log("current season: " + this.currentSeason + " : " + this.currentSeasonID);
+
       this.currentVenue = this.venueService.getCurrentVenue();
       this.currentVenueID = this.currentVenue.idvenue;
       this.getEvents();

@@ -1,0 +1,103 @@
+<button type="button" class="btn report-btn" (click)="onEventReport()">Event Report</button>
+<p></p>
+
+  <div *ngIf="eventReportMsg">
+    <form [formGroup]="eventReportForm" (ngSubmit)="onCreateEventReport()">
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          <label for="startDate">Choose Start Date:</label>
+          <ejs-datepicker class="date-picker" id='startDate' placeholder='Select a date' [value]='dateValue' formControlName="startDate"></ejs-datepicker>
+        </div>
+        <div class="form-group col-md-3">
+          <label for="endDate">Choose End Date:</label>
+          <ejs-datepicker class="date-picker" id='endDate' placeholder='Select a date' [value]='dateValue' formControlName="endDate"></ejs-datepicker>
+        </div>
+      </div>
+      <p></p>
+      <div class="form-row">
+        <strong>Which venues do you want to include in the report?</strong>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-12">
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" id="pnc" formControlName="pnc">
+            <label for="pnc" class="form-check-label">PNC</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" id="wc" formControlName="wc">
+            <label for="wc" class="form-check-label">Walnut Creek</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" id="cf" formControlName="cf">
+            <label for="cf" class="form-check-label">Carter-Finley</label>
+          </div>
+        </div>
+      </div>
+      <p></p>
+      <div class="form-row">
+        <strong>What information do you want to include in the report?</strong>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-12">
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" id="eventDate" formControlName="eventDate">
+            <label for="eventDate" class="form-check-label">Event Date</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" id="eventName" formControlName="eventName">
+            <label for="eventName" class="form-check-label">Event Name</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" id="eventLocation" formControlName="eventLocation">
+            <label for="eventLocation" class="form-check-label">Location</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" id="eventPayout" formControlName="eventPayout">
+            <label for="eventPayout" class="form-check-label">Payout</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" id="eventCheck" formControlName="eventCheck">
+            <label for="eventCheck" class="form-check-label">Check Received</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" id="eventBonus" formControlName="eventBonus">
+            <label for="eventBonus" class="form-check-label">Venue Bonus</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" id="eventDiscrepancy" formControlName="eventDiscrepancy">
+            <label for="eventDiscrepancy" class="form-check-label">Discrepancy</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" id="eventProfit" formControlName="eventProfit">
+            <label for="eventProfit" class="form-check-label">Profit</label>
+          </div>
+        </div>
+      </div>
+      <p></p>
+
+      <div class="form-row creditMsg">
+        <span *ngIf="!showSummaryMsg"><strong>What do you want to do with the Credit Summary?</strong></span>
+        <span class="summaryMsg" *ngIf="showSummaryMsg">What do you want to do with the Credit Summary?</span>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-12">
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" id="emailSummary" formControlName="emailSummary">
+            <label for="emailSummary" class="form-check-label">Send email to coordinator</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" id="downloadSummary" formControlName="downloadSummary">
+            <label for="downloadSummary" class="form-check-label">Download Summary</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-md-4">
+          <button class="btn btn-info" type="button" (click)="onCancelEventReport()">Cancel</button>
+        </div>
+        <div class="col-md-4">
+          <button class="btn btn-info" type="submit">Create Report</button>
+        </div>
+      </div>
+    </form>
+  </div>

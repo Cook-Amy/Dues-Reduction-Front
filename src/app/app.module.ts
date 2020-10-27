@@ -5,7 +5,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FullCalendarModule } from '@fullcalendar/angular';
-import { MatTableModule } from '@angular/material';
+import { MatTableModule, MatExpansionModule, MatButtonModule } from '@angular/material';
 import { MatSelectModule } from '@angular/material/select';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule, MatInputModule } from  '@angular/material';
@@ -44,6 +44,7 @@ import { EventStaffAddComponent } from './events/event-list/event-staff-add/even
 import { StaffNewComponent } from './staff/staff-list/staff-new/staff-new.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { SettingsComponent } from './user/settings.component';
+import { ReportsComponent } from './reports/reports.component';
 
 
 
@@ -75,7 +76,8 @@ import { SettingsComponent } from './user/settings.component';
     EventStaffAddComponent,
     StaffNewComponent,
     CalendarComponent,
-    SettingsComponent
+    SettingsComponent,
+    ReportsComponent
   ],
   imports: [
     BrowserModule,
@@ -96,7 +98,9 @@ import { SettingsComponent } from './user/settings.component';
     TimePickerModule, 
     DatePickerModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    MatExpansionModule,
+    MatButtonModule
   ],
   providers: [GlobalVariables],
   bootstrap: [AppComponent]

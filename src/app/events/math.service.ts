@@ -15,6 +15,11 @@ export class MathService {
 
   constructor(private eventService: EventService) { }
 
+  /*************************************************************************************
+   * 
+   * PNC Events
+   * 
+  *************************************************************************************/
   calculatePncEvent(event: Event, contract: ContractPNC, timesheets: Timesheet[]) {
     // calculate totalPayout
     var totalPayout = 0;
@@ -111,6 +116,11 @@ export class MathService {
     return event;
   }
 
+  /*************************************************************************************
+   * 
+   * WC Events
+   * 
+  *************************************************************************************/
   calculateWcEvent(event: Event, contract: ContractWC, timesheets: Timesheet[]) {
     // calculate tips per person
     var tipAmountPerPerson = 0;
@@ -153,6 +163,11 @@ export class MathService {
     return event;
   }
 
+  /*************************************************************************************
+   * 
+   * CF Events
+   * 
+  *************************************************************************************/
   calculateCfEvent(event: Event, contract: ContractCF, timesheets: Timesheet[]) {
      // calculate totalPayout
      var totalPayout = 0;
@@ -215,6 +230,11 @@ export class MathService {
      return event;
   }
 
+  /*************************************************************************************
+   * 
+   * Calculate All Timesheets
+   * 
+  *************************************************************************************/
   calculateTimeSheets(timesheets: Timesheet[]) {
     // calculate individual timesheets
     timesheets.forEach(timesheet => {
@@ -254,6 +274,11 @@ export class MathService {
     });
   }
 
+  /*************************************************************************************
+   * 
+   * Calculate One Timesheets
+   * 
+  *************************************************************************************/
   calculateOneTimeSheet(timesheet: Timesheet) {
     
       // hours worked
