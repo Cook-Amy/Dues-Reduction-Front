@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { StaffService } from './../../staff.service';
 import { Staff } from './../../../models/staff.model';
 import { Component, OnInit, Input } from '@angular/core';
+import { NgbActiveModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-staff-edit',
@@ -14,6 +15,7 @@ export class StaffEditComponent implements OnInit {
 @Input() currentVenueID: number;
 @Input() showVenue: number;
 
+modalOptions: NgbModalOptions;
 allTuAccounts: any[];
 editStaffForm1: FormGroup;
 editStaffForm2: FormGroup;
@@ -28,7 +30,14 @@ dateValue2: Date;
 dateValue3: Date;
 removeStaffConfirm: Boolean = false;
 
-  constructor(private staffService: StaffService) { }
+  constructor(private staffService: StaffService,
+              public activeModal: NgbActiveModal) {
+                this.modalOptions = {
+                  backdrop:'static',
+                  backdropClass:'customBackdrop',
+                  size: 'xl'
+               } 
+              }
 
   ngOnInit() {
     this.allTuAccounts = this.staffService.returnAllTuAccounts();
@@ -314,7 +323,7 @@ removeStaffConfirm: Boolean = false;
       this.staffService.getAllStaff().subscribe(staff => {
         var formattedStaff: Staff[] = this.staffService.formatAllStaffResults(staff);
         this.staffService.setAllStaff(formattedStaff);
-        this.onCancel();
+        this.activeModal.dismiss("Edit submitted");
       });
     });
   }

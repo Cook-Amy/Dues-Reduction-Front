@@ -15,7 +15,8 @@ import { DlDateTimeDateModule, DlDateTimePickerModule } from 'angular-bootstrap-
 import { DateTimePickerModule, TimePickerModule, DatePickerModule } from '@syncfusion/ej2-angular-calendars';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
-
+import { DataTablesModule } from 'angular-datatables';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 import { AppComponent } from './app.component';
@@ -100,9 +101,15 @@ import { ReportsComponent } from './reports/reports.component';
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     MatExpansionModule,
-    MatButtonModule
+    MatButtonModule,
+    DataTablesModule,
+    NgbModule
   ],
   providers: [GlobalVariables],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    StaffDetailComponent,
+    StaffEditComponent
+  ]
 })
 export class AppModule { }

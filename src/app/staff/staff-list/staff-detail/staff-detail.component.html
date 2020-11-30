@@ -1,78 +1,74 @@
-<!--------------------------------------------------------------------------------------------
+<!-- ------------------------------------------------------------------------------------------
 -- PNC Staff Details 
 --------------------------------------------------------------------------------------------->
 <div *ngIf="showVenue == 1">
   <div *ngIf="staffEdit == false">
-    <table class="table table-sm table-responsive">
+    <table class="table table-sm table-responsive table-detail">
       <tbody>
         <tr>
           <td colspan="3">  
-            <i class="far fa-square" *ngIf="!staff.pncExperienced"></i>
-            <i class="far fa-check-square" *ngIf="staff.pncExperienced"></i>
+            <i class="far fa-square" *ngIf="!staffMember.pncExperienced"></i>
+            <i class="far fa-check-square" *ngIf="staffMember.pncExperienced"></i>
             Experienced
           </td>
           <td colspan="3">
-            <i class="far fa-square" *ngIf="!staff.pncHealthForm"></i>
-            <i class="far fa-check-square" *ngIf="staff.pncHealthForm"></i>
+            <i class="far fa-square" *ngIf="!staffMember.pncHealthForm"></i>
+            <i class="far fa-check-square" *ngIf="staffMember.pncHealthForm"></i>
             Health Form
           </td>
           <td colspan="3">
-            <i class="far fa-square" *ngIf="!staff.pncWaiver"></i>
-            <i class="far fa-check-square" *ngIf="staff.pncWaiver"></i>
+            <i class="far fa-square" *ngIf="!staffMember.pncWaiver"></i>
+            <i class="far fa-check-square" *ngIf="staffMember.pncWaiver"></i>
             Waiver
           </td>
-          <td colspan="3">BARS Date: {{ checkForNullString(getDate(staff.pncBars)) }}</td>
+          <td colspan="3">BARS Date: {{ checkForNullString(getDate(staffMember.pncBars)) }}</td>
         </tr>
         <hr>
         <h6>Job Training Complete:</h6>
         <tr>
           <td colspan="3">
             <!-- <i class="far fa-square"></i> -->
-            <i class="far fa-square" *ngIf="!staff.pncStandLeader"></i>
-            <i class="far fa-check-square" *ngIf="staff.pncStandLeader"></i>
+            <i class="far fa-square" *ngIf="!staffMember.pncStandLeader"></i>
+            <i class="far fa-check-square" *ngIf="staffMember.pncStandLeader"></i>
             Stand Leader
           </td>
           <td colspan="3">
             <!-- <i class="far fa-square"></i> -->
-            <i class="far fa-square" *ngIf="!staff.pncGroupLeader"></i>
-            <i class="far fa-check-square" *ngIf="staff.pncGroupLeader"></i>
+            <i class="far fa-square" *ngIf="!staffMember.pncGroupLeader"></i>
+            <i class="far fa-check-square" *ngIf="staffMember.pncGroupLeader"></i>
             Group Leader
           </td>
           <td colspan="3">
             <!-- <i class="far fa-square"></i> -->
-            <i class="far fa-square" *ngIf="!staff.pncRegister"></i>
-            <i class="far fa-check-square" *ngIf="staff.pncRegister"></i>
+            <i class="far fa-square" *ngIf="!staffMember.pncRegister"></i>
+            <i class="far fa-check-square" *ngIf="staffMember.pncRegister"></i>
             Register
           </td>
         </tr>
         <tr>
           <td colspan="3">
             <!-- <i class="far fa-square"></i> -->
-            <i class="far fa-square" *ngIf="!staff.pncHeadCook"></i>
-            <i class="far fa-check-square" *ngIf="staff.pncHeadCook"></i>
+            <i class="far fa-square" *ngIf="!staffMember.pncHeadCook"></i>
+            <i class="far fa-check-square" *ngIf="staffMember.pncHeadCook"></i>
             Head Cook
           </td>
           <td colspan="3">
             <!-- <i class="far fa-square"></i> -->
-            <i class="far fa-square" *ngIf="!staff.pncAssistantCook"></i>
-            <i class="far fa-check-square" *ngIf="staff.pncAssistantCook"></i>
+            <i class="far fa-square" *ngIf="!staffMember.pncAssistantCook"></i>
+            <i class="far fa-check-square" *ngIf="staffMember.pncAssistantCook"></i>
             Assistant Cook
           </td>
           <td colspan="3">
             <!-- <i class="far fa-square"></i> -->
-            <i class="far fa-square" *ngIf="!staff.pncBeerCart"></i>
-            <i class="far fa-check-square" *ngIf="staff.pncBeerCart"></i>
+            <i class="far fa-square" *ngIf="!staffMember.pncBeerCart"></i>
+            <i class="far fa-check-square" *ngIf="staffMember.pncBeerCart"></i>
             Beer Cart
           </td>
         </tr>
         <tr>
           <td colspan="3">
-            <button type="button" class="btn event-btn" (click)="onEditStaff()">Edit Member</button>
+            <button class="btn event-btn" type="button" (click)="open()">Edit Member</button>
           </td>
-          <!-- 
-          <td colspan="3">
-            <button type="button" class="btn event-btn">Send Email</button>
-          </td> -->
           <td colspan="3">
             <button type="button" class="btn event-btn" (click)="onCreditSummary()">Credit Summary</button>
           </td>
@@ -80,8 +76,6 @@
       </tbody>
     </table>
   </div>
-  
-  <app-staff-edit *ngIf="staffEdit == true" [staff]="staff" [showVenue]="showVenue" [currentVenueID]="currentVenueID"></app-staff-edit>
 
   <div *ngIf="creditSummaryMsg">
     <form [formGroup]="summaryForm" (ngSubmit)="onCreateCreditSummary()">
@@ -135,52 +129,48 @@
     <table class="table table-sm table-responsive">
       <tbody>
         <tr>
-          <td colspan="6">Team Training Date: {{ checkForNullString(getDate(staff.wcTeamTraining)) }}</td>
+          <td colspan="6">Team Training Date: {{ checkForNullString(getDate(staffMember.wcTeamTraining)) }}</td>
         </tr>
         <hr>
         <h6>Job Training Complete:</h6>
         <tr>
           <td colspan="3">
             <!-- <i class="far fa-square"></i> -->
-            <i class="far fa-square" *ngIf="!staff.wcStandLeader"></i>
-            <i class="far fa-check-square" *ngIf="staff.wcStandLeader"></i>
+            <i class="far fa-square" *ngIf="!staffMember.wcStandLeader"></i>
+            <i class="far fa-check-square" *ngIf="staffMember.wcStandLeader"></i>
             Stand Leader
           </td>
           <td colspan="3">
             <!-- <i class="far fa-square"></i> -->
-            <i class="far fa-square" *ngIf="!staff.wcContainerBarLead"></i>
-            <i class="far fa-check-square" *ngIf="staff.wcContainerBarLead"></i>
+            <i class="far fa-square" *ngIf="!staffMember.wcContainerBarLead"></i>
+            <i class="far fa-check-square" *ngIf="staffMember.wcContainerBarLead"></i>
             Container Bar Lead
           </td>
           <td colspan="3">
             <!-- <i class="far fa-square"></i> -->
-            <i class="far fa-square" *ngIf="!staff.wcSales"></i>
-            <i class="far fa-check-square" *ngIf="staff.wcSales"></i>
+            <i class="far fa-square" *ngIf="!staffMember.wcSales"></i>
+            <i class="far fa-check-square" *ngIf="staffMember.wcSales"></i>
             Sales
           </td>
         </tr>
         <tr>
           <td colspan="3">
             <!-- <i class="far fa-square"></i> -->
-            <i class="far fa-square" *ngIf="!staff.wcMoveStockOut"></i>
-            <i class="far fa-check-square" *ngIf="staff.wcMoveStockOut"></i>
+            <i class="far fa-square" *ngIf="!staffMember.wcMoveStockOut"></i>
+            <i class="far fa-check-square" *ngIf="staffMember.wcMoveStockOut"></i>
             Move Stock Out
           </td>
           <td colspan="3">
             <!-- <i class="far fa-square"></i> -->
-            <i class="far fa-square" *ngIf="!staff.wcFinalStandPrep"></i>
-            <i class="far fa-check-square" *ngIf="staff.wcFinalStandPrep"></i>
+            <i class="far fa-square" *ngIf="!staffMember.wcFinalStandPrep"></i>
+            <i class="far fa-check-square" *ngIf="staffMember.wcFinalStandPrep"></i>
             Final Stand Prep
           </td>
         </tr>
         <tr>
           <td colspan="3">
-            <button type="button" class="btn event-btn" (click)="onEditStaff()">Edit Member</button>
+            <button class="btn event-btn" type="button" (click)="open()">Edit Member</button>
           </td>
-          <!--
-          <td colspan="3">
-            <button type="button" class="btn event-btn">Send Email</button>
-          </td> -->
           <td colspan="3">
             <button type="button" class="btn event-btn" (click)="onCreditSummary()">Credit Summary</button>
           </td>
@@ -188,7 +178,6 @@
       </tbody>
     </table>
   </div>
-  <app-staff-edit *ngIf="staffEdit == true" [staff]="staff" [showVenue]="showVenue" [currentVenueID]="currentVenueID"></app-staff-edit>
 
   <div *ngIf="creditSummaryMsg">
     <form [formGroup]="summaryForm2" (ngSubmit)="onCreateCreditSummary()">
@@ -243,38 +232,34 @@
     <table class="table table-sm table-responsive">
       <tbody>
         <tr>
-          <td colspan="6">Alcohol Training Date: {{ checkForNullString(getDate(staff.cfAlcoholTraining)) }}</td>
+          <td colspan="6">Alcohol Training Date: {{ checkForNullString(getDate(staffMember.cfAlcoholTraining)) }}</td>
         </tr>
         <hr>
         <h6>Job Training Complete:</h6>
         <tr>
           <td colspan="3">
             <!-- <i class="far fa-square"></i> -->
-            <i class="far fa-square" *ngIf="!staff.cfLeader"></i>
-            <i class="far fa-check-square" *ngIf="staff.cfLeader"></i>
+            <i class="far fa-square" *ngIf="!staffMember.cfLeader"></i>
+            <i class="far fa-check-square" *ngIf="staffMember.cfLeader"></i>
             Leader
           </td>
           <td colspan="3">
             <!-- <i class="far fa-square"></i> -->
-            <i class="far fa-square" *ngIf="!staff.cfAssistantLeader"></i>
-            <i class="far fa-check-square" *ngIf="staff.cfAssistantLeader"></i>
+            <i class="far fa-square" *ngIf="!staffMember.cfAssistantLeader"></i>
+            <i class="far fa-check-square" *ngIf="staffMember.cfAssistantLeader"></i>
             Assistant Leader
           </td>
           <td colspan="3">
             <!-- <i class="far fa-square"></i> -->
-            <i class="far fa-square" *ngIf="!staff.cfStaff"></i>
-            <i class="far fa-check-square" *ngIf="staff.cfStaff"></i>
+            <i class="far fa-square" *ngIf="!staffMember.cfStaff"></i>
+            <i class="far fa-check-square" *ngIf="staffMember.cfStaff"></i>
             Staff
           </td>
         </tr>
         <tr>
           <td colspan="3">
-            <button type="button" class="btn event-btn" (click)="onEditStaff()">Edit Member</button>
+            <button class="btn event-btn" type="button" (click)="open()">Edit Member</button>
           </td>
-          <!-- 
-          <td colspan="3">
-            <button type="button" class="btn event-btn">Send Email</button>
-          </td> -->
           <td colspan="3">
             <button type="button" class="btn event-btn" (click)="onCreditSummary()">Credit Summary</button>
           </td>
@@ -282,8 +267,6 @@
       </tbody>
     </table>
   </div>
-
-  <app-staff-edit *ngIf="staffEdit == true" [staff]="staff" [showVenue]="showVenue" [currentVenueID]="currentVenueID"></app-staff-edit>
 
   <div *ngIf="creditSummaryMsg">
     <form [formGroup]="summaryForm3" (ngSubmit)="onCreateCreditSummary()">
@@ -341,61 +324,61 @@
         </tr>
         <tr>
           <td colspan="3">  
-            <i class="far fa-square" *ngIf="!staff.pncExperienced"></i>
-            <i class="far fa-check-square" *ngIf="staff.pncExperienced"></i>
+            <i class="far fa-square" *ngIf="!staffMember.pncExperienced"></i>
+            <i class="far fa-check-square" *ngIf="staffMember.pncExperienced"></i>
             Experienced
           </td>
           <td colspan="3">
-            <i class="far fa-square" *ngIf="!staff.pncHealthForm"></i>
-            <i class="far fa-check-square" *ngIf="staff.pncHealthForm"></i>
+            <i class="far fa-square" *ngIf="!staffMember.pncHealthForm"></i>
+            <i class="far fa-check-square" *ngIf="staffMember.pncHealthForm"></i>
             Health Form
           </td>
           <td colspan="3">
-            <i class="far fa-square" *ngIf="!staff.pncWaiver"></i>
-            <i class="far fa-check-square" *ngIf="staff.pncWaiver"></i>
+            <i class="far fa-square" *ngIf="!staffMember.pncWaiver"></i>
+            <i class="far fa-check-square" *ngIf="staffMember.pncWaiver"></i>
             Waiver
           </td>
-          <td colspan="3">BARS Date: {{ checkForNullString(getDate(staff.pncBars)) }}</td>
+          <td colspan="3">BARS Date: {{ checkForNullString(getDate(staffMember.pncBars)) }}</td>
         </tr>
         <hr>
         <h6>Job Training Complete:</h6>
         <tr>
           <td colspan="3">
             <!-- <i class="far fa-square"></i> -->
-            <i class="far fa-square" *ngIf="!staff.pncStandLeader"></i>
-            <i class="far fa-check-square" *ngIf="staff.pncStandLeader"></i>
+            <i class="far fa-square" *ngIf="!staffMember.pncStandLeader"></i>
+            <i class="far fa-check-square" *ngIf="staffMember.pncStandLeader"></i>
             Stand Leader
           </td>
           <td colspan="3">
             <!-- <i class="far fa-square"></i> -->
-            <i class="far fa-square" *ngIf="!staff.pncGroupLeader"></i>
-            <i class="far fa-check-square" *ngIf="staff.pncGroupLeader"></i>
+            <i class="far fa-square" *ngIf="!staffMember.pncGroupLeader"></i>
+            <i class="far fa-check-square" *ngIf="staffMember.pncGroupLeader"></i>
             Group Leader
           </td>
           <td colspan="3">
             <!-- <i class="far fa-square"></i> -->
-            <i class="far fa-square" *ngIf="!staff.pncRegister"></i>
-            <i class="far fa-check-square" *ngIf="staff.pncRegister"></i>
+            <i class="far fa-square" *ngIf="!staffMember.pncRegister"></i>
+            <i class="far fa-check-square" *ngIf="staffMember.pncRegister"></i>
             Register
           </td>
         </tr>
         <tr>
           <td colspan="3">
             <!-- <i class="far fa-square"></i> -->
-            <i class="far fa-square" *ngIf="!staff.pncHeadCook"></i>
-            <i class="far fa-check-square" *ngIf="staff.pncHeadCook"></i>
+            <i class="far fa-square" *ngIf="!staffMember.pncHeadCook"></i>
+            <i class="far fa-check-square" *ngIf="staffMember.pncHeadCook"></i>
             Head Cook
           </td>
           <td colspan="3">
             <!-- <i class="far fa-square"></i> -->
-            <i class="far fa-square" *ngIf="!staff.pncAssistantCook"></i>
-            <i class="far fa-check-square" *ngIf="staff.pncAssistantCook"></i>
+            <i class="far fa-square" *ngIf="!staffMember.pncAssistantCook"></i>
+            <i class="far fa-check-square" *ngIf="staffMember.pncAssistantCook"></i>
             Assistant Cook
           </td>
           <td colspan="3">
             <!-- <i class="far fa-square"></i> -->
-            <i class="far fa-square" *ngIf="!staff.pncBeerCart"></i>
-            <i class="far fa-check-square" *ngIf="staff.pncBeerCart"></i>
+            <i class="far fa-square" *ngIf="!staffMember.pncBeerCart"></i>
+            <i class="far fa-check-square" *ngIf="staffMember.pncBeerCart"></i>
             Beer Cart
           </td>
         </tr>
@@ -406,41 +389,41 @@
           <td colspan="9"><h5>WALNUT CREEK</h5></td>
         </tr>
         <tr>
-          <td colspan="6">Team Training Date: {{ checkForNullString(getDate(staff.wcTeamTraining)) }}</td>
+          <td colspan="6">Team Training Date: {{ checkForNullString(getDate(staffMember.wcTeamTraining)) }}</td>
         </tr>
         <hr>
         <h6>Job Training Complete:</h6>
         <tr>
           <td colspan="3">
             <!-- <i class="far fa-square"></i> -->
-            <i class="far fa-square" *ngIf="!staff.wcStandLeader"></i>
-            <i class="far fa-check-square" *ngIf="staff.wcStandLeader"></i>
+            <i class="far fa-square" *ngIf="!staffMember.wcStandLeader"></i>
+            <i class="far fa-check-square" *ngIf="staffMember.wcStandLeader"></i>
             Stand Leader
           </td>
           <td colspan="3">
             <!-- <i class="far fa-square"></i> -->
-            <i class="far fa-square" *ngIf="!staff.wcContainerBarLead"></i>
-            <i class="far fa-check-square" *ngIf="staff.wcContainerBarLead"></i>
+            <i class="far fa-square" *ngIf="!staffMember.wcContainerBarLead"></i>
+            <i class="far fa-check-square" *ngIf="staffMember.wcContainerBarLead"></i>
             Container Bar Lead
           </td>
           <td colspan="3">
             <!-- <i class="far fa-square"></i> -->
-            <i class="far fa-square" *ngIf="!staff.wcSales"></i>
-            <i class="far fa-check-square" *ngIf="staff.wcSales"></i>
+            <i class="far fa-square" *ngIf="!staffMember.wcSales"></i>
+            <i class="far fa-check-square" *ngIf="staffMember.wcSales"></i>
             Sales
           </td>
         </tr>
         <tr>
           <td colspan="3">
             <!-- <i class="far fa-square"></i> -->
-            <i class="far fa-square" *ngIf="!staff.wcMoveStockOut"></i>
-            <i class="far fa-check-square" *ngIf="staff.wcMoveStockOut"></i>
+            <i class="far fa-square" *ngIf="!staffMember.wcMoveStockOut"></i>
+            <i class="far fa-check-square" *ngIf="staffMember.wcMoveStockOut"></i>
             Move Stock Out
           </td>
           <td colspan="3">
             <!-- <i class="far fa-square"></i> -->
-            <i class="far fa-square" *ngIf="!staff.wcFinalStandPrep"></i>
-            <i class="far fa-check-square" *ngIf="staff.wcFinalStandPrep"></i>
+            <i class="far fa-square" *ngIf="!staffMember.wcFinalStandPrep"></i>
+            <i class="far fa-check-square" *ngIf="staffMember.wcFinalStandPrep"></i>
             Final Stand Prep
           </td>
         </tr>
@@ -451,38 +434,35 @@
           <td colspan="9"><h5>CARTER-FINLEY STADIUM</h5></td>
         </tr>
         <tr>
-          <td colspan="6">Alcohol Training Date: {{ checkForNullString(getDate(staff.cfAlcoholTraining)) }}</td>
+          <td colspan="6">Alcohol Training Date: {{ checkForNullString(getDate(staffMember.cfAlcoholTraining)) }}</td>
         </tr>
         <hr>
         <h6>Job Training Complete:</h6>
         <tr>
           <td colspan="3">
             <!-- <i class="far fa-square"></i> -->
-            <i class="far fa-square" *ngIf="!staff.cfLeader"></i>
-            <i class="far fa-check-square" *ngIf="staff.cfLeader"></i>
+            <i class="far fa-square" *ngIf="!staffMember.cfLeader"></i>
+            <i class="far fa-check-square" *ngIf="staffMember.cfLeader"></i>
             Leader
           </td>
           <td colspan="3">
             <!-- <i class="far fa-square"></i> -->
-            <i class="far fa-square" *ngIf="!staff.cfAssistantLeader"></i>
-            <i class="far fa-check-square" *ngIf="staff.cfAssistantLeader"></i>
+            <i class="far fa-square" *ngIf="!staffMember.cfAssistantLeader"></i>
+            <i class="far fa-check-square" *ngIf="staffMember.cfAssistantLeader"></i>
             Assistant Leader
           </td>
           <td colspan="3">
             <!-- <i class="far fa-square"></i> -->
-            <i class="far fa-square" *ngIf="!staff.cfStaff"></i>
-            <i class="far fa-check-square" *ngIf="staff.cfStaff"></i>
+            <i class="far fa-square" *ngIf="!staffMember.cfStaff"></i>
+            <i class="far fa-check-square" *ngIf="staffMember.cfStaff"></i>
             Staff
           </td>
         </tr>
 
         <tr>
           <td colspan="3">
-            <button type="button" class="btn event-btn" (click)="onEditStaff()">Edit Member</button>
+            <button class="btn event-btn" type="button" (click)="open()">Edit Member</button>
           </td>
-          <!-- 
-            <button type="button" class="btn event-btn">Send Email</button>
-          </td> -->
           <td colspan="3">
             <button type="button" class="btn event-btn" (click)="onCreditSummary()">Credit Summary</button>
           </td>
@@ -490,8 +470,6 @@
       </tbody>
     </table>
   </div>
-  
-  <app-staff-edit *ngIf="staffEdit == true" [staff]="staff" [showVenue]="showVenue" [currentVenueID]="currentVenueID"></app-staff-edit>
 
   <div *ngIf="creditSummaryMsg">
     <form [formGroup]="summaryForm4" (ngSubmit)="onCreateCreditSummary()">
@@ -536,3 +514,4 @@
   </div>
 
 </div>
+

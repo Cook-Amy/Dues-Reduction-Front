@@ -1,3 +1,4 @@
+import { StaffDetailComponent } from './staff-detail/staff-detail.component';
 import { ToastrService } from 'ngx-toastr';
 import { MonthReportService } from './../../createReports/month-report.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -6,7 +7,8 @@ import { VenueService } from './../../venues/venue.service';
 import { Venue } from './../../models/venue.model';
 import { StaffService } from './../staff.service';
 import { Staff } from './../../models/staff.model';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, Renderer2, ComponentFactoryResolver, ViewContainerRef, ComponentRef } from '@angular/core';
+import { DataTableDirective } from 'angular-datatables';
 
 @Component({
   selector: 'app-staff-list',
@@ -14,6 +16,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./staff-list.component.css']
 })
 export class StaffListComponent implements OnInit {
+  @ViewChild(DataTableDirective, {static: false}) dtElement: DataTableDirective;
+  dtOptions: any = {};
+  private childRow: ComponentRef<StaffDetailComponent>;
+  //dtTrigger: Subject<any> = new Subject();
+
   activeForm: FormGroup;
 
   allStaff: Staff[] = [];
@@ -55,7 +62,10 @@ export class StaffListComponent implements OnInit {
               private monthReportService: MonthReportService,
               private route: ActivatedRoute,
               private router: Router,
-              private toastr: ToastrService) { }
+              private toastr: ToastrService,
+              private _renderer: Renderer2,
+              private compFactory: ComponentFactoryResolver,
+              private viewRef: ViewContainerRef) { }
 
   ngOnInit() {
     this.initForm1();
@@ -64,17 +74,126 @@ export class StaffListComponent implements OnInit {
     this.currentVenue = this.venueService.getCurrentVenue();
     this.currentVenueID = this.currentVenue.idvenue;
     this.showVenue = this.currentVenueID;
-    this.getAllStaff();
-
-    this.staffService.allStaffChanged.subscribe(staffChanged => {
-      this.setAllStaff(staffChanged);
-      this.router.navigate([], {relativeTo: this.route});
-    });
+    this.setAllStaff();
+    this.getDtOptions();
 
     this.staffNew = this.staffService.getStaffNew();
-    this.staffService.staffNewChanged.subscribe(newStaffChanged => {
-      this.staffNew = newStaffChanged;
+    // this.staffService.staffNewChanged.subscribe(newStaffChanged => {
+    //   this.staffNew = newStaffChanged;
+    //   this.preserveExpandedRows(this.dtElement, 'idperson', newStaffChanged);
+    // });
+  }
+
+  getDtOptions() {
+    if(this.currentVenueID == 1) {
+      this.dtOptions = { 
+        processing: true,
+        paging: true,
+        pagingType: 'full_numbers',
+        pageLength: 20,
+        lengthChange: true,
+        columnDefs: [
+          {
+            targets: [7, 8],
+            type: 'date'
+          },
+          {
+            targets: [3, 4, 5, 6],
+            className: 'dt-center'
+          },
+          {
+            targets: [9, 10],
+            visible: false
+          }
+        ]
+      };
+    }
+
+    if(this.currentVenueID == 2) {
+      this.dtOptions = { 
+        paging: true,
+        pagingType: 'full_numbers',
+        pageLength: 20,
+        lengthChange: true,
+        columnDefs: [
+          {
+            targets: [7, 8],
+            type: 'date'
+          },
+          {
+            targets: [5, 6, 7, 8, 10],
+            visible: false
+          }
+        ],
+        responsive: true
+      };
+    }
+
+    if(this.currentVenueID == 3) {
+      this.dtOptions = { 
+        paging: true,
+        pagingType: 'full_numbers',
+        pageLength: 20,
+        lengthChange: true,
+        columnDefs: [
+          {
+            targets: [7, 8],
+            type: 'date'
+          },
+          {
+            targets: [5, 6, 7, 8, 9],
+            visible: false
+          }
+        ]
+      };
+    }
+  }
+    
+  expandRow(trRef, rowData) {
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      var row = dtInstance.row(trRef);
+      if(row.child.isShown()) {
+        row.child.hide();
+        this._renderer.removeClass(trRef, 'shown');
+      }
+      else {
+        let factory = this.compFactory.resolveComponentFactory (StaffDetailComponent);
+        this.childRow = this.viewRef.createComponent(factory);
+        this.childRow.instance.setStaff = [rowData];
+        this.childRow.instance.currentVenueID = this.currentVenueID;
+        this.childRow.instance.showVenue = this.showVenue;
+        row.child(this.childRow.location.nativeElement).show();
+        this._renderer.addClass(trRef, 'shown');
+      }
     });
+  }
+
+  preserveExpandedRows(datatableRef, id, tableData):void {
+    try{
+      const expandedIds = datatableRef.expandedRows.map(x => x[id]);
+      datatableRef.expandedRows = tableData.filter(x => expandedIds.includes(x[id]));
+    } catch (error) {
+      if(error.name !== 'TypeError') throw error;
+    }
+  }
+
+  checkForNullString(string) {
+    if(string == null)
+      return '0';
+    else  
+      return string;
+  }
+
+  checkForNullNum(num) {
+    if(num == null)
+      return 0;
+    else  
+      return num;
+  }
+
+  getDate(date) {
+    var newDate : Date = new Date(date);
+    return newDate;
   }
 
   private initForm1() {
@@ -103,22 +222,16 @@ export class StaffListComponent implements OnInit {
     });
   }
 
-  getAllStaff() {
-    this.staffService.getAllStaff().subscribe(allStaff => {
-      var formattedStaff: Staff[] = this.staffService.formatAllStaffResults(allStaff);
-      this.staffService.setAllStaff(formattedStaff);
-      this.staffService.getAllTuAccounts().subscribe(tuAccounts => {
-        this.staffService.setAllTuAccounts(tuAccounts);
-      });
-    });
-  }
-
-  setAllStaff(allStaff) {
+  setChangedStaff(allStaff) {
     this.staffService.setAllStaffOther(allStaff);
     this.staffService.setAllPncStaff(allStaff);
     this.staffService.setAllWcStaff(allStaff);
     this.staffService.setAllCfStaff(allStaff);
 
+    this.setAllStaff();
+  }
+
+  setAllStaff() {
     this.allStaff = this.staffService.returnAllStaff();
     this.activeStaff = this.staffService.returnActiveStaff();
     this.inactiveStaff = this.staffService.returnInactiveStaff();
@@ -195,6 +308,10 @@ export class StaffListComponent implements OnInit {
         this.setStaff = this.allStaff;
       }
     }
+  }
+
+  returnSetStaff() {
+    return this.setStaff;
   }
  
   changeStaffList() {

@@ -1,9 +1,12 @@
+import { StaffEditComponent } from './../staff-edit/staff-edit.component';
 import { ToastrService } from 'ngx-toastr';
 import { CreditSummaryService } from './../../../createReports/credit-summary.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { StaffService } from './../../staff.service';
 import { Staff } from './../../../models/staff.model';
 import { Component, OnInit, Input } from '@angular/core';
+import {NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
+
 
 @Component({
   selector: 'app-staff-detail',
@@ -11,10 +14,13 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./staff-detail.component.css']
 })
 export class StaffDetailComponent implements OnInit {
-  @Input() staff: Staff;
+  @Input() setStaff: Staff[];
   @Input() currentVenueID: number;
   @Input() showVenue: number;
 
+  modalOptions:NgbModalOptions;
+  closeResult: string;
+  staffMember: Staff;
   staffEdit: Boolean;
   creditSummaryMsg: Boolean = false;
   dateValue: Date;
@@ -26,7 +32,14 @@ export class StaffDetailComponent implements OnInit {
 
   constructor(private staffService: StaffService, 
               private creditSummaryService: CreditSummaryService,
-              private toastr: ToastrService) { }
+              private toastr: ToastrService,
+              private modalServices: NgbModal) {
+                this.modalOptions = {
+                  backdrop:'static',
+                  backdropClass:'customBackdrop',
+                  size: 'xl'
+               } 
+              }
 
   ngOnInit() {
     this.dateValue = this.getToday();
@@ -34,11 +47,8 @@ export class StaffDetailComponent implements OnInit {
     this.initForm2();
     this.initForm3();
     this.initForm4();
-
+    this.staffMember = this.setStaff[0];
     this.staffEdit = this.staffService.getstaffEdit();
-    this.staffService.staffEditChanged.subscribe(editChanged => {
-      this.staffEdit = editChanged;
-    });
    }
 
    getToday() {
@@ -167,8 +177,8 @@ export class StaffDetailComponent implements OnInit {
       var end = new Date(this.summaryForm.value['endDate']);
   
       var summarySpecs = {
-        staffID: this.staff.idperson,
-        staffName: this.staff.lastName + ", " + this.staff.firstName,
+        staffID: this.staffMember.idperson,
+        staffName: this.staffMember.lastName + ", " + this.staffMember.firstName,
         start: start,
         end: end,
         email1: this.summaryForm.value['emailSummary1'],
@@ -202,8 +212,8 @@ export class StaffDetailComponent implements OnInit {
       var end2 = new Date(this.summaryForm2.value['endDate']);
   
       var summarySpecs2 = {
-        staffID: this.staff.idperson,
-        staffName: this.staff.lastName + ", " + this.staff.firstName,
+        staffID: this.staffMember.idperson,
+        staffName: this.staffMember.lastName + ", " + this.staffMember.firstName,
         start: start2,
         end: end2,
         email1: this.summaryForm2.value['emailSummary1'],
@@ -238,8 +248,8 @@ export class StaffDetailComponent implements OnInit {
       var end3 = new Date(this.summaryForm3.value['endDate']);
   
       var summarySpecs3 = {
-        staffID: this.staff.idperson,
-        staffName: this.staff.lastName + ", " + this.staff.firstName,
+        staffID: this.staffMember.idperson,
+        staffName: this.staffMember.lastName + ", " + this.staffMember.firstName,
         start: start3,
         end: end3,
         email1: this.summaryForm3.value['emailSummary1'],
@@ -273,8 +283,8 @@ export class StaffDetailComponent implements OnInit {
       var end4 = new Date(this.summaryForm4.value['endDate']);
   
       var summarySpecs4 = {
-        staffID: this.staff.idperson,
-        staffName: this.staff.lastName + ", " + this.staff.firstName,
+        staffID: this.staffMember.idperson,
+        staffName: this.staffMember.lastName + ", " + this.staffMember.firstName,
         start: start4,
         end: end4,
         email1: this.summaryForm4.value['emailSummary1'],
@@ -303,4 +313,12 @@ export class StaffDetailComponent implements OnInit {
       }
     }
   }
+
+  open() {
+    const modalRef = this.modalServices.open(StaffEditComponent);
+    modalRef.componentInstance.staff = this.staffMember;
+    modalRef.componentInstance.currentVenueID = this.currentVenueID;
+    modalRef.componentInstance.showVenue = this.showVenue;
+  }
+
 }

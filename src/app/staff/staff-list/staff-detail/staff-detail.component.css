@@ -22,3 +22,11 @@
   font-weight: bold;
   font-size: 18px;
 }
+
+.table-detail>tbody>tr {
+  background-color: white;
+}
+
+.table-detail:hover {
+  background-color: white;
+}

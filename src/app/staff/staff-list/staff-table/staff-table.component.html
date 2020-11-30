@@ -1,5 +1,29 @@
 
-  <div class="mat-elevation-z8">
+  <div #tableInsert>
+    <table datatable [dtOptions]="dtOptions" class="row-border hover"></table>
+  </div>
+
+
+<!--   <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Phone</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let person of staff">
+      <td>{{ person.Name }}</td>
+      <td>{{ person.Email }}</td>
+      <td>{{ person.Phone }}</td>
+    </tr>
+  </tbody> 
+</table> -->
+
+
+
+
+<!--   <div class="mat-elevation-z8">
     <table mat-table
       [dataSource]="dataSource" multiTemplateDataRows>
       <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
@@ -26,5 +50,5 @@
       </tr>
       <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
     </table>
-  </div>
+  </div>  -->
 

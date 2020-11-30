@@ -2,617 +2,653 @@
 -- PNC edit staff 
 ---------------------------------------------------------------------------------------------->
 <div *ngIf="currentVenueID == 1">
-  <form [formGroup]="editStaffForm1" (ngSubmit)="onSubmit()">
 
-    <div class="form-row staffName">
-      {{ staff.Name }}
+    <div class="modal-header">
+      <h5 class="modal-title" id="editModalLabel">Edit: {{ staff.Name }}</h5>
+      <button class="close" type="button" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
     </div>
+  
+    <div class="modal-body">
+      <form [formGroup]="editStaffForm1" (ngSubmit)="onSubmit()">
 
-    <div class="form-row">
-      <div class="form-group col-md-4">
-        <label for="firstName">First Name</label>
-        <input type="text" class="form-control" id="firstName" formControlName="firstName">
-      </div>
-      <div class="form-group col-md-4">
-        <label for="lastName">Last Name</label>
-        <input type="text" class="form-control" id="lastName" formControlName="lastName">
-      </div>
-
-      <div class="form-group col-md-4">
-        <label for="tuAccount">TeamUnify Account</label>
-          <input type="text" list="tuAccount"  class="form-control" placeholder="{{staff.tuAccount}}" formControlName="tuAccount">
-        <datalist id="tuAccount">
-          <option *ngFor="let account of allTuAccounts" [value]="account.accountName">
-            {{ account.accountName }}
-          </option>
-        </datalist>
-      </div>
-      
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="firstName">First Name</label>
+            <input type="text" class="form-control" id="firstName" formControlName="firstName">
+          </div>
+          <div class="form-group col-md-4">
+            <label for="lastName">Last Name</label>
+            <input type="text" class="form-control" id="lastName" formControlName="lastName">
+          </div>
+    
+          <div class="form-group col-md-4">
+            <label for="tuAccount">TeamUnify Account</label>
+              <input type="text" list="tuAccount"  class="form-control" placeholder="{{staff.tuAccount}}" formControlName="tuAccount">
+            <datalist id="tuAccount">
+              <option *ngFor="let account of allTuAccounts" [value]="account.accountName">
+                {{ account.accountName }}
+              </option>
+            </datalist>
+          </div>
+          
+        </div>
+    
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="email">Email</label>
+            <input type="text" class="form-control" id="email" formControlName="email">
+          </div>
+          <div class="form-group col-md-4">
+            <label for="phone">Phone #</label>
+            <input type="text" class="form-control" id="phone" formControlName="phone" placeholder="555-123-1234">
+          </div>
+        </div>
+    
+        <div class="form-row">
+          <div class="col-md-2">Status: </div>
+          <div class="form-group col-md-8">
+            <div class="form-check form-check-inline">
+              <input type="radio" class="form-check-input" id="pncActive" formControlName="active1" value="pncActive">
+              <label class="form-check-label" for="pncActive">
+                Active
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input type="radio" class="form-check-input" id="pncInactive" formControlName="active1" value="pncInactive">
+              <label class="form-check-label" for="pncInactive">
+                Inactive
+              </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input type="radio" class="form-check-input" id="pncInterested" formControlName="active1"  value="pncInterested">
+              <label class="form-check-label" for="pncInterested">
+                Interested
+              </label>
+            </div>
+          </div>
+        </div>
+    
+        <p></p>
+    
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <div class="form-check form-check-inline">
+              <input type="checkbox" class="form-check-input" id="pncExperienced" formControlName="pncExperienced">
+              <label for="pncExperienced" class="form-check-label">Experienced</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input type="checkbox" class="form-check-input" id="pncHealthForm" formControlName="pncHealthForm">
+              <label for="pncHealthForm" class="form-check-label">Health Form</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input type="checkbox" class="form-check-input" id="pncWaiver" formControlName="pncWaiver">
+              <label for="pncWaiver" class="form-check-label">Waiver</label>
+            </div>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="pncBars">Bars Date</label>
+            <ejs-datepicker class="date-picker" id="pncBars" [value]="dateValue" formControlName="pncBars"></ejs-datepicker>
+          </div>
+        </div>
+    
+        <hr>
+        <h6>Job Training Complete:</h6>
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <div class="form-check form-check-inline">
+              <input type="checkbox" class="form-check-input" id="pncStandLeader" formControlName="pncStandLeader">
+              <label for="pncStandLeader" class="form-check-label">Stand Leader</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input type="checkbox" class="form-check-input" id="pncGroupLeader" formControlName="pncGroupLeader">
+              <label for="pncGroupLeader" class="form-check-label">Group Leader</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input type="checkbox" class="form-check-input" id="pncRegister" formControlName="pncRegister">
+              <label for="pncRegister" class="form-check-label">Register</label>
+            </div>
+          </div>
+        </div>
+    
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <div class="form-check form-check-inline">
+              <input type="checkbox" class="form-check-input" id="pncHeadCook" formControlName="pncHeadCook">
+              <label for="pncHeadCook" class="form-check-label">Head Cook</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input type="checkbox" class="form-check-input" id="pncAssistantCook" formControlName="pncAssistantCook">
+              <label for="pncAssistantCook" class="form-check-label">Assistant Cook</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input type="checkbox" class="form-check-input" id="pncBeerCart" formControlName="pncBeerCart">
+              <label for="pncBeerCart" class="form-check-label">BeerCart</label>
+            </div>
+          </div>
+        </div>
+    
+        <div class="form-row">
+          <div class="col-md-1"></div>
+          <div class="col-md-2">
+            <button class="btn btn-primary" type="button" (click)="activeModal.dismiss('Cross click')">Cancel</button>
+          </div>
+          <div class="col-md-2">
+            <button class="btn btn-primary" type="submit">Submit</button>
+          </div>
+        </div>
+    
+      </form>
     </div>
-
-    <div class="form-row">
-      <div class="form-group col-md-4">
-        <label for="email">Email</label>
-        <input type="text" class="form-control" id="email" formControlName="email">
-      </div>
-      <div class="form-group col-md-4">
-        <label for="phone">Phone #</label>
-        <input type="text" class="form-control" id="phone" formControlName="phone" placeholder="555-123-1234">
-      </div>
-    </div>
-
-    <div class="form-row">
-      <div class="col-md-2">Status: </div>
-      <div class="form-group col-md-8">
-        <div class="form-check form-check-inline">
-          <input type="radio" class="form-check-input" id="pncActive" formControlName="active1" value="pncActive">
-          <label class="form-check-label" for="pncActive">
-            Active
-          </label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input type="radio" class="form-check-input" id="pncInactive" formControlName="active1" value="pncInactive">
-          <label class="form-check-label" for="pncInactive">
-            Inactive
-          </label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input type="radio" class="form-check-input" id="pncInterested" formControlName="active1"  value="pncInterested">
-          <label class="form-check-label" for="pncInterested">
-            Interested
-          </label>
-        </div>
-      </div>
-    </div>
-
-    <div class="form-row">
-      <div class="form-group col-md-3">
-        <label for="pncBars">Bars Date</label>
-        <ejs-datepicker class="date-picker" id="pncBars" [value]="dateValue" formControlName="pncBars"></ejs-datepicker>
-      </div>
-    </div>
-
-    <div class="form-row">
-      <div class="form-group col-md-12">
-        <div class="form-check form-check-inline">
-          <input type="checkbox" class="form-check-input" id="pncExperienced" formControlName="pncExperienced">
-          <label for="pncExperienced" class="form-check-label">Experienced</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input type="checkbox" class="form-check-input" id="pncHealthForm" formControlName="pncHealthForm">
-          <label for="pncHealthForm" class="form-check-label">Health Form</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input type="checkbox" class="form-check-input" id="pncWaiver" formControlName="pncWaiver">
-          <label for="pncWaiver" class="form-check-label">Waiver</label>
-        </div>
-      </div>
-    </div>
-
-    <hr>
-    <h6>Job Training Complete:</h6>
-    <div class="form-row">
-      <div class="form-group col-md-12">
-        <div class="form-check form-check-inline">
-          <input type="checkbox" class="form-check-input" id="pncStandLeader" formControlName="pncStandLeader">
-          <label for="pncStandLeader" class="form-check-label">Stand Leader</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input type="checkbox" class="form-check-input" id="pncGroupLeader" formControlName="pncGroupLeader">
-          <label for="pncGroupLeader" class="form-check-label">Group Leader</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input type="checkbox" class="form-check-input" id="pncRegister" formControlName="pncRegister">
-          <label for="pncRegister" class="form-check-label">Register</label>
-        </div>
-      </div>
-    </div>
-
-    <div class="form-row">
-      <div class="form-group col-md-12">
-        <div class="form-check form-check-inline">
-          <input type="checkbox" class="form-check-input" id="pncHeadCook" formControlName="pncHeadCook">
-          <label for="pncHeadCook" class="form-check-label">Head Cook</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input type="checkbox" class="form-check-input" id="pncAssistantCook" formControlName="pncAssistantCook">
-          <label for="pncAssistantCook" class="form-check-label">Assistant Cook</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input type="checkbox" class="form-check-input" id="pncBeerCart" formControlName="pncBeerCart">
-          <label for="pncBeerCart" class="form-check-label">BeerCart</label>
-        </div>
-      </div>
-    </div>
-
-    <div class="form-row">
-      <div class="col-md-1"></div>
-      <div class="col-md-2">
-        <button class="btn btn-primary" type="button" (click)="onCancel()">Cancel</button>
-      </div>
-      <div class="col-md-2">
-        <button class="btn btn-primary" type="submit">Submit</button>
-      </div>
-    </div>
-
-  </form>
+  
 </div>
 
 <!--------------------------------------------------------------------------------------------
 -- WC edit staff 
 ---------------------------------------------------------------------------------------------->
 <div *ngIf="currentVenueID == 2">
-  <form [formGroup]="editStaffForm2" (ngSubmit)="onSubmit()">
 
-    <div class="form-row staffName">
-      {{ staff.Name }}
-    </div>
+  <div class="modal-header">
+    <h5 class="modal-title" id="editModalLabel">Edit: {{ staff.Name }}</h5>
+    <button class="close" type="button" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
 
-    <div class="form-row">
-      <div class="form-group col-md-4">
-        <label for="firstName">First Name</label>
-        <input type="text" class="form-control" id="firstName" formControlName="firstName">
-      </div>
-      <div class="form-group col-md-4">
-        <label for="lastName">Last Name</label>
-        <input type="text" class="form-control" id="lastName" formControlName="lastName">
-      </div>
-      <div class="form-group col-md-4">
-        <label for="tuAccount">TeamUnify Account</label>
-          <input type="text" list="tuAccount"  class="form-control" placeholder="{{staff.tuAccount}}" formControlName="tuAccount">
-        <datalist id="tuAccount">
-          <option *ngFor="let account of allTuAccounts" [value]="account.accountName">
-            {{ account.accountName }}
-          </option>
-        </datalist>
-      </div>
-    </div>
+  <div class="modal-body">
+    <form [formGroup]="editStaffForm2" (ngSubmit)="onSubmit()">
 
-    <div class="form-row">
-      <div class="form-group col-md-4">
-        <label for="email">Email</label>
-        <input type="text" class="form-control" id="email" formControlName="email">
+      <div class="form-row staffName">
+        {{ staff.Name }}
       </div>
-      <div class="form-group col-md-4">
-        <label for="phone">Phone #</label>
-        <input type="text" class="form-control" id="phone" formControlName="phone" placeholder="555-123-1234">
-      </div>
-    </div>
 
-    <div class="form-row">
-      <div class="col-md-2">Status: </div>
-      <div class="form-group col-md-8">
-        <div class="form-check form-check-inline">
-          <input type="radio" class="form-check-input" id="wcActive" formControlName="active1" value="wcActive">
-          <label class="form-check-label" for="wcActive">
-            Active
-          </label>
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="firstName">First Name</label>
+          <input type="text" class="form-control" id="firstName" formControlName="firstName">
         </div>
-        <div class="form-check form-check-inline">
-          <input type="radio" class="form-check-input" id="wcInactive" formControlName="active1" value="wcInactive">
-          <label class="form-check-label" for="wcInactive">
-            Inactive
-          </label>
+        <div class="form-group col-md-4">
+          <label for="lastName">Last Name</label>
+          <input type="text" class="form-control" id="lastName" formControlName="lastName">
         </div>
-        <div class="form-check form-check-inline">
-          <input type="radio" class="form-check-input" id="wcInterested" formControlName="active1" value="wcInterested">
-          <label class="form-check-label" for="wcInterested">
-            Interested
-          </label>
+        <div class="form-group col-md-4">
+          <label for="tuAccount">TeamUnify Account</label>
+            <input type="text" list="tuAccount"  class="form-control" placeholder="{{staff.tuAccount}}" formControlName="tuAccount">
+          <datalist id="tuAccount">
+            <option *ngFor="let account of allTuAccounts" [value]="account.accountName">
+              {{ account.accountName }}
+            </option>
+          </datalist>
         </div>
       </div>
-    </div>
 
-    <div class="form-row">
-      <div class="form-group col-md-3">
-        <label for="wcTeamTraining">Team Training Date</label>
-        <ejs-datepicker class="date-picker" id="wcTeamTraining" [value]="dateValue" formControlName="wcTeamTraining"></ejs-datepicker>
-      </div>
-    </div>
-
-    <hr>
-    <h6>Job Training Complete:</h6>
-    <div class="form-row">
-      <div class="form-group col-md-12">
-        <div class="form-check form-check-inline">
-          <input type="checkbox" class="form-check-input" id="wcStandLeader" formControlName="wcStandLeader">
-          <label for="wcStandLeader" class="form-check-label">Stand Leader</label>
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="email">Email</label>
+          <input type="text" class="form-control" id="email" formControlName="email">
         </div>
-        <div class="form-check form-check-inline">
-          <input type="checkbox" class="form-check-input" id="wcContainerBarLead" formControlName="wcContainerBarLead">
-          <label for="wcContainerBarLead" class="form-check-label">Container Bar Lead</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input type="checkbox" class="form-check-input" id="wcSales" formControlName="wcSales">
-          <label for="wcSales" class="form-check-label">Sales</label>
+        <div class="form-group col-md-4">
+          <label for="phone">Phone #</label>
+          <input type="text" class="form-control" id="phone" formControlName="phone" placeholder="555-123-1234">
         </div>
       </div>
-    </div>
 
-    <div class="form-row">
-      <div class="form-group col-md-12">
-        <div class="form-check form-check-inline">
-          <input type="checkbox" class="form-check-input" id="wcMoveStockOut" formControlName="wcMoveStockOut">
-          <label for="wcMoveStockOut" class="form-check-label">Move Out Stock</label>
+      <div class="form-row">
+        <div class="col-md-2">Status: </div>
+        <div class="form-group col-md-8">
+          <div class="form-check form-check-inline">
+            <input type="radio" class="form-check-input" id="wcActive" formControlName="active1" value="wcActive">
+            <label class="form-check-label" for="wcActive">
+              Active
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="radio" class="form-check-input" id="wcInactive" formControlName="active1" value="wcInactive">
+            <label class="form-check-label" for="wcInactive">
+              Inactive
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="radio" class="form-check-input" id="wcInterested" formControlName="active1" value="wcInterested">
+            <label class="form-check-label" for="wcInterested">
+              Interested
+            </label>
+          </div>
         </div>
-        <div class="form-check form-check-inline">
-          <input type="checkbox" class="form-check-input" id="wcFinalStandPrep" formControlName="wcFinalStandPrep">
-          <label for="wcFinalStandPrep" class="form-check-label">Final Stand Prep</label>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="wcTeamTraining">Team Training Date</label>
+          <ejs-datepicker class="date-picker" id="wcTeamTraining" [value]="dateValue" formControlName="wcTeamTraining"></ejs-datepicker>
         </div>
       </div>
-    </div>
 
-    <div class="form-row">
-      <div class="col-md-1"></div>
-      <div class="col-md-2">
-        <button class="btn btn-primary" type="button" (click)="onCancel()">Cancel</button>
+      <hr>
+      <h6>Job Training Complete:</h6>
+      <div class="form-row">
+        <div class="form-group col-md-12">
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" id="wcStandLeader" formControlName="wcStandLeader">
+            <label for="wcStandLeader" class="form-check-label">Stand Leader</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" id="wcContainerBarLead" formControlName="wcContainerBarLead">
+            <label for="wcContainerBarLead" class="form-check-label">Container Bar Lead</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" id="wcSales" formControlName="wcSales">
+            <label for="wcSales" class="form-check-label">Sales</label>
+          </div>
+        </div>
       </div>
-      <div class="col-md-2">
-        <button class="btn btn-primary" type="submit">Submit</button>
-      </div>
-    </div>
 
-  </form>
+      <div class="form-row">
+        <div class="form-group col-md-12">
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" id="wcMoveStockOut" formControlName="wcMoveStockOut">
+            <label for="wcMoveStockOut" class="form-check-label">Move Out Stock</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" id="wcFinalStandPrep" formControlName="wcFinalStandPrep">
+            <label for="wcFinalStandPrep" class="form-check-label">Final Stand Prep</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="col-md-1"></div>
+        <div class="col-md-2">
+          <button class="btn btn-primary" type="button" (click)="onCancel()">Cancel</button>
+        </div>
+        <div class="col-md-2">
+          <button class="btn btn-primary" type="submit">Submit</button>
+        </div>
+      </div>
+
+    </form>
+  </div>
 </div>
 
 <!--------------------------------------------------------------------------------------------
 -- CF edit staff 
 ---------------------------------------------------------------------------------------------->
 <div *ngIf="currentVenueID == 3">
-  <form [formGroup]="editStaffForm3" (ngSubmit)="onSubmit()">
 
-    <div class="form-row staffName">
-      {{ staff.Name }}
-    </div>
+  <div class="modal-header">
+    <h5 class="modal-title" id="editModalLabel">Edit: {{ staff.Name }}</h5>
+    <button class="close" type="button" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
 
-    <div class="form-row">
-      <div class="form-group col-md-4">
-        <label for="firstName">First Name</label>
-        <input type="text" class="form-control" id="firstName" formControlName="firstName">
-      </div>
-      <div class="form-group col-md-4">
-        <label for="lastName">Last Name</label>
-        <input type="text" class="form-control" id="lastName" formControlName="lastName">
-      </div>
-      <div class="form-group col-md-4">
-        <label for="tuAccount">TeamUnify Account</label>
-          <input type="text" list="tuAccount"  class="form-control" placeholder="{{staff.tuAccount}}" formControlName="tuAccount">
-        <datalist id="tuAccount">
-          <option *ngFor="let account of allTuAccounts" [value]="account.accountName">
-            {{ account.accountName }}
-          </option>
-        </datalist>
-      </div>
-    </div>
+  <div class="modal-body">
+    <form [formGroup]="editStaffForm3" (ngSubmit)="onSubmit()">
 
-    <div class="form-row">
-      <div class="form-group col-md-4">
-        <label for="email">Email</label>
-        <input type="text" class="form-control" id="email" formControlName="email">
+      <div class="form-row staffName">
+        {{ staff.Name }}
       </div>
-      <div class="form-group col-md-4">
-        <label for="phone">Phone #</label>
-        <input type="text" class="form-control" id="phone" formControlName="phone" placeholder="555-123-1234">
-      </div>
-    </div>
 
-    <div class="form-row">
-      <div class="col-md-2">Status: </div>
-      <div class="form-group col-md-8">
-        <div class="form-check form-check-inline">
-          <input type="radio" class="form-check-input" id="cfActive" formControlName="active1" value="cfActive">
-          <label class="form-check-label" for="cfActive">
-            Active
-          </label>
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="firstName">First Name</label>
+          <input type="text" class="form-control" id="firstName" formControlName="firstName">
         </div>
-        <div class="form-check form-check-inline">
-          <input type="radio" class="form-check-input" id="cfInactive" formControlName="active1" value="cfInactive">
-          <label class="form-check-label" for="cfInactive">
-            Inactive
-          </label>
+        <div class="form-group col-md-4">
+          <label for="lastName">Last Name</label>
+          <input type="text" class="form-control" id="lastName" formControlName="lastName">
         </div>
-        <div class="form-check form-check-inline">
-          <input type="radio" class="form-check-input" id="cfInterested" formControlName="active1" value="cfInterested">
-          <label class="form-check-label" for="cfInterested">
-            Interested
-          </label>
+        <div class="form-group col-md-4">
+          <label for="tuAccount">TeamUnify Account</label>
+            <input type="text" list="tuAccount"  class="form-control" placeholder="{{staff.tuAccount}}" formControlName="tuAccount">
+          <datalist id="tuAccount">
+            <option *ngFor="let account of allTuAccounts" [value]="account.accountName">
+              {{ account.accountName }}
+            </option>
+          </datalist>
         </div>
       </div>
-    </div>
 
-    <div class="form-row">
-      <div class="form-group col-md-3">
-        <label for="cfAlcoholTraining">Alcohol Training Date</label>
-        <ejs-datepicker class="date-picker" id="cfAlcoholTraining" [value]="dateValue" formControlName="cfAlcoholTraining"></ejs-datepicker>
-      </div>
-    </div>
-
-    <hr>
-    <h6>Job Training Complete:</h6>
-    <div class="form-row">
-      <div class="form-group col-md-12">
-        <div class="form-check form-check-inline">
-          <input type="checkbox" class="form-check-input" id="cfLeader" formControlName="cfLeader">
-          <label for="cfLeader" class="form-check-label">Leader</label>
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="email">Email</label>
+          <input type="text" class="form-control" id="email" formControlName="email">
         </div>
-        <div class="form-check form-check-inline">
-          <input type="checkbox" class="form-check-input" id="cfAssistantLeader" formControlName="cfAssistantLeader">
-          <label for="cfAssistantLeader" class="form-check-label">Assistant Leader</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input type="checkbox" class="form-check-input" id="cfStaff" formControlName="cfStaff">
-          <label for="cfStaff" class="form-check-label">Staff</label>
+        <div class="form-group col-md-4">
+          <label for="phone">Phone #</label>
+          <input type="text" class="form-control" id="phone" formControlName="phone" placeholder="555-123-1234">
         </div>
       </div>
-    </div>
 
-    <div class="form-row">
-      <div class="col-md-1"></div>
-      <div class="col-md-2">
-        <button class="btn btn-primary" type="button" (click)="onCancel()">Cancel</button>
+      <div class="form-row">
+        <div class="col-md-2">Status: </div>
+        <div class="form-group col-md-8">
+          <div class="form-check form-check-inline">
+            <input type="radio" class="form-check-input" id="cfActive" formControlName="active1" value="cfActive">
+            <label class="form-check-label" for="cfActive">
+              Active
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="radio" class="form-check-input" id="cfInactive" formControlName="active1" value="cfInactive">
+            <label class="form-check-label" for="cfInactive">
+              Inactive
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="radio" class="form-check-input" id="cfInterested" formControlName="active1" value="cfInterested">
+            <label class="form-check-label" for="cfInterested">
+              Interested
+            </label>
+          </div>
+        </div>
       </div>
-      <div class="col-md-2">
-        <button class="btn btn-primary" type="submit">Submit</button>
-      </div>
-    </div>
 
-  </form>
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="cfAlcoholTraining">Alcohol Training Date</label>
+          <ejs-datepicker class="date-picker" id="cfAlcoholTraining" [value]="dateValue" formControlName="cfAlcoholTraining"></ejs-datepicker>
+        </div>
+      </div>
+
+      <hr>
+      <h6>Job Training Complete:</h6>
+      <div class="form-row">
+        <div class="form-group col-md-12">
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" id="cfLeader" formControlName="cfLeader">
+            <label for="cfLeader" class="form-check-label">Leader</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" id="cfAssistantLeader" formControlName="cfAssistantLeader">
+            <label for="cfAssistantLeader" class="form-check-label">Assistant Leader</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" id="cfStaff" formControlName="cfStaff">
+            <label for="cfStaff" class="form-check-label">Staff</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="col-md-1"></div>
+        <div class="col-md-2">
+          <button class="btn btn-primary" type="button" (click)="onCancel()">Cancel</button>
+        </div>
+        <div class="col-md-2">
+          <button class="btn btn-primary" type="submit">Submit</button>
+        </div>
+      </div>
+
+    </form>
+  </div>
 </div>
 
 <!--------------------------------------------------------------------------------------------
 -- All Venue edit staff 
 ---------------------------------------------------------------------------------------------->
 <div *ngIf="currentVenueID == 99">
-  <form [formGroup]="editStaffForm99" (ngSubmit)="onSubmit()">
 
-    <div class="form-row staffName">
-      {{ staff.Name }}
-    </div>
+  <div class="modal-header">
+    <h5 class="modal-title" id="editModalLabel">Edit: {{ staff.Name }}</h5>
+    <button class="close" type="button" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
 
-    <div class="form-row">
-      <div class="form-group col-md-4">
-        <label for="firstName">First Name</label>
-        <input type="text" class="form-control" id="firstName" formControlName="firstName">
-      </div>
-      <div class="form-group col-md-4">
-        <label for="lastName">Last Name</label>
-        <input type="text" class="form-control" id="lastName" formControlName="lastName">
-      </div>
-      <div class="form-group col-md-4">
-        <label for="tuAccount">TeamUnify Account</label>
-          <input type="text" list="tuAccount"  class="form-control" placeholder="{{staff.tuAccount}}" formControlName="tuAccount">
-        <datalist id="tuAccount">
-          <option *ngFor="let account of allTuAccounts" [value]="account.accountName">
-            {{ account.accountName }}
-          </option>
-        </datalist>
-      </div>
-    </div>
+  <div class="modal-body">
+    <form [formGroup]="editStaffForm99" (ngSubmit)="onSubmit()">
 
-    <div class="form-row">
-      <div class="form-group col-md-4">
-        <label for="email">Email</label>
-        <input type="text" class="form-control" id="email" formControlName="email">
+      <div class="form-row staffName">
+        {{ staff.Name }}
       </div>
-      <div class="form-group col-md-4">
-        <label for="phone">Phone #</label>
-        <input type="text" class="form-control" id="phone" formControlName="phone" placeholder="555-123-1234">
-      </div>
-    </div>
 
-    <div class="form-row"><h5>PNC ARENA</h5></div>
-    <div class="form-row">
-      <div class="col-md-2">Status: </div>
-      <div class="form-group col-md-8">
-        <div class="form-check form-check-inline">
-          <input type="radio" class="form-check-input" id="pncActive" formControlName="active1" value="pncActive">
-          <label class="form-check-label" for="pncActive">
-            Active
-          </label>
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="firstName">First Name</label>
+          <input type="text" class="form-control" id="firstName" formControlName="firstName">
         </div>
-        <div class="form-check form-check-inline">
-          <input type="radio" class="form-check-input" id="pncInactive" formControlName="active1" value="pncInactive">
-          <label class="form-check-label" for="pncInactive">
-            Inactive
-          </label>
+        <div class="form-group col-md-4">
+          <label for="lastName">Last Name</label>
+          <input type="text" class="form-control" id="lastName" formControlName="lastName">
         </div>
-        <div class="form-check form-check-inline">
-          <input type="radio" class="form-check-input" id="pncInterested" formControlName="active1"  value="pncInterested">
-          <label class="form-check-label" for="pncInterested">
-            Interested
-          </label>
+        <div class="form-group col-md-4">
+          <label for="tuAccount">TeamUnify Account</label>
+            <input type="text" list="tuAccount"  class="form-control" placeholder="{{staff.tuAccount}}" formControlName="tuAccount">
+          <datalist id="tuAccount">
+            <option *ngFor="let account of allTuAccounts" [value]="account.accountName">
+              {{ account.accountName }}
+            </option>
+          </datalist>
         </div>
       </div>
-    </div>
 
-    <div class="form-row">
-      <div class="form-group col-md-3">
-        <label for="pncBars">Bars Date</label>
-        <ejs-datepicker class="date-picker" id="pncBars" [value]="dateValue" formControlName="pncBars"></ejs-datepicker>
-      </div>
-    </div>
-
-    <div class="form-row">
-      <div class="form-group col-md-12">
-        <div class="form-check form-check-inline">
-          <input type="checkbox" class="form-check-input" id="pncExperienced" formControlName="pncExperienced">
-          <label for="pncExperienced" class="form-check-label">Experienced</label>
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="email">Email</label>
+          <input type="text" class="form-control" id="email" formControlName="email">
         </div>
-        <div class="form-check form-check-inline">
-          <input type="checkbox" class="form-check-input" id="pncHealthForm" formControlName="pncHealthForm">
-          <label for="pncHealthForm" class="form-check-label">Health Form</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input type="checkbox" class="form-check-input" id="pncWaiver" formControlName="pncWaiver">
-          <label for="pncWaiver" class="form-check-label">Waiver</label>
+        <div class="form-group col-md-4">
+          <label for="phone">Phone #</label>
+          <input type="text" class="form-control" id="phone" formControlName="phone" placeholder="555-123-1234">
         </div>
       </div>
-    </div>
 
-    <hr>
-    <h6>Job Training Complete:</h6>
-    <div class="form-row">
-      <div class="form-group col-md-12">
-        <div class="form-check form-check-inline">
-          <input type="checkbox" class="form-check-input" id="pncStandLeader" formControlName="pncStandLeader">
-          <label for="pncStandLeader" class="form-check-label">Stand Leader</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input type="checkbox" class="form-check-input" id="pncGroupLeader" formControlName="pncGroupLeader">
-          <label for="pncGroupLeader" class="form-check-label">Group Leader</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input type="checkbox" class="form-check-input" id="pncRegister" formControlName="pncRegister">
-          <label for="pncRegister" class="form-check-label">Register</label>
+      <div class="form-row"><h5>PNC ARENA</h5></div>
+      <div class="form-row">
+        <div class="col-md-2">Status: </div>
+        <div class="form-group col-md-8">
+          <div class="form-check form-check-inline">
+            <input type="radio" class="form-check-input" id="pncActive" formControlName="active1" value="pncActive">
+            <label class="form-check-label" for="pncActive">
+              Active
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="radio" class="form-check-input" id="pncInactive" formControlName="active1" value="pncInactive">
+            <label class="form-check-label" for="pncInactive">
+              Inactive
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="radio" class="form-check-input" id="pncInterested" formControlName="active1"  value="pncInterested">
+            <label class="form-check-label" for="pncInterested">
+              Interested
+            </label>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="form-row">
-      <div class="form-group col-md-12">
-        <div class="form-check form-check-inline">
-          <input type="checkbox" class="form-check-input" id="pncHeadCook" formControlName="pncHeadCook">
-          <label for="pncHeadCook" class="form-check-label">Head Cook</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input type="checkbox" class="form-check-input" id="pncAssistantCook" formControlName="pncAssistantCook">
-          <label for="pncAssistantCook" class="form-check-label">Assistant Cook</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input type="checkbox" class="form-check-input" id="pncBeerCart" formControlName="pncBeerCart">
-          <label for="pncBeerCart" class="form-check-label">BeerCart</label>
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          <label for="pncBars">Bars Date</label>
+          <ejs-datepicker class="date-picker" id="pncBars" [value]="dateValue" formControlName="pncBars"></ejs-datepicker>
         </div>
       </div>
-    </div>
 
-    <hr><hr>
-
-    <div class="form-row"><h5>WALNUT CREEK</h5></div>
-    <div class="form-row">
-      <div class="col-md-2">Status: </div>
-      <div class="form-group col-md-8">
-        <div class="form-check form-check-inline">
-          <input type="radio" class="form-check-input" id="wcActive" formControlName="active2" value="wcActive">
-          <label class="form-check-label" for="wcActive">
-            Active
-          </label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input type="radio" class="form-check-input" id="wcInactive" formControlName="active2" value="wcInactive">
-          <label class="form-check-label" for="wcInactive">
-            Inactive
-          </label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input type="radio" class="form-check-input" id="wcInterested" formControlName="active2" value="wcInterested">
-          <label class="form-check-label" for="wcInterested">
-            Interested
-          </label>
+      <div class="form-row">
+        <div class="form-group col-md-12">
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" id="pncExperienced" formControlName="pncExperienced">
+            <label for="pncExperienced" class="form-check-label">Experienced</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" id="pncHealthForm" formControlName="pncHealthForm">
+            <label for="pncHealthForm" class="form-check-label">Health Form</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" id="pncWaiver" formControlName="pncWaiver">
+            <label for="pncWaiver" class="form-check-label">Waiver</label>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="form-row">
-      <div class="form-group col-md-3">
-        <label for="wcTeamTraining">Team Training Date</label>
-        <ejs-datepicker class="date-picker" id="wcTeamTraining" [value]="dateValue2" formControlName="wcTeamTraining"></ejs-datepicker>
-      </div>
-    </div>
-
-    <hr>
-    <h6>Job Training Complete:</h6>
-    <div class="form-row">
-      <div class="form-group col-md-12">
-        <div class="form-check form-check-inline">
-          <input type="checkbox" class="form-check-input" id="cfLeader" formControlName="cfLeader">
-          <label for="cfLeader" class="form-check-label">Leader</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input type="checkbox" class="form-check-input" id="cfAssistantLeader" formControlName="cfAssistantLeader">
-          <label for="cfAssistantLeader" class="form-check-label">Assistant Leader</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input type="checkbox" class="form-check-input" id="cfStaff" formControlName="cfStaff">
-          <label for="cfStaff" class="form-check-label">Staff</label>
+      <hr>
+      <h6>Job Training Complete:</h6>
+      <div class="form-row">
+        <div class="form-group col-md-12">
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" id="pncStandLeader" formControlName="pncStandLeader">
+            <label for="pncStandLeader" class="form-check-label">Stand Leader</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" id="pncGroupLeader" formControlName="pncGroupLeader">
+            <label for="pncGroupLeader" class="form-check-label">Group Leader</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" id="pncRegister" formControlName="pncRegister">
+            <label for="pncRegister" class="form-check-label">Register</label>
+          </div>
         </div>
       </div>
-    </div>
 
-    <hr><hr>
-
-    <div class="form-row"><h5>CARTER-FINLEY STADIUM</h5></div>
-    <div class="form-row">
-      <div class="col-md-2">Status: </div>
-      <div class="form-group col-md-8">
-        <div class="form-check form-check-inline">
-          <input type="radio" class="form-check-input" id="cfActive" formControlName="active3" value="cfActive">
-          <label class="form-check-label" for="cfActive">
-            Active
-          </label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input type="radio" class="form-check-input" id="cfInactive" formControlName="active3" value="cfInactive">
-          <label class="form-check-label" for="cfInactive">
-            Inactive
-          </label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input type="radio" class="form-check-input" id="cfInterested" formControlName="active3" value="cfInterested">
-          <label class="form-check-label" for="cfInterested">
-            Interested
-          </label>
+      <div class="form-row">
+        <div class="form-group col-md-12">
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" id="pncHeadCook" formControlName="pncHeadCook">
+            <label for="pncHeadCook" class="form-check-label">Head Cook</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" id="pncAssistantCook" formControlName="pncAssistantCook">
+            <label for="pncAssistantCook" class="form-check-label">Assistant Cook</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" id="pncBeerCart" formControlName="pncBeerCart">
+            <label for="pncBeerCart" class="form-check-label">BeerCart</label>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="form-row">
-      <div class="form-group col-md-3">
-        <label for="cfAlcoholTraining">Alcohol Training Date</label>
-        <ejs-datepicker class="date-picker" id="cfAlcoholTraining" [value]="dateValue3" formControlName="cfAlcoholTraining"></ejs-datepicker>
-      </div>
-    </div>
+      <hr><hr>
 
-    <hr>
-    <h6>Job Training Complete:</h6>
-    <div class="form-row">
-      <div class="form-group col-md-12">
-        <div class="form-check form-check-inline">
-          <input type="checkbox" class="form-check-input" id="cfLeader" formControlName="cfLeader">
-          <label for="cfLeader" class="form-check-label">Leader</label>
+      <div class="form-row"><h5>WALNUT CREEK</h5></div>
+      <div class="form-row">
+        <div class="col-md-2">Status: </div>
+        <div class="form-group col-md-8">
+          <div class="form-check form-check-inline">
+            <input type="radio" class="form-check-input" id="wcActive" formControlName="active2" value="wcActive">
+            <label class="form-check-label" for="wcActive">
+              Active
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="radio" class="form-check-input" id="wcInactive" formControlName="active2" value="wcInactive">
+            <label class="form-check-label" for="wcInactive">
+              Inactive
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="radio" class="form-check-input" id="wcInterested" formControlName="active2" value="wcInterested">
+            <label class="form-check-label" for="wcInterested">
+              Interested
+            </label>
+          </div>
         </div>
-        <div class="form-check form-check-inline">
-          <input type="checkbox" class="form-check-input" id="cfAssistantLeader" formControlName="cfAssistantLeader">
-          <label for="cfAssistantLeader" class="form-check-label">Assistant Leader</label>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          <label for="wcTeamTraining">Team Training Date</label>
+          <ejs-datepicker class="date-picker" id="wcTeamTraining" [value]="dateValue2" formControlName="wcTeamTraining"></ejs-datepicker>
         </div>
-        <div class="form-check form-check-inline">
-          <input type="checkbox" class="form-check-input" id="cfStaff" formControlName="cfStaff">
-          <label for="cfStaff" class="form-check-label">Staff</label>
+      </div>
+
+      <hr>
+      <h6>Job Training Complete:</h6>
+      <div class="form-row">
+        <div class="form-group col-md-12">
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" id="cfLeader" formControlName="cfLeader">
+            <label for="cfLeader" class="form-check-label">Leader</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" id="cfAssistantLeader" formControlName="cfAssistantLeader">
+            <label for="cfAssistantLeader" class="form-check-label">Assistant Leader</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" id="cfStaff" formControlName="cfStaff">
+            <label for="cfStaff" class="form-check-label">Staff</label>
+          </div>
         </div>
       </div>
-    </div>
 
-    <hr>
+      <hr><hr>
 
-    <div class="form-row">
-      <div class="col-md-2">
-        <button class="btn btn-primary" type="button" (click)="onCancel()">Cancel</button>
+      <div class="form-row"><h5>CARTER-FINLEY STADIUM</h5></div>
+      <div class="form-row">
+        <div class="col-md-2">Status: </div>
+        <div class="form-group col-md-8">
+          <div class="form-check form-check-inline">
+            <input type="radio" class="form-check-input" id="cfActive" formControlName="active3" value="cfActive">
+            <label class="form-check-label" for="cfActive">
+              Active
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="radio" class="form-check-input" id="cfInactive" formControlName="active3" value="cfInactive">
+            <label class="form-check-label" for="cfInactive">
+              Inactive
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="radio" class="form-check-input" id="cfInterested" formControlName="active3" value="cfInterested">
+            <label class="form-check-label" for="cfInterested">
+              Interested
+            </label>
+          </div>
+        </div>
       </div>
-      <div class="col-md-2">
-        <button class="btn btn-primary" type="submit">Submit</button>
-      </div>
-      <div class="col-md-4">
-        <button class="btn btn-danger" type="button" (click)="onRemoveStaff()">Remove Member</button>
-      </div>
-    </div>
 
-    <div *ngIf="removeStaffConfirm" class="form-row removeConfirm">
-      <div class="col-md-2"></div>
-      <div class="col-md-10">
-        Are you sure you want to remove this member?
-        <button class="btn btn-outline-danger" type="button" (click)="onRemoveNo()">No</button>
-        &nbsp;&nbsp;
-        <button class="btn btn-outline-info" type="button" (click)="onRemoveYes()">Yes</button>
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          <label for="cfAlcoholTraining">Alcohol Training Date</label>
+          <ejs-datepicker class="date-picker" id="cfAlcoholTraining" [value]="dateValue3" formControlName="cfAlcoholTraining"></ejs-datepicker>
+        </div>
       </div>
-    </div>
-  </form>
+
+      <hr>
+      <h6>Job Training Complete:</h6>
+      <div class="form-row">
+        <div class="form-group col-md-12">
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" id="cfLeader" formControlName="cfLeader">
+            <label for="cfLeader" class="form-check-label">Leader</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" id="cfAssistantLeader" formControlName="cfAssistantLeader">
+            <label for="cfAssistantLeader" class="form-check-label">Assistant Leader</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" id="cfStaff" formControlName="cfStaff">
+            <label for="cfStaff" class="form-check-label">Staff</label>
+          </div>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="form-row">
+        <div class="col-md-2">
+          <button class="btn btn-primary" type="button" (click)="onCancel()">Cancel</button>
+        </div>
+        <div class="col-md-2">
+          <button class="btn btn-primary" type="submit">Submit</button>
+        </div>
+        <div class="col-md-4">
+          <button class="btn btn-danger" type="button" (click)="onRemoveStaff()">Remove Member</button>
+        </div>
+      </div>
+
+      <div *ngIf="removeStaffConfirm" class="form-row removeConfirm">
+        <div class="col-md-2"></div>
+        <div class="col-md-10">
+          Are you sure you want to remove this member?
+          <button class="btn btn-outline-danger" type="button" (click)="onRemoveNo()">No</button>
+          &nbsp;&nbsp;
+          <button class="btn btn-outline-info" type="button" (click)="onRemoveYes()">Yes</button>
+        </div>
+      </div>
+    </form>
+  </div>
 </div>
