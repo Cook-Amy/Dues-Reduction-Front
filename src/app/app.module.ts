@@ -46,6 +46,7 @@ import { StaffNewComponent } from './staff/staff-list/staff-new/staff-new.compon
 import { CalendarComponent } from './calendar/calendar.component';
 import { SettingsComponent } from './user/settings.component';
 import { ReportsComponent } from './reports/reports.component';
+import { ConfirmDeleteComponent } from './events/event-list/event-detail/modals/confirm-delete/confirm-delete.component';
 
 
 
@@ -78,7 +79,8 @@ import { ReportsComponent } from './reports/reports.component';
     StaffNewComponent,
     CalendarComponent,
     SettingsComponent,
-    ReportsComponent
+    ReportsComponent,
+    ConfirmDeleteComponent
   ],
   imports: [
     BrowserModule,
@@ -109,7 +111,10 @@ import { ReportsComponent } from './reports/reports.component';
   bootstrap: [AppComponent],
   entryComponents: [
     StaffDetailComponent,
-    StaffEditComponent
+    StaffEditComponent,
+    EventDetailComponent,
+    EventEditComponent,
+    ConfirmDeleteComponent
   ]
 })
 export class AppModule { }

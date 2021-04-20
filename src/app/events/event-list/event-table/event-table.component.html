@@ -1,41 +1,5 @@
 
 
-  <div class="mat-elevation-z8">
-    <table mat-table
-      [dataSource]="dataSource" 
-      multiTemplateDataRows>
-      <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
-        <th mat-header-cell *matHeaderCellDef> {{column}} </th>
-        <td mat-cell *matCellDef="let element"> {{ getDate(element[column]) }} </td>
-      </ng-container>
-  
-      <ng-container matColumnDef="expandedDetail">
-        <td class="mat-detail-area" mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
-        <div class="example-element-detail"
-              [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-          <div class="example-element-description">
-            <app-event-detail [currentVenueID]="currentVenueID" [event]="element"></app-event-detail>
-          </div>
-        </div>
-        </td>
-      </ng-container>
-  
-      <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
-      <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"
-      class="example-element-row"
-      [class.example-expanded-row]="expandedElement === element"
-      (click)="expandedElement = element">
-      </tr>
-      <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
-    </table>
+  <div #tableInsert>
+    <table datatable [dtOptions]="dtOptions" class="row-border hover"></table>
   </div>
-
-
-  <!-- examples 
-  1. https://stackblitz.com/edit/table-like-mat-accordion?file=app/app.component.html
-  https://www.freakyjolly.com/angular-material-7-8-add-expansion-panel-accordion-in-angular-project-using-material/
-
-  2. https://www.reddit.com/r/Angular2/comments/ehsmey/material_table_with_expandable_rows_how_to/
-  https://stackoverflow.com/questions/45172111/a-forkjoin-alternative-for-uncompleted-observables/50514129 -->
-
-

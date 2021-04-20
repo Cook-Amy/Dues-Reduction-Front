@@ -1,0 +1,4 @@
+.modal-body, .modal-header {
+    width: 700px !important;
+    background-color: white;
+  }

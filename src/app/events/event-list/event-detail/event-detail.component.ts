@@ -8,6 +8,9 @@ import { GateListService } from '../../../createReports/gateList.service';
 import { Timesheet } from './../../../models/timesheet.model';
 import { EventService } from './../../event.service';
 import { Component, OnInit, Input } from '@angular/core';
+import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
+import { EventEditComponent } from './../event-edit/event-edit.component';
+import { ConfirmDeleteComponent } from './modals/confirm-delete/confirm-delete.component';
 
 @Component({
   selector: 'app-event-detail',
@@ -15,8 +18,14 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./event-detail.component.css']
 })
 export class EventDetailComponent implements OnInit {
-  @Input() event: Event;
+  @Input() setEvent: Event[];
   @Input() currentVenueID: number;
+  @Input() currentSeasonID: number;
+
+  modalOptions:NgbModalOptions;
+  closeResult: string;
+
+  event: Event;
   idVenue: number;
 
   timesheet: Timesheet[] = [];
@@ -25,7 +34,6 @@ export class EventDetailComponent implements OnInit {
   eventStaffEdit: Boolean;
   eventStaffAdd: Boolean;
   editTimesheet: Timesheet;
-  confirmDelete = false;
   confirmGateList = false;
   gateListForm: FormGroup;
   addShuttleBonus = false;
@@ -48,9 +56,18 @@ export class EventDetailComponent implements OnInit {
               private emailService: EmailService,
               private toastr: ToastrService,
               private route: ActivatedRoute,
-              private router: Router) { }
+              private router: Router,
+              private modalServices: NgbModal) { 
+                this.modalOptions = {
+                  backdrop: 'static',
+                  backdropClass:'customBackdrop',
+                  size: 'xl',
+                  centered: true
+               }
+              }
 
   ngOnInit() { 
+    this.event = this.setEvent[0];
     this.masterSelected = false;
     this.idVenue = this.event.venueID;
     this.eventEdit = this.eventService.getEventEdit();
@@ -173,27 +190,6 @@ export class EventDetailComponent implements OnInit {
     this.eventEdit = true;
   }
 
-  onDeleteEvent() {
-    this.confirmDelete = true;
-  }
-
-  onDeleteNo() {
-    this.confirmDelete = false;
-  }
-
-  // TODO: Event is not being removed from list on first delete
-  onDeleteYes() {
-   
-    this.eventService.deleteEvent(this.event).subscribe(res => {
-      this.eventService.getAllEvents().subscribe(events => {
-        this.eventService.setAllEvents(events);
-        // this.router.navigate([], {relativeTo: this.route});
-        this.confirmDelete = false;
-      });
-    });
-  }
-
-
   getTime(date) {
     if(date == null) {
       date = this.checkForNullString(date);
@@ -213,14 +209,15 @@ export class EventDetailComponent implements OnInit {
     return convertDate;
   }
 
-  checkForNullString(string) {
-    if(string == null)
+  checkForNullString(str) {
+    if(str == null)
       return '0';
     else  
-      return string;
+      return str;
   }
 
   checkForNullNum(num) {
+    num = parseFloat(num);
     if(num == null)
       return 0;
     else  {
@@ -547,5 +544,18 @@ export class EventDetailComponent implements OnInit {
 
   onOkNoStaff() {
     this.noStaffMsg = false;
+  }
+
+  openEdit() {
+    const modalRef = this.modalServices.open(EventEditComponent);
+    modalRef.componentInstance.event = this.event;
+    modalRef.componentInstance.currentVenueID = this.currentVenueID;
+    modalRef.componentInstance.currentSeasonID = this.currentSeasonID;
+  }
+
+  openDeleteEvent() {
+    const modalRef = this.modalServices.open(ConfirmDeleteComponent);
+    modalRef.componentInstance.event = this.event;
+    modalRef.componentInstance.currentSeasonID = this.currentSeasonID;
   }
 }

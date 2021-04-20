@@ -2,7 +2,14 @@
 -- PNC Edit Event
 ------------------------------------------------------------------------------>
 <div *ngIf="idVenue == 1">
-  <div>
+  <div class="modal-header">
+    <h5 class="modal-title" id="editModalLabel">Edit: {{ event.Title }}</h5>
+    <button class="close" type="button" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
     <form [formGroup]="editEventForm" (ngSubmit)="onSubmit()">
   
       <div class="form-row">
@@ -184,78 +191,86 @@
 -- CF Edit Event
 ------------------------------------------------------------------------------>
 <div *ngIf="idVenue == 3">
-  <div>
-    <form [formGroup]="editEventForm" (ngSubmit)="onSubmit()">
-  
-      <div class="form-row">
-        <div class="form-group col-md-8">
-          <label for="eventTitle">Title</label>
-          <input type="text" class="form-control" id="eventTitle" formControlName="eventTitle">
-        </div>
-        <div class="form-group col-md-4"></div>
-      </div>
-  
-      <div class="form-row">
-        <div class="form-group col-md-3">
-          <label for="dateTime">Date & Time</label>
-          <ejs-datetimepicker class="date-picker" id='datetimepicker' [value]='dateValue' formControlName="dateTime"></ejs-datetimepicker>
-        </div>
-        <div class="form-group col-md-3">
-          <label for="inputLocation">Location</label>
-          <input type="text" class="form-control" id="inputLocation" formControlName="inputLocation">
-        </div>
-        <div class="form-group col-md-3">
-          <label for="coordinatorAdminAmt">Coordinator Payout</label>
-          <input type="number" class="form-control" id="coordinatorAdminAmt" formControlName="coordinatorAdminAmt">
-        </div>
-      </div>
-  
-      <div class="form-row">
-        <div class="form-group col-md-3">
-          <label for="totalSalesCf">Total Sales</label>
-          <input type="text" class="form-control" id="totalSalesCf" formControlName="totalSalesCf">
-        </div>
-        <div class="form-group col-md-3">
-          <label for="bonus">Venue Bonus</label>
-          <input type="text" class="form-control" id="bonus" formControlName="bonus">
-        </div>
-        <div class="form-group col-md-3">
-          <label for="checkRcvd">Check Recieved</label>
-          <input type="text" class="form-control" id="checkRcvd" formControlName="checkRcvd">
-        </div>
+      <div class="modal-header">
+        <h5 class="modal-title" id="editModalLabel">Edit: {{ event.Title }}</h5>
+        <button class="close" type="button" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
 
-      <div class="form-row">
-        <div class="form-group col-md-12">
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="closed" formControlName="closed">
-            <label class="form-check-label" for="closed">
-              Closed
-            </label>
-          </div>
-        </div>
-      </div>
-  
-      <div class="form-row">
-        <div class="form-group col-md-8">
-          <label for="notes">Notes</label>
-          <textarea rows="2" class="form-control" id="notes" formControlName="notes"></textarea>
-        </div>
-      </div>
-  
-      <div class="form-row">
-        <div class="col-md-6"></div>
-        <div class="col-md-1">
-          <button class="btn btn-primary" type="button" (click)="onCancelEdit()">Cancel</button>
-        </div>
-        <div class="col-md-1"></div>
-        <div class="col-md-1">
-          <button class="btn btn-primary" type="submit">Save</button>
-        </div>
-      </div>
+      <div class="modal-body">
+        <form [formGroup]="editEventForm" (ngSubmit)="onSubmit()">
       
-    </form>
-  </div>
+          <div class="form-row">
+            <div class="form-group col-md-10">
+              <label for="eventTitle">Title</label>
+              <input type="text" class="form-control" id="eventTitle" formControlName="eventTitle">
+            </div>
+            <div class="form-group col-md-4"></div>
+          </div>
+      
+          <div class="form-row">
+            <div class="form-group col-md-4">
+              <label for="dateTime">Date & Time</label>
+              <ejs-datetimepicker class="date-picker" id='datetimepicker' [value]='dateValue' formControlName="dateTime"></ejs-datetimepicker>
+            </div>
+            <div class="form-group col-md-3">
+              <label for="inputLocation">Location</label>
+              <input type="text" class="form-control" id="inputLocation" formControlName="inputLocation">
+            </div>
+            <div class="form-group col-md-3">
+              <label for="coordinatorAdminAmt">Coordinator Payout</label>
+              <input type="number" class="form-control" id="coordinatorAdminAmt" formControlName="coordinatorAdminAmt">
+            </div>
+          </div>
+      
+          <div class="form-row">
+            <div class="form-group col-md-1"></div>
+            <div class="form-group col-md-3">
+              <label for="totalSalesCf">Total Sales</label>
+              <input type="text" class="form-control" id="totalSalesCf" formControlName="totalSalesCf">
+            </div>
+            <div class="form-group col-md-3">
+              <label for="bonus">Venue Bonus</label>
+              <input type="text" class="form-control" id="bonus" formControlName="bonus">
+            </div>
+            <div class="form-group col-md-3">
+              <label for="checkRcvd">Check Recieved</label>
+              <input type="text" class="form-control" id="checkRcvd" formControlName="checkRcvd">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="closed" formControlName="closed">
+                <label class="form-check-label" for="closed">
+                  Closed
+                </label>
+              </div>
+            </div>
+          </div>
+      
+          <div class="form-row">
+            <div class="form-group col-md-10">
+              <label for="notes">Notes</label>
+              <textarea rows="2" class="form-control" id="notes" formControlName="notes"></textarea>
+            </div>
+          </div>
+      
+          <div class="form-row">
+            <div class="col-md-3"></div>
+            <div class="col-md-1">
+              <button class="btn btn-primary" type="button" (click)="activeModal.dismiss('Cancel click')">Cancel</button>
+            </div>
+            <div class="col-md-1"></div>
+            <div class="col-md-1">
+              <button class="btn btn-primary" type="submit">Save</button>
+            </div>
+          </div>
+          
+        </form>
+      </div>
 </div>
 
 

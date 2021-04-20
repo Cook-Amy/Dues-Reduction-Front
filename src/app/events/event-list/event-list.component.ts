@@ -2,9 +2,12 @@ import { Event } from './../../models/event.model';
 import { Venue } from './../../models/venue.model';
 import { VenueService } from './../../venues/venue.service';
 import { EventService } from './../event.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, ComponentRef, OnInit, ViewChild, Renderer2, ComponentFactoryResolver, ViewContainerRef, ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Season } from 'src/app/models/season.model';
+import { DataTableDirective } from 'angular-datatables';
+import { EventDetailComponent } from './event-detail/event-detail.component';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-event-list',
@@ -12,8 +15,14 @@ import { Season } from 'src/app/models/season.model';
   styleUrls: ['./event-list.component.css']
 })
 export class EventListComponent implements OnInit {
-  selectedSeason: string;
+  @ViewChild(DataTableDirective, {static: false}) dtElement: DataTableDirective;
+  dtOptions: any = {};
+  private childRow: ComponentRef<EventDetailComponent>;
 
+  activeForm: FormGroup;
+
+  selectedSeason: string;
+  gotData = false;
   eventsAll: Event[] = [];
   eventsPNC: Event[];
   eventsWC: Event[];
@@ -31,9 +40,13 @@ export class EventListComponent implements OnInit {
   constructor(private eventService: EventService, 
               private venueService: VenueService,
               private route: ActivatedRoute,
-              private router: Router) { }
+              private router: Router,
+              private _renderer: Renderer2,
+              private compFactory: ComponentFactoryResolver,
+              private viewRef: ViewContainerRef) { }
 
   ngOnInit() {
+    this.gotData = false;
     this.allVenues = this.venueService.returnAllVenues();
 
     this.eventService.getSeasons().subscribe(res => {
@@ -42,7 +55,6 @@ export class EventListComponent implements OnInit {
       this.eventService.setCurrentSeason(this.seasons[this.seasons.length - 2]);
       this.currentSeason = this.eventService.getCurrentSeason();
       this.currentSeasonID = this.currentSeason.idSeason;
-      console.log("current season: " + this.currentSeason + " : " + this.currentSeasonID);
 
       this.currentVenue = this.venueService.getCurrentVenue();
       this.currentVenueID = this.currentVenue.idvenue;
@@ -50,6 +62,7 @@ export class EventListComponent implements OnInit {
     });
 
     this.eventService.eventsAllChanged.subscribe(eventsChanged => {
+      this.gotData = false;
       this.setAllEvents(eventsChanged);
       this.router.navigate([], {relativeTo: this.route});
     });
@@ -59,7 +72,66 @@ export class EventListComponent implements OnInit {
       this.eventNew = newEventChanged;
     });
 
+      this.getDtOptions();
   }
+
+  getDtOptions() {
+    if(this.currentVenueID == 1) {
+
+    }
+
+    if(this.currentVenueID == 2) {
+
+    }
+
+    if(this.currentVenueID == 3) {
+      this.dtOptions = { 
+        paging: true,
+        pagingType: 'full_numbers',
+        pageLength: 20,
+        lengthChange: true,
+        columnDefs: [
+          {
+            targets: [2, 3],
+            type: 'date'
+          },
+          {
+            targets: [],
+            visible: false
+          }
+        ]
+      };
+    }
+  }
+
+  expandRow(trRef, rowData) {
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      var row = dtInstance.row(trRef);
+      if(row.child.isShown()) {
+        row.child.hide();
+        this._renderer.removeClass(trRef, 'shown');
+      }
+      else {
+        let factory = this.compFactory.resolveComponentFactory (EventDetailComponent);
+        this.childRow = this.viewRef.createComponent(factory);
+        this.childRow.instance.setEvent = [rowData];
+        this.childRow.instance.currentVenueID = this.currentVenueID;
+        this.childRow.instance.currentSeasonID = this.currentSeasonID;
+        row.child(this.childRow.location.nativeElement).show();
+        this._renderer.addClass(trRef, 'shown');
+      }
+    });
+  }
+
+  preserveExpandedRows(datatableRef, id, tableData):void {
+    try{
+      const expandedIds = datatableRef.expandedRows.map(x => x[id]);
+      datatableRef.expandedRows = tableData.filter(x => expandedIds.includes(x[id]));
+    } catch (error) {
+      if(error.name !== 'TypeError') throw error;
+    }
+  }
+
 
   getEvents() {
     this.eventService.getAllEvents().subscribe(allEvents => {
@@ -74,11 +146,11 @@ export class EventListComponent implements OnInit {
     this.eventsPNC = this.eventService.returnEventsPnc();
     this.eventsWC = this.eventService.returnEventsWc();
     this.eventsCF = this.eventService.returnEventsCf();
-
-    
+    this.gotData = true;
   }
 
   changeSeason(change) {
+    this.gotData = false;
     if(change.seasonSelect == 999) {
       this.eventService.setCurrentSeason(this.seasons[this.seasons.length - 1]);
     }

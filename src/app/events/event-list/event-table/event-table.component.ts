@@ -1,23 +1,20 @@
 import { Event } from './../../../models/event.model';
-import { Component, OnInit, Input } from '@angular/core';
-import {animate, state, style, transition, trigger} from '@angular/animations';
-
+import { Component, OnInit, Input, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
+import { Subject } from 'rxjs';
+import { DataTableDirective } from 'angular-datatables';
 
 @Component({
   selector: 'app-event-table',
   templateUrl: './event-table.component.html',
   styleUrls: ['./event-table.component.css'],
-  animations: [
-    trigger('detailExpand', [
-      state('collapsed', style({height: '0px', minHeight: '0'})),
-      state('expanded', style({height: '*'})),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-    ]),
-  ],
 })
-export class EventTableComponent implements OnInit {  
+export class EventTableComponent implements OnInit, AfterViewInit, OnDestroy {
+  @ViewChild(DataTableDirective, {static: false}) dtElement: DataTableDirective;  
   @Input() dataSource: Event[];
   @Input() currentVenueID: number;
+
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject();
 
   columnsToDisplay = ['Title', 'Date'];
   expandedElement: Event;
@@ -25,7 +22,43 @@ export class EventTableComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() { }
+  ngOnInit() { 
+    this.dtOptions = {
+      data: this.dataSource,
+      columns: [{
+        title: 'Name',
+        data: 'Name'
+      }, {
+        title: 'Email',
+        data: 'Email'
+      }, {
+        title: 'Phone',
+        data: 'Phone'
+      }], 
+      paging: true,
+      pagingType: 'full_numbers',
+      pageLength: 20,
+      lengthChange: true
+    };
+  }
+
+  ngAfterViewInit() {
+    this.dtTrigger.next();
+    this.rerender();
+
+  }
+
+  ngOnDestroy() {
+    this.dtTrigger.unsubscribe();
+  }
+
+  rerender(): void {
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      dtInstance.destroy();
+      this.dtTrigger.next();
+      console.log(JSON.stringify(this.dataSource));
+    });
+  }
 
   getDate(date) {
     if(date == null) {

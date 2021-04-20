@@ -5,6 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { EventService } from './../../event.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit, Input } from '@angular/core';
+import { NgbActiveModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
+import { Season } from 'src/app/models/season.model';
 
 @Component({
   selector: 'app-event-edit',
@@ -14,17 +16,33 @@ import { Component, OnInit, Input } from '@angular/core';
 export class EventEditComponent implements OnInit {
   @Input() event: Event;
   @Input() currentVenueID: number;
+  @Input() currentSeasonID: number;
 
+  modalOptions: NgbModalOptions;
   public dateValue: Date;
   editEventForm: FormGroup;
   idVenue: number;
+  currentSeason: Season;
 
   constructor(private eventService: EventService,
               private mathService: MathService,
               private route: ActivatedRoute,
-              private router: Router) { }
+              private router: Router,
+              public activeModal: NgbActiveModal) {
+                this.modalOptions = {
+                  backdrop:'static',
+                  backdropClass:'customBackdrop',
+                  size: 'xl',
+                  centered: true
+               } 
+              }
 
   ngOnInit() {
+    this.eventService.getSeasons().subscribe(res => {
+      this.eventService.setSeasons(res);
+      this.eventService.setCurrentSeasonById(this.currentSeasonID);
+      this.currentSeason = this.eventService.getCurrentSeason();
+    });
     this.idVenue = this.event.venueID;
     this.initForm();
   }
@@ -89,6 +107,7 @@ export class EventEditComponent implements OnInit {
   }
 
   checkForNullNum(num) {
+    num = parseFloat(num);
     if(num == null)
       return num;
     else  {
@@ -103,7 +122,6 @@ export class EventEditComponent implements OnInit {
 
   onSubmit() {
     this.updateEvent();
-
     if(this.idVenue == 1) {
       this.eventService.getPncContractInfo().subscribe(contract => {
         this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
@@ -148,7 +166,8 @@ export class EventEditComponent implements OnInit {
           this.eventService.editEvent(this.event, this.idVenue).subscribe(res => {
             this.eventService.getAllEvents().subscribe(events => {
               this.eventService.setAllEvents(events);
-              this.onCancelEdit();
+              this.activeModal.dismiss("Edit submitted");
+              //this.onCancelEdit();
             });
           });
         });

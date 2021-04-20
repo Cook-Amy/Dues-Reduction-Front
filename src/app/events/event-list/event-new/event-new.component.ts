@@ -140,6 +140,7 @@ export class EventNewComponent implements OnInit {
           this.allEvents.push(this.newEvent);
           this.eventService.setAllEvents(this.allEvents);
           this.allEvents = this.eventService.returnEventsPnc();
+          this.redirectTo();
         });
       });
     }
@@ -157,8 +158,9 @@ export class EventNewComponent implements OnInit {
           var timesheets: Timesheet[] = this.eventService.returnTimesheets();
           if(timesheets.length > 0) {
             this.eventService.updateAllTimesheetsInDB(timesheets).subscribe(x => {
-            })
+            });
           }
+          this.redirectTo();
         });
       });
     }
@@ -173,16 +175,36 @@ export class EventNewComponent implements OnInit {
           this.allEvents.push(this.newEvent);
           this.eventService.setAllEvents(this.allEvents);
           this.allEvents = this.eventService.returnEventsCf();
+          this.redirectTo();
         });
       });
     }
 
-    this.onCancel();
+    //this.onCancel();
   }
 
   onCancel() {
     this.eventService.setEventNew(false);
     this.router.navigate([], {relativeTo: this.route});
+  }
+
+  redirectTo() {
+    var route = this.router.url;
+    console.log("route: " + route);
+    var redir = '';
+    if(route == '/pnc/events')
+      redir = '/pnc';
+    else if(route == '/wc/events')
+      redir = '/wc';
+    else if(route == '/cf/events')
+      redir = '/cf';
+    else if(route == '/admin/events')
+      redir = '/admin';
+    else
+      redir = '/home';
+    
+    this.router.navigateByUrl(redir, {skipLocationChange: true}).then(()=>
+    this.router.navigate([route]));
   }
 
   createNewEvent() {

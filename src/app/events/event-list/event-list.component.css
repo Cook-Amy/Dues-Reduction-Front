@@ -2,3 +2,46 @@
   background-color: #0579AE;
   color: white;
 }
+
+/* Table Styling */
+table {
+  width: 100%;
+}
+
+.table th {
+  border-top: 5px solid maroon;
+  border-bottom: 5px solid maroon;
+}
+
+.table-striped>tbody>tr:nth-child(odd){
+  background-color: #9dddfb;
+}
+.table-striped>tbody>tr:nth-child(even){
+  background-color:#e7f7fe;
+}
+
+.table-striped>tbody>tr:hover {
+  background-color: maroon;
+  color: white;
+}
+
+td.dt-center {
+  text-align: center;
+}
+
+tr td:first-child {
+  cursor: pointer;
+  font-size: 1.2em;
+  color: 034563;
+  font-weight: 700;
+}
+tr td:first-child::before {
+  content: '+';
+}
+tr.shown td:first-child::before{
+  content: '-';
+}
+
+tr.shown td:nth-child(2)::before:hover{
+  background-color: white;
+}

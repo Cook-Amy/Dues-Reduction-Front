@@ -41,10 +41,110 @@
 
 
 <!-- Collapsible Table -->
-<app-event-table *ngIf="currentVenueID == 1" [currentVenueID]="currentVenueID" [dataSource]="eventsPNC"></app-event-table>
-<app-event-table *ngIf="currentVenueID == 2" [currentVenueID]="currentVenueID" [dataSource]="eventsWC"></app-event-table>
-<app-event-table *ngIf="currentVenueID == 3" [currentVenueID]="currentVenueID" [dataSource]="eventsCF"></app-event-table>
-<app-event-table *ngIf="currentVenueID == 99" [currentVenueID]="currentVenueID" [dataSource]="eventsAll"></app-event-table>
+<div *ngIf="currentVenueID == 1">
+  <table *ngIf="gotData == true" datatable [dtOptions]="dtOptions"  class="row-border hover table table-striped collapsed main-table">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Title</th>
+        <th>Date</th>
+        <th>Doors Open</th>
+        <th>Location</th>
+        <th>Total Sales</th>
+        <th>Payout</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr #trRef *ngFor="let event of eventsPNC" class="tableRow">
+        <td (click)="expandRow(trRef, event)"></td>
+        <td>{{ event.Title }}</td>
+        <td>{{ event.Date }}</td>
+        <td>{{ event.Date }}</td>
+        <td>{{ event.location }}</td>
+        <td>{{ event.totalSalesPnc }}</td>
+        <td>{{ event.payout }}</td>
+      </tr>
+    </tbody> 
+  </table>
+</div>
+
+<div *ngIf="currentVenueID == 2">
+  <table *ngIf="gotData == true" datatable [dtOptions]="dtOptions"  class="row-border hover table table-striped collapsed main-table">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Title</th>
+        <th>Date</th>
+        <th>Doors Open</th>
+        <th>Location</th>
+        <th>Payout</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr #trRef *ngFor="let event of eventsWC" class="tableRow">
+        <td (click)="expandRow(trRef, event)"></td>
+        <td>{{ event.Title }}</td>
+        <td>{{ event.Date }}</td>
+        <td>{{ event.Date }}</td>
+        <td>{{ event.location }}</td>
+        <td>{{ event.payout }}</td>
+      </tr>
+    </tbody> 
+  </table>
+</div>
+
+<div *ngIf="currentVenueID == 3">
+  <table *ngIf="gotData == true" datatable [dtOptions]="dtOptions"  class="row-border hover table table-striped collapsed main-table">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Title</th>
+        <th>Date</th>
+        <th>Doors Open</th>
+        <th>Location</th>
+        <th>Total Sales</th>
+        <th>Payout</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr #trRef *ngFor="let event of eventsCF" class="tableRow">
+        <td (click)="expandRow(trRef, event)"></td>
+        <td>{{ event.Title }}</td>
+        <td>{{ event.Date }}</td>
+        <td>{{ event.Date }}</td>
+        <td>{{ event.location }}</td>
+        <td>{{ event.totalSalesCf }}</td>
+        <td>{{ event.payout }}</td>
+      </tr>
+    </tbody> 
+  </table>
+</div>
+
+<div *ngIf="currentVenueID == 99">
+  <table *ngIf="gotData == true" datatable [dtOptions]="dtOptions"  class="row-border hover table table-striped collapsed main-table">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Title</th>
+        <th>Date</th>
+        <th>Doors Open</th>
+        <th>Location</th>
+        <th>Payout</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr #trRef *ngFor="let event of eventsAll" class="tableRow">
+        <td (click)="expandRow(trRef, event)"></td>
+        <td>{{ event.Title }}</td>
+        <td>{{ event.Date }}</td>
+        <td>{{ event.Date }}</td>
+        <td>{{ event.location }}</td>
+        <td>{{ event.payout }}</td>
+      </tr>
+    </tbody> 
+  </table>
+</div>
+
 
 
 

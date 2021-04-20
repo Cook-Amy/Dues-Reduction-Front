@@ -269,6 +269,15 @@ export class EventService {
     this.currentSeason = season;
   }
 
+  setCurrentSeasonById(id: number) {
+    for(var i = 0; i < this.seasons.length; i++) {
+      if(this.seasons[i]['idSeason'] == id) {
+        this.currentSeason = this.seasons[i];
+      }
+    }
+    return this.currentSeason;
+  }
+
   getCurrentSeason() {
     return this.currentSeason;
   }

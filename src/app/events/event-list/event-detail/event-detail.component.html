@@ -1,11 +1,11 @@
 <!--------------------------------------------------------------------
   - PNC event details 
 ---------------------------------------------------------------------->
-<div *ngIf="idVenue == 1">
+<div class="detailDiv" *ngIf="idVenue == 1">
   <div *ngIf="eventEdit == false">
 
     <!-- Event details -->
-    <table class="table table-sm table-responsive">
+    <table class="table table-sm">
       <tbody>
         <tr>
           <td colspan="4">Doors: {{ checkForNullString(getTime(event.Date)) }}</td>
@@ -63,7 +63,7 @@
     <!-- Buttons -->
     <tr>
       <td colspan="4">
-        <button type="button" class="btn event-btn" (click)="onEditEvent()">Edit Event</button>
+        <button type="button" class="btn event-btn" (click)="open()">Edit Event</button>
       </td>
       <td colspan="4">
         <button type="button" class="btn event-btn" (click)="confirmGateList=false; onDeleteEvent()">Delete Event</button>
@@ -284,9 +284,9 @@
 <!--------------------------------------------------------------------
   - WC event details 
 ---------------------------------------------------------------------->
-<div *ngIf="idVenue == 2">
+<div class="detailDiv" *ngIf="idVenue == 2">
   <div *ngIf="eventEdit == false">
-    <table class="table table-sm table-responsive">
+    <table class="table table-sm">
       <tbody>
         <tr>
           <td colspan="4">Doors: {{ checkForNullString(getTime(event.Date)) }}</td>
@@ -294,8 +294,8 @@
           <td colspan="4"></td>
         </tr>
         <tr>
-          <td colspan="4">Credit Card Tips: {{ (checkForNullNum(event.creditCardTips)).toFixed(2) }}</td>
-          <td colspan="4">Max Credit Card Tips: {{ (checkForNullNum(event.maxCreditCardTipAmount)).toFixed(2) }}</td>
+          <td colspan="4">Credit Card Tips: ${{ (checkForNullNum(event.creditCardTips)).toFixed(2) }}</td>
+          <td colspan="4">Max Credit Card Tips: ${{ (checkForNullNum(event.maxCreditCardTipAmount)).toFixed(2) }}</td>
           <td colspan="4">Venue Bonus: {{ (checkForNullNum(event.venueBonus)).toFixed(2) }}</td>
         </tr>
         <tr>
@@ -311,10 +311,10 @@
         <tr>
           <td colspan="4">TAC Cut: ${{ (checkForNullNum(event.tacCut)).toFixed(2) }}</td>
           <td colspan="4">DR Cut: ${{ (checkForNullNum(event.drCut)).toFixed(2) }}</td>
-          <td colspan="4">Coordinator Payout: {{ (checkForNullNum(event.coordinatorAdminAmt)).toFixed(2) }}</td>
+          <td colspan="4">Coordinator Payout: ${{ (checkForNullNum(event.coordinatorAdminAmt)).toFixed(2) }}</td>
         </tr>
         <tr>
-          <td colspan="12">Notes: ${{ checkForNullString(event.eventNotes) }}</td>
+          <td colspan="12">Notes: {{ checkForNullString(event.eventNotes) }}</td>
         </tr>
         <tr>
           <td colspan="4">  
@@ -567,9 +567,9 @@
 <!--------------------------------------------------------------------
   - CF event details 
 ---------------------------------------------------------------------->
-<div *ngIf="idVenue == 3">
+<div class="detailDiv" *ngIf="idVenue == 3">
   <div *ngIf="eventEdit == false">
-    <table class="table table-sm table-responsive">
+    <table class="table table-sm">
       <tbody>
         <tr>
           <td colspan="4">Doors: {{ checkForNullString(getTime(event.Date)) }}</td>
@@ -577,8 +577,8 @@
           <td colspan="4"></td>
         </tr>
         <tr>
-          <td colspan="4">Total Sales: {{ (checkForNullNum(event.totalSalesCf)).toFixed(2) }}</td>
-          <td colspan="4">Venue Bonus: {{ (checkForNullNum(event.venueBonus)).toFixed(2) }}</td>
+          <td colspan="4">Total Sales: ${{ (checkForNullNum(event.totalSalesCf)).toFixed(2) }}</td>
+          <td colspan="4">Venue Bonus: ${{ (checkForNullNum(event.venueBonus)).toFixed(2) }}</td>
         </tr>
         <tr>
           <td colspan="4">Payout: ${{ (checkForNullNum(event.payout)).toFixed(2) }}</td>
@@ -593,10 +593,10 @@
         <tr>
           <td colspan="4">TAC Cut: ${{ (checkForNullNum(event.tacCut)).toFixed(2) }}</td>
           <td colspan="4">DR Cut: ${{ (checkForNullNum(event.drCut)).toFixed(2) }}</td>
-          <td colspan="4">Coordinator Payout: {{ (checkForNullNum(event.coordinatorAdminAmt)).toFixed(2) }}</td>
+          <td colspan="4">Coordinator Payout: ${{ (checkForNullNum(event.coordinatorAdminAmt)).toFixed(2) }}</td>
         </tr>
         <tr>
-          <td colspan="12">Notes: ${{ checkForNullString(event.eventNotes) }}</td>
+          <td colspan="12">Notes: {{ checkForNullString(event.eventNotes) }}</td>
         </tr>
         <tr>
           <td colspan="4">  
@@ -612,20 +612,14 @@
 
     <tr>
       <td colspan="4">
-        <button type="button" class="btn event-btn" (click)="onEditEvent()">Edit Event</button>
+        <button type="button" class="btn event-btn" (click)="openEdit()">Edit Event</button>
       </td>
       <td colspan="4">
-        <button type="button" class="btn event-btn" (click)="confirmGateList=false; onDeleteEvent()">Delete Event</button>
+        <button type="button" class="btn event-btn" (click)="confirmGateList=false; openDeleteEvent()">Delete Event</button>
       </td>
     </tr>
-
-    <div class="deleteConfirm" *ngIf="confirmDelete">
-      Are your sure you want to delete this event?&nbsp;
-      <button class="btn btn-outline-danger" (click)="onDeleteNo()">No</button>
-      &nbsp;&nbsp;
-      <button class="btn btn-outline-info" (click)="onDeleteYes()">Yes</button>
-    </div>
     
+    <br>
     <div class="row">
       <div class="col-md-12">
         <div *ngIf="!getStaff">
@@ -795,7 +789,7 @@
     </div> <!-- row -->
   </div>
 
-  <app-event-edit *ngIf="eventEdit == true" [currentVenueID]="currentVenueID" [event]="event"></app-event-edit>
+  <!-- <app-event-edit *ngIf="eventEdit == true" [currentVenueID]="currentVenueID" [event]="event"></app-event-edit> -->
 
   
 </div>
