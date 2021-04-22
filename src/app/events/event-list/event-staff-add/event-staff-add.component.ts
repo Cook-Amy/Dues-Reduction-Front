@@ -8,6 +8,8 @@ import { Job } from './../../../models/job.model';
 import { EventService } from './../../event.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit, Input } from '@angular/core';
+import { NgbActiveModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
+import { Season } from 'src/app/models/season.model';
 
 @Component({
   selector: 'app-event-staff-add',
@@ -16,21 +18,38 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class EventStaffAddComponent implements OnInit {
   @Input() event: Event;
+  @Input() currentSeasonID: number;
 
+  currentSeason: Season;
   staffAddForm: FormGroup;
   jobs: Job[] = [];
   staff: Staff[] = [];
   timesheet: Timesheet;
   idVenue: number; 
   interval: number = 15;
+  modalOptions: NgbModalOptions;
 
   constructor(private eventService: EventService,
               private staffService: StaffService,
               private mathService: MathService,
               private route: ActivatedRoute,
-              private router: Router) { }
+              private router: Router, 
+              public activeModal: NgbActiveModal) {
+                this.modalOptions = {
+                  backdrop:'static',
+                  backdropClass:'customBackdrop',
+                  size: 'xl',
+                  centered: true
+               }  
+              }
 
   ngOnInit() {
+    this.eventService.getSeasons().subscribe(res => {
+      this.eventService.setSeasons(res);
+      this.eventService.setCurrentSeasonById(this.currentSeasonID);
+      this.currentSeason = this.eventService.getCurrentSeason();
+    });
+    
     this.idVenue = this.event.venueID;
     this.initForm();
 
@@ -138,8 +157,7 @@ export class EventStaffAddComponent implements OnInit {
             this.eventService.editEvent(this.event, this.idVenue).subscribe(res => {
               this.eventService.getAllEvents().subscribe(events => {
                 this.eventService.setAllEvents(events);
-                this.eventService.setEventStaffEdit(false);
-                this.router.navigate([], {relativeTo: this.route});
+                this.activeModal.close("added");
               });
             });
           });
@@ -153,8 +171,7 @@ export class EventStaffAddComponent implements OnInit {
             this.eventService.editEvent(this.event, this.idVenue).subscribe(res => {
               this.eventService.getAllEvents().subscribe(events => {
                 this.eventService.setAllEvents(events);
-                this.eventService.setEventStaffEdit(false);
-                this.router.navigate([], {relativeTo: this.route});
+                this.activeModal.close("added");
               });
             });
           });
@@ -168,18 +185,13 @@ export class EventStaffAddComponent implements OnInit {
             this.eventService.editEvent(this.event, this.idVenue).subscribe(res => {
               this.eventService.getAllEvents().subscribe(events => {
                 this.eventService.setAllEvents(events);
-                this.eventService.setEventStaffEdit(false);
-                this.router.navigate([], {relativeTo: this.route});
+                this.activeModal.close("added");
               });
             });
           });
         });
       }
     });
-  }
-
-  onCancelAdd() {
-    this.eventService.setEventStaffAdd(false);
   }
 
   createTimesheet() {

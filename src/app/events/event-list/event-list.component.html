@@ -58,8 +58,8 @@
       <tr #trRef *ngFor="let event of eventsPNC" class="tableRow">
         <td (click)="expandRow(trRef, event)"></td>
         <td>{{ event.Title }}</td>
-        <td>{{ event.Date }}</td>
-        <td>{{ event.Date }}</td>
+        <td>{{ getDate(checkForNullString(event.Date)) }}</td>
+        <td>{{ getTime(checkForNullString(event.Date)) }}</td>
         <td>{{ event.location }}</td>
         <td>{{ event.totalSalesPnc }}</td>
         <td>{{ event.payout }}</td>
@@ -84,8 +84,8 @@
       <tr #trRef *ngFor="let event of eventsWC" class="tableRow">
         <td (click)="expandRow(trRef, event)"></td>
         <td>{{ event.Title }}</td>
-        <td>{{ event.Date }}</td>
-        <td>{{ event.Date }}</td>
+        <td>{{ getDate(checkForNullString(event.Date)) }}</td>
+        <td>{{ getTime(checkForNullString(event.Date)) }}</td>
         <td>{{ event.location }}</td>
         <td>{{ event.payout }}</td>
       </tr>
@@ -110,8 +110,8 @@
       <tr #trRef *ngFor="let event of eventsCF" class="tableRow">
         <td (click)="expandRow(trRef, event)"></td>
         <td>{{ event.Title }}</td>
-        <td>{{ event.Date }}</td>
-        <td>{{ event.Date }}</td>
+        <td>{{ getDate(checkForNullString(event.Date)) }}</td>
+        <td>{{ getTime(checkForNullString(event.Date)) }}</td>
         <td>{{ event.location }}</td>
         <td>{{ event.totalSalesCf }}</td>
         <td>{{ event.payout }}</td>
@@ -136,8 +136,8 @@
       <tr #trRef *ngFor="let event of eventsAll" class="tableRow">
         <td (click)="expandRow(trRef, event)"></td>
         <td>{{ event.Title }}</td>
-        <td>{{ event.Date }}</td>
-        <td>{{ event.Date }}</td>
+        <td>{{ getDate(checkForNullString(event.Date)) }}</td>
+        <td>{{ getTime(checkForNullString(event.Date)) }}</td>
         <td>{{ event.location }}</td>
         <td>{{ event.payout }}</td>
       </tr>

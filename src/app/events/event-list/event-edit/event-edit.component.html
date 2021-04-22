@@ -13,7 +13,7 @@
     <form [formGroup]="editEventForm" (ngSubmit)="onSubmit()">
   
       <div class="form-row">
-        <div class="form-group col-md-8">
+        <div class="form-group col-md-10">
           <label for="eventTitle">Title</label>
           <input type="text" class="form-control" id="eventTitle" formControlName="eventTitle">
         </div>
@@ -21,7 +21,7 @@
       </div>
   
       <div class="form-row">
-        <div class="form-group col-md-3">
+        <div class="form-group col-md-4">
           <label for="dateTime">Date & Time</label>
           <ejs-datetimepicker class="date-picker" id='datetimepicker' [value]='dateValue' formControlName="dateTime"></ejs-datetimepicker>
         </div>
@@ -65,35 +65,35 @@
       </div>
   
       <div class="form-row">
-        <div class="form-group col-md-2">
+        <div class="form-group col-md-3">
           <label for="totalSalesPnc">Total Sales</label>
           <input type="text" class="form-control" id="totalSalesPnc" formControlName="totalSalesPnc">
         </div>
-        <div class="form-group col-md-2">
+        <div class="form-group col-md-3">
           <label for="alcSales">Alcohol Sales</label>
           <input type="text" class="form-control" id="alcSales"formControlName="alcSales">
         </div>
-        <div class="form-group col-md-2">
+        <div class="form-group col-md-3">
           <label for="bonus">Venue Bonus</label>
           <input type="text" class="form-control" id="bonus" formControlName="bonus">
         </div>
-        <div class="form-group col-md-2">
+        <div class="form-group col-md-3">
           <label for="checkRcvd">Check Recieved</label>
           <input type="text" class="form-control" id="checkRcvd" formControlName="checkRcvd">
         </div>
       </div>
   
       <div class="form-row">
-        <div class="form-group col-md-8">
+        <div class="form-group col-md-10">
           <label for="notes">Notes</label>
           <textarea rows="2" class="form-control" id="notes" formControlName="notes"></textarea>
         </div>
       </div>
   
       <div class="form-row">
-        <div class="col-md-6"></div>
+        <div class="col-md-3"></div>
         <div class="col-md-1">
-          <button class="btn btn-primary" type="button" (click)="onCancelEdit()">Cancel</button>
+          <button class="btn btn-primary" type="button" (click)="activeModal.dismiss('Cancel click')">Cancel</button>
         </div>
         <div class="col-md-1"></div>
         <div class="col-md-1">
@@ -109,11 +109,18 @@
 -- WC Edit Event
 ------------------------------------------------------------------------------>
 <div *ngIf="idVenue == 2">
-  <div>
+  <div class="modal-header">
+    <h5 class="modal-title" id="editModalLabel">Edit: {{ event.Title }}</h5>
+    <button class="close" type="button" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
     <form [formGroup]="editEventForm" (ngSubmit)="onSubmit()">
   
       <div class="form-row">
-        <div class="form-group col-md-8">
+        <div class="form-group col-md-10">
           <label for="eventTitle">Title</label>
           <input type="text" class="form-control" id="eventTitle" formControlName="eventTitle">
         </div>
@@ -121,7 +128,7 @@
       </div>
   
       <div class="form-row">
-        <div class="form-group col-md-3">
+        <div class="form-group col-md-4">
           <label for="dateTime">Date & Time</label>
           <ejs-datetimepicker class="date-picker" id='datetimepicker' [value]='dateValue' formControlName="dateTime"></ejs-datetimepicker>
         </div>
@@ -166,16 +173,16 @@
       </div>
   
       <div class="form-row">
-        <div class="form-group col-md-8">
+        <div class="form-group col-md-10">
           <label for="notes">Notes</label>
           <textarea rows="2" class="form-control" id="notes" formControlName="notes"></textarea>
         </div>
       </div>
   
       <div class="form-row">
-        <div class="col-md-6"></div>
+        <div class="col-md-3"></div>
         <div class="col-md-1">
-          <button class="btn btn-primary" type="button" (click)="onCancelEdit()">Cancel</button>
+          <button class="btn btn-primary" type="button" (click)="activeModal.dismiss('Cancel click')">Cancel</button>
         </div>
         <div class="col-md-1"></div>
         <div class="col-md-1">

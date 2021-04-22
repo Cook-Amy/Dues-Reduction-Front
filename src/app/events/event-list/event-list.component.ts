@@ -180,5 +180,49 @@ export class EventListComponent implements OnInit {
   addNewEvent() {
     this.eventNew = true;
   }
+
+  getDate(date) {
+    if(date == null) {
+      return "---";
+    }
+    else {
+      var newDate: Date = new Date(date);
+
+      if(newDate.getDate()) {
+        var convertDate = (newDate.getMonth() + 1) + '-' + newDate.getDate() + '-' + newDate.getFullYear();
+        return convertDate;
+      } 
+      else {
+        return date;
+      }
+    }
+  }
+
+  getTime(date) {
+    if(date == null) {
+      date = this.checkForNullString(date);
+    }
+    var newDate: Date = new Date(date);
+    var hours = newDate.getHours();
+    var night = "PM";
+    if(hours < 12) {
+      night = "AM";
+    }
+    if(hours > 12) {
+      hours -= 12;
+    }
+    var min = (newDate.getMinutes() < 10 ? '0' : '') + newDate.getMinutes();
+
+    var convertDate = hours + ':' + min + " " + night;
+    return convertDate;
+  }
+
+  checkForNullString(str) {
+    if(str == null)
+      return '0';
+    else  
+      return str;
+  }
+
 }
 

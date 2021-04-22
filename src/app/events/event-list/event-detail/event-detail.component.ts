@@ -1,16 +1,17 @@
-import { ActivatedRoute, Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
-import { EmailService } from './../../../email/email.service';
 import { Event } from './../../../models/event.model';
-import { MathService } from './../../math.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { GateListService } from '../../../createReports/gateList.service';
 import { Timesheet } from './../../../models/timesheet.model';
 import { EventService } from './../../event.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { EventEditComponent } from './../event-edit/event-edit.component';
 import { ConfirmDeleteComponent } from './modals/confirm-delete/confirm-delete.component';
+import { EventStaffEditComponent } from '../event-staff-edit/event-staff-edit.component';
+import { EventStaffAddComponent } from '../event-staff-add/event-staff-add.component';
+import { AddShuttleBonusComponent } from './modals/add-shuttle-bonus/add-shuttle-bonus.component';
+import { AddEventBonusComponent } from './modals/add-event-bonus/add-event-bonus.component';
+import { AddHourlyBonusComponent } from './modals/add-hourly-bonus/add-hourly-bonus.component';
+import { SendEventReminderComponent } from './modals/send-event-reminder/send-event-reminder.component';
+import { SendGateListComponent } from './modals/send-gate-list/send-gate-list.component';
 
 @Component({
   selector: 'app-event-detail',
@@ -23,7 +24,6 @@ export class EventDetailComponent implements OnInit {
   @Input() currentSeasonID: number;
 
   modalOptions:NgbModalOptions;
-  closeResult: string;
 
   event: Event;
   idVenue: number;
@@ -34,29 +34,10 @@ export class EventDetailComponent implements OnInit {
   eventStaffEdit: Boolean;
   eventStaffAdd: Boolean;
   editTimesheet: Timesheet;
-  confirmGateList = false;
-  gateListForm: FormGroup;
-  addShuttleBonus = false;
-  addEventBonus = false;
-  addHourlyBonus = false;
-  eventTimeDate: Date;
   eventID: number;
-  sbForm: FormGroup;
-  ebForm: FormGroup;
-  hbForm: FormGroup;
-  reminderInfo = false;
   checklist: any[] = [];
-  checkedList: any[];
-  masterSelected: boolean; 
-  noStaffMsg: boolean = false;
 
   constructor(private eventService: EventService,
-              private gateListService: GateListService,
-              private mathService: MathService,
-              private emailService: EmailService,
-              private toastr: ToastrService,
-              private route: ActivatedRoute,
-              private router: Router,
               private modalServices: NgbModal) { 
                 this.modalOptions = {
                   backdrop: 'static',
@@ -68,7 +49,6 @@ export class EventDetailComponent implements OnInit {
 
   ngOnInit() { 
     this.event = this.setEvent[0];
-    this.masterSelected = false;
     this.idVenue = this.event.venueID;
     this.eventEdit = this.eventService.getEventEdit();
     this.eventStaffEdit = this.eventService.getEventStaffEdit();
@@ -77,93 +57,14 @@ export class EventDetailComponent implements OnInit {
     });
     this.eventService.eventStaffEditChanged.subscribe(newStaffEditChanged => {
       this.eventStaffEdit = newStaffEditChanged;
- 
+      this.getStaff = null; 
+      this.getTimesheetForEvent();
     });
     this.eventService.eventStaffAddChanged.subscribe(newStaffAddChanged => {
       this.eventStaffAdd = newStaffAddChanged;
+      this.getStaff = null; 
+      this.getTimesheetForEvent();
     });
-
-    this.initForm1();
-    this.initForm2();
-    this.initForm3();
-    this.initForm4();
-  }
-
-  private initForm1() {
-    let emailGateList = true;
-    let downloadGateList = false;
-    
-    this.gateListForm = new FormGroup({
-      'emailGateList': new FormControl(emailGateList, Validators.required),
-      'downloadGateList': new FormControl(downloadGateList, Validators.required)
-    });
-  }
-
-  private initForm2() {
-    let ebAmount = 0;
-
-    this.ebForm = new FormGroup({
-      'ebAmount': new FormControl(ebAmount, Validators.required)
-    });
-  }
-
-  private initForm3() {
-    let hbAmount = 0;
-
-    this.hbForm = new FormGroup({
-      'hbAmount': new FormControl(hbAmount, Validators.required)
-    });
-  }
-
-  private initForm4() {
-    let sbAmount = 0;
-    this.sbForm = new FormGroup({
-      'sbAmount': new FormControl(sbAmount, Validators.required)
-    });
-  }
-
-  onGateListSubmit() {
-    let email = this.gateListForm.value['emailGateList'];
-    let download = this.gateListForm.value['downloadGateList'];
-
-    if(email || download) {
-      this.gateListService.getStaffForEvent(this.event.idevent).subscribe(staff => {
-        if(!staff) {
-          this.confirmGateList = false;
-          this.noStaffMsg = true;
-        }
-        else {
-          if(this.currentVenueID == 1) {
-            this.gateListService.generatePncGateList(this.event, staff, email, download).subscribe(results => {
-              if(email) {
-                this.toastr.success("Gate List was emailed.", "SUCCESS!", {
-                  closeButton: true,
-                  timeOut: 3000
-                });
-              }
-              if(download) {
-                window.open(window.URL.createObjectURL(results));
-              }
-              this.confirmGateList = false; 
-             });
-          }
-          else if(this.currentVenueID == 2) {
-            this.gateListService.generateWcGateList(this.event, staff, email, download). subscribe(results => {
-              if(email) {
-                this.toastr.success("Gate List was emailed.", "SUCCESS!", {
-                  closeButton: true,
-                  timeOut: 3000
-                });
-              }
-              if(download) {
-                window.open(window.URL.createObjectURL(results));
-              }
-             this.confirmGateList = false; 
-             });
-          }
-        }
-    });
-    }
   }
 
   getTimesheetForEvent() {
@@ -184,10 +85,6 @@ export class EventDetailComponent implements OnInit {
         });
       }
     });
-  }
-
-  onEditEvent() {
-    this.eventEdit = true;
   }
 
   getTime(date) {
@@ -234,317 +131,18 @@ export class EventDetailComponent implements OnInit {
 
   onEditStaff(sheet: Timesheet) {
     this.editTimesheet = sheet;
-    this.eventStaffEdit = true;
+    this.openEditStaff();
   }
 
-  onAddStaff() {
-    this.eventStaffAdd = true;
-  }
+  onAddStaff() { this.openAddStaff(); }
 
-  onAddShuttleBonus() {
-    this.addHourlyBonus = false;
-    this.addEventBonus = false;
-    this.addShuttleBonus = true;
+  onAddShuttleBonus() { this.openAddShuttleBonus(); }
 
-  }
+  onAddEventBonus() { this.openAddEventBonus(); }
 
-  onAddEventBonus() { 
-    this.addHourlyBonus = false;
-    this.addShuttleBonus = false;
-    this.addEventBonus = true; 
-  }
+  onAddHourlyBonus() { this.openAddHourlyBonus(); }
 
-  onAddHourlyBonus() { 
-    this.addEventBonus = false;
-    this.addShuttleBonus = false;
-    this.addHourlyBonus = true; 
-  }
-
-  onShuttleBonusAdded() {
-    var sb = this.sbForm.value['sbAmount'];
-    this.timesheet.forEach(ts => {
-      ts.shuttleBonus += sb;
-    });
-
-    this.mathService.calculateTimeSheets(this.timesheet);
-    this.eventService.setTimesheets(this.timesheet);
-    this.eventService.updateAllTimesheetsInDB(this.timesheet).subscribe(res => {
-
-      if(this.currentVenueID == 1) {
-        this.eventService.getPncContractInfo().subscribe(contract => {
-          this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
-            this.event = this.mathService.calculatePncEvent(this.event, contract[0], timesheets);
-            this.eventService.editEvent(this.event, this.currentVenueID).subscribe(res => {
-              this.eventService.getAllEvents().subscribe(events => {
-                this.eventService.setAllEvents(events);
-                this.eventService.setEventStaffEdit(false);
-                // this.router.navigate([], {relativeTo: this.route});
-                this.onCancelBonus();
-              });
-            });
-          });
-        });
-      }
-
-      else if(this.currentVenueID == 2) {
-        this.eventService.getWcContractInfo().subscribe(contract => {
-          this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
-            this.event = this.mathService.calculateWcEvent(this.event, contract[0], timesheets);
-            this.eventService.editEvent(this.event, this.currentVenueID).subscribe(res => {
-              this.eventService.getAllEvents().subscribe(events => {
-                this.eventService.setAllEvents(events);
-                this.eventService.setEventStaffEdit(false);
-                // this.router.navigate([], {relativeTo: this.route});
-                this.onCancelBonus();
-              });
-            });
-          });
-        });
-      }
-
-      else if(this.currentVenueID == 3) {
-        this.eventService.getCfContractInfo().subscribe(contract => {
-          this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
-            this.event = this.mathService.calculateCfEvent(this.event, contract[0], timesheets);
-            this.eventService.editEvent(this.event, this.currentVenueID).subscribe(res => {
-              this.eventService.getAllEvents().subscribe(events => {
-                this.eventService.setAllEvents(events);
-                this.eventService.setEventStaffEdit(false);
-                // this.router.navigate([], {relativeTo: this.route});
-                this.onCancelBonus();
-              });
-            });
-          });
-        });
-      }
-    });
-  }
-
-  onEventBonusAdded() {
-    var eb = this.ebForm.value['ebAmount'];
-    this.timesheet.forEach(ts => {
-      ts.eventBonus += eb;
-    });
-
-    this.mathService.calculateTimeSheets(this.timesheet);
-    this.eventService.setTimesheets(this.timesheet);
-    this.eventService.updateAllTimesheetsInDB(this.timesheet).subscribe(res => {
-
-      if(this.currentVenueID == 1) {
-        this.eventService.getPncContractInfo().subscribe(contract => {
-          this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
-            this.event = this.mathService.calculatePncEvent(this.event, contract[0], timesheets);
-            this.eventService.editEvent(this.event, this.currentVenueID).subscribe(res => {
-              this.eventService.getAllEvents().subscribe(events => {
-                this.eventService.setAllEvents(events);
-                this.eventService.setEventStaffEdit(false);
-                // this.router.navigate([], {relativeTo: this.route});
-                this.onCancelBonus();
-              });
-            });
-          });
-        });
-      }
-
-      else if(this.currentVenueID == 2) {
-        this.eventService.getWcContractInfo().subscribe(contract => {
-          this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
-            this.event = this.mathService.calculateWcEvent(this.event, contract[0], timesheets);
-            this.eventService.editEvent(this.event, this.currentVenueID).subscribe(res => {
-              this.eventService.getAllEvents().subscribe(events => {
-                this.eventService.setAllEvents(events);
-                this.eventService.setEventStaffEdit(false);
-                // this.router.navigate([], {relativeTo: this.route});
-                this.onCancelBonus();
-              });
-            });
-          });
-        });
-      }
-
-      else if(this.currentVenueID == 3) {
-        this.eventService.getCfContractInfo().subscribe(contract => {
-          this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
-            this.event = this.mathService.calculateCfEvent(this.event, contract[0], timesheets);
-            this.eventService.editEvent(this.event, this.currentVenueID).subscribe(res => {
-              this.eventService.getAllEvents().subscribe(events => {
-                this.eventService.setAllEvents(events);
-                this.eventService.setEventStaffEdit(false);
-                // this.router.navigate([], {relativeTo: this.route});
-                this.onCancelBonus();
-              });
-            });
-          });
-        });
-      }
-    });
-  }
-
-  onHourlyBonusAdded() {
-    var hb = this.hbForm.value['hbAmount'];
-    this.timesheet.forEach(ts => {
-      ts.hourlyBonus += hb;
-    });
-
-    this.mathService.calculateTimeSheets(this.timesheet);
-    this.eventService.setTimesheets(this.timesheet);
-    this.eventService.updateAllTimesheetsInDB(this.timesheet).subscribe(res => {
-      if(this.currentVenueID == 1) {
-        this.eventService.getPncContractInfo().subscribe(contract => {
-          this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
-            this.event = this.mathService.calculatePncEvent(this.event, contract[0], timesheets);
-            this.eventService.editEvent(this.event, this.currentVenueID).subscribe(res => {
-              this.eventService.getAllEvents().subscribe(events => {
-                this.eventService.setAllEvents(events);
-                this.eventService.setEventStaffEdit(false);
-                // this.router.navigate([], {relativeTo: this.route});
-                this.onCancelBonus();
-              });
-            });
-          });
-        });
-      }
-
-      else if(this.currentVenueID == 2) {
-        this.eventService.getWcContractInfo().subscribe(contract => {
-          this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
-            this.event = this.mathService.calculateWcEvent(this.event, contract[0], timesheets);
-            this.eventService.editEvent(this.event, this.currentVenueID).subscribe(res => {
-              this.eventService.getAllEvents().subscribe(events => {
-                this.eventService.setAllEvents(events);
-                this.eventService.setEventStaffEdit(false);
-                // this.router.navigate([], {relativeTo: this.route});
-                this.onCancelBonus();
-              });
-            });
-          });
-        });
-      }
-
-      else if(this.currentVenueID == 3) {
-        this.eventService.getCfContractInfo().subscribe(contract => {
-          this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
-            this.event = this.mathService.calculateCfEvent(this.event, contract[0], timesheets);
-            this.eventService.editEvent(this.event, this.currentVenueID).subscribe(res => {
-              this.eventService.getAllEvents().subscribe(events => {
-                this.eventService.setAllEvents(events);
-                this.eventService.setEventStaffEdit(false);
-                // this.router.navigate([], {relativeTo: this.route});
-                this.onCancelBonus();
-              });
-            });
-          });
-        });
-      }
-    });
-  }
-
-  onCancelBonus() {
-    this.addShuttleBonus = false;
-    this.addEventBonus = false;
-    this.addHourlyBonus = false;
-  }
-
-  getReminderDate(date) {
-    if(date == null) {
-      return "----";
-    }
-    else {
-      var newDate: Date = new Date(date);
-  
-      if(newDate.getDate()) {
-        var convertDate = (newDate.getMonth() + 1) + '-' + newDate.getDate() + '-' + newDate.getFullYear();
-        return convertDate;
-      } 
-      else {
-        return date;
-      }
-    }
-  }
-
-  onSendReminder() {
-    this.reminderInfo = true;
-  }
-
-  onCancelReminder() {
-    this.reminderInfo = false;
-  }
-
-  onSubmitReminder() {
-    // TODO: log last reminder date
-
-    this.getCheckedItemList();
-    var list = this.checkedList;
-
-    if(this.idVenue == 1) {
-      this.emailService.sendPncReminderEmail(list, this.event.idevent).subscribe(res => {
-          this.toastr.success("Event reminder was emailed.", "SUCCESS!", {
-            closeButton: true,
-            timeOut: 3000
-          });
-        this.eventService.getAllEvents().subscribe(events => {
-          this.eventService.setAllEvents(events);
-          this.eventService.setEventStaffEdit(false);
-          this.onCancelReminder();
-        });
-      });
-    }
-
-    else if(this.idVenue == 2) {
-      this.emailService.sendWcReminderEmail(list, this.event.idevent).subscribe(res => {
-        this.toastr.success("Event reminder was emailed.", "SUCCESS!", {
-          closeButton: true,
-          timeOut: 3000
-        });
-        this.eventService.getAllEvents().subscribe(events => {
-          this.eventService.setAllEvents(events);
-          this.eventService.setEventStaffEdit(false);
-          this.onCancelReminder();
-        });
-      });
-    }
-
-    else if(this.idVenue == 3) {
-      this.emailService.sendCfReminderEmail(list, this.event.idevent).subscribe(res => {
-        this.toastr.success("Event reminder was emailed.", "SUCCESS!", {
-          closeButton: true,
-          timeOut: 3000
-        });
-        this.eventService.getAllEvents().subscribe(events => {
-          this.eventService.setAllEvents(events);
-          this.eventService.setEventStaffEdit(false);
-          this.onCancelReminder();
-        });
-      });
-    }
-  }
-
-  checkUncheckAll() {
-    for (var i = 0; i < this.checklist.length; i++) {
-      this.checklist[i].isSelected = this.masterSelected;
-    }
-    this.getCheckedItemList();
-  }
-   
-  isAllSelected() {
-    this.masterSelected = this.checklist.every(function(item: any) {
-      return item.isSelected == true;
-    });
-    this.getCheckedItemList();
-  }
-
-  getCheckedItemList() {
-    this.checkedList = [];
-    for(var i = 0; i < this.checklist.length; i++) {
-      if(this.checklist[i].isSelected) {
-        this.checkedList.push(this.checklist[i]);
-      }
-    }
-  }
-
-  onOkNoStaff() {
-    this.noStaffMsg = false;
-  }
+  onSendReminder() { this.openEventReminder(); }
 
   openEdit() {
     const modalRef = this.modalServices.open(EventEditComponent);
@@ -557,5 +155,86 @@ export class EventDetailComponent implements OnInit {
     const modalRef = this.modalServices.open(ConfirmDeleteComponent);
     modalRef.componentInstance.event = this.event;
     modalRef.componentInstance.currentSeasonID = this.currentSeasonID;
+  }
+
+  openEditStaff() {
+    const modalRef = this.modalServices.open(EventStaffEditComponent);
+    modalRef.componentInstance.timesheet = this.editTimesheet;
+    modalRef.componentInstance.event = this.event;
+    modalRef.componentInstance.currentSeasonID = this.currentSeasonID;
+    modalRef.result.then((result) => {
+      if(result) {
+        this.eventService.setEventStaffEdit(true);
+      }
+    });
+  }
+
+  openAddStaff() {
+    const modalRef = this.modalServices.open(EventStaffAddComponent);
+    modalRef.componentInstance.event = this.event;
+    modalRef.componentInstance.currentSeasonID = this.currentSeasonID;
+    modalRef.result.then((result) => {
+      if(result) {
+        this.eventService.setEventStaffAdd(true);
+      }
+    });
+  }
+
+  openAddShuttleBonus() {
+    const modalRef = this.modalServices.open(AddShuttleBonusComponent);
+    modalRef.componentInstance.event = this.event;
+    modalRef.componentInstance.currentSeasonID = this.currentSeasonID;
+    modalRef.componentInstance.currentVenueID = this.currentVenueID;
+    modalRef.componentInstance.timesheet = this.timesheet;
+    modalRef.result.then((result) => {
+      if(result) {
+        this.eventService.setEventStaffEdit(true);
+      }
+    });
+  }
+
+  openAddEventBonus() {
+    const modalRef = this.modalServices.open(AddEventBonusComponent);
+    modalRef.componentInstance.event = this.event;
+    modalRef.componentInstance.currentSeasonID = this.currentSeasonID;
+    modalRef.componentInstance.currentVenueID = this.currentVenueID;
+    modalRef.componentInstance.timesheet = this.timesheet;
+    modalRef.result.then((result) => {
+      if(result) {
+        this.eventService.setEventStaffEdit(true);
+      }
+    });
+  }
+
+  openAddHourlyBonus() {
+    const modalRef = this.modalServices.open(AddHourlyBonusComponent);
+    modalRef.componentInstance.event = this.event;
+    modalRef.componentInstance.currentSeasonID = this.currentSeasonID;
+    modalRef.componentInstance.currentVenueID = this.currentVenueID;
+    modalRef.componentInstance.timesheet = this.timesheet;
+    modalRef.result.then((result) => {
+      if(result) {
+        this.eventService.setEventStaffEdit(true);
+      }
+    });
+  }
+
+  openEventReminder() {
+    const modalRef = this.modalServices.open(SendEventReminderComponent);
+    modalRef.componentInstance.event = this.event;
+    modalRef.componentInstance.currentSeasonID = this.currentSeasonID;
+    modalRef.componentInstance.currentVenueID = this.currentVenueID;
+    modalRef.componentInstance.checklist = this.checklist;
+    modalRef.result.then((result) => {
+      if(result) {
+        this.eventService.setEventStaffEdit(true);
+      }
+    });
+  }
+
+  openSendGateList() {
+    const modalRef = this.modalServices.open(SendGateListComponent);
+    modalRef.componentInstance.event = this.event;
+    modalRef.componentInstance.currentVenueID = this.currentVenueID;
   }
 }

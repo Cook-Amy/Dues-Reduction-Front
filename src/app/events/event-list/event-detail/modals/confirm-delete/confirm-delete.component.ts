@@ -1,10 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { EventService } from 'src/app/events/event.service';
 import { Event } from 'src/app/models/event.model';
 import { NgbActiveModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { Season } from 'src/app/models/season.model';
-import { EventListComponent } from '../../../event-list.component';
 
 @Component({
   selector: 'app-confirm-delete',
@@ -19,7 +18,6 @@ export class ConfirmDeleteComponent implements OnInit {
   currentSeason: Season;
   
   constructor(private eventService: EventService,
-    private route: ActivatedRoute,
     private router: Router,
     public activeModal: NgbActiveModal) {
       this.modalOptions = {

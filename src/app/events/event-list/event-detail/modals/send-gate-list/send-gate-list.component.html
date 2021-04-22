@@ -1,0 +1,59 @@
+    <!-- Gate list Confirm -->
+    <div class="modal-header">
+        <h5 class="modal-title" id="editModalLabel">Send Gate List</h5>
+        <button class="close" type="button" aria-label="Close" (click)="activeModal.close(null)">
+          <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    
+    <div class="modal-body">
+        <div *ngIf="!noStaffMsg">
+            <form [formGroup]="gateListForm" (ngSubmit)="onGateListSubmit()">
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                What do you want to do with the Gate List?
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-2"></div>
+                <div class="form-group col-md-8">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="emailGateList" formControlName="emailGateList">
+                        <label class="form-check-label" for="emailGateList">
+                        Email
+                        </label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="checkbox" id="downloadGateList" formControlName="downloadGateList">
+                        <label class="form-check-label" for="downloadGateList">
+                        Download
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-2"></div>
+                <div class="form-group col-md-8">
+                    <button class="btn btn-outline-info" type="submit">Send</button>
+                    &nbsp;
+                    <button class="btn btn-outline-danger" type="button" (click)="activeModal.close(null)">Cancel</button>
+                </div>
+            </div>
+            </form>
+        </div>
+
+            <!-- No staff listed -->
+    <div *ngIf="noStaffMsg">
+        <form>
+          <div class="form-row">
+            <div class="col-md-1"></div>
+            <div class="col-md-7 noStaffMsg">
+              No staff are listed for this event.
+            </div>
+            <div class="col-md-2">
+              <button class="btn btn-info" (click)="activeModal.close(null)">OK</button>
+            </div>
+          </div>
+        </form>
+      </div>
+      </div>

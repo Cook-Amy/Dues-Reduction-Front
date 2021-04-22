@@ -1,67 +1,82 @@
-<form [formGroup]="staffAddForm" (ngSubmit)="onSubmit()">
+<div class="modal-header">
+  <h5 class="modal-title" id="editModalLabel">Add New Staff Member</h5>
+  <button class="close" type="button" aria-label="Close" (click)="activeModal.close(null)">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
 
-  <div class="form-row">
-    <div class="form-group col-md-5">
-      <label for="member">Choose A Name</label>
-      <select id="member" class="form-control" formControlName="member">
-        <option *ngFor="let person of staff" [value]="person.Name">
-          {{ person.lastName }}, {{ person.firstName }}
-        </option>
-      </select>
-    </div>
-  </div>
+<div class="modal-body">
+  <form [formGroup]="staffAddForm" (ngSubmit)="onSubmit()">
 
-  <div class="form-row">
-    <div class="form-group col-md-4">
-      <label for="position">Position</label>
-      <select id="position" class="form-control" formControlName="position">
-        <option *ngFor="let job of jobs" [value]="job.jobName">
-          {{ job.jobName }}
-        </option>
-      </select>
+    <div class="form-row">
+      <div class="form-group col-md-10">
+        <label for="member">Choose A Name</label>
+        <select id="member" class="form-control" formControlName="member">
+          <option *ngFor="let person of staff" [value]="person.Name">
+            {{ person.lastName }}, {{ person.firstName }}
+          </option>
+        </select>
+      </div>
     </div>
-    <div class="form-group col-md-2">
-      <label for="rate">Rate</label>
-      <input type="number" class="form-control" id="rate" value="rate" formControlName="rate">
-    </div>
-    <div *ngIf="idVenue != 1" class="form-group col-md-2">
-      <label for="shuttleBonus">Shuttle Bonus</label>
-      <input type="number" class="form-control" id="shuttleBonus" formControlName="shuttleBonus" value="shuttleBonus">
-    </div>
-    <div class="form-group col-md-2">
-      <label for="eventBonus">Event Bonus</label>
-      <input type="number" class="form-control" id="eventBonus" formControlName="eventBonus" value="eventBonus">
-    </div>
-    <div class="form-group col-md-2">
-      <label for="hourlyBonus">Hourly Bonus</label>
-      <input type="number" class="form-control" id="hourlyBonus" formControlName="hourlyBonus" value="hourlyBonus">
-    </div>
-  </div>
 
-  <div class="form-row">
-    <div class="form-group col-md-3">
-      <label for="scheduledArrivalTime">Scheduled Arrival Time</label>
-      <ejs-timepicker class="date-picker" id='scheduledArrivalTime' value="arrivalTime" [step]="interval" formControlName="scheduledArrivalTime"></ejs-timepicker>
+    <div class="form-row">
+      <div class="form-group col-md-8">
+        <label for="position">Position</label>
+        <select id="position" class="form-control" formControlName="position">
+          <option *ngFor="let job of jobs" [value]="job.jobName">
+            {{ job.jobName }}
+          </option>
+        </select>
+      </div>
+      <div class="form-group col-md-2">
+        <label for="rate">Rate</label>
+        <input type="number" class="form-control" id="rate" value="rate" formControlName="rate">
+      </div>
     </div>
-    <div class="form-group col-md-3">
-      <label for="timeIn">Time In</label>
-      <ejs-timepicker class="date-picker" id='timeIn' value="timeIn" [step]="interval" formControlName="timeIn"></ejs-timepicker>
-    </div>
-    <div class="form-group col-md-3">
-      <label for="timeOut">Time Out</label>
-      <ejs-timepicker class="date-picker" id='timeOut' value="timeOut" [step]="interval" formControlName="timeOut"></ejs-timepicker>
-    </div>
-  </div>
 
-  <div class="form-row">
-    <div class="col-md-4"></div>
-    <div class="col-md-1">
-      <button class="btn btn-info" (click)="onCancelAdd()" type="button">Cancel</button>
+    <div class="form-row">
+      <div *ngIf="idVenue != 1" class="form-group col-md-2">
+        <label for="shuttleBonus">Shuttle Bonus</label>
+        <input type="number" class="form-control" id="shuttleBonus" formControlName="shuttleBonus" value="shuttleBonus">
+      </div>
+      <div class="form-group col-md-2">
+        <label for="eventBonus">Event Bonus</label>
+        <input type="number" class="form-control" id="eventBonus" formControlName="eventBonus" value="eventBonus">
+      </div>
+      <div class="form-group col-md-2">
+        <label for="hourlyBonus">Hourly Bonus</label>
+        <input type="number" class="form-control" id="hourlyBonus" formControlName="hourlyBonus" value="hourlyBonus">
+      </div>
     </div>
-    <div class="col-md-1"></div>
-    <div class="col-md-1">
-      <button class="btn btn-info" type="submit">Save</button>
+
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="scheduledArrivalTime">Scheduled Arrival Time</label>
+        <ejs-timepicker class="date-picker" id='scheduledArrivalTime' value="arrivalTime" [step]="interval" formControlName="scheduledArrivalTime"></ejs-timepicker>
+      </div>
     </div>
-  </div>
- 
-</form>
+
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <label for="timeIn">Time In</label>
+        <ejs-timepicker class="date-picker" id='timeIn' value="timeIn" [step]="interval" formControlName="timeIn"></ejs-timepicker>
+      </div>
+      <div class="form-group col-md-4">
+        <label for="timeOut">Time Out</label>
+        <ejs-timepicker class="date-picker" id='timeOut' value="timeOut" [step]="interval" formControlName="timeOut"></ejs-timepicker>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="col-md-2"></div>
+      <div class="col-md-1">
+        <button class="btn btn-info"  (click)="activeModal.close(null)" type="button">Cancel</button>
+      </div>
+      <div class="col-md-2"></div>
+      <div class="col-md-1">
+        <button class="btn btn-info" type="submit">Save</button>
+      </div>
+    </div>
+  
+  </form>
+</div>

@@ -129,7 +129,7 @@ export class EventEditComponent implements OnInit {
           this.eventService.editEvent(this.event, this.idVenue).subscribe(res => {
             this.eventService.getAllEvents().subscribe(events => {
               this.eventService.setAllEvents(events);
-              this.onCancelEdit();
+              this.activeModal.dismiss("Edit submitted");
             });
           });
         });
@@ -144,15 +144,13 @@ export class EventEditComponent implements OnInit {
             this.eventService.getAllEvents().subscribe(events => {
               this.eventService.setAllEvents(events);
               var timesheets: Timesheet[] = this.mathService.timesheets;
-              for(var i = 0; i < timesheets.length; i++) {
-              }
               if(timesheets.length > 0) {
-                this.eventService.updateAllTimesheetsInDB(timesheets).subscribe(x => {
-                  this.onCancelEdit();
+                this.eventService.updateAllTimesheetsInDB(timesheets).subscribe(x => {  
+                  this.activeModal.dismiss("Edit submitted");
                 })
               }
               else {
-                this.onCancelEdit();
+                this.activeModal.dismiss("Edit submitted");
               }
             });
           });
@@ -167,7 +165,6 @@ export class EventEditComponent implements OnInit {
             this.eventService.getAllEvents().subscribe(events => {
               this.eventService.setAllEvents(events);
               this.activeModal.dismiss("Edit submitted");
-              //this.onCancelEdit();
             });
           });
         });

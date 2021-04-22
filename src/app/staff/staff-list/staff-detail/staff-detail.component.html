@@ -2,7 +2,6 @@
 -- PNC Staff Details 
 --------------------------------------------------------------------------------------------->
 <div *ngIf="showVenue == 1">
-  <div *ngIf="staffEdit == false">
     <table class="table table-sm table-responsive table-detail">
       <tbody>
         <tr>
@@ -75,7 +74,6 @@
         </tr>
       </tbody>
     </table>
-  </div>
 
   <div *ngIf="creditSummaryMsg">
     <form [formGroup]="summaryForm" (ngSubmit)="onCreateCreditSummary()">
@@ -125,7 +123,6 @@
 -- WC Staff Details 
 --------------------------------------------------------------------------------------------->
 <div *ngIf="showVenue == 2">
-  <div *ngIf="staffEdit == false">
     <table class="table table-sm table-responsive">
       <tbody>
         <tr>
@@ -177,7 +174,6 @@
         </tr>
       </tbody>
     </table>
-  </div>
 
   <div *ngIf="creditSummaryMsg">
     <form [formGroup]="summaryForm2" (ngSubmit)="onCreateCreditSummary()">
@@ -228,7 +224,6 @@
 -- CF Staff Details 
 --------------------------------------------------------------------------------------------->
 <div *ngIf="showVenue == 3">
-  <div *ngIf="staffEdit == false">
     <table class="table table-sm table-responsive">
       <tbody>
         <tr>
@@ -266,7 +261,6 @@
         </tr>
       </tbody>
     </table>
-  </div>
 
   <div *ngIf="creditSummaryMsg">
     <form [formGroup]="summaryForm3" (ngSubmit)="onCreateCreditSummary()">
@@ -316,7 +310,6 @@
 -- All Venue Staff Details 
 --------------------------------------------------------------------------------------------->
 <div *ngIf="showVenue == 99">
-  <div *ngIf="staffEdit == false">
     <table class="table table-sm table-responsive">
       <tbody>
         <tr>
@@ -469,7 +462,6 @@
         </tr>
       </tbody>
     </table>
-  </div>
 
   <div *ngIf="creditSummaryMsg">
     <form [formGroup]="summaryForm4" (ngSubmit)="onCreateCreditSummary()">

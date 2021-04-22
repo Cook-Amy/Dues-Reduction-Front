@@ -47,6 +47,11 @@ import { CalendarComponent } from './calendar/calendar.component';
 import { SettingsComponent } from './user/settings.component';
 import { ReportsComponent } from './reports/reports.component';
 import { ConfirmDeleteComponent } from './events/event-list/event-detail/modals/confirm-delete/confirm-delete.component';
+import { AddShuttleBonusComponent } from './events/event-list/event-detail/modals/add-shuttle-bonus/add-shuttle-bonus.component';
+import { AddEventBonusComponent } from './events/event-list/event-detail/modals/add-event-bonus/add-event-bonus.component';
+import { AddHourlyBonusComponent } from './events/event-list/event-detail/modals/add-hourly-bonus/add-hourly-bonus.component';
+import { SendEventReminderComponent } from './events/event-list/event-detail/modals/send-event-reminder/send-event-reminder.component';
+import { SendGateListComponent } from './events/event-list/event-detail/modals/send-gate-list/send-gate-list.component';
 
 
 
@@ -80,7 +85,12 @@ import { ConfirmDeleteComponent } from './events/event-list/event-detail/modals/
     CalendarComponent,
     SettingsComponent,
     ReportsComponent,
-    ConfirmDeleteComponent
+    ConfirmDeleteComponent,
+    AddShuttleBonusComponent,
+    AddEventBonusComponent,
+    AddHourlyBonusComponent,
+    SendEventReminderComponent,
+    SendGateListComponent
   ],
   imports: [
     BrowserModule,
@@ -114,7 +124,14 @@ import { ConfirmDeleteComponent } from './events/event-list/event-detail/modals/
     StaffEditComponent,
     EventDetailComponent,
     EventEditComponent,
-    ConfirmDeleteComponent
+    ConfirmDeleteComponent,
+    EventStaffEditComponent,
+    EventStaffAddComponent,
+    AddShuttleBonusComponent,
+    AddEventBonusComponent,
+    AddHourlyBonusComponent,
+    SendEventReminderComponent,
+    SendGateListComponent
   ]
 })
 export class AppModule { }

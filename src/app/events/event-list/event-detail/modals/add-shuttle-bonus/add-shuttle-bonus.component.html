@@ -1,0 +1,24 @@
+<div class="modal-header">
+    <h5 class="modal-title" id="editModalLabel">Add Shuttle Bonus to all staff</h5>
+    <button class="close" type="button" aria-label="Close" (click)="activeModal.close(null)">
+      <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<div class="modal-body">
+    <form [formGroup]="sbForm" (ngSubmit)="onShuttleBonusAdded()">
+      <div class="form-row">
+        <div class="col-md-1"></div>
+        <div class="form-group col-md-3">
+          <input type="number" class="numInput form-control" id="sbAmount" formControlName="sbAmount">
+        </div>
+        <div class="col-md-1"></div>
+        <div class="form-group col-md-2">
+          <button class="btn btn-outline-info" type="submit">Add</button>
+        </div>
+        <div class="form-group col-md-2">
+          <button class="btn btn-outline-info" type="button" (click)="activeModal.close(null)">Cancel</button>
+        </div>
+      </div>
+    </form>
+</div>
