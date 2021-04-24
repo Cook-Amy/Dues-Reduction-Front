@@ -30,6 +30,14 @@
     </table>
 
       <!-- TODO: Insert editable text for reminder email -->
+      <form [formGroup]="emailTextForm">
+        <div>Additional Notes for Reminder Email</div>
+        <div class="form-row">
+          <div class="form-group col-md-12">
+              <textarea class="form-control" id="emailText" formControlName="emailText" rows="10"></textarea>
+          </div>
+        </div>
+    </form>
 
     <div class="row">
       <div class="col-md-2"></div>

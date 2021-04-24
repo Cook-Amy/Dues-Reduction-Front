@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { EmailService } from 'src/app/email/email.service';
@@ -21,6 +22,7 @@ export class SendEventReminderComponent implements OnInit {
   checkedList: any[];
   masterSelected: boolean; 
   currentSeason: Season;
+  emailTextForm: FormGroup;
 
   constructor(private eventService: EventService,
     private emailService: EmailService,
@@ -42,6 +44,14 @@ export class SendEventReminderComponent implements OnInit {
     });
 
     this.masterSelected = false;
+    this.initForm();
+  }
+
+  private initForm() {
+    let emailText = '';
+    this.emailTextForm = new FormGroup({
+      'emailText': new FormControl(emailText, Validators.required)
+    });
   }
 
   onSubmitReminder() {
@@ -50,8 +60,10 @@ export class SendEventReminderComponent implements OnInit {
     this.getCheckedItemList();
     var list = this.checkedList;
 
+    var emailText = this.emailTextForm.value['emailText'];
+
     if(this.currentVenueID == 1) {
-      this.emailService.sendPncReminderEmail(list, this.event.idevent).subscribe(res => {
+      this.emailService.sendPncReminderEmail(list, emailText, this.event.idevent).subscribe(res => {
           this.toastr.success("Event reminder was emailed.", "SUCCESS!", {
             closeButton: true,
             timeOut: 3000
@@ -65,7 +77,7 @@ export class SendEventReminderComponent implements OnInit {
     }
 
     else if(this.currentVenueID == 2) {
-      this.emailService.sendWcReminderEmail(list, this.event.idevent).subscribe(res => {
+      this.emailService.sendWcReminderEmail(list, emailText, this.event.idevent).subscribe(res => {
         this.toastr.success("Event reminder was emailed.", "SUCCESS!", {
           closeButton: true,
           timeOut: 3000
@@ -79,7 +91,7 @@ export class SendEventReminderComponent implements OnInit {
     }
 
     else if(this.currentVenueID == 3) {
-      this.emailService.sendCfReminderEmail(list, this.event.idevent).subscribe(res => {
+      this.emailService.sendCfReminderEmail(list, emailText, this.event.idevent).subscribe(res => {
         this.toastr.success("Event reminder was emailed.", "SUCCESS!", {
           closeButton: true,
           timeOut: 3000

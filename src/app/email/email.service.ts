@@ -12,11 +12,12 @@ export class EmailService {
 
   constructor(private http: HttpClient, private auth: AuthService) { }
 
-  sendPncReminderEmail(list: any[], eventID: number) {
+  sendPncReminderEmail(list: any[], emailText: string, eventID: number) {
     var userID = this.auth.getCurrentUser().userID;
     var userName = this.auth.getCurrentUser().firstName + " " + this.auth.getCurrentUser().lastName;
     var params = {
       list: list,
+      emailText: emailText,
       eventID: eventID,
       userID: userID,
       userName: userName
@@ -25,11 +26,12 @@ export class EmailService {
     return sendReminder;
   }
 
-  sendWcReminderEmail(list: any[], eventID: number) {
+  sendWcReminderEmail(list: any[], emailText: string, eventID: number) {
     var userID = this.auth.getCurrentUser().userID;
     var userName = this.auth.getCurrentUser().firstName + " " + this.auth.getCurrentUser().lastName;
     var params = {
       list: list,
+      emailText: emailText,
       eventID: eventID,
       userID: userID,
       userName: userName
@@ -38,11 +40,12 @@ export class EmailService {
     return sendReminder;
   }
 
-  sendCfReminderEmail(list: any[], eventID: number) {
+  sendCfReminderEmail(list: any[], emailText: string, eventID: number) {
     var userID = this.auth.getCurrentUser().userID;
     var userName = this.auth.getCurrentUser().firstName + " " + this.auth.getCurrentUser().lastName;
     var params = {
       list: list,
+      emailText: emailText,
       eventID: eventID,
       userID: userID,
       userName: userName
