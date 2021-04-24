@@ -60,9 +60,9 @@ export class StaffListComponent implements OnInit {
   constructor(private staffService: StaffService,
               private venueService: VenueService,
               private monthReportService: MonthReportService,
+              private toastr: ToastrService,
               private route: ActivatedRoute,
               private router: Router,
-              private toastr: ToastrService,
               private _renderer: Renderer2,
               private compFactory: ComponentFactoryResolver,
               private viewRef: ViewContainerRef) { }
@@ -85,7 +85,7 @@ export class StaffListComponent implements OnInit {
   }
 
   getDtOptions() {
-    if(this.currentVenueID == 1) {
+    if(this.showVenue == 1) {
       this.dtOptions = { 
         processing: true,
         paging: true,
@@ -100,16 +100,12 @@ export class StaffListComponent implements OnInit {
           {
             targets: [3, 4, 5, 6],
             className: 'dt-center'
-          },
-          {
-            targets: [9, 10],
-            visible: false
           }
         ]
       };
     }
 
-    if(this.currentVenueID == 2) {
+    else if(this.showVenue == 2) {
       this.dtOptions = { 
         paging: true,
         pagingType: 'full_numbers',
@@ -117,20 +113,31 @@ export class StaffListComponent implements OnInit {
         lengthChange: true,
         columnDefs: [
           {
-            targets: [7, 8],
+            targets: [5],
             type: 'date'
-          },
-          {
-            targets: [5, 6, 7, 8, 10],
-            visible: false
           }
         ],
         responsive: true
       };
     }
 
-    if(this.currentVenueID == 3) {
+    else if(this.showVenue == 3) {
       this.dtOptions = { 
+        paging: true,
+        pagingType: 'full_numbers',
+        pageLength: 20,
+        lengthChange: true,
+        columnDefs: [
+          {
+            targets: [5],
+            type: 'date'
+          }
+        ]
+      };
+    }
+
+    else {
+      this.dtOptions = {
         paging: true,
         pagingType: 'full_numbers',
         pageLength: 20,
@@ -139,10 +146,6 @@ export class StaffListComponent implements OnInit {
           {
             targets: [7, 8],
             type: 'date'
-          },
-          {
-            targets: [5, 6, 7, 8, 9],
-            visible: false
           }
         ]
       };
@@ -308,6 +311,7 @@ export class StaffListComponent implements OnInit {
         this.setStaff = this.allStaff;
       }
     }
+
   }
 
   returnSetStaff() {
@@ -319,6 +323,8 @@ export class StaffListComponent implements OnInit {
     if(!venueSelect) {
       venueSelect = this.currentVenueID;
     }
+    this.showVenue = venueSelect;
+    this.getDtOptions();
     var activeSelect = this.activeForm.value['activeSelect'];
 
        // Activity level set to active
@@ -384,6 +390,8 @@ export class StaffListComponent implements OnInit {
         this.setStaff = this.allStaff;
       }
     }
+
+    this.router.navigate([], {relativeTo: this.route});
   }
 
   onAddStaff() {

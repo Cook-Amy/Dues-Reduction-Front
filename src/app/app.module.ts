@@ -52,6 +52,7 @@ import { AddEventBonusComponent } from './events/event-list/event-detail/modals/
 import { AddHourlyBonusComponent } from './events/event-list/event-detail/modals/add-hourly-bonus/add-hourly-bonus.component';
 import { SendEventReminderComponent } from './events/event-list/event-detail/modals/send-event-reminder/send-event-reminder.component';
 import { SendGateListComponent } from './events/event-list/event-detail/modals/send-gate-list/send-gate-list.component';
+import { CreditSummaryComponent } from './staff/staff-list/credit-summary/credit-summary.component';
 
 
 
@@ -90,7 +91,8 @@ import { SendGateListComponent } from './events/event-list/event-detail/modals/s
     AddEventBonusComponent,
     AddHourlyBonusComponent,
     SendEventReminderComponent,
-    SendGateListComponent
+    SendGateListComponent,
+    CreditSummaryComponent
   ],
   imports: [
     BrowserModule,
@@ -131,7 +133,8 @@ import { SendGateListComponent } from './events/event-list/event-detail/modals/s
     AddEventBonusComponent,
     AddHourlyBonusComponent,
     SendEventReminderComponent,
-    SendGateListComponent
+    SendGateListComponent,
+    CreditSummaryComponent
   ]
 })
 export class AppModule { }

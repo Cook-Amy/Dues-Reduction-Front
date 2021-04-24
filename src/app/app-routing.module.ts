@@ -14,41 +14,42 @@ import { ReportsComponent } from './reports/reports.component';
 
 
 const routes: Routes = [
-  { path: '', component: AuthComponent },
-  { path: 'home', component: HomeComponent },
-
   { path: 'pnc', component: VenuesComponent, children: [
-    { path: '', component: VenueStartComponent },
     { path: 'events', component: EventsComponent },
     { path: 'staff', component: StaffComponent },
-    { path: 'documents', component: DocumentsComponent }
+    { path: 'documents', component: DocumentsComponent },
+    { path: '', component: VenueStartComponent }
    ]},
 
   { path: 'wc', component: VenuesComponent, children: [
-    { path: '', component: VenueStartComponent },
-    { path: 'events', component: EventsComponent},
-    { path: 'staff', component: StaffComponent },
-    { path: 'documents', component: DocumentsComponent }
-   ]},
-
-  { path: 'cf', component: VenuesComponent, children: [
-    { path: '', component: VenueStartComponent },
-    { path: 'events', component: EventsComponent},
-    { path: 'staff', component: StaffComponent },
-    { path: 'documents', component: DocumentsComponent }
-   ]},
-
-  { path: 'admin', component: VenuesComponent, children: [
-    { path: '', component: VenueStartComponent },
     { path: 'events', component: EventsComponent},
     { path: 'staff', component: StaffComponent },
     { path: 'documents', component: DocumentsComponent },
-    { path: 'reports', component: ReportsComponent }
+    { path: '', component: VenueStartComponent }
+   ]},
+
+  { path: 'cf', component: VenuesComponent, children: [
+    { path: 'events', component: EventsComponent},
+    { path: 'staff', component: StaffComponent },
+    { path: 'documents', component: DocumentsComponent },
+    { path: '', component: VenueStartComponent },
+   ]},
+
+  { path: 'admin', component: VenuesComponent, children: [
+    { path: 'events', component: EventsComponent},
+    { path: 'staff', component: StaffComponent },
+    { path: 'documents', component: DocumentsComponent },
+    { path: 'reports', component: ReportsComponent },
+    { path: '', component: VenueStartComponent },
    ]},
 
   { path: 'login', component: AuthComponent },
 
-  { path: 'settings', component: SettingsComponent }
+  { path: 'settings', component: SettingsComponent },
+
+  { path: 'home', component: HomeComponent },
+
+  { path: '', component: AuthComponent } 
 ];
 
 @NgModule({

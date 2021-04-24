@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 export class VenuesComponent implements OnInit {
   venueName: string;
   currentVenue: Venue;
-  idVenue = 0;
+  idVenue: number;
   
 
   constructor(private venueService: VenueService,

@@ -1,0 +1,64 @@
+<div class="modal-header">
+    <h5 class="modal-title" id="editModalLabel">Credit Summary</h5>
+    <button class="close" type="button" aria-label="Close" (click)="activeModal.close(null)">
+      <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<div class="modal-body">
+    <form [formGroup]="summaryForm" (ngSubmit)="onCreateCreditSummary()">
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="startDate">Choose Start Date:</label>
+          <ejs-datepicker class="date-picker" id='startDate' placeholder='Select a date' [value]='dateValue' formControlName="startDate"></ejs-datepicker>
+        </div>
+        <div class="form-group col-md-4">
+          <label for="endDate">Choose End Date:</label>
+          <ejs-datepicker class="date-picker" id='endDate' placeholder='Select a date' [value]='dateValue' formControlName="endDate"></ejs-datepicker>
+        </div>
+      </div>
+      <div class="form-row creditMsg">
+        <span style="font-weight: bold">What do you want to do with the Credit Summary?</span>
+      </div>
+      <div class="form-row">
+        <div class="col-md-1"></div>
+        <div class="form-group col-md-8">
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" id="emailSummary1" formControlName="emailSummary1">
+            <label for="emailSummary1" class="form-check-label">Send email to member</label>
+          </div>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="col-md-1"></div>
+        <div class="form-group col-md-8">
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" id="emailSummary2" formControlName="emailSummary2">
+            <label for="emailSummary2" class="form-check-label">Send email to coordinator</label>
+          </div>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="col-md-1"></div>
+        <div class="form-group col-md-8">
+          <div class="form-check form-check-inline">
+            <input type="checkbox" class="form-check-input" id="downloadSummary" formControlName="downloadSummary">
+            <label for="downloadSummary" class="form-check-label">Download Summary</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="col-md-1"></div>
+        <div class="col-md-2">
+          <button class="btn btn-info" type="button" (click)="activeModal.close(null)">Cancel</button>
+        </div>
+        <div class="col-md-1"></div>
+        <div class="col-md-4">
+          <button class="btn btn-info" type="submit">Create Report</button>
+        </div>
+      </div>
+    </form>
+  </div>

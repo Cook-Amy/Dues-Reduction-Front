@@ -23,6 +23,7 @@ export class AppComponent implements OnInit {
     }
     else{
       this.router.navigate(['/home']);
+      // this.router.navigate([], {relativeTo: this.route});
     }
   }
 

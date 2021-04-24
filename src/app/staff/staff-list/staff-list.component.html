@@ -148,45 +148,133 @@
 </div>
 
 <!-- Collapsible Table -->
-<table datatable [dtOptions]="dtOptions"  class="row-border hover table table-striped collapsed main-table">
-  <thead>
-    <tr>
-      <th></th>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Phone</th>
-      <th>TU Account</th>
-      <th>Health Form</th>
-      <th>Exp.</th>
-      <th>Waiver</th>
-      <th>Bars</th>
-      <th>Team Training</th>
-      <th>Alcohol Training</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr #trRef *ngFor="let person of setStaff" class="tableRow">
-      <td (click)="expandRow(trRef, person)"></td>
-      <td>{{ person.Name }}</td>
-      <td>{{ person.Email }}</td>
-      <td>{{ person.Phone }}</td>
-      <td>{{ person.tuAccount }}</td>
-      <td>
-        <span *ngIf="person.pncHealthForm == 1"><i class="fas fa-check"></i></span>
-      </td>
-      <td>
-        <span *ngIf="person.pncExperienced == 1"><i class="fas fa-check"></i></span>
-      </td>
-      <td>
-        <span *ngIf="person.pncWaiver == 1"><i class="fas fa-check"></i></span>
-      </td>
-      <td><span *ngIf="person.pncBars != null">{{ person.pncBars | date: 'MM/dd/yyyy' }}</span></td>
-      <td><span *ngIf="person.wcTeamTraining != null">{{ person.wcTeamTraining | date: 'MM/dd/yyyy' }}</span></td>
-      <td><span *ngIf="person.cfAlcoholTraining != null">{{ person.cfAlcoholTraining | date: 'MM/dd/yyyy' }}</span></td>
+<div *ngIf="showVenue == 1">
+  <table datatable [dtOptions]="dtOptions"  class="row-border hover table table-striped collapsed main-table">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>TU Account</th>
+        <th>Health Form</th>
+        <th>Exp.</th>
+        <th>Waiver</th>
+        <th>Bars</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr #trRef *ngFor="let person of setStaff" class="tableRow">
+        <td (click)="expandRow(trRef, person)"></td>
+        <td>{{ person.Name }}</td>
+        <td>{{ person.Email }}</td>
+        <td>{{ person.Phone }}</td>
+        <td>{{ person.tuAccount }}</td>
+        <td>
+          <span *ngIf="person.pncHealthForm == 1"><i class="fas fa-check"></i></span>
+        </td>
+        <td>
+          <span *ngIf="person.pncExperienced == 1"><i class="fas fa-check"></i></span>
+        </td>
+        <td>
+          <span *ngIf="person.pncWaiver == 1"><i class="fas fa-check"></i></span>
+        </td>
+        <td><span *ngIf="person.pncBars != null">{{ person.pncBars | date: 'MM/dd/yyyy' }}</span></td>
+      </tr>
+    </tbody> 
+  </table>
+</div>
 
-    </tr>
-  </tbody> 
-</table>
+<div *ngIf="showVenue == 2">
+  <table datatable [dtOptions]="dtOptions"  class="row-border hover table table-striped collapsed main-table">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>TU Account</th>
+        <th>Team Training</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr #trRef *ngFor="let person of setStaff" class="tableRow">
+        <td (click)="expandRow(trRef, person)"></td>
+        <td>{{ person.Name }}</td>
+        <td>{{ person.Email }}</td>
+        <td>{{ person.Phone }}</td>
+        <td>{{ person.tuAccount }}</td>
+        <td><span *ngIf="person.wcTeamTraining != null">{{ person.wcTeamTraining | date: 'MM/dd/yyyy' }}</span></td>
+      </tr>
+    </tbody> 
+  </table>
+</div>
+
+<div *ngIf="showVenue == 3">
+  <table datatable [dtOptions]="dtOptions"  class="row-border hover table table-striped collapsed main-table">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>TU Account</th>
+        <th>Alcohol Training</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr #trRef *ngFor="let person of setStaff" class="tableRow">
+        <td (click)="expandRow(trRef, person)"></td>
+        <td>{{ person.Name }}</td>
+        <td>{{ person.Email }}</td>
+        <td>{{ person.Phone }}</td>
+        <td>{{ person.tuAccount }}</td>
+        <td><span *ngIf="person.cfAlcoholTraining != null">{{ person.cfAlcoholTraining | date: 'MM/dd/yyyy' }}</span></td>
+      </tr>
+    </tbody> 
+  </table>
+</div>
+
+<div *ngIf="showVenue == 99">
+  <table datatable [dtOptions]="dtOptions"  class="row-border hover table table-striped collapsed main-table">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>TU Account</th>
+        <th>Health Form</th>
+        <th>Exp.</th>
+        <th>Waiver</th>
+        <th>Bars</th>
+        <th>Team Training</th>
+        <th>Alcohol Training</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr #trRef *ngFor="let person of setStaff" class="tableRow">
+        <td (click)="expandRow(trRef, person)"></td>
+        <td>{{ person.Name }}</td>
+        <td>{{ person.Email }}</td>
+        <td>{{ person.Phone }}</td>
+        <td>{{ person.tuAccount }}</td>
+        <td>
+          <span *ngIf="person.pncHealthForm == 1"><i class="fas fa-check"></i></span>
+        </td>
+        <td>
+          <span *ngIf="person.pncExperienced == 1"><i class="fas fa-check"></i></span>
+        </td>
+        <td>
+          <span *ngIf="person.pncWaiver == 1"><i class="fas fa-check"></i></span>
+        </td>
+        <td><span *ngIf="person.pncBars != null">{{ person.pncBars | date: 'MM/dd/yyyy' }}</span></td>
+        <td><span *ngIf="person.wcTeamTraining != null">{{ person.wcTeamTraining | date: 'MM/dd/yyyy' }}</span></td>
+        <td><span *ngIf="person.cfAlcoholTraining != null">{{ person.cfAlcoholTraining | date: 'MM/dd/yyyy' }}</span></td>
+      </tr>
+    </tbody> 
+  </table>
+</div>
 
 
 

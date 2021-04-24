@@ -187,9 +187,20 @@ export class StaffService {
   }
 
   setAllStaffOther(staff: Staff[]) {
-    this.setActiveStaff(staff);
-    this.setInactiveStaff(staff);
-    this.setInterestedStaff(staff);
+    var temp: Staff[] = [];
+    var temp2: Staff[] = [];
+    var temp3: Staff[] = [];
+    staff.forEach(st => {
+      if(st.pncActive == true && st.wcActive == true && st.cfActive == true) 
+        temp.push(st);
+      if(st.pncInactive == true && st.wcInactive == true && st.cfInactive == true)
+        temp2.push(st);
+      if(st.pncInterested == true && st.wcInterested == true && st.cfInterested == true)
+        temp3.push(st);
+    });
+    this.setActiveStaff(temp);
+    this.setInactiveStaff(temp2);
+    this.setInterestedStaff(temp3);
   }
 
   setActiveStaff(staff: Staff[]) {

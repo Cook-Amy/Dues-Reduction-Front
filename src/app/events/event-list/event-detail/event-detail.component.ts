@@ -74,6 +74,7 @@ export class EventDetailComponent implements OnInit {
       this.eventService.setTimesheets(res);
       this.timesheet = this.eventService.returnTimesheets();
       if(this.timesheet) {
+        this.checklist = [];
         this.timesheet.forEach(ts => {
           this.checklist.push({
             id: ts.idtimesheet,
