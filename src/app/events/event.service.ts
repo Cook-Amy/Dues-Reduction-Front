@@ -121,6 +121,44 @@ export class EventService {
         event.totalSalesCf = parseFloat(event.totalSalesCf.toFixed(2));
       if(event.alcSales)
         event.alcSales = parseFloat(event.alcSales.toFixed(2));
+      if(event.totalDiscounts)
+        event.totalDiscounts = parseFloat(event.totalDiscounts.toFixed(2));
+      if(event.itemSales1)
+        event.itemSales1 = parseFloat(event.itemSales1.toFixed(2));
+      if(event.alcSales1)
+        event.alcSales1 = parseFloat(event.alcSales1.toFixed(2));
+      if(event.discounts1)
+        event.discounts1 = parseFloat(event.discounts1.toFixed(2));
+        if(event.itemSales2)
+        event.itemSales2 = parseFloat(event.itemSales2.toFixed(2));
+      if(event.alcSales2)
+        event.alcSales2 = parseFloat(event.alcSales2.toFixed(2));
+      if(event.discounts2)
+        event.discounts2 = parseFloat(event.discounts2.toFixed(2));
+        if(event.itemSales3)
+        event.itemSales3 = parseFloat(event.itemSales3.toFixed(2));
+      if(event.alcSales3)
+        event.alcSales3 = parseFloat(event.alcSales3.toFixed(2));
+      if(event.discounts3)
+        event.discounts3 = parseFloat(event.discounts3.toFixed(2));
+        if(event.itemSales4)
+        event.itemSales4 = parseFloat(event.itemSales4.toFixed(2));
+      if(event.alcSales4)
+        event.alcSales4 = parseFloat(event.alcSales4.toFixed(2));
+      if(event.discounts4)
+        event.discounts4 = parseFloat(event.discounts4.toFixed(2));
+        if(event.itemSales5)
+        event.itemSales5 = parseFloat(event.itemSales5.toFixed(2));
+      if(event.alcSales5)
+        event.alcSales5 = parseFloat(event.alcSales5.toFixed(2));
+      if(event.discounts5)
+        event.discounts5 = parseFloat(event.discounts5.toFixed(2));
+        if(event.itemSales6)
+        event.itemSales6 = parseFloat(event.itemSales6.toFixed(2));
+      if(event.alcSales6)
+        event.alcSales6 = parseFloat(event.alcSales6.toFixed(2));
+      if(event.discounts6)
+        event.discounts6 = parseFloat(event.discounts6.toFixed(2));
       if(event.shuttleBonusAmountWc)
         event.shuttleBonusAmountWc = parseFloat(event.shuttleBonusAmountWc.toFixed(2));
       if(event.shuttleBonusAmountCf)

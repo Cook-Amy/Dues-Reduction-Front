@@ -27,7 +27,26 @@ export class Event {
   public metCommissionBonus: Boolean;
   public guarantee: Boolean;
   public alcSales: number;
+  public totalDiscounts: number;
   public eventCountsTowardsTotal: Boolean;
+  public itemSales1: number;
+  public alcSales1: number;
+  public discounts1: number;
+  public itemSales2: number;
+  public alcSales2: number;
+  public discounts2: number;
+  public itemSales3: number;
+  public alcSales3: number;
+  public discounts3: number;
+  public itemSales4: number;
+  public alcSales4: number;
+  public discounts4: number;
+  public itemSales5: number;
+  public alcSales5: number;
+  public discounts5: number;
+  public itemSales6: number;
+  public alcSales6: number;
+  public discounts6: number;
 
   // wc events
   public creditCardTips: number;
@@ -65,7 +84,26 @@ export class Event {
      metCommissionBonus: Boolean,
      guarantee: Boolean,
      alcSales: number,
+     totalDiscounts: number,
      eventCountsTowardsTotal: Boolean,
+     itemSales1: number,
+     alcSales1: number,
+     discounts1: number,
+     itemSales2: number,
+     alcSales2: number,
+     discounts2: number,
+     itemSales3: number,
+     alcSales3: number,
+     discounts3: number,
+     itemSales4: number,
+     alcSales4: number,
+     discounts4: number,
+     itemSales5: number,
+     alcSales5: number,
+     discounts5: number,
+     itemSales6: number,
+     alcSales6: number,
+     discounts6: number,
 
      creditCardTips: number,
      maxCreditCardTipAmount: number,
@@ -101,7 +139,26 @@ export class Event {
     this.metCommissionBonus = metCommissionBonus;
     this.guarantee = guarantee;
     this.alcSales = alcSales;
+    this.totalDiscounts = totalDiscounts;
     this.eventCountsTowardsTotal = eventCountsTowardsTotal;
+    this.itemSales1 = itemSales1;
+    this.alcSales1 = alcSales1;
+    this.discounts1 = discounts1;
+    this.itemSales2 = itemSales2;
+    this.alcSales2 = alcSales2;
+    this.discounts2 = discounts2;
+    this.itemSales3 = itemSales3;
+    this.alcSales3 = alcSales3;
+    this.discounts3 = discounts3;
+    this.itemSales4 = itemSales4;
+    this.alcSales4 = alcSales4;
+    this.discounts4 = discounts4;
+    this.itemSales5 = itemSales5;
+    this.alcSales5 = alcSales5;
+    this.discounts5 = discounts5;
+    this.itemSales6 = itemSales6;
+    this.alcSales6 = alcSales6;
+    this.discounts6 = discounts6;
 
     this.creditCardTips = creditCardTips;
     this.maxCreditCardTipAmount = maxCreditCardTipAmount;

@@ -18,6 +18,7 @@ export class MathService {
   /*************************************************************************************
    * 
    * PNC Events
+   * 2019/2020 Season and earlier
    * 
   *************************************************************************************/
   calculatePncEvent(event: Event, contract: ContractPNC, timesheets: Timesheet[]) {
@@ -63,6 +64,113 @@ export class MathService {
       if(guar > estCheck) {
         estCheck = guar;
 
+      }
+    }
+
+    estCheck += event.venueBonus;
+
+      // add other positions to estimate 
+      // applies to Stand Leader and Cooks
+    var pncPay = 0;
+    if(timesheets) {
+      for(var i = 0; i < timesheets.length; i++) {
+        pncPay += timesheets[i].venuePay;
+      }
+    }
+    estCheck += pncPay;
+    
+    event.estimatedCheck = estCheck;
+
+    // if we have a payout, we can calculate estimated profit, actual profit, and discrepancy
+    if(totalPayout > 0) {
+      // calculate estimated profit
+      var estProfit = (estCheck * (1 - event.tacPct)) - totalPayout - event.coordinatorAdminAmt;
+      event.estimatedProfit = estProfit;
+
+      // get actual profit and discrepancy if check has been received
+      if(event.actualCheck > 0) {
+        var tacCut = event.actualCheck * event.tacPct;
+        var drCut = event.actualCheck * (1 - event.tacPct);
+        var actProfit = drCut - totalPayout - event.coordinatorAdminAmt;
+        var discrepancy = event.actualCheck - estCheck;
+
+        event.tacCut = tacCut;
+        event.drCut = drCut;
+        event.actualProfit = actProfit;
+        event.discrepancy = discrepancy;
+      }
+      else {
+        event.tacCut = 0;
+        event.drCut = 0;
+        event.actualProfit = 0;
+        event.discrepancy = 0;
+      }
+    }
+    else {
+      event.estimatedProfit = 0; 
+      event.tacCut = 0;
+      event.drCut = 0;
+      event.actualProfit = 0;
+      event.discrepancy = 0;
+    }
+
+    return event;
+  }
+
+  /*************************************************************************************
+   * 
+   * PNC Events
+   * 2020/2021 Season and later
+   * 
+  *************************************************************************************/
+   calculatePncEvent2020(event: Event, contract: ContractPNC, timesheets: Timesheet[]) {
+    // calculate totalPayout
+    var totalPayout = 0;
+    if(timesheets) {
+      timesheets.forEach(timesheet => {
+ 
+        totalPayout += timesheet.creditAmount;
+      });
+    }
+    event.payout = totalPayout;
+
+    // get commission rates
+    var commFoodRate = event.metCommissionBonus ? contract.pncFoodCommissionAfterIncrease : contract.pncFoodCommission;
+    var commAlcRate = event.metCommissionBonus ? contract.pncAlcoholCommissionAfterIncrease : contract.pncAlcoholCommission;
+  
+    // get food and alcohol sales amounts
+    var itemSales = event.itemSales1 + event.itemSales2 + event.itemSales3 + event.itemSales4 + event.itemSales5 + event.itemSales6;
+    var alcSales = event.alcSales1 + event.alcSales2 + event.alcSales3 + event.alcSales4 + event.alcSales5 + event.alcSales6;
+    var discounts = event.discounts1 + event.discounts2 + event.discounts3 + event.discounts4 + event.discounts5 + event.discounts6;
+    var foodSales = itemSales - alcSales - discounts;
+
+    event.totalSalesPnc = itemSales;
+    event.alcSales = alcSales;
+    event.totalDiscounts = discounts;
+
+    // calculate tax
+    var taxOnFood = foodSales * (contract.pncFoodTaxRate - 1);
+    var taxOnAlc = alcSales * (contract.pncAlcoholTaxRate - 1);
+
+    // get total sales amounts
+    var totalFoodSales = foodSales - taxOnFood;
+    var totalAlcSales = alcSales - taxOnAlc;
+  
+    // estimated check
+    var estCheck = (totalFoodSales * commFoodRate) + (totalAlcSales * commAlcRate);
+
+        // guarantee is only checked if there is a payout
+        // guarantee applies to cashiers only
+    if(event.guarantee && (event.payout > 0)) {
+      var guarCount = 0;
+      for(var i = 0; i < timesheets.length; i++) {
+        if(timesheets[i].isGuarantee) {
+          guarCount++;
+        }
+      }
+      var guar = contract.pncMemberGuarantee * guarCount;
+      if(guar > estCheck) {
+        estCheck = guar;
       }
     }
 

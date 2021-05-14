@@ -141,10 +141,24 @@ export class EventStaffEditComponent implements OnInit {
     this.eventService.updateTimesheets(this.timesheet);
     // update timesheet in DB
     this.eventService.updateTimesheetDB(this.timesheet).subscribe(res => {
-      if(this.idVenue == 1) {
+      if(this.idVenue == 1 && this.currentSeasonID <= 3) {
         this.eventService.getPncContractInfo().subscribe(contract => {
           this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
             this.event = this.mathService.calculatePncEvent(this.event, contract[0], timesheets);
+            this.eventService.editEvent(this.event, this.idVenue).subscribe(res => {
+              this.eventService.getAllEvents().subscribe(events => {
+                this.eventService.setAllEvents(events);
+                this.activeModal.close("staff edited");
+              });
+            });
+          });
+        });
+      }
+
+      else if(this.idVenue == 1 && this.currentSeasonID >= 4) {
+        this.eventService.getPncContractInfo().subscribe(contract => {
+          this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
+            this.event = this.mathService.calculatePncEvent2020(this.event, contract[0], timesheets);
             this.eventService.editEvent(this.event, this.idVenue).subscribe(res => {
               this.eventService.getAllEvents().subscribe(events => {
                 this.eventService.setAllEvents(events);
@@ -208,11 +222,27 @@ export class EventStaffEditComponent implements OnInit {
   onDeleteYes() {
     this.deleting = true;
 
-    if(this.idVenue == 1) {
+    if(this.idVenue == 1 && this.currentSeasonID <= 3) {
       this.eventService.deleteTimesheetinDB(this.timesheet.idtimesheet).subscribe(res => {
         this.eventService.getPncContractInfo().subscribe(contract => {
           this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
             this.event = this.mathService.calculatePncEvent(this.event, contract[0], timesheets);
+            this.eventService.editEvent(this.event, this.idVenue).subscribe(res => {
+              this.eventService.getAllEvents().subscribe(events => {
+                this.eventService.setAllEvents(events);
+                this.activeModal.close('delete');
+              });
+            });
+          });
+        });
+      });
+    }
+
+    else if(this.idVenue == 1 && this.currentSeasonID >= 4) {
+      this.eventService.deleteTimesheetinDB(this.timesheet.idtimesheet).subscribe(res => {
+        this.eventService.getPncContractInfo().subscribe(contract => {
+          this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
+            this.event = this.mathService.calculatePncEvent2020(this.event, contract[0], timesheets);
             this.eventService.editEvent(this.event, this.idVenue).subscribe(res => {
               this.eventService.getAllEvents().subscribe(events => {
                 this.eventService.setAllEvents(events);

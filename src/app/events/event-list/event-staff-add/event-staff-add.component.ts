@@ -150,10 +150,24 @@ export class EventStaffAddComponent implements OnInit {
     this.eventService.addToTimesheets(this.timesheet);
     this.eventService.addTimesheetinDB(this.timesheet, this.event.idevent).subscribe(id => {
       this.timesheet.idtimesheet = id;
-      if(this.idVenue == 1) {
+      if(this.idVenue == 1 && this.currentSeasonID <= 3) {
         this.eventService.getPncContractInfo().subscribe(contract => {
           this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
             this.event = this.mathService.calculatePncEvent(this.event, contract[0], timesheets);
+            this.eventService.editEvent(this.event, this.idVenue).subscribe(res => {
+              this.eventService.getAllEvents().subscribe(events => {
+                this.eventService.setAllEvents(events);
+                this.activeModal.close("added");
+              });
+            });
+          });
+        });
+      }
+
+      else if(this.idVenue == 1 && this.currentSeasonID >= 4) {
+        this.eventService.getPncContractInfo().subscribe(contract => {
+          this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
+            this.event = this.mathService.calculatePncEvent2020(this.event, contract[0], timesheets);
             this.eventService.editEvent(this.event, this.idVenue).subscribe(res => {
               this.eventService.getAllEvents().subscribe(events => {
                 this.eventService.setAllEvents(events);

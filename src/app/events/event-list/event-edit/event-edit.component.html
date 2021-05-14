@@ -1,7 +1,8 @@
 <!-----------------------------------------------------------------------------
 -- PNC Edit Event
+-- 2019/2020 Season and earlier
 ------------------------------------------------------------------------------>
-<div *ngIf="idVenue == 1">
+<div *ngIf="idVenue == 1 && currentSeasonID <= 3">
   <div class="modal-header">
     <h5 class="modal-title" id="editModalLabel">Edit: {{ event.Title }}</h5>
     <button class="close" type="button" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
@@ -73,6 +74,214 @@
           <label for="alcSales">Alcohol Sales</label>
           <input type="text" class="form-control" id="alcSales"formControlName="alcSales">
         </div>
+        <div class="form-group col-md-3">
+          <label for="bonus">Venue Bonus</label>
+          <input type="text" class="form-control" id="bonus" formControlName="bonus">
+        </div>
+        <div class="form-group col-md-3">
+          <label for="checkRcvd">Check Recieved</label>
+          <input type="text" class="form-control" id="checkRcvd" formControlName="checkRcvd">
+        </div>
+      </div>
+  
+      <div class="form-row">
+        <div class="form-group col-md-10">
+          <label for="notes">Notes</label>
+          <textarea rows="2" class="form-control" id="notes" formControlName="notes"></textarea>
+        </div>
+      </div>
+  
+      <div class="form-row">
+        <div class="col-md-3"></div>
+        <div class="col-md-1">
+          <button class="btn btn-primary" type="button" (click)="activeModal.dismiss('Cancel click')">Cancel</button>
+        </div>
+        <div class="col-md-1"></div>
+        <div class="col-md-1">
+          <button class="btn btn-primary" type="submit">Save</button>
+        </div>
+      </div>
+      
+    </form>
+  </div>
+</div>
+
+<!-----------------------------------------------------------------------------
+-- PNC Edit Event 
+-- 2020/2021 Season and later
+------------------------------------------------------------------------------>
+<div *ngIf="idVenue == 1 && currentSeasonID >= 4">
+  <div class="modal-header">
+    <h5 class="modal-title" id="editModalLabel">Edit: {{ event.Title }}</h5>
+    <button class="close" type="button" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <form [formGroup]="editEventForm2020" (ngSubmit)="onSubmit2020()">
+  
+      <div class="form-row">
+        <div class="form-group col-md-10">
+          <label for="eventTitle">Title</label>
+          <input type="text" class="form-control" id="eventTitle" formControlName="eventTitle">
+        </div>
+        <div class="form-group col-md-4"></div>
+      </div>
+  
+      <div class="form-row">
+        <div class="form-group col-md-4">
+          <label for="dateTime">Date & Time</label>
+          <ejs-datetimepicker class="date-picker" id='datetimepicker' [value]='dateValue' formControlName="dateTime"></ejs-datetimepicker>
+        </div>
+        <div class="form-group col-md-3">
+          <label for="inputLocation">Stand Assignment</label>
+          <input type="text" class="form-control" id="inputLocation" formControlName="inputLocation">
+        </div>
+        <div class="form-group col-md-3">
+          <label for="coordinatorAdminAmt">Coordinator Payout</label>
+          <input type="number" class="form-control" id="coordinatorAdminAmt" formControlName="coordinatorAdminAmt">
+        </div>
+      </div>
+  
+      <div class="form-row">
+        <div class="form-group col-md-12">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="commBonus" formControlName="commBonus">
+            <label class="form-check-label" for="commBonus">
+              Met Commission Bonus
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="guarantee" formControlName="guarantee">
+            <label class="form-check-label" for="guarantee">
+              Guarantee
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="countTotal" formControlName="countTotal">
+            <label class="form-check-label" for="countTotal">
+              Counts Towards Total
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="closed" formControlName="closed">
+            <label class="form-check-label" for="closed">
+              Closed
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          Terminal 1
+        </div>
+        <div class="form-group col-md-3">
+          <label for="itemSales1">Item Sales</label>
+          <input type="text" class="form-control" id="itemSales1"formControlName="itemSales1">
+        </div>
+        <div class="form-group col-md-3">
+          <label for="alcSales1">Alcohol Sales</label>
+          <input type="text" class="form-control" id="alcSales1" formControlName="alcSales1">
+        </div>
+        <div class="form-group col-md-3">
+          <label for="discounts1">Discounts</label>
+          <input type="text" class="form-control" id="discounts1" formControlName="discounts1">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          Terminal 2
+        </div>
+        <div class="form-group col-md-3">
+          <label for="itemSales2">Item Sales</label>
+          <input type="text" class="form-control" id="itemSales2"formControlName="itemSales2">
+        </div>
+        <div class="form-group col-md-3">
+          <label for="alcSales2">Alcohol Sales</label>
+          <input type="text" class="form-control" id="alcSales2" formControlName="alcSales2">
+        </div>
+        <div class="form-group col-md-3">
+          <label for="discounts2">Discounts</label>
+          <input type="text" class="form-control" id="discounts2" formControlName="discounts2">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          Terminal 3
+        </div>
+        <div class="form-group col-md-3">
+          <label for="itemSales3">Item Sales</label>
+          <input type="text" class="form-control" id="itemSales3"formControlName="itemSales3">
+        </div>
+        <div class="form-group col-md-3">
+          <label for="alcSales3">Alcohol Sales</label>
+          <input type="text" class="form-control" id="alcSales3" formControlName="alcSales3">
+        </div>
+        <div class="form-group col-md-3">
+          <label for="discounts3">Discounts</label>
+          <input type="text" class="form-control" id="discounts3" formControlName="discounts3">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          Terminal 4
+        </div>
+        <div class="form-group col-md-3">
+          <label for="itemSales4">Item Sales</label>
+          <input type="text" class="form-control" id="itemSales4"formControlName="itemSales4">
+        </div>
+        <div class="form-group col-md-3">
+          <label for="alcSales4">Alcohol Sales</label>
+          <input type="text" class="form-control" id="alcSales4" formControlName="alcSales4">
+        </div>
+        <div class="form-group col-md-3">
+          <label for="discounts4">Discounts</label>
+          <input type="text" class="form-control" id="discounts4" formControlName="discounts4">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          Terminal 5
+        </div>
+        <div class="form-group col-md-3">
+          <label for="itemSales5">Item Sales</label>
+          <input type="text" class="form-control" id="itemSales5"formControlName="itemSales5">
+        </div>
+        <div class="form-group col-md-3">
+          <label for="alcSales5">Alcohol Sales</label>
+          <input type="text" class="form-control" id="alcSales5" formControlName="alcSales5">
+        </div>
+        <div class="form-group col-md-3">
+          <label for="discounts5">Discounts</label>
+          <input type="text" class="form-control" id="discounts5" formControlName="discounts5">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          Terminal 6
+        </div>
+        <div class="form-group col-md-3">
+          <label for="itemSales6">Item Sales</label>
+          <input type="text" class="form-control" id="itemSales6"formControlName="itemSales6">
+        </div>
+        <div class="form-group col-md-3">
+          <label for="alcSales6">Alcohol Sales</label>
+          <input type="text" class="form-control" id="alcSales6" formControlName="alcSales6">
+        </div>
+        <div class="form-group col-md-3">
+          <label for="discounts6">Discounts</label>
+          <input type="text" class="form-control" id="discounts6" formControlName="discounts6">
+        </div>
+      </div>
+
+      <div class="form-row">
         <div class="form-group col-md-3">
           <label for="bonus">Venue Bonus</label>
           <input type="text" class="form-control" id="bonus" formControlName="bonus">
