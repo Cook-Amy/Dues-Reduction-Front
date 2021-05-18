@@ -508,7 +508,7 @@ export class EventNewComponent implements OnInit {
         0,
         this.newEventForm2020.value['notes'],
         this.newEventForm2020.value['closed'],
-        this.newEventForm2020.value['coordinatorAdminAmt'],
+        parseFloat(this.newEventForm2020.value['coordinatorAdminAmt']),
         0,
         this.newEventForm2020.value['commBonus'],
         this.newEventForm2020.value['guarantee'],
@@ -541,7 +541,6 @@ export class EventNewComponent implements OnInit {
         null
       );
     }
-    
     return event;
   }
   

@@ -102,6 +102,7 @@ export class EventStaffEditComponent implements OnInit {
   }
 
   onChanges() {
+    // when staff position changes
     this.staffEditForm.get('position').valueChanges.subscribe(val => {
       this.jobs.forEach(job => {
         if(job.jobName == val) {
@@ -113,10 +114,25 @@ export class EventStaffEditComponent implements OnInit {
           var newTime = new Date(this.computeScheduledArrival(
                                       this.event.Date, 
                                       job.minutesBeforeOpen));
+
+          // update TimeIn and TimeOut
+          var timeIn = newTime;
+          var timeOut = timeIn;
+
           this.staffEditForm.patchValue({
-            scheduledArrivalTime: newTime
+            scheduledArrivalTime: newTime,
+            timeIn: timeIn,
+            timeOut: timeOut
           });
         }
+      });
+    });
+
+    // when arrival time changes
+    this.staffEditForm.get('scheduledArrivalTime').valueChanges.subscribe(val => {
+      this.staffEditForm.patchValue({
+        timeIn: val,
+        timeOut: val
       });
     });
   }
@@ -206,8 +222,23 @@ export class EventStaffEditComponent implements OnInit {
     this.timesheet.eventBonus = this.staffEditForm.value['eventBonus'];
     this.timesheet.hourlyBonus = this.staffEditForm.value['hourlyBonus'];
     this.timesheet.scheduledArrivalTime = this.staffEditForm.value['scheduledArrivalTime'];
-    this.timesheet.timeIn = this.staffEditForm.value['timeIn'];
-    this.timesheet.timeOut = this.staffEditForm.value['timeOut'];
+    this.timesheet.timeIn = this.checkDate(this.staffEditForm.value['timeIn']);
+    this.timesheet.timeOut = this.checkDate(this.staffEditForm.value['timeOut']);
+  }
+
+  checkDate(dateVal) {
+    var eventDate = new Date(this.event.Date);
+    var timesheetDate = new Date(dateVal);
+
+    var mm = eventDate.getMonth();
+    var dd = eventDate.getDate();
+    var yyyy = eventDate.getFullYear();
+
+    timesheetDate.setMonth(mm);
+    timesheetDate.setDate(dd);
+    timesheetDate.setFullYear(yyyy);
+
+    return timesheetDate.toString();
   }
 
 

@@ -113,7 +113,7 @@ export class EventService {
         event.tacCut = parseFloat(event.tacCut.toFixed(2));
       if(event.drCut)
         event.drCut = parseFloat(event.drCut.toFixed(2));
-      if(event.coordinatorAdminAmt)
+      if(event.coordinatorAdminAmt) 
         event.coordinatorAdminAmt = parseFloat(event.coordinatorAdminAmt.toFixed(2));
       if(event.totalSalesPnc)
         event.totalSalesPnc = parseFloat(event.totalSalesPnc.toFixed(2));

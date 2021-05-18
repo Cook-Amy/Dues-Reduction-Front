@@ -120,6 +120,7 @@ export class EventStaffAddComponent implements OnInit {
   }
 
   onChanges() {
+    // when staff position changes
     this.staffAddForm.get('position').valueChanges.subscribe(val => {
       this.jobs.forEach(job => {
         if(job.jobName == val) {
@@ -130,10 +131,25 @@ export class EventStaffAddComponent implements OnInit {
           var newTime = new Date(this.computeScheduledArrival(
                                       this.event.Date, 
                                       job.minutesBeforeOpen));
+
+          // update TimeIn and TimeOut
+          var timeIn = newTime;
+          var timeOut = timeIn;
+
           this.staffAddForm.patchValue({
-            scheduledArrivalTime: newTime
+            scheduledArrivalTime: newTime,
+            timeIn: timeIn,
+            timeOut: timeOut
           });
         }
+      });
+    });
+
+    // when arrival time changes
+    this.staffAddForm.get('scheduledArrivalTime').valueChanges.subscribe(val => {
+      this.staffAddForm.patchValue({
+        timeIn: val,
+        timeOut: val
       });
     });
   }
