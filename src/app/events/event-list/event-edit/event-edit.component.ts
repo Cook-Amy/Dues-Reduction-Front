@@ -147,6 +147,7 @@ export class EventEditComponent implements OnInit {
     let itemSales6 = this.checkForNullNum(this.event.itemSales6);
     let alcSales6 = this.checkForNullNum(this.event.alcSales6);
     let discounts6 = this.checkForNullNum(this.event.discounts6);
+    let ccTips = this.checkForNullNum(this.event.ccTips);
 
     let estCheck = this.checkForNullNum(this.event.estimatedCheck);
     let creditCardTips = this.checkForNullNum(this.event.creditCardTips);
@@ -187,13 +188,14 @@ export class EventEditComponent implements OnInit {
       'discounts5' : new FormControl(discounts5, Validators.required),
       'itemSales6' : new FormControl(itemSales6, Validators.required),
       'alcSales6' : new FormControl(alcSales6, Validators.required),
-      'discounts6' : new FormControl(discounts6, Validators.required)
+      'discounts6' : new FormControl(discounts6, Validators.required),
+      'ccTips' : new FormControl(ccTips, Validators.required)
     });
   }
 
   checkForNullNum(num) {
     num = parseFloat(num);
-    if(num == null)
+    if(num == null || isNaN(num))
       return num;
     else  {
       return num.toFixed(2);
@@ -334,6 +336,7 @@ export class EventEditComponent implements OnInit {
       this.event.itemSales6 = parseFloat(this.editEventForm2020.value['itemSales6']);
       this.event.alcSales6 = parseFloat(this.editEventForm2020.value['alcSales6']);
       this.event.discounts6 = parseFloat(this.editEventForm2020.value['discounts6']);
+      this.event.ccTips = parseFloat(this.editEventForm2020.value['ccTips']);
     }
   }
 }

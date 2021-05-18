@@ -174,7 +174,9 @@ export class MathService {
       }
     }
 
+    // add on extra money from PNC
     estCheck += event.venueBonus;
+    estCheck += event.ccTips;
 
       // add other positions to estimate 
       // applies to Stand Leader and Cooks

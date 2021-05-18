@@ -48,7 +48,6 @@ export class ConfirmDeleteComponent implements OnInit {
 
   redirectTo() {
     var route = this.router.url;
-    console.log("route: " + route);
     var redir = '';
     if(route == '/pnc/events')
       redir = '/pnc';
@@ -61,7 +60,6 @@ export class ConfirmDeleteComponent implements OnInit {
     else
       redir = '/home';
 
-    console.log("redir: " + redir);
     this.router.navigateByUrl(redir, {skipLocationChange: true}).then(()=>
     this.router.navigate([route]));
   }

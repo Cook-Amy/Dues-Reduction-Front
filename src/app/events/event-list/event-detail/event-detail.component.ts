@@ -116,7 +116,7 @@ export class EventDetailComponent implements OnInit {
 
   checkForNullNum(num) {
     num = parseFloat(num);
-    if(num == null)
+    if(num == null || isNaN(num))
       return 0;
     else  {
       return num;

@@ -148,12 +148,17 @@
       <tr>
         <td colspan="4">Doors: {{ checkForNullString(getTime(event.Date)) }}</td>
         <td colspan="4">Location: {{ checkForNullString(event.location) }}</td>
-        <td colspan="4">Venue Bonus: ${{ (checkForNullNum(event.venueBonus)).toFixed(2) }}</td>
+        <td colspan="4"></td>
       </tr>
       <tr>
         <td colspan="4">Total Sales: ${{ (checkForNullNum(event.totalSalesPnc)).toFixed(2) }}</td>
         <td colspan="4">Alc Sales: ${{ (checkForNullNum(event.alcSales)).toFixed(2) }}</td>
         <td colspan="4">Discounts: ${{ (checkForNullNum(event.totalDiscounts)).toFixed(2) }}</td>
+      </tr>
+      <tr>
+        <td colspan="4">Venue Bonus: ${{ (checkForNullNum(event.venueBonus)).toFixed(2) }}</td>
+        <td colspan="4">CC Tips: ${{ (checkForNullNum(event.ccTips)).toFixed(2) }}</td>
+        <td colspan="4"></td>
       </tr>
       <tr>
         <td colspan="4">Payout: ${{ (checkForNullNum(event.payout)).toFixed(2) }}</td>

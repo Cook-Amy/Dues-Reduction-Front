@@ -1,4 +1,3 @@
-
 export class Event {
   // all events
   public idevent: number;
@@ -47,6 +46,7 @@ export class Event {
   public itemSales6: number;
   public alcSales6: number;
   public discounts6: number;
+  public ccTips: number;
 
   // wc events
   public creditCardTips: number;
@@ -104,6 +104,7 @@ export class Event {
      itemSales6: number,
      alcSales6: number,
      discounts6: number,
+     ccTips: number,
 
      creditCardTips: number,
      maxCreditCardTipAmount: number,
@@ -159,6 +160,7 @@ export class Event {
     this.itemSales6 = itemSales6;
     this.alcSales6 = alcSales6;
     this.discounts6 = discounts6;
+    this.ccTips = ccTips;
 
     this.creditCardTips = creditCardTips;
     this.maxCreditCardTipAmount = maxCreditCardTipAmount;

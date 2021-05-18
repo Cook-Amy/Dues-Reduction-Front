@@ -160,6 +160,7 @@ export class EventNewComponent implements OnInit {
     let itemSales6:number = 0;
     let alcSales6:number = 0;
     let discounts6:number = 0;
+    let ccTips:number = 0;
 
     let estCheck = 0;
     let creditCardTips = 0;
@@ -200,7 +201,8 @@ export class EventNewComponent implements OnInit {
       'discounts5' : new FormControl(discounts5, Validators.required),
       'itemSales6' : new FormControl(itemSales6, Validators.required),
       'alcSales6' : new FormControl(alcSales6, Validators.required),
-      'discounts6' : new FormControl(discounts6, Validators.required)
+      'discounts6' : new FormControl(discounts6, Validators.required),
+      'ccTips' : new FormControl(ccTips, Validators.required)
     });
   }
 
@@ -299,7 +301,6 @@ export class EventNewComponent implements OnInit {
 
   redirectTo() {
     var route = this.router.url;
-    console.log("route: " + route);
     var redir = '';
     if(route == '/pnc/events')
       redir = '/pnc';
@@ -347,6 +348,7 @@ export class EventNewComponent implements OnInit {
         parseFloat(this.newEventForm.value['alcSales']),
         0,
         this.newEventForm.value['countTotal'],
+        0,
         0,
         0,
         0,
@@ -419,6 +421,7 @@ export class EventNewComponent implements OnInit {
         0,
         0,
         0,
+        0,
         parseFloat(this.newEventForm.value['creditCardTips']),
         30,
         0,
@@ -455,6 +458,7 @@ export class EventNewComponent implements OnInit {
         0,
         0,
         false,
+        0,
         0,
         0,
         0,
@@ -533,6 +537,7 @@ export class EventNewComponent implements OnInit {
         this.newEventForm2020.value['itemSales6'],
         this.newEventForm2020.value['alcSales6'],
         this.newEventForm2020.value['discounts6'],
+        this.newEventForm2020.value['ccTips'],
         0,
         0,
         0,
