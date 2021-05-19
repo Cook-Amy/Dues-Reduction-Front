@@ -94,7 +94,7 @@ export class StaffListComponent implements OnInit {
         lengthChange: true,
         columnDefs: [
           {
-            targets: [7, 8],
+            targets: [8],
             type: 'date'
           },
           {
@@ -107,6 +107,7 @@ export class StaffListComponent implements OnInit {
 
     else if(this.showVenue == 2) {
       this.dtOptions = { 
+        processing: true,
         paging: true,
         pagingType: 'full_numbers',
         pageLength: 20,
@@ -117,12 +118,12 @@ export class StaffListComponent implements OnInit {
             type: 'date'
           }
         ],
-        responsive: true
       };
     }
 
     else if(this.showVenue == 3) {
       this.dtOptions = { 
+        processing: true,
         paging: true,
         pagingType: 'full_numbers',
         pageLength: 20,
@@ -138,13 +139,14 @@ export class StaffListComponent implements OnInit {
 
     else {
       this.dtOptions = {
+        processing: true,
         paging: true,
         pagingType: 'full_numbers',
         pageLength: 20,
         lengthChange: true,
         columnDefs: [
           {
-            targets: [7, 8],
+            targets: [8, 9, 10],
             type: 'date'
           }
         ]
@@ -153,6 +155,8 @@ export class StaffListComponent implements OnInit {
   }
     
   expandRow(trRef, rowData) {
+    console.log(JSON.stringify(trRef));
+    console.log(JSON.stringify(rowData));
     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
       var row = dtInstance.row(trRef);
       if(row.child.isShown()) {

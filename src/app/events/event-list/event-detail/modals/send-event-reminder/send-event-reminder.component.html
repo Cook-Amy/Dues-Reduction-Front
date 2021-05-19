@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h5 class="modal-title" id="editModalLabel">Send An Event Reminder</h5>
+    <h5 class="modal-title" id="editModalLabel">Send An Email To Event Staff</h5>
     <button class="close" type="button" aria-label="Close" (click)="activeModal.close(null)">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -28,10 +28,17 @@
         </tr>
       </tbody>
     </table>
-
-      <!-- TODO: Insert editable text for reminder email -->
+<br>
       <form [formGroup]="emailTextForm">
-        <div>Additional Notes for Reminder Email</div>
+        <div class="form-row">
+          <div class="form-group col-md-1">
+            <input type="checkbox" class="form-control" id="removeReminderText" formControlName="removeReminderText">
+          </div>
+          <div class="form-group col-md-11">
+            <label for="removeReminderText">Do not include reminder text in email body.</label>
+          </div>
+        </div>
+        <div>Additional Notes for Email</div>
         <div class="form-row">
           <div class="form-group col-md-12">
               <textarea class="form-control" id="emailText" formControlName="emailText" rows="10"></textarea>

@@ -49,8 +49,11 @@ export class SendEventReminderComponent implements OnInit {
 
   private initForm() {
     let emailText = '';
+    let removeReminderText = false;
+
     this.emailTextForm = new FormGroup({
-      'emailText': new FormControl(emailText, Validators.required)
+      'emailText': new FormControl(emailText, Validators.required),
+      'removeReminderText' : new FormControl(removeReminderText, Validators.required)
     });
   }
 
@@ -60,10 +63,11 @@ export class SendEventReminderComponent implements OnInit {
     this.getCheckedItemList();
     var list = this.checkedList;
 
+    var removeReminderText = this.emailTextForm.value['removeReminderText'];
     var emailText = this.emailTextForm.value['emailText'];
 
     if(this.currentVenueID == 1) {
-      this.emailService.sendPncReminderEmail(list, emailText, this.event.idevent).subscribe(res => {
+      this.emailService.sendPncReminderEmail(list, removeReminderText, emailText, this.event.idevent).subscribe(res => {
           this.toastr.success("Event reminder was emailed.", "SUCCESS!", {
             closeButton: true,
             timeOut: 3000
@@ -77,7 +81,7 @@ export class SendEventReminderComponent implements OnInit {
     }
 
     else if(this.currentVenueID == 2) {
-      this.emailService.sendWcReminderEmail(list, emailText, this.event.idevent).subscribe(res => {
+      this.emailService.sendWcReminderEmail(list, removeReminderText, emailText, this.event.idevent).subscribe(res => {
         this.toastr.success("Event reminder was emailed.", "SUCCESS!", {
           closeButton: true,
           timeOut: 3000
@@ -91,7 +95,7 @@ export class SendEventReminderComponent implements OnInit {
     }
 
     else if(this.currentVenueID == 3) {
-      this.emailService.sendCfReminderEmail(list, emailText, this.event.idevent).subscribe(res => {
+      this.emailService.sendCfReminderEmail(list, removeReminderText, emailText, this.event.idevent).subscribe(res => {
         this.toastr.success("Event reminder was emailed.", "SUCCESS!", {
           closeButton: true,
           timeOut: 3000

@@ -80,7 +80,7 @@
 -- WC Staff Details 
 --------------------------------------------------------------------------------------------->
 <div *ngIf="showVenue == 2">
-    <table class="table table-sm table-responsive">
+    <table class="table table-sm table-responsive table-detail">
       <tbody>
         <tr>
           <td colspan="6">Team Training Date: {{ checkForNullString(getDate(staffMember.wcTeamTraining)) }}</td>
@@ -138,7 +138,7 @@
 -- CF Staff Details 
 --------------------------------------------------------------------------------------------->
 <div *ngIf="showVenue == 3">
-    <table class="table table-sm table-responsive">
+    <table class="table table-sm table-responsive table-detail">
       <tbody>
         <tr>
           <td colspan="6">Alcohol Training Date: {{ checkForNullString(getDate(staffMember.cfAlcoholTraining)) }}</td>
@@ -181,7 +181,7 @@
 -- All Venue Staff Details 
 --------------------------------------------------------------------------------------------->
 <div *ngIf="showVenue == 99">
-    <table class="table table-sm table-responsive">
+    <table class="table table-sm table-responsive table-detail">
       <tbody>
         <tr>
           <td colspan="9"><h5>PNC ARENA</h5></td>
