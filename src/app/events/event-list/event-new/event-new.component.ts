@@ -43,7 +43,10 @@ export class EventNewComponent implements OnInit {
     if(this.currentVenueID == 2) {
       this.allEvents = this.eventService.returnEventsWc();
       this.idVenue = 2;
-      this.initForm();
+      if(this.currentSeasonID <= 3)
+        this.initForm();
+      if(this.currentSeasonID >= 4)
+        this.initForm2020();
     }
 
     if(this.currentVenueID == 3) {
@@ -162,7 +165,7 @@ export class EventNewComponent implements OnInit {
     let discounts6:number = 0;
     let ccTips:number = 0;
 
-    let estCheck = 0;
+    let totalSalesWc = 0;
     let creditCardTips = 0;
 
     let totalSalesCf:number = 0;
@@ -179,7 +182,7 @@ export class EventNewComponent implements OnInit {
       'totalSalesPnc': new FormControl(totalSalesPnc, Validators.required),
       'alcSales': new FormControl(alcSales, Validators.required),
       'bonus': new FormControl(bonus, Validators.required),
-      'estCheck': new FormControl(estCheck, Validators.required),
+      'totalSalesWc': new FormControl(totalSalesWc, Validators.required),
       'checkRcvd': new FormControl(checkRcvd, Validators.required),
       'notes': new FormControl(notes, Validators.required),
       'creditCardTips': new FormControl(creditCardTips, Validators.required),
@@ -292,6 +295,26 @@ export class EventNewComponent implements OnInit {
         });
       });
     }
+
+    else if(this.idVenue == 2) {
+      this.eventService.getWcContractInfo().subscribe(contract => {
+        // new events have no timesheets yet; send an empty array
+        var timesheets: Timesheet[] = [];
+        this.newEvent = this.mathService.calculateWcEvent2020(event, contract[0], timesheets);
+        this.eventService.setNewEvent(this.newEvent).subscribe(id => {
+          this.newEvent.idevent = id;
+          this.allEvents.push(this.newEvent);
+          this.eventService.setAllEvents(this.allEvents);
+          this.allEvents = this.eventService.returnEventsWc();
+          var timesheets: Timesheet[] = this.eventService.returnTimesheets();
+          if(timesheets.length > 0) {
+            this.eventService.updateAllTimesheetsInDB(timesheets).subscribe(x => {
+            });
+          }
+          this.redirectTo();
+        });
+      });
+    }
   }
 
   onCancel() {
@@ -372,6 +395,7 @@ export class EventNewComponent implements OnInit {
         0,
         0,
         0,
+        0,
         null
       );
     }
@@ -403,6 +427,7 @@ export class EventNewComponent implements OnInit {
         0,
         0,
         false,
+        0,
         0,
         0,
         0,
@@ -458,6 +483,7 @@ export class EventNewComponent implements OnInit {
         0,
         0,
         false,
+        0,
         0,
         0,
         0,
@@ -540,6 +566,64 @@ export class EventNewComponent implements OnInit {
         this.newEventForm2020.value['ccTips'],
         0,
         0,
+        0,
+        0,
+        0,
+        0,
+        null
+      );
+    }
+
+    else if(this.idVenue == 2) {
+      event = new Event (
+        0,
+        this.currentSeasonID,
+        2, 
+        this.newEventForm2020.value['dateTime'],
+        this.newEventForm2020.value['eventTitle'],
+        true,
+        this.newEventForm2020.value['inputLocation'],
+        parseFloat(this.newEventForm2020.value['bonus']),
+        parseFloat(this.newEventForm2020.value['estCheck']),
+        0,
+        parseFloat(this.newEventForm2020.value['checkRcvd']),
+        0,
+        0,
+        0,
+        0.2000,
+        0,
+        0,
+        this.newEventForm2020.value['notes'],
+        this.newEventForm2020.value['closed'],
+        parseFloat(this.newEventForm2020.value['coordinatorAdminAmt']),
+        0,
+        false,
+        false,
+        0,
+        0,
+        false,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        parseFloat(this.newEventForm2020.value['totalSalesWc']),
+        parseFloat(this.newEventForm2020.value['creditCardTips']),
+        30,
         0,
         0,
         0,

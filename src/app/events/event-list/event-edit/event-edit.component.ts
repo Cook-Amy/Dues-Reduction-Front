@@ -149,7 +149,7 @@ export class EventEditComponent implements OnInit {
     let discounts6 = this.checkForNullNum(this.event.discounts6);
     let ccTips = this.checkForNullNum(this.event.ccTips);
 
-    let estCheck = this.checkForNullNum(this.event.estimatedCheck);
+    let totalSalesWc = this.checkForNullNum(this.event.totalSalesWc);
     let creditCardTips = this.checkForNullNum(this.event.creditCardTips);
 
     let totalSalesCf = this.checkForNullNum(this.event.totalSalesCf);
@@ -166,7 +166,7 @@ export class EventEditComponent implements OnInit {
       'totalSalesPnc': new FormControl(totalSalesPnc, Validators.required),
       'alcSales': new FormControl(alcSales, Validators.required),
       'bonus': new FormControl(bonus, Validators.required),
-      'estCheck': new FormControl(estCheck, Validators.required),
+      'totalSalesWc': new FormControl(totalSalesWc, Validators.required),
       'checkRcvd': new FormControl(checkRcvd, Validators.required),
       'notes': new FormControl(notes, Validators.required),
       'creditCardTips': new FormControl(creditCardTips, Validators.required),
@@ -222,7 +222,7 @@ export class EventEditComponent implements OnInit {
         });
       });
     }
-    else if(this.idVenue == 2) {
+    else if(this.idVenue == 2 && this.currentSeasonID <= 3) {
       this.eventService.getWcContractInfo().subscribe(contract => {
         this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
           if(!timesheets) {timesheets = [];}
@@ -230,11 +230,11 @@ export class EventEditComponent implements OnInit {
           this.eventService.editEvent(this.event, this.idVenue).subscribe(res => {
             this.eventService.getAllEvents().subscribe(events => {
               this.eventService.setAllEvents(events);
-              var timesheets: Timesheet[] = this.mathService.timesheets;
+              var timesheets: Timesheet[] = this.eventService.returnTimesheets();
               if(timesheets.length > 0) {
-                this.eventService.updateAllTimesheetsInDB(timesheets).subscribe(x => {  
+                this.eventService.updateAllTimesheetsInDB(timesheets).subscribe(x => {
                   this.activeModal.dismiss("Edit submitted");
-                })
+                });
               }
               else {
                 this.activeModal.dismiss("Edit submitted");
@@ -274,6 +274,30 @@ export class EventEditComponent implements OnInit {
         });
       });
     }
+
+    else if(this.idVenue == 2 && this.currentSeasonID >= 4) {
+      this.eventService.getWcContractInfo().subscribe(contract => {
+        this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
+          if(!timesheets) {timesheets = [];}
+          this.event = this.mathService.calculateWcEvent2020(this.event, contract[0], timesheets);
+          this.eventService.editEvent(this.event, this.idVenue).subscribe(res => {
+            this.eventService.getAllEvents().subscribe(events => {
+              this.eventService.setAllEvents(events);
+              var timesheets: Timesheet[] = this.eventService.returnTimesheets();
+              if(timesheets.length > 0) {
+                this.eventService.updateAllTimesheetsInDB(timesheets).subscribe(x => {
+                  this.activeModal.dismiss("Edit submitted");
+                });
+              }
+              else {
+                this.activeModal.dismiss("Edit submitted");
+              }
+            });
+          });
+        });
+      });
+    }
+
   }
 
   updateEvent() {
@@ -337,6 +361,11 @@ export class EventEditComponent implements OnInit {
       this.event.alcSales6 = parseFloat(this.editEventForm2020.value['alcSales6']);
       this.event.discounts6 = parseFloat(this.editEventForm2020.value['discounts6']);
       this.event.ccTips = parseFloat(this.editEventForm2020.value['ccTips']);
+    }
+
+    else if(this.idVenue == 2) {
+      this.event.creditCardTips = parseFloat(this.editEventForm2020.value['creditCardTips']);
+      this.event.totalSalesWc = parseFloat(this.editEventForm2020.value['totalSalesWc']);
     }
   }
 }

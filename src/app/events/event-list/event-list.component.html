@@ -77,6 +77,8 @@
         <th>Date</th>
         <th>Doors Open</th>
         <th>Location</th>
+        <th>Sales</th>
+        <th>CC Tips</th>
         <th>Payout</th>
       </tr>
     </thead>
@@ -87,7 +89,9 @@
         <td>{{ getDate(checkForNullString(event.Date)) }}</td>
         <td>{{ getTime(checkForNullString(event.Date)) }}</td>
         <td>{{ event.location }}</td>
-        <td>{{ event.payout }}</td>
+        <td>{{ (checkForNullNum(event.totalSalesWc)).toFixed(2) }}</td>
+        <td>{{ (checkForNullNum(event.creditCardTips)).toFixed(2) }}</td>
+        <td>{{ (checkForNullNum(event.payout)).toFixed(2) }}</td>
       </tr>
     </tbody> 
   </table>

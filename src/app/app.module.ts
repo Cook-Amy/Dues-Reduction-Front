@@ -53,6 +53,14 @@ import { AddHourlyBonusComponent } from './events/event-list/event-detail/modals
 import { SendEventReminderComponent } from './events/event-list/event-detail/modals/send-event-reminder/send-event-reminder.component';
 import { SendGateListComponent } from './events/event-list/event-detail/modals/send-gate-list/send-gate-list.component';
 import { CreditSummaryComponent } from './staff/staff-list/credit-summary/credit-summary.component';
+import { StaffInactiveComponent } from './staff-inactive/staff-inactive.component';
+import { StaffInterestedComponent } from './staff-interested/staff-interested.component';
+import { StaffAllComponent } from './staff-all/staff-all.component';
+import { StaffActiveComponent } from './staff-active/staff-active.component';
+import { StaffActiveListComponent } from './staff-active/staff-list/staff-active-list/staff-active-list.component';
+import { StaffAllListComponent } from './staff-all/staff-list/staff-all-list/staff-all-list.component';
+import { StaffInactiveListComponent } from './staff-inactive/staff-list/staff-inactive-list/staff-inactive-list.component';
+import { StaffInterestedListComponent } from './staff-interested/staff-list/staff-interested-list/staff-interested-list.component';
 
 
 
@@ -92,7 +100,15 @@ import { CreditSummaryComponent } from './staff/staff-list/credit-summary/credit
     AddHourlyBonusComponent,
     SendEventReminderComponent,
     SendGateListComponent,
-    CreditSummaryComponent
+    CreditSummaryComponent,
+    StaffInactiveComponent,
+    StaffInterestedComponent,
+    StaffAllComponent,
+    StaffActiveComponent,
+    StaffActiveListComponent,
+    StaffAllListComponent,
+    StaffInactiveListComponent,
+    StaffInterestedListComponent
   ],
   imports: [
     BrowserModule,

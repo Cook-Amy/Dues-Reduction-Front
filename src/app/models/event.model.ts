@@ -49,6 +49,7 @@ export class Event {
   public ccTips: number;
 
   // wc events
+  public totalSalesWc: number;
   public creditCardTips: number;
   public maxCreditCardTipAmount: number;
   public shuttleBonusAmountWc: number;
@@ -106,6 +107,7 @@ export class Event {
      discounts6: number,
      ccTips: number,
 
+     totalSalesWc: number,
      creditCardTips: number,
      maxCreditCardTipAmount: number,
      shuttleBonusAmountWc: number,
@@ -162,6 +164,7 @@ export class Event {
     this.discounts6 = discounts6;
     this.ccTips = ccTips;
 
+    this.totalSalesWc = totalSalesWc;
     this.creditCardTips = creditCardTips;
     this.maxCreditCardTipAmount = maxCreditCardTipAmount;
     this.shuttleBonusAmountWc = shuttleBonusAmountWc;

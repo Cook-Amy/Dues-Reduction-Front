@@ -140,7 +140,7 @@ export class StaffService {
         false,
         false,
         false,
-        staffResult[i].cfAlcolholTraining,
+        staffResult[i].cfAlcoholTraining,
         false,
         false,
         false

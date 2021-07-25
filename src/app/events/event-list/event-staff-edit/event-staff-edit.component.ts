@@ -222,11 +222,15 @@ export class EventStaffEditComponent implements OnInit {
     this.timesheet.eventBonus = this.staffEditForm.value['eventBonus'];
     this.timesheet.hourlyBonus = this.staffEditForm.value['hourlyBonus'];
     this.timesheet.scheduledArrivalTime = this.staffEditForm.value['scheduledArrivalTime'];
-    this.timesheet.timeIn = this.checkDate(this.staffEditForm.value['timeIn']);
-    this.timesheet.timeOut = this.checkDate(this.staffEditForm.value['timeOut']);
+    this.timesheet.timeIn = this.checkDate(this.staffEditForm.value['timeIn'], null);
+    this.timesheet.timeOut = this.checkDate(this.staffEditForm.value['timeOut'], this.timesheet.timeIn, true);
   }
 
-  checkDate(dateVal) {
+    // CHECK DATE
+      // First, make sure date matches event date
+      // Second, if time out is after midnight, make sure date is the next day
+  checkDate(dateVal, inDateVal, outDate = null) {
+    // console.log("starting date value: " + dateVal);
     var eventDate = new Date(this.event.Date);
     var timesheetDate = new Date(dateVal);
 
@@ -234,10 +238,22 @@ export class EventStaffEditComponent implements OnInit {
     var dd = eventDate.getDate();
     var yyyy = eventDate.getFullYear();
 
+    // check for timeOut that is after midnight
+    if(inDateVal && outDate) {
+      // console.log("checking timeOut");
+      var timein = new Date(inDateVal);
+      var timeout = timesheetDate;
+
+      if(timein.getTime() > timeout.getTime()) 
+      // console.log("Time out is before time in");
+        dd = eventDate.getDate() + 1;
+    }
+
     timesheetDate.setMonth(mm);
     timesheetDate.setDate(dd);
     timesheetDate.setFullYear(yyyy);
 
+    // console.log("ending date value: " + timesheetDate.toString());
     return timesheetDate.toString();
   }
 

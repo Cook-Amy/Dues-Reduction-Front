@@ -267,4 +267,35 @@ export class EventStaffAddComponent implements OnInit {
       null
     );
   }
+
+  // CHECK DATE
+    // First, make sure date matches event date
+    // Second, if time out is after midnight, make sure date is the next day
+  checkDate(dateVal, inDateVal, outDate = null) {
+    console.log("starting date value: " + dateVal);
+    var eventDate = new Date(this.event.Date);
+    var timesheetDate = new Date(dateVal);
+
+    var mm = eventDate.getMonth();
+    var dd = eventDate.getDate();
+    var yyyy = eventDate.getFullYear();
+
+    // check for timeOut that is after midnight
+    if(inDateVal && outDate) {
+      console.log("checking timeOut");
+      var timein = new Date(inDateVal);
+      var timeout = timesheetDate;
+
+      if(timein.getTime() > timeout.getTime()) 
+      console.log("Time out is before time in");
+        dd = eventDate.getDate() + 1;
+    }
+
+    timesheetDate.setMonth(mm);
+    timesheetDate.setDate(dd);
+    timesheetDate.setFullYear(yyyy);
+
+    console.log("ending date value: " + timesheetDate.toString());
+    return timesheetDate.toString();
+  }
 }

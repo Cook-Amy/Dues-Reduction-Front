@@ -45,6 +45,8 @@ export class StaffTableComponent implements OnInit, AfterViewInit, OnDestroy {
       lengthChange: true
     };
 
+    console.log("Staff: " + JSON.stringify(this.staff));
+
   }
 
   ngAfterViewInit() {

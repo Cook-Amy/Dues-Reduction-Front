@@ -1,21 +1,21 @@
-import { StaffDetailComponent } from './staff-detail/staff-detail.component';
-import { ToastrService } from 'ngx-toastr';
-import { MonthReportService } from './../../createReports/month-report.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Component, OnInit, ComponentRef, ViewChild, Renderer2, ComponentFactoryResolver, ViewContainerRef } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { VenueService } from './../../venues/venue.service';
-import { Venue } from './../../models/venue.model';
-import { StaffService } from './../staff.service';
-import { Staff } from './../../models/staff.model';
-import { Component, OnInit, ViewChild, Renderer2, ComponentFactoryResolver, ViewContainerRef, ComponentRef } from '@angular/core';
 import { DataTableDirective } from 'angular-datatables';
+import { ToastrService } from 'ngx-toastr';
+import { MonthReportService } from 'src/app/createReports/month-report.service';
+import { Staff } from 'src/app/models/staff.model';
+import { Venue } from 'src/app/models/venue.model';
+import { StaffDetailComponent } from 'src/app/staff/staff-list/staff-detail/staff-detail.component';
+import { StaffService } from 'src/app/staff/staff.service';
+import { VenueService } from 'src/app/venues/venue.service';
 
 @Component({
-  selector: 'app-staff-list',
-  templateUrl: './staff-list.component.html',
-  styleUrls: ['./staff-list.component.css']
+  selector: 'app-staff-interested-list',
+  templateUrl: './staff-interested-list.component.html',
+  styleUrls: ['./staff-interested-list.component.css']
 })
-export class StaffListComponent implements OnInit {
+export class StaffInterestedListComponent implements OnInit {
   @ViewChild(DataTableDirective, {static: false}) dtElement: DataTableDirective;
   dtOptions: any = {};
   private childRow: ComponentRef<StaffDetailComponent>;
@@ -23,24 +23,9 @@ export class StaffListComponent implements OnInit {
 
   activeForm: FormGroup;
 
-  allStaff: Staff[] = [];
-  activeStaff: Staff[] = [];
-  inactiveStaff: Staff[] = [];
   interestedStaff: Staff[] = [];
-
-  allPncStaff: Staff[] = [];
-  activePncStaff: Staff[] = [];
-  inactivePncStaff: Staff[] = [];
   interestedPncStaff: Staff[] = [];
-
-  allWcStaff: Staff[] = [];
-  activeWcStaff: Staff[] = [];
-  inactiveWcStaff: Staff[] = [];
   interestedWcStaff: Staff[] = [];
-
-  allCfStaff: Staff[] = [];
-  activeCfStaff: Staff[] = [];
-  inactiveCfStaff: Staff[] = [];
   interestedCfStaff: Staff[] = [];
 
   setStaff: Staff[] = [];
@@ -51,7 +36,6 @@ export class StaffListComponent implements OnInit {
   showVenue: number;
 
   staffNew: Boolean = true;
-  activityLevel: number = 1;
 
   monthlyReportMsg: Boolean;
   monthlyReportForm: FormGroup;
@@ -78,10 +62,6 @@ export class StaffListComponent implements OnInit {
     this.getDtOptions();
 
     this.staffNew = this.staffService.getStaffNew();
-    // this.staffService.staffNewChanged.subscribe(newStaffChanged => {
-    //   this.staffNew = newStaffChanged;
-    //   this.preserveExpandedRows(this.dtElement, 'idperson', newStaffChanged);
-    // });
   }
 
   getDtOptions() {
@@ -203,11 +183,9 @@ export class StaffListComponent implements OnInit {
 
   private initForm1() {
     let venueSelect = false;
-    let activeSelect = false;
 
     this.activeForm = new FormGroup ({
-      'venueSelect': new FormControl(venueSelect, Validators.required),
-      'activeSelect': new FormControl({value: '1', disabled: false}, Validators.required)
+      'venueSelect': new FormControl(venueSelect, Validators.required)
     });
   }
 
@@ -237,55 +215,11 @@ export class StaffListComponent implements OnInit {
   }
 
   setAllStaff() {
-    this.allStaff = this.staffService.returnAllStaff();
-    this.activeStaff = this.staffService.returnActiveStaff();
-    this.inactiveStaff = this.staffService.returnInactiveStaff();
     this.interestedStaff = this.staffService.returnInterestedStaff();
-
-    this.allPncStaff = this.staffService.returnAllPncStaff();
-    this.activePncStaff = this.staffService.returnActivePncStaff();
-    this.inactivePncStaff = this.staffService.returnInactivePncStaff();
     this.interestedPncStaff = this.staffService.returnInterestedPncStaff();
-
-    this.allWcStaff = this.staffService.returnAllWcStaff();
-    this.activeWcStaff = this.staffService.returnActiveWcStaff();
-    this.inactiveWcStaff = this.staffService.returnInactiveWcStaff();
     this.interestedWcStaff = this.staffService.returnInterestedWcStaff();
-
-    this.allCfStaff = this.staffService.returnAllCfStaff();
-    this.activeCfStaff = this.staffService.returnActiveCfStaff();
-    this.inactiveCfStaff = this.staffService.returnInactiveCfStaff();
     this.interestedCfStaff = this.staffService.returnInterestedCfStaff();
 
-    if(this.activityLevel == 1) {
-      if(this.showVenue == 1) {
-        this.setStaff = this.activePncStaff;
-      }
-      else if(this.showVenue == 2) {
-        this.setStaff = this.activeWcStaff;
-      }
-      else if(this.showVenue == 3) {
-        this.setStaff = this.activeCfStaff;
-      }
-      else if(this.showVenue == 99) {
-        this.setStaff = this.activeStaff;
-      }
-    }
-    else if(this.activityLevel == 2) {
-      if(this.showVenue == 1) {
-        this.setStaff = this.inactivePncStaff;
-      }
-      else if(this.showVenue == 2) {
-        this.setStaff = this.inactiveWcStaff;
-      }
-      else if(this.showVenue == 3) {
-        this.setStaff = this.inactiveCfStaff;
-      }
-      else if(this.showVenue == 99) {
-        this.setStaff = this.inactiveStaff;
-      }
-    }
-    else if(this.activityLevel == 3) {
       if(this.showVenue == 1) {
         this.setStaff = this.interestedPncStaff;
       }
@@ -298,24 +232,7 @@ export class StaffListComponent implements OnInit {
       else if(this.showVenue == 99) {
         this.setStaff = this.interestedStaff;
       }
-    }
-    else if(this.activityLevel == 4) {
-      if(this.showVenue == 1) {
-        this.setStaff = this.allPncStaff;
-      }
-      else if(this.showVenue == 2) {
-        this.setStaff = this.allWcStaff;
-      }
-      else if(this.showVenue == 3) {
-        this.setStaff = this.allCfStaff;
-      }
-      else if(this.showVenue == 99) {
-        this.setStaff = this.allStaff;
-      }
-    }
-
-    console.log("Set Staff: " + JSON.stringify(this.allStaff));
-
+    
   }
 
   returnSetStaff() {
@@ -329,42 +246,8 @@ export class StaffListComponent implements OnInit {
     }
     this.showVenue = venueSelect;
     this.getDtOptions();
-    var activeSelect = this.activeForm.value['activeSelect'];
 
        // Activity level set to active
-    if(activeSelect == 1) {
-      if(venueSelect == 1) {
-        this.setStaff = this.activePncStaff;
-      }
-      else if(venueSelect == 2) {
-        this.setStaff = this.activeWcStaff;
-      } 
-      else if(venueSelect == 3) {
-        this.setStaff = this.activeCfStaff;
-      }
-      else if(venueSelect == 99) {
-        this.setStaff = this.activeStaff;
-      }
-    }
-
-    // Activity level set to inactive
-    if(activeSelect == 2) {
-      if(venueSelect == 1) {
-        this.setStaff = this.inactivePncStaff;
-      }
-      else if(venueSelect == 2) {
-        this.setStaff = this.inactiveWcStaff;
-      } 
-      else if(venueSelect == 3) {
-        this.setStaff = this.inactiveCfStaff;
-      }
-      else if(venueSelect == 99) {
-        this.setStaff = this.inactiveStaff;
-      }
-    }
-
-    // Activity level set to interested
-    if(activeSelect == 3) {
       if(venueSelect == 1) {
         this.setStaff = this.interestedPncStaff;
       }
@@ -377,23 +260,6 @@ export class StaffListComponent implements OnInit {
       else if(venueSelect == 99) {
         this.setStaff = this.interestedStaff;
       }
-    }
-
-    // Activity level set to all
-    if(activeSelect == 4) {
-      if(venueSelect == 1) {
-        this.setStaff = this.allPncStaff;
-      }
-      else if(venueSelect == 2) {
-        this.setStaff = this.allWcStaff;
-      } 
-      else if(venueSelect == 3) {
-        this.setStaff = this.allCfStaff;
-      }
-      else if(venueSelect = 99) {
-        this.setStaff = this.allStaff;
-      }
-    }
 
     this.router.navigate([], {relativeTo: this.route});
   }
@@ -456,4 +322,3 @@ export class StaffListComponent implements OnInit {
   }
 
 }
-

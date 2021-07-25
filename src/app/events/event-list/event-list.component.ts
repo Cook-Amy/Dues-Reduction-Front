@@ -224,5 +224,14 @@ export class EventListComponent implements OnInit {
       return str;
   }
 
+  checkForNullNum(num) {
+    num = parseFloat(num);
+    if(num == null || isNaN(num))
+      return 0;
+    else  {
+      return num;
+    }
+  }
+
 }
 

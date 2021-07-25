@@ -1,3 +1,12 @@
+.active-btn {
+  background-color: #0579AE;
+  border-radius: 10px;
+}
+
+.active-activity {
+  background-color: black;
+}
+
 .new-event-btn {
   background-color: #0579AE;
   color: white;

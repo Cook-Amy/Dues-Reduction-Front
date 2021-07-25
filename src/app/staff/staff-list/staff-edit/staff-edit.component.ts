@@ -201,6 +201,7 @@ removeStaffConfirm: Boolean = false;
     let cfLeader = this.staff.cfLeader;
     let cfAssistantLeader = this.staff.cfAssistantLeader;
     let cfStaff = this.staff.cfStaff;
+    
 
     this.editStaffForm3 = new FormGroup({
       'firstName': new FormControl(firstName, Validators.required),

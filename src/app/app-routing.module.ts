@@ -10,6 +10,10 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { AuthComponent } from './auth/auth.component';
 import { ReportsComponent } from './reports/reports.component';
+import { StaffInactiveComponent } from './staff-inactive/staff-inactive.component';
+import { StaffInterestedComponent } from './staff-interested/staff-interested.component';
+import { StaffAllComponent } from './staff-all/staff-all.component';
+import { StaffActiveComponent } from './staff-active/staff-active.component';
 
 
 
@@ -17,6 +21,10 @@ const routes: Routes = [
   { path: 'pnc', component: VenuesComponent, children: [
     { path: 'events', component: EventsComponent },
     { path: 'staff', component: StaffComponent },
+    {path: 'staff-active', component: StaffActiveComponent },
+    { path: 'staff-inactive', component: StaffInactiveComponent },
+    { path: 'staff-interested', component: StaffInterestedComponent },
+    { path: 'staff-all', component: StaffAllComponent },
     { path: 'documents', component: DocumentsComponent },
     { path: '', component: VenueStartComponent }
    ]},
@@ -24,6 +32,10 @@ const routes: Routes = [
   { path: 'wc', component: VenuesComponent, children: [
     { path: 'events', component: EventsComponent},
     { path: 'staff', component: StaffComponent },
+    {path: 'staff-active', component: StaffActiveComponent },
+    { path: 'staff-inactive', component: StaffInactiveComponent },
+    { path: 'staff-interested', component: StaffInterestedComponent },
+    { path: 'staff-all', component: StaffAllComponent },
     { path: 'documents', component: DocumentsComponent },
     { path: '', component: VenueStartComponent }
    ]},
@@ -31,6 +43,10 @@ const routes: Routes = [
   { path: 'cf', component: VenuesComponent, children: [
     { path: 'events', component: EventsComponent},
     { path: 'staff', component: StaffComponent },
+    {path: 'staff-active', component: StaffActiveComponent },
+    { path: 'staff-inactive', component: StaffInactiveComponent },
+    { path: 'staff-interested', component: StaffInterestedComponent },
+    { path: 'staff-all', component: StaffAllComponent },
     { path: 'documents', component: DocumentsComponent },
     { path: '', component: VenueStartComponent },
    ]},
@@ -38,6 +54,10 @@ const routes: Routes = [
   { path: 'admin', component: VenuesComponent, children: [
     { path: 'events', component: EventsComponent},
     { path: 'staff', component: StaffComponent },
+    {path: 'staff-active', component: StaffActiveComponent },
+    { path: 'staff-inactive', component: StaffInactiveComponent },
+    { path: 'staff-interested', component: StaffInterestedComponent },
+    { path: 'staff-all', component: StaffAllComponent },
     { path: 'documents', component: DocumentsComponent },
     { path: 'reports', component: ReportsComponent },
     { path: '', component: VenueStartComponent },
