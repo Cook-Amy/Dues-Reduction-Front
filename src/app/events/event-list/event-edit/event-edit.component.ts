@@ -153,6 +153,7 @@ export class EventEditComponent implements OnInit {
     let creditCardTips = this.checkForNullNum(this.event.creditCardTips);
 
     let totalSalesCf = this.checkForNullNum(this.event.totalSalesCf);
+    let creditCardTipsCf = this.checkForNullNum(this.event.creditCardTipsCf);
     
     this.editEventForm2020 = new FormGroup({
       'eventTitle': new FormControl(eventTitle, Validators.required),
@@ -189,7 +190,8 @@ export class EventEditComponent implements OnInit {
       'itemSales6' : new FormControl(itemSales6, Validators.required),
       'alcSales6' : new FormControl(alcSales6, Validators.required),
       'discounts6' : new FormControl(discounts6, Validators.required),
-      'ccTips' : new FormControl(ccTips, Validators.required)
+      'ccTips' : new FormControl(ccTips, Validators.required),
+      'creditCardTipsCf' : new FormControl(creditCardTipsCf, Validators.required)
     });
   }
 
@@ -244,7 +246,7 @@ export class EventEditComponent implements OnInit {
         });
       });
     }
-    else if(this.idVenue == 3) {
+    else if(this.idVenue == 3 && this.currentSeasonID <= 4) {
       this.eventService.getCfContractInfo().subscribe(contract => {
         this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
           this.event = this.mathService.calculateCfEvent(this.event, contract[0], timesheets);
@@ -280,6 +282,28 @@ export class EventEditComponent implements OnInit {
         this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
           if(!timesheets) {timesheets = [];}
           this.event = this.mathService.calculateWcEvent2020(this.event, contract[0], timesheets);
+          this.eventService.editEvent(this.event, this.idVenue).subscribe(res => {
+            this.eventService.getAllEvents().subscribe(events => {
+              this.eventService.setAllEvents(events);
+              var timesheets: Timesheet[] = this.eventService.returnTimesheets();
+              if(timesheets.length > 0) {
+                this.eventService.updateAllTimesheetsInDB(timesheets).subscribe(x => {
+                  this.activeModal.dismiss("Edit submitted");
+                });
+              }
+              else {
+                this.activeModal.dismiss("Edit submitted");
+              }
+            });
+          });
+        });
+      });
+    }
+
+    else if(this.idVenue == 3 && this.currentSeasonID >= 5) {
+      this.eventService.getCfContractInfo().subscribe(contract => {
+        this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
+          this.event = this.mathService.calculateCfEvent2020(this.event, contract[0], timesheets);
           this.eventService.editEvent(this.event, this.idVenue).subscribe(res => {
             this.eventService.getAllEvents().subscribe(events => {
               this.eventService.setAllEvents(events);
@@ -366,6 +390,11 @@ export class EventEditComponent implements OnInit {
     else if(this.idVenue == 2) {
       this.event.creditCardTips = parseFloat(this.editEventForm2020.value['creditCardTips']);
       this.event.totalSalesWc = parseFloat(this.editEventForm2020.value['totalSalesWc']);
+    }
+
+    else if(this.idVenue == 3) {
+      this.event.totalSalesCf = this.editEventForm2020.value['totalSalesCf'];
+      this.event.creditCardTipsCf = this.editEventForm2020.value['creditCardTipsCf'];
     }
   }
 }

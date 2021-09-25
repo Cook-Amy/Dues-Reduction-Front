@@ -196,6 +196,7 @@ export class StaffNewComponent implements OnInit {
     this.staffService.addNewStaffToDB(newStaff).subscribe(id => {
       newStaff.idperson = id;
       this.staffService.getAllStaff().subscribe(allStaff => {
+        console.log(JSON.stringify(allStaff));
         var formattedStaff: Staff[] = this.staffService.formatAllStaffResults(allStaff);
         this.staffService.setAllStaff(formattedStaff);
         this.onCancel();

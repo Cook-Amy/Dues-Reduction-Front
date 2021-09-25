@@ -331,6 +331,7 @@ removeStaffConfirm: Boolean = false;
 
   onCancel() {
     this.staffService.setstaffEdit(false);
+    this.activeModal.dismiss("Edit submitted");
   }
 
   updateStaffPnc() {

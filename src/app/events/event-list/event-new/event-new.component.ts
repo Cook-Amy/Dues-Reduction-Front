@@ -52,7 +52,10 @@ export class EventNewComponent implements OnInit {
     if(this.currentVenueID == 3) {
       this.allEvents = this.eventService.returnEventsCf();
       this.idVenue = 3;
-      this.initForm();
+      if(this.currentSeasonID <= 4)
+        this.initForm();
+      if(this.currentSeasonID >= 5)
+        this.initForm2020();
     }
 
     if(this.currentVenueID == 99) {
@@ -169,6 +172,7 @@ export class EventNewComponent implements OnInit {
     let creditCardTips = 0;
 
     let totalSalesCf:number = 0;
+    let creditCardTipsCf:number = 0;
 
     this.newEventForm2020 = new FormGroup({
       'eventTitle': new FormControl(eventTitle, Validators.required),
@@ -205,7 +209,8 @@ export class EventNewComponent implements OnInit {
       'itemSales6' : new FormControl(itemSales6, Validators.required),
       'alcSales6' : new FormControl(alcSales6, Validators.required),
       'discounts6' : new FormControl(discounts6, Validators.required),
-      'ccTips' : new FormControl(ccTips, Validators.required)
+      'ccTips' : new FormControl(ccTips, Validators.required),
+      'creditCardTipsCf' : new FormControl(creditCardTipsCf, Validators.required)
     });
   }
 
@@ -315,6 +320,21 @@ export class EventNewComponent implements OnInit {
         });
       });
     }
+
+    else if(this.idVenue == 3) {
+      this.eventService.getCfContractInfo().subscribe(contract => {
+        // new events have no timesheets yet; send an empty array
+        var timesheets: Timesheet[] = [];
+        this.newEvent = this.mathService.calculateCfEvent2020(event, contract[0], timesheets);
+        this.eventService.setNewEvent(this.newEvent).subscribe(id => {
+          this.newEvent.idevent = id;
+          this.allEvents.push(this.newEvent);
+          this.eventService.setAllEvents(this.allEvents);
+          this.allEvents = this.eventService.returnEventsCf();
+          this.redirectTo();
+        });
+      });
+    }
   }
 
   onCancel() {
@@ -396,6 +416,8 @@ export class EventNewComponent implements OnInit {
         0,
         0,
         0,
+        0,
+        0,
         null
       );
     }
@@ -449,6 +471,8 @@ export class EventNewComponent implements OnInit {
         0,
         parseFloat(this.newEventForm.value['creditCardTips']),
         30,
+        0,
+        0,
         0,
         0,
         0,
@@ -507,6 +531,8 @@ export class EventNewComponent implements OnInit {
         0,
         0,
         parseFloat(this.newEventForm.value['totalSalesCf']),
+        0,
+        30,
         0,
         '',
       );
@@ -570,6 +596,8 @@ export class EventNewComponent implements OnInit {
         0,
         0,
         0,
+        0,
+        0,
         null
       );
     }
@@ -627,7 +655,68 @@ export class EventNewComponent implements OnInit {
         0,
         0,
         0,
+        0,
+        0,
         null
+      );
+    }
+
+    else if(this.idVenue == 3) {
+      event = new Event (
+        0,
+        this.currentSeasonID,
+        3,
+        this.newEventForm2020.value['dateTime'],
+        this.newEventForm2020.value['eventTitle'],
+        true,
+        this.newEventForm2020.value['inputLocation'],
+        parseFloat(this.newEventForm2020.value['bonus']),
+        0,
+        0,
+        parseFloat(this.newEventForm2020.value['checkRcvd']),
+        0,
+        0,
+        0,
+        0.2000,
+        0,
+        0,
+        this.newEventForm2020.value['notes'],
+        this.newEventForm2020.value['closed'],
+        parseFloat(this.newEventForm2020.value['coordinatorAdminAmt']),
+        0,
+        false,
+        false,
+        0,
+        0,
+        false,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        parseFloat(this.newEventForm2020.value['totalSalesCf']),
+        parseFloat(this.newEventForm2020.value['creditCardTipsCf']),
+        30,
+        0,
+        '',
       );
     }
     return event;

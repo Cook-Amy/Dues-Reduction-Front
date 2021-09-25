@@ -167,6 +167,10 @@ export class EventService {
         event.creditCardTips = parseFloat(event.creditCardTips.toFixed(2));
       if(event.maxCreditCardTipAmount)
         event.maxCreditCardTipAmount = parseFloat(event.maxCreditCardTipAmount.toFixed(2));
+      if(event.creditCardTipsCf)
+        event.creditCardTipsCf = parseFloat(event.creditCardTipsCf.toFixed(2));
+      if(event.maxCreditCardTipAmountCf)
+        event.maxCreditCardTipAmountCf = parseFloat(event.maxCreditCardTipAmountCf.toFixed(2));
     });
 
     return events;
@@ -371,6 +375,7 @@ export class EventService {
   updateAllTimesheetsInDB(timesheets: Timesheet[]) {
     const params = { timesheets: timesheets};
     const updateDB = this.http.post(this.serverUrl + 'updateAllTimesheets', params);
+    this.timesheetsChanged.next(this.timesheets);
     return updateDB;
 
   }

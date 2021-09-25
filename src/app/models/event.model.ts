@@ -56,6 +56,8 @@ export class Event {
 
   // cf events
   public totalSalesCf: number;
+  public creditCardTipsCf: number;
+  public maxCreditCardTipAmountCf: number;
   public shuttleBonusAmountCf: number;
   public shuttleLocation: string;
 
@@ -113,6 +115,8 @@ export class Event {
      shuttleBonusAmountWc: number,
 
      totalSalesCf: number,
+     creditCardTipsCf: number,
+     maxCreditCardTipAmountCf: number,
      shuttleBonusAmountCf: number,
      shuttleLocation: string
 
@@ -170,6 +174,8 @@ export class Event {
     this.shuttleBonusAmountWc = shuttleBonusAmountWc;
 
     this.totalSalesCf = totalSalesCf;
+    this.creditCardTipsCf = creditCardTipsCf;
+    this.maxCreditCardTipAmountCf = maxCreditCardTipAmountCf;
     this.shuttleBonusAmountCf = shuttleBonusAmountCf;
     this.shuttleLocation = shuttleLocation;
   }

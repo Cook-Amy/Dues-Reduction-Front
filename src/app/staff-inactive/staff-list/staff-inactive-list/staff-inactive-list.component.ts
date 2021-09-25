@@ -35,7 +35,7 @@ export class StaffInactiveListComponent implements OnInit {
   allVenues: Venue[] = [];
   showVenue: number;
 
-  staffNew: Boolean = true;
+  staffNew: Boolean = false;
 
   monthlyReportMsg: Boolean;
   monthlyReportForm: FormGroup;
@@ -61,7 +61,16 @@ export class StaffInactiveListComponent implements OnInit {
     this.setAllStaff();
     this.getDtOptions();
 
-    this.staffNew = this.staffService.getStaffNew();
+    // this.staffNew = this.staffService.getStaffNew();
+    this.staffService.staffNewChanged.subscribe(newStaffChanged => {
+      this.staffNew = newStaffChanged;
+      this.setAllStaff();
+      // this.router.navigate([], {relativeTo: this.route});
+    });
+
+    this.router.routeReuseStrategy.shouldReuseRoute = () => {
+      return false;
+    }
   }
 
   getDtOptions() {

@@ -194,10 +194,24 @@ export class EventStaffAddComponent implements OnInit {
         });
       }
 
-      else if(this.idVenue == 2) {
+      else if(this.idVenue == 2 && this.currentSeasonID <= 3) {
         this.eventService.getWcContractInfo().subscribe(contract => {
           this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
             this.event = this.mathService.calculateWcEvent(this.event, contract[0], timesheets);
+            this.eventService.editEvent(this.event, this.idVenue).subscribe(res => {
+              this.eventService.getAllEvents().subscribe(events => {
+                this.eventService.setAllEvents(events);
+                this.activeModal.close("added");
+              });
+            });
+          });
+        });
+      }
+
+      else if(this.idVenue == 2 && this.currentSeasonID >= 4) {
+        this.eventService.getWcContractInfo().subscribe(contract => {
+          this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
+            this.event = this.mathService.calculateWcEvent2020(this.event, contract[0], timesheets);
             this.eventService.editEvent(this.event, this.idVenue).subscribe(res => {
               this.eventService.getAllEvents().subscribe(events => {
                 this.eventService.setAllEvents(events);

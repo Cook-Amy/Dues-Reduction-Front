@@ -314,7 +314,7 @@ export class StaffListComponent implements OnInit {
       }
     }
 
-    console.log("Set Staff: " + JSON.stringify(this.allStaff));
+    // console.log("Set Staff: " + JSON.stringify(this.allStaff));
 
   }
 

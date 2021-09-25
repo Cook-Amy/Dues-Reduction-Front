@@ -56,7 +56,7 @@ export class EventTableComponent implements OnInit, AfterViewInit, OnDestroy {
     this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
       dtInstance.destroy();
       this.dtTrigger.next();
-      console.log(JSON.stringify(this.dataSource));
+      // console.log(JSON.stringify(this.dataSource));
     });
   }
 

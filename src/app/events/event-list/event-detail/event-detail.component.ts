@@ -65,6 +65,9 @@ export class EventDetailComponent implements OnInit {
       this.getStaff = null; 
       this.getTimesheetForEvent();
     });
+    this.eventService.timesheetsChanged.subscribe(timeSheetschanged => {
+      this.getTimesheetForEvent();
+    })
   }
 
   getTimesheetForEvent() {

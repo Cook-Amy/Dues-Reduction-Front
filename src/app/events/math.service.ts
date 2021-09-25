@@ -315,9 +315,9 @@ export class MathService {
     event.estimatedCheck = event.totalSalesWc + event.creditCardTips + event.venueBonus;
     event.estimatedProfit = (event.totalSalesWc * (1 - event.tacPct)) + event.creditCardTips + (event.venueBonus * (1 - event.tacPct)) - event.payout - event.coordinatorAdminAmt;
     event.discrepancy = event.estimatedCheck - event.actualCheck;
-    if(event.actualCheck == 0) {
-      event.tacCut = 0;
-      event.drCut = 0;
+    if(event.actualCheck <= 0) {
+      event.tacCut = (event.estimatedCheck - event.creditCardTips) * event.tacPct;
+      event.drCut = event.estimatedCheck - event.tacCut;
       event.actualProfit = 0;
     }
     if(event.actualCheck > 0) {
@@ -332,6 +332,7 @@ export class MathService {
   /*************************************************************************************
    * 
    * CF Events
+   * 2020/2021 Season and earlier
    * 
   *************************************************************************************/
   calculateCfEvent(event: Event, contract: ContractCF, timesheets: Timesheet[]) {
@@ -395,6 +396,72 @@ export class MathService {
  
      return event;
   }
+
+   /*************************************************************************************
+   * 
+   * CF Events
+   * 2021/2022 Season and later
+   * 
+  *************************************************************************************/
+    calculateCfEvent2020(event: Event, contract: ContractCF, timesheets: Timesheet[]) {
+      // calculate tips per person
+      var tipAmountPerPerson = 0;
+      var totNumberOfWorkers = timesheets.length;
+      if(totNumberOfWorkers > 0 && event.creditCardTipsCf > 0) {
+        var ccTipsToDistribute = event.creditCardTipsCf;
+        tipAmountPerPerson = ccTipsToDistribute / totNumberOfWorkers;
+        tipAmountPerPerson = Math.min(event.maxCreditCardTipAmountCf, tipAmountPerPerson);
+      }
+
+      // update Timesheets
+      var totalPayout = 0;
+      timesheets.forEach(ts => {
+
+        // cc tip amount
+        ts.creditCardTips = tipAmountPerPerson;
+
+        // update credit amount
+        ts.creditAmount = Math.ceil(ts.eventBonus + 
+                            ts.shuttleBonus +
+                            ((ts.hourlyRate + ts.hourlyBonus) * ts.hoursWorked) +
+                            ts.creditCardTips);
+                    
+        totalPayout += ts.creditAmount;
+      });
+      this.eventService.setTimesheets(timesheets);
+      this.timesheets = timesheets;
+
+      // total Payout
+      event.payout = totalPayout;
+
+      // get sales amounts
+      var sales = event.totalSalesCf;
+
+      // calculate tax
+      var tax = sales * (contract.cfTaxRate - 1);
+  
+      // get total sales amounts
+      var totalSales = sales - tax;
+    
+      // estimated check
+      var estCheck = (totalSales * contract.cfCommission) + event.venueBonus + event.creditCardTipsCf;
+      event.estimatedCheck = estCheck;
+
+      event.estimatedProfit = (event.totalSalesCf * (1 - event.tacPct)) + event.creditCardTipsCf + (event.venueBonus * (1 - event.tacPct)) - event.payout - event.coordinatorAdminAmt;
+      event.discrepancy = event.estimatedCheck - event.actualCheck;
+      if(event.actualCheck <= 0) {
+        event.tacCut = (event.estimatedCheck - event.creditCardTipsCf) * event.tacPct;
+        event.drCut = event.estimatedCheck - event.tacCut;
+        event.actualProfit = 0;
+      }
+      if(event.actualCheck > 0) {
+        event.tacCut = (event.actualCheck - event.creditCardTipsCf) * event.tacPct;
+        event.drCut = event.actualCheck - event.tacCut;
+        event.actualProfit = event.drCut - event.payout - event.coordinatorAdminAmt;
+      }
+  
+      return event;
+   }
 
   /*************************************************************************************
    * 
