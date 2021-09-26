@@ -303,6 +303,7 @@ export class EventStaffEditComponent implements OnInit {
       this.eventService.deleteTimesheetinDB(this.timesheet.idtimesheet).subscribe(res => {
         this.eventService.getPncContractInfo().subscribe(contract => {
           this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
+            this.eventService.setTimesheets(timesheets);
             this.event = this.mathService.calculatePncEvent2020(this.event, contract[0], timesheets);
             this.eventService.editEvent(this.event, this.idVenue).subscribe(res => {
               this.eventService.getAllEvents().subscribe(events => {

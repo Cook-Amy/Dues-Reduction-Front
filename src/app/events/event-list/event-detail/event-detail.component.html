@@ -236,6 +236,7 @@
                 <th>Time In</th>
                 <th>Time Out</th>
                 <th class="align-right">Hrs Worked</th>
+                <th class="align-right">CC Tips</th>
                 <th class="align-right">Event Bonus</th>
                 <th class="align-right">Hourly Bonus</th>
                 <th class="align-right">Payout</th>
@@ -251,6 +252,7 @@
                 <td>{{ checkForNullString(getTime(t.timeIn)) }}</td>
                 <td>{{ checkForNullString(getTime(t.timeOut)) }}</td>
                 <td class="align-right">{{ checkForNullNum(t.hoursWorked) }}</td>
+                <td class="align-right">{{ checkForNullNum(t.creditCardTips) }}</td>
                 <td class="align-right">{{ checkForNullNum(t.eventBonus) }}</td>
                 <td class="align-right">{{ checkForNullNum(t.hourlyBonus) }}</td>
                 <td class="align-right">{{ checkForNullNum(t.creditAmount) }}</td>
@@ -755,7 +757,6 @@
                   <th class="align-right">Shuttle Bonus</th>
                   <th class="align-right">CC Tips</th>
                   <th class="align-right">Event Bonus</th>
-                  <th class="align-right">Hourly Bonus</th>
                   <th class="align-right">Payout</th>
                   <th></th>
                 </tr>
@@ -772,7 +773,6 @@
                   <td class="align-right">{{ checkForNullNum(t.shuttleBonus) }}</td>
                   <td class="align-right">{{ checkForNullNum(t.creditCardTips) }}</td>
                   <td class="align-right">{{ checkForNullNum(t.eventBonus) }}</td>
-                  <td class="align-right">{{ checkForNullNum(t.hourlyBonus) }}</td>
                   <td class="align-right">{{ checkForNullNum(t.creditAmount) }}</td>
                   <td>
                     <button class="btn btn-info" (click)="onEditStaff(t)">Edit</button>
@@ -791,9 +791,6 @@
               </td>
               <td colspan="2">
                 <button class="btn btn-info" (click)="onAddEventBonus()">Add Event Bonus</button>
-              </td>
-              <td colspan="2">
-                <button class="btn btn-info" (click)="onAddHourlyBonus()">Add Hourly Bonus</button>
               </td>
               <td colspan="3">
                 <button type="button" class="btn btn-info" (click)="onSendReminder()">Send Email</button>

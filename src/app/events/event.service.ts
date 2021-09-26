@@ -360,6 +360,11 @@ export class EventService {
     this.timesheetsChanged.next(this.timesheets);
   }
 
+  setTimesheetsOnLoad(timesheets: Timesheet[]) {
+    this.timesheets = timesheets;
+    // this.timesheetsChanged.next(this.timesheets);
+  }
+
   returnTimesheets() {
     return this.timesheets;
   }

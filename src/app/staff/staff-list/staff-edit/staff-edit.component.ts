@@ -40,6 +40,7 @@ removeStaffConfirm: Boolean = false;
               }
 
   ngOnInit() {
+    console.log(new Date() + "\t Opening Staff Edit Modal");
     this.allTuAccounts = this.staffService.returnAllTuAccounts();
 
     if(this.currentVenueID == 1) {

@@ -356,9 +356,12 @@ export class EventEditComponent implements OnInit {
     this.event.Title = this.editEventForm2020.value['eventTitle'];
     this.event.Date = this.editEventForm2020.value['dateTime'];
     this.event.location = this.editEventForm2020.value['inputLocation'];
-    this.event.coordinatorAdminAmt = parseFloat(this.editEventForm2020.value['coordinatorAdminAmt']);
-    this.event.venueBonus = parseFloat(this.editEventForm2020.value['bonus']);
-    this.event.actualCheck = parseFloat(this.editEventForm2020.value['checkRcvd']);
+    this.event.coordinatorAdminAmt = (this.editEventForm2020.value['coordinatorAdminAmt'] != null && !isNaN(this.editEventForm2020.value['coordinatorAdminAmt']) && this.editEventForm2020.value['coordinatorAdminAmt'] != '') 
+      ? parseFloat(this.editEventForm2020.value['coordinatorAdminAmt']) : 0;
+    this.event.venueBonus = (this.editEventForm2020.value['bonus'] != null && !isNaN(this.editEventForm2020.value['bonus']) && this.editEventForm2020.value['bonus'] != '')
+      ? parseFloat(this.editEventForm2020.value['bonus']) : 0;
+    this.event.actualCheck = this.editEventForm2020.value['checkRcvd'] != null && !isNaN(this.editEventForm2020.value['checkRcvd']) && this.editEventForm2020.value['checkRcvd'] != ''
+      ? parseFloat(this.editEventForm2020.value['checkRcvd']) : 0;
     this.event.eventNotes = this.editEventForm2020.value['notes'];
     this.event.closed = this.editEventForm2020.value['closed'];
 
@@ -393,8 +396,10 @@ export class EventEditComponent implements OnInit {
     }
 
     else if(this.idVenue == 3) {
-      this.event.totalSalesCf = this.editEventForm2020.value['totalSalesCf'];
-      this.event.creditCardTipsCf = this.editEventForm2020.value['creditCardTipsCf'];
+      this.event.totalSalesCf = this.editEventForm2020.value['totalSalesCf'] != null && !isNaN(this.editEventForm2020.value['totalSalesCf']) && this.editEventForm2020.value['totalSalesCf'] != '' 
+        ? this.editEventForm2020.value['totalSalesCf'] : 0;
+      this.event.creditCardTipsCf = this.editEventForm2020.value['creditCardTipsCf'] != null && !isNaN(this.editEventForm2020.value['creditCardTipsCf']) && this.editEventForm2020.value['creditCardTipsCf'] != '' 
+        ? this.editEventForm2020.value['creditCardTipsCf'] : 0;
     }
   }
 }

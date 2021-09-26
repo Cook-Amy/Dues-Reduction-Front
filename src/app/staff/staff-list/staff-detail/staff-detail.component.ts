@@ -87,10 +87,17 @@ export class StaffDetailComponent implements OnInit {
   }
 
   openEditMember() {
-    const modalRef = this.modalServices.open(StaffEditComponent);
-    modalRef.componentInstance.staff = this.staffMember;
-    modalRef.componentInstance.currentVenueID = this.currentVenueID;
-    modalRef.componentInstance.showVenue = this.showVenue;
+    console.log(new Date() + "\tAttempting to edit a staff member");
+    try{
+      const modalRef = this.modalServices.open(StaffEditComponent);
+      modalRef.componentInstance.staff = this.staffMember;
+      modalRef.componentInstance.currentVenueID = this.currentVenueID;
+      modalRef.componentInstance.showVenue = this.showVenue;
+    }
+    catch (err) {
+      console.log(new Date() + "\tError trying open edit staff modal: \n" + err);
+    }
+    
   }
 
   openCreditSummary() {

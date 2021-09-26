@@ -28,6 +28,7 @@ export class EventDetailComponent implements OnInit {
   event: Event;
   idVenue: number;
 
+  isLoading = true;
   timesheet: Timesheet[] = [];
   getStaff = null;
   eventEdit: Boolean;
@@ -66,27 +67,32 @@ export class EventDetailComponent implements OnInit {
       this.getTimesheetForEvent();
     });
     this.eventService.timesheetsChanged.subscribe(timeSheetschanged => {
-      this.getTimesheetForEvent();
-    })
+        this.getTimesheetForEvent();
+    });
   }
 
   getTimesheetForEvent() {
     this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(res => {
       this.getStaff = 1;
       this.eventID = this.event.idevent;
-      this.eventService.setTimesheets(res);
-      this.timesheet = this.eventService.returnTimesheets();
-      if(this.timesheet) {
-        this.checklist = [];
-        this.timesheet.forEach(ts => {
-          this.checklist.push({
-            id: ts.idtimesheet,
-            name: ts.lastName + ", " + ts.firstName,
-            jobName: ts.jobName,
-            lastReminder: ts.lastReminder,
-            isSelected: false
+      if(res != null) {  
+        this.eventService.setTimesheetsOnLoad(res);
+        this.timesheet = this.eventService.returnTimesheets();
+        if(this.timesheet) {
+          this.checklist = [];
+          this.timesheet.forEach(ts => {
+            this.checklist.push({
+              id: ts.idtimesheet,
+              name: ts.lastName + ", " + ts.firstName,
+              jobName: ts.jobName,
+              lastReminder: ts.lastReminder,
+              isSelected: false
+            });
           });
-        });
+        }
+      }
+      else {
+        this.timesheet = null;
       }
     });
   }
