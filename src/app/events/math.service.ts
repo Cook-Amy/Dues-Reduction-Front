@@ -256,7 +256,9 @@ export class MathService {
       // calculate estimated profit
       // var estProfit = (estCheck * (1 - event.tacPct)) - totalPayout - event.coordinatorAdminAmt;
       // event.estimatedProfit = estProfit;
-      estimatedProfit = oneNum.minus(tacPct).times(estCheck).minus(totalPayout).minus(coordinatorAdminAmt);
+      var tempTacCut = estCheck.minus(ccTips).times(tacPct);
+      var tempDrCut = estCheck.minus(tempTacCut)
+      estimatedProfit = tempDrCut.minus(totalPayout).minus(coordinatorAdminAmt);
 
       // get actual profit and discrepancy if check has been received
       if(Number(actualCheck) > 0) {
@@ -268,6 +270,7 @@ export class MathService {
         drCut = actualCheck.minus(tacCut);
         actualProfit = drCut.minus(totalPayout).minus(coordinatorAdminAmt);
         discrepancy = actualCheck.minus(estCheck);
+        
 
         // event.tacCut = tacCut;
         // event.drCut = drCut;
@@ -603,12 +606,14 @@ export class MathService {
       // var estCheck = (totalSales * contract.cfCommission) + event.venueBonus + event.creditCardTipsCf;
       var estimatedCheck = totalSales.times(cfCommission).add(venueBonus).add(creditCardTipsCf);
       // event.estimatedProfit = (event.totalSalesCf * (1 - event.tacPct)) + event.creditCardTipsCf + (event.venueBonus * (1 - event.tacPct)) - event.payout - event.coordinatorAdminAmt;
-      var totalSalesAfterTacPct = oneNum.minus(tacPct).times(totalSalesCf);
-      var venueBonusAfterTacPct = oneNum.minus(tacPct).times(venueBonus);
-      if(Number(totalSalesAfterTacPct) > 0 || Number(creditCardTipsCf) > 0 || Number(venueBonusAfterTacPct) > 0 || Number(payout) > 0)
-        estimatedProfit = totalSalesAfterTacPct.add(creditCardTipsCf).add(venueBonusAfterTacPct.minus(payout).minus(coordinatorAdminAmt));
+      // var totalSalesAfterTacPct = oneNum.minus(tacPct).times(totalSalesCf);
+      // var venueBonusAfterTacPct = oneNum.minus(tacPct).times(venueBonus);
+      // if(Number(totalSalesAfterTacPct) > 0 || Number(creditCardTipsCf) > 0 || Number(venueBonusAfterTacPct) > 0 || Number(payout) > 0)
+        // estimatedProfit = totalSalesAfterTacPct.add(creditCardTipsCf).add(venueBonusAfterTacPct.minus(payout).minus(coordinatorAdminAmt));
       // event.discrepancy = event.estimatedCheck - event.actualCheck;
-      
+      var tempTacCut = estimatedCheck.minus(creditCardTipsCf).times(tacPct);
+      var tempDrCut = estimatedCheck.minus(tempTacCut);
+      estimatedProfit = tempDrCut.minus(payout).minus(coordinatorAdminAmt);
 
       if(Number(actualCheck) <= 0) {
         // event.tacCut = (event.estimatedCheck - event.creditCardTipsCf) * event.tacPct;
