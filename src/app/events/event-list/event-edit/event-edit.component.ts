@@ -22,6 +22,7 @@ export class EventEditComponent implements OnInit {
   public dateValue: Date;
   editEventForm: FormGroup;
   editEventForm2020: FormGroup;
+  editEventForm2021: FormGroup;
   idVenue: number;
   currentSeason: Season;
 
@@ -47,6 +48,7 @@ export class EventEditComponent implements OnInit {
     this.idVenue = this.event.venueID;
     this.initForm();
     this.initForm2020();
+    this.initForm2021();
   }
 
   // set the starting day/time to today's date at 6:00 PM
@@ -195,6 +197,45 @@ export class EventEditComponent implements OnInit {
     });
   }
 
+  private initForm2021() {
+    let eventTitle = this.event.Title;
+    let dateTime = this.event.Date;
+    if(!dateTime) {
+      this.dateValue = this.getToday();
+    }
+    else {
+      this.dateValue = new Date(dateTime);
+    }
+    let inputLocation = this.event.location;
+    let coordinatorAdminAmt = this.checkForNullNum(this.event.coordinatorAdminAmt);
+    let closed = this.event.closed;
+    let bonus = this.checkForNullNum(this.event.venueBonus);
+    let checkRcvd = this.checkForNullNum(this.event.actualCheck);
+    let notes = this.event.eventNotes;
+
+    let totalSalesPnc = this.checkForNullNum(this.event.totalSalesPnc);
+    let commBonus = this.event.metCommissionBonus;
+    let guarantee = this.event.guarantee;
+    let countTotal = this.event.eventCountsTowardsTotal;
+    let ccTips = this.checkForNullNum(this.event.ccTips);
+    
+    this.editEventForm2021 = new FormGroup({
+      'eventTitle': new FormControl(eventTitle, Validators.required),
+      'dateTime': new FormControl(dateTime, Validators.required),
+      'coordinatorAdminAmt': new FormControl(coordinatorAdminAmt, Validators.required),
+      'inputLocation': new FormControl(inputLocation, Validators.required),
+      'commBonus': new FormControl(commBonus, Validators.required),
+      'guarantee': new FormControl(guarantee, Validators.required),
+      'countTotal': new FormControl(countTotal, Validators.required),
+      'closed': new FormControl(closed, Validators.required),
+      'totalSalesPnc': new FormControl(totalSalesPnc, Validators.required),
+      'bonus': new FormControl(bonus, Validators.required),
+      'checkRcvd': new FormControl(checkRcvd, Validators.required),
+      'notes': new FormControl(notes, Validators.required),
+      'ccTips' : new FormControl(ccTips, Validators.required)
+    });
+  }
+
   checkForNullNum(num) {
     num = parseFloat(num);
     if(num == null || isNaN(num))
@@ -263,7 +304,7 @@ export class EventEditComponent implements OnInit {
 
   onSubmit2020() {
     this.updateEvent2020();
-    if(this.idVenue == 1 && this.currentSeasonID >= 4) {
+    if(this.idVenue == 1 && this.currentSeasonID == 4) {
       this.eventService.getPncContractInfo().subscribe(contract => {
         this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
           this.event = this.mathService.calculatePncEvent2020(this.event, contract[0], timesheets);
@@ -322,6 +363,23 @@ export class EventEditComponent implements OnInit {
       });
     }
 
+  }
+
+  onSubmit2021() {
+    this.updateEvent2021();
+    if(this.idVenue == 1 && this.currentSeasonID >= 5) {
+      this.eventService.getPncContractInfo().subscribe(contract => {
+        this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
+          this.event = this.mathService.calculatePncEvent2021(this.event, contract[0], timesheets);
+          this.eventService.editEvent(this.event, this.idVenue).subscribe(res => {
+            this.eventService.getAllEvents().subscribe(events => {
+              this.eventService.setAllEvents(events);
+              this.activeModal.dismiss("Edit submitted");
+            });
+          });
+        });
+      });
+    }
   }
 
   updateEvent() {
@@ -400,6 +458,28 @@ export class EventEditComponent implements OnInit {
         ? this.editEventForm2020.value['totalSalesCf'] : 0;
       this.event.creditCardTipsCf = this.editEventForm2020.value['creditCardTipsCf'] != null && !isNaN(this.editEventForm2020.value['creditCardTipsCf']) && this.editEventForm2020.value['creditCardTipsCf'] != '' 
         ? this.editEventForm2020.value['creditCardTipsCf'] : 0;
+    }
+  }
+
+  updateEvent2021() {
+    this.event.Title = this.editEventForm2021.value['eventTitle'];
+    this.event.Date = this.editEventForm2021.value['dateTime'];
+    this.event.location = this.editEventForm2021.value['inputLocation'];
+    this.event.coordinatorAdminAmt = (this.editEventForm2021.value['coordinatorAdminAmt'] != null && !isNaN(this.editEventForm2021.value['coordinatorAdminAmt']) && this.editEventForm2021.value['coordinatorAdminAmt'] != '') 
+      ? parseFloat(this.editEventForm2021.value['coordinatorAdminAmt']) : 0;
+    this.event.venueBonus = (this.editEventForm2021.value['bonus'] != null && !isNaN(this.editEventForm2021.value['bonus']) && this.editEventForm2021.value['bonus'] != '')
+      ? parseFloat(this.editEventForm2021.value['bonus']) : 0;
+    this.event.actualCheck = this.editEventForm2021.value['checkRcvd'] != null && !isNaN(this.editEventForm2021.value['checkRcvd']) && this.editEventForm2021.value['checkRcvd'] != ''
+      ? parseFloat(this.editEventForm2021.value['checkRcvd']) : 0;
+    this.event.eventNotes = this.editEventForm2021.value['notes'];
+    this.event.closed = this.editEventForm2021.value['closed'];
+
+    if(this.idVenue == 1) {
+      this.event.metCommissionBonus = this.editEventForm2021.value['commBonus'];
+      this.event.guarantee = this.editEventForm2021.value['guarantee'];
+      this.event.eventCountsTowardsTotal = this.editEventForm2021.value['countTotal'];
+      this.event.totalSalesPnc = parseFloat(this.editEventForm2021.value['totalSalesPnc']);
+      this.event.ccTips = parseFloat(this.editEventForm2021.value['ccTips']);
     }
   }
 }

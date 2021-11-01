@@ -18,6 +18,7 @@ export class EventNewComponent implements OnInit {
   public dateValue: Date;
   newEventForm: FormGroup;
   newEventForm2020: FormGroup;
+  newEventForm2021: FormGroup;
   venueForm: FormGroup;
 
   newEvent: Event;
@@ -36,8 +37,10 @@ export class EventNewComponent implements OnInit {
       this.idVenue = 1;
       if(this.currentSeasonID <= 3)
         this.initForm();
-      if(this.currentSeasonID >= 4)
+      if(this.currentSeasonID == 4)
         this.initForm2020();
+      if(this.currentSeasonID >= 5)
+        this.initForm2021();
     }
 
     if(this.currentVenueID == 2) {
@@ -214,6 +217,45 @@ export class EventNewComponent implements OnInit {
     });
   }
 
+  private initForm2021() {
+    let eventTitle:string = "";
+    let dateTime = this.dateValue;
+    let inputLocation:string = "";
+    if(this.idVenue == 1){
+      inputLocation = "S109";
+    }
+    if(this.idVenue == 3) {
+      inputLocation = "Beer2";
+    }
+    let coordinatorAdminAmt:number = 30;
+    let closed:boolean = false;
+    let bonus:number = 0;
+    let checkRcvd:number = 0;
+    let notes:string = "";
+
+    let totalSalesPnc:number = 0;
+    let commBonus:boolean = false;
+    let guarantee:boolean = false; 
+    let countTotal:boolean = false;
+    let ccTips:number = 0;
+
+    this.newEventForm2021 = new FormGroup({
+      'eventTitle': new FormControl(eventTitle, Validators.required),
+      'dateTime': new FormControl(dateTime, Validators.required),
+      'coordinatorAdminAmt': new FormControl(coordinatorAdminAmt, Validators.required),
+      'inputLocation': new FormControl(inputLocation, Validators.required),
+      'commBonus': new FormControl(commBonus, Validators.required),
+      'guarantee': new FormControl(guarantee, Validators.required),
+      'countTotal': new FormControl(countTotal, Validators.required),
+      'closed': new FormControl(closed, Validators.required),
+      'totalSalesPnc': new FormControl(totalSalesPnc, Validators.required),
+      'bonus': new FormControl(bonus, Validators.required),
+      'checkRcvd': new FormControl(checkRcvd, Validators.required),
+      'notes': new FormControl(notes, Validators.required),
+      'ccTips' : new FormControl(ccTips, Validators.required)
+    });
+  }
+
   initVenueForm() {
     let selectVenue:number = 0;
 
@@ -331,6 +373,25 @@ export class EventNewComponent implements OnInit {
           this.allEvents.push(this.newEvent);
           this.eventService.setAllEvents(this.allEvents);
           this.allEvents = this.eventService.returnEventsCf();
+          this.redirectTo();
+        });
+      });
+    }
+  }
+
+  onSubmit2021() {
+    var event: Event = this.createNewEvent2021();
+
+    if(this.idVenue == 1) {
+      this.eventService.getPncContractInfo().subscribe(contract => {
+        // new events have no timesheets yet; send an empty array
+        var timesheets: Timesheet[] = [];
+        this.newEvent = this.mathService.calculatePncEvent2021(event, contract[0], timesheets);
+        this.eventService.setNewEvent(this.newEvent).subscribe(id => {
+          this.newEvent.idevent = id;
+          this.allEvents.push(this.newEvent);
+          this.eventService.setAllEvents(this.allEvents);
+          this.allEvents = this.eventService.returnEventsPnc();
           this.redirectTo();
         });
       });
@@ -717,6 +778,70 @@ export class EventNewComponent implements OnInit {
         30,
         0,
         '',
+      );
+    }
+    return event;
+  }
+
+  createNewEvent2021() {
+    var event: Event;
+
+    if(this.idVenue == 1) {
+      event = new Event (
+        0,
+        this.currentSeasonID,
+        1,
+        this.newEventForm2021.value['dateTime'],
+        this.newEventForm2021.value['eventTitle'],
+        true,
+        this.newEventForm2021.value['inputLocation'],
+        parseFloat(this.newEventForm2021.value['bonus']),
+        0,
+        0,
+        parseFloat(this.newEventForm2021.value['checkRcvd']),
+        0,
+        0,
+        0,
+        0.2000,
+        0,
+        0,
+        this.newEventForm2021.value['notes'],
+        this.newEventForm2021.value['closed'],
+        parseFloat(this.newEventForm2021.value['coordinatorAdminAmt']),
+        this.newEventForm2021.value['totalSalesPnc'],
+        this.newEventForm2021.value['commBonus'],
+        this.newEventForm2021.value['guarantee'],
+        0,
+        0,
+        this.newEventForm2021.value['countTotal'],
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        this.newEventForm2021.value['ccTips'],
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        null
       );
     }
     return event;
