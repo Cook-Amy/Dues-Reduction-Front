@@ -5,7 +5,7 @@ import { ContractWC } from './../models/contractWC.model';
 import { Timesheet } from './../models/timesheet.model';
 import { ContractPNC } from './../models/contractPNC.model';
 import { Injectable } from '@angular/core';
-import {Decimal} from 'decimal.js';
+import { Decimal } from 'decimal.js';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +25,7 @@ export class MathService {
   calculatePncEvent(event: Event, contract: ContractPNC, timesheets: Timesheet[]) {
     // calculate totalPayout
     var totalPayout = 0;
-    if(timesheets) {
+    if (timesheets) {
       timesheets.forEach(timesheet => {
         totalPayout += timesheet.creditAmount;
       });
@@ -35,7 +35,7 @@ export class MathService {
     // get commission rates
     var commFoodRate = event.metCommissionBonus ? contract.pncFoodCommissionAfterIncrease : contract.pncFoodCommission;
     var commAlcRate = event.metCommissionBonus ? contract.pncAlcoholCommissionAfterIncrease : contract.pncAlcoholCommission;
-  
+
     // get food and alcohol sales amounts
     var alcSales = event.alcSales;
     var foodSales = event.totalSalesPnc - event.alcSales;
@@ -47,21 +47,21 @@ export class MathService {
     // get total sales amounts
     var totalFoodSales = foodSales - taxOnFood;
     var totalAlcSales = alcSales - taxOnAlc;
-  
+
     // estimated check
     var estCheck = (totalFoodSales * commFoodRate) + (totalAlcSales * commAlcRate);
 
-        // guarantee is only checked if there is a payout
-        // guarantee applies to cashiers only
-    if(event.guarantee && (event.payout > 0)) {
+    // guarantee is only checked if there is a payout
+    // guarantee applies to cashiers only
+    if (event.guarantee && (event.payout > 0)) {
       var guarCount = 0;
-      for(var i = 0; i < timesheets.length; i++) {
-        if(timesheets[i].isGuarantee) {
+      for (var i = 0; i < timesheets.length; i++) {
+        if (timesheets[i].isGuarantee) {
           guarCount++;
         }
       }
       var guar = contract.pncMemberGuarantee * guarCount;
-      if(guar > estCheck) {
+      if (guar > estCheck) {
         estCheck = guar;
 
       }
@@ -69,26 +69,26 @@ export class MathService {
 
     estCheck += event.venueBonus;
 
-      // add other positions to estimate 
-      // applies to Stand Leader and Cooks
+    // add other positions to estimate 
+    // applies to Stand Leader and Cooks
     var pncPay = 0;
-    if(timesheets) {
-      for(var i = 0; i < timesheets.length; i++) {
+    if (timesheets) {
+      for (var i = 0; i < timesheets.length; i++) {
         pncPay += timesheets[i].venuePay;
       }
     }
     estCheck += pncPay;
-    
+
     event.estimatedCheck = estCheck;
 
     // if we have a payout, we can calculate estimated profit, actual profit, and discrepancy
-    if(totalPayout > 0) {
+    if (totalPayout > 0) {
       // calculate estimated profit
       var estProfit = (estCheck * (1 - event.tacPct)) - totalPayout - event.coordinatorAdminAmt;
       event.estimatedProfit = estProfit;
 
       // get actual profit and discrepancy if check has been received
-      if(event.actualCheck > 0) {
+      if (event.actualCheck > 0) {
         var tacCut = event.actualCheck * event.tacPct;
         var drCut = event.actualCheck * (1 - event.tacPct);
         var actProfit = drCut - totalPayout - event.coordinatorAdminAmt;
@@ -107,7 +107,7 @@ export class MathService {
       }
     }
     else {
-      event.estimatedProfit = 0; 
+      event.estimatedProfit = 0;
       event.tacCut = 0;
       event.drCut = 0;
       event.actualProfit = 0;
@@ -123,8 +123,8 @@ export class MathService {
    * 2020/2021
    * 
   *************************************************************************************/
-   calculatePncEvent2020(event: Event, contract: ContractPNC, timesheets: Timesheet[]) {
-     // cast values to Decimal
+  calculatePncEvent2020(event: Event, contract: ContractPNC, timesheets: Timesheet[]) {
+    // cast values to Decimal
     var zeroNum = new Decimal(0);
     var totalPayout = zeroNum;
     var pncFoodCommissionAfterIncrease = contract.pncFoodCommissionAfterIncrease != null ? new Decimal(contract.pncFoodCommissionAfterIncrease) : zeroNum;
@@ -153,7 +153,7 @@ export class MathService {
     var pncFoodTaxRate = contract.pncFoodTaxRate != null ? new Decimal(contract.pncFoodTaxRate) : zeroNum;
     var pncAlcoholTaxRate = contract.pncAlcoholTaxRate != null ? new Decimal(contract.pncAlcoholTaxRate) : zeroNum;
     var pncMemberGuarantee = contract.pncMemberGuarantee != null ? new Decimal(contract.pncMemberGuarantee) : zeroNum;
-    var venueBonus = event.venueBonus != null ? new Decimal(event.venueBonus) : zeroNum; 
+    var venueBonus = event.venueBonus != null ? new Decimal(event.venueBonus) : zeroNum;
     var ccTips = event.ccTips != null ? new Decimal(event.ccTips) : zeroNum;
     var pncPay = zeroNum;
     var estimatedProfit = zeroNum;
@@ -166,7 +166,7 @@ export class MathService {
     var discrepancy = zeroNum;
 
     // calculate totalPayout
-    if(timesheets) {
+    if (timesheets) {
       timesheets.forEach(timesheet => {
         var creditAmount = timesheet.creditAmount != null ? new Decimal(timesheet.creditAmount) : zeroNum;
         totalPayout = totalPayout.add(creditAmount);
@@ -176,7 +176,7 @@ export class MathService {
     // get commission rates
     var commFoodRate = event.metCommissionBonus ? pncFoodCommissionAfterIncrease : pncFoodCommision;
     var commAlcRate = event.metCommissionBonus ? pncAlcoholCommissionAfterIncrease : pncAlcoholCommission;
-  
+
     // get food and alcohol sales amounts
     var itemSales = itemSales1.add(itemSales2).add(itemSales3).add(itemSales4).add(itemSales5).add(itemSales6);
     var alcSales = alcSales1.add(alcSales2).add(alcSales3).add(alcSales4).add(alcSales5).add(alcSales6);
@@ -190,24 +190,24 @@ export class MathService {
     // get total sales amounts
     var totalFoodSales = itemSales.minus(taxOnFood);
     var totalAlcSales = alcSales.minus(taxOnAlc);
-  
+
     // estimated check
     var estFoodCheck = totalFoodSales.times(commFoodRate);
     var estAlcCheck = totalAlcSales.times(commAlcRate);
     var estCheck = estFoodCheck.add(estAlcCheck);
 
-        // guarantee is only checked if there is a payout and timesheets available
-        // guarantee applies to cashiers only
-    if(event.guarantee && timesheets && (Number(totalPayout) > 0)) {
+    // guarantee is only checked if there is a payout and timesheets available
+    // guarantee applies to cashiers only
+    if (event.guarantee && timesheets && (Number(totalPayout) > 0)) {
       var guarCount = 0;
-      for(var i = 0; i < timesheets.length; i++) {
-        if(timesheets[i].isGuarantee) {
+      for (var i = 0; i < timesheets.length; i++) {
+        if (timesheets[i].isGuarantee) {
           guarCount++;
         }
       }
       // var guar = contract.pncMemberGuarantee * guarCount;
       var guar = pncMemberGuarantee.times(guarCount);
-      if(Number(guar) > Number(estCheck)) {
+      if (Number(guar) > Number(estCheck)) {
         estCheck = guar;
       }
     }
@@ -215,35 +215,35 @@ export class MathService {
     // add on extra money from PNC
     estCheck = estCheck.add(venueBonus).add(ccTips);
 
-      // add other positions to estimate 
-      // applies to Stand Leader and Cooks
-    if(timesheets) {
-      for(var i = 0; i < timesheets.length; i++) {
+    // add other positions to estimate 
+    // applies to Stand Leader and Cooks
+    if (timesheets) {
+      for (var i = 0; i < timesheets.length; i++) {
         var venuePay = timesheets[i].venuePay != null ? new Decimal(timesheets[i].venuePay) : zeroNum;
         pncPay = pncPay.add(venuePay);
       }
     }
     estCheck = estCheck.add(pncPay);
-    
+
     // if we have a payout, we can calculate estimated profit, actual profit, and discrepancy
-    if(Number(totalPayout) > 0) { 
+    if (Number(totalPayout) > 0) {
       var tempTacCut = estCheck.minus(ccTips).times(tacPct);
       var tempDrCut = estCheck.minus(tempTacCut)
       estimatedProfit = tempDrCut.minus(totalPayout).minus(coordinatorAdminAmt);
 
       // get actual profit and discrepancy if check has been received
-      if(Number(actualCheck) > 0) { 
+      if (Number(actualCheck) > 0) {
         tacCut = actualCheck.minus(ccTips).times(tacPct);
         drCut = actualCheck.minus(tacCut);
         actualProfit = drCut.minus(totalPayout).minus(coordinatorAdminAmt);
         discrepancy = actualCheck.minus(estCheck);
-         
+
       }
       else {
         tacCut = estCheck.minus(ccTips).times(tacPct);
         drCut = estCheck.minus(tacCut);
       }
-    } 
+    }
 
 
     // cast values back to Number format
@@ -267,95 +267,98 @@ export class MathService {
    * 2021/2022 and later
    * 
   *************************************************************************************/
-   calculatePncEvent2021(event: Event, contract: ContractPNC, timesheets: Timesheet[]) {
+  calculatePncEvent2021(event: Event, contract: ContractPNC, timesheets: Timesheet[]) {
     // cast values to Decimal
-   var zeroNum = new Decimal(0);
-   var totalPayout = zeroNum;
-   var totalSalesPnc = event.totalSalesPnc != null ? new Decimal(event.totalSalesPnc) : zeroNum;
-   var oneNum = new Decimal(1);
-   var pncMemberGuarantee = contract.pncMemberGuarantee != null ? new Decimal(contract.pncMemberGuarantee) : zeroNum;
-   var venueBonus = event.venueBonus != null ? new Decimal(event.venueBonus) : zeroNum; 
-   var ccTips = event.ccTips != null ? new Decimal(event.ccTips) : zeroNum;
-   var pncPay = zeroNum;
-   var estimatedProfit = zeroNum;
-   var coordinatorAdminAmt = event.coordinatorAdminAmt != null ? new Decimal(event.coordinatorAdminAmt) : zeroNum;
-   var tacPct = event.tacPct != null ? new Decimal(event.tacPct) : zeroNum;
-   var actualCheck = event.actualCheck != null ? new Decimal(event.actualCheck) : zeroNum;
-   var tacCut = zeroNum;
-   var drCut = zeroNum;
-   var actualProfit = zeroNum;
-   var discrepancy = zeroNum;
+    var zeroNum = new Decimal(0);
+    var totalPayout = zeroNum;
+    var totalSalesPnc = event.totalSalesPnc != null ? new Decimal(event.totalSalesPnc) : zeroNum;
+    var oneNum = new Decimal(1);
+    var pncMemberGuarantee = contract.pncMemberGuarantee != null ? new Decimal(contract.pncMemberGuarantee) : zeroNum;
+    var venueBonus = event.venueBonus != null ? new Decimal(event.venueBonus) : zeroNum;
+    var ccTips = event.ccTips != null ? new Decimal(event.ccTips) : zeroNum;
+    var pncPay = zeroNum;
+    var estimatedProfit = zeroNum;
+    var coordinatorAdminAmt = event.coordinatorAdminAmt != null ? new Decimal(event.coordinatorAdminAmt) : zeroNum;
+    var tacPct = event.tacPct != null ? new Decimal(event.tacPct) : zeroNum;
+    var actualCheck = event.actualCheck != null ? new Decimal(event.actualCheck) : zeroNum;
+    var tacCut = zeroNum;
+    var drCut = zeroNum;
+    var actualProfit = zeroNum;
+    var discrepancy = zeroNum;
 
-   // calculate totalPayout
-   if(timesheets) {
-     timesheets.forEach(timesheet => {
-       var creditAmount = timesheet.creditAmount != null ? new Decimal(timesheet.creditAmount) : zeroNum;
-       totalPayout = totalPayout.add(creditAmount);
-     });
-   }
- 
-   // estimated check
-   var estCheck = totalSalesPnc;
+    console.log("total sales pnc: " + totalSalesPnc);
+    console.log("venue bonus: " + venueBonus);
 
-       // guarantee is only checked if there is a payout and timesheets available
-       // guarantee applies to cashiers only
-   if(event.guarantee && timesheets && (Number(totalPayout) > 0)) {
-     var guarCount = 0;
-     for(var i = 0; i < timesheets.length; i++) {
-       if(timesheets[i].isGuarantee) {
-         guarCount++;
-       }
-     }
+    // calculate totalPayout
+    if (timesheets) {
+      timesheets.forEach(timesheet => {
+        var creditAmount = timesheet.creditAmount != null ? new Decimal(timesheet.creditAmount) : zeroNum;
+        totalPayout = totalPayout.add(creditAmount);
+      });
+    }
 
-     var guar = pncMemberGuarantee.times(guarCount);
-     if(Number(guar) > Number(estCheck)) {
-       estCheck = guar;
-     }
-   }
+    // estimated check
+    var estCheck = totalSalesPnc;
 
-   // add on extra money from PNC
-   estCheck = estCheck.add(venueBonus).add(ccTips);
+    // guarantee is only checked if there is a payout and timesheets available
+    // guarantee applies to cashiers only
+    if (event.guarantee && timesheets && (Number(totalPayout) > 0)) {
+      var guarCount = 0;
+      for (var i = 0; i < timesheets.length; i++) {
+        if (timesheets[i].isGuarantee) {
+          guarCount++;
+        }
+      }
 
-     // add other positions to estimate 
-     // applies to Stand Leader and Cooks
-  //  if(timesheets) {
-  //    for(var i = 0; i < timesheets.length; i++) {
-  //      var venuePay = timesheets[i].venuePay != null ? new Decimal(timesheets[i].venuePay) : zeroNum;
-  //      pncPay = pncPay.add(venuePay);
-  //    }
-  //  }
-   // estCheck = estCheck.add(pncPay);
-   
-   // Calculate estimated profit
-  var tempTacCut = estCheck.minus(ccTips).times(tacPct);
-  var tempDrCut = estCheck.minus(tempTacCut);
-  estimatedProfit = tempDrCut.minus(totalPayout).minus(coordinatorAdminAmt);
+      var guar = pncMemberGuarantee.times(guarCount);
+      if (Number(guar) > Number(estCheck)) {
+        estCheck = guar;
+      }
+    }
 
-  // get actual profit and discrepancy if check has been received
-  if(Number(actualCheck) > 0) { 
-    tacCut = actualCheck.minus(ccTips).times(tacPct);
-    drCut = actualCheck.minus(tacCut);
-    actualProfit = drCut.minus(totalPayout).minus(coordinatorAdminAmt);
-    discrepancy = actualCheck.minus(estCheck);
-    
+    // add on extra money from PNC
+    estCheck = estCheck.add(venueBonus).add(ccTips);
+
+    // add other positions to estimate 
+    // applies to Stand Leader and Cooks
+    //  if(timesheets) {
+    //    for(var i = 0; i < timesheets.length; i++) {
+    //      var venuePay = timesheets[i].venuePay != null ? new Decimal(timesheets[i].venuePay) : zeroNum;
+    //      pncPay = pncPay.add(venuePay);
+    //    }
+    //  }
+    // estCheck = estCheck.add(pncPay);
+
+    // Calculate estimated profit
+    var tempTacCut = estCheck.minus(ccTips).times(tacPct);
+    var tempDrCut = estCheck.minus(tempTacCut);
+    estimatedProfit = tempDrCut.minus(totalPayout).minus(coordinatorAdminAmt);
+
+    // get actual profit and discrepancy if check has been received
+    if (Number(actualCheck) > 0) {
+      tacCut = actualCheck.minus(ccTips).times(tacPct);
+      drCut = actualCheck.minus(tacCut);
+      actualProfit = drCut.minus(totalPayout).minus(coordinatorAdminAmt);
+      discrepancy = actualCheck.minus(estCheck);
+
+    }
+    else {
+      tacCut = tempTacCut;
+      drCut = tempDrCut;
+    }
+
+    // cast values back to Number format
+    event.payout = Number(totalPayout);
+    event.totalSalesPnc = Number(totalSalesPnc);
+    event.estimatedCheck = Number(estCheck);
+    event.estimatedProfit = Number(estimatedProfit);
+    event.tacCut = Number(tacCut);
+    event.drCut = Number(drCut);
+    event.actualProfit = Number(actualProfit);
+    event.discrepancy = Number(discrepancy);
+
+    return event;
   }
-  else {
-    tacCut = tempTacCut;
-    drCut = tempDrCut;
-  }
-
-   // cast values back to Number format
-   event.payout = Number(totalPayout);
-   event.totalSalesPnc = Number(totalSalesPnc);
-   event.estimatedCheck = Number(estCheck);
-   event.estimatedProfit = Number(estimatedProfit);
-   event.tacCut = Number(tacCut);
-   event.drCut = Number(drCut);
-   event.actualProfit = Number(actualProfit);
-   event.discrepancy = Number(discrepancy);
-
-   return event;
- }
 
   /*************************************************************************************
    * 
@@ -367,7 +370,7 @@ export class MathService {
     // calculate tips per person
     var tipAmountPerPerson = 0;
     var totNumberOfWorkers = timesheets.length;
-    if(totNumberOfWorkers > 0 && event.creditCardTips > 0) {
+    if (totNumberOfWorkers > 0 && event.creditCardTips > 0) {
       var ccTipsToDistribute = event.creditCardTips * (1 - event.tacPct);
       tipAmountPerPerson = ccTipsToDistribute / totNumberOfWorkers;
       tipAmountPerPerson = Math.min(event.maxCreditCardTipAmount, tipAmountPerPerson);
@@ -381,11 +384,11 @@ export class MathService {
       ts.creditCardTips = tipAmountPerPerson;
 
       // update credit amount
-      ts.creditAmount = Math.ceil(ts.eventBonus + 
-                          ts.shuttleBonus +
-                          ((ts.hourlyRate + ts.hourlyBonus) * ts.hoursWorked) +
-                          ts.creditCardTips);
-                  
+      ts.creditAmount = Math.ceil(ts.eventBonus +
+        ts.shuttleBonus +
+        ((ts.hourlyRate + ts.hourlyBonus) * ts.hoursWorked) +
+        ts.creditCardTips);
+
       totalPayout += ts.creditAmount;
     });
     // this.eventService.setTimesheets(timesheets);
@@ -411,8 +414,8 @@ export class MathService {
    * 2020/2021 Season and later
    * 
   *************************************************************************************/
-   calculateWcEvent2020(event: Event, contract: ContractWC, timesheets: Timesheet[]) {
-     // cast values to Decimal format
+  calculateWcEvent2020(event: Event, contract: ContractWC, timesheets: Timesheet[]) {
+    // cast values to Decimal format
     var zeroNum = new Decimal(0);
     var oneNum = new Decimal(1);
     var tipAmountPerPerson = zeroNum;
@@ -425,37 +428,37 @@ export class MathService {
     var venueBonus = event.venueBonus != null ? new Decimal(event.venueBonus) : zeroNum;
     var tacPct = event.tacPct != null ? new Decimal(event.tacPct) : zeroNum;
     var coordinatorAdminAmt = event.coordinatorAdminAmt != null ? new Decimal(event.coordinatorAdminAmt) : zeroNum;
-    var actualCheck = event.actualCheck != null ? new Decimal(event.actualCheck) : zeroNum;  
-    var discrepancy = zeroNum;  
+    var actualCheck = event.actualCheck != null ? new Decimal(event.actualCheck) : zeroNum;
+    var discrepancy = zeroNum;
     var tacCut = zeroNum;
     var drCut = zeroNum;
     var actualProfit = zeroNum;
 
     // calculate tips per person
-    if(Number(totNumberOfWorkers) > 0 && Number(creditCardTips) > 0) {
+    if (Number(totNumberOfWorkers) > 0 && Number(creditCardTips) > 0) {
       tipAmountPerPerson = creditCardTips.div(totNumberOfWorkers);
-      if(Number(tipAmountPerPerson) > Number(maxCreditCardTipAmount)) {
+      if (Number(tipAmountPerPerson) > Number(maxCreditCardTipAmount)) {
         tipAmountPerPerson = maxCreditCardTipAmount;
       }
     }
 
     // update Timesheets
-    if(timesheets) {
+    if (timesheets) {
       timesheets.forEach(ts => {
         var eventBonus = ts.eventBonus != null ? new Decimal(ts.eventBonus) : zeroNum;
         var shuttleBonus = ts.shuttleBonus != null ? new Decimal(ts.shuttleBonus) : zeroNum;
         var hourlyRate = ts.hourlyRate != null ? new Decimal(ts.hourlyRate) : zeroNum;
         var hourlyBonus = ts.hourlyBonus != null ? new Decimal(ts.hourlyBonus) : zeroNum;
-        var hoursWorked = ts. hoursWorked != null ? new Decimal(ts.hoursWorked) : zeroNum;
+        var hoursWorked = ts.hoursWorked != null ? new Decimal(ts.hoursWorked) : zeroNum;
         var tsCreditCardTips = ts.creditCardTips != null ? new Decimal(ts.creditCardTips) : zeroNum;
 
         // cc tip amount
         ts.creditCardTips = Number(tipAmountPerPerson);
-  
+
         // update credit amount
         var creditAmount = hourlyRate.add(hourlyBonus).times(hoursWorked).add(eventBonus).add(shuttleBonus).add(tsCreditCardTips);
         ts.creditAmount = Math.ceil(Number(creditAmount));
-                    
+
         totalPayout = totalPayout.add(creditAmount);
       });
       this.eventService.setTimesheets(timesheets);
@@ -466,14 +469,14 @@ export class MathService {
     var estimatedCheck = totalSalesWc.add(creditCardTips).add(venueBonus);
     var sub1 = oneNum.minus(tacPct).times(totalSalesWc);
     var sub2 = oneNum.minus(tacPct).times(venueBonus);
-    if(Number(sub1) > 0 || Number(sub2) > 0 || Number(creditCardTips) > 0 || Number(totalPayout) > 0)
+    if (Number(sub1) > 0 || Number(sub2) > 0 || Number(creditCardTips) > 0 || Number(totalPayout) > 0)
       var estimatedProfit = sub1.add(sub2).add(creditCardTips).minus(totalPayout).minus(coordinatorAdminAmt);
-    
-    if(Number(actualCheck) <= 0) {
+
+    if (Number(actualCheck) <= 0) {
       tacCut = estimatedCheck.minus(creditCardTips).times(tacPct);
       drCut = estimatedCheck.minus(tacCut);
     }
-    if(event.actualCheck > 0) {
+    if (event.actualCheck > 0) {
       tacCut = actualCheck.minus(creditCardTips).times(tacPct);
       drCut = actualCheck.minus(tacCut);
       actualProfit = drCut.minus(totalPayout).minus(coordinatorAdminAmt);
@@ -499,160 +502,161 @@ export class MathService {
    * 
   *************************************************************************************/
   calculateCfEvent(event: Event, contract: ContractCF, timesheets: Timesheet[]) {
-     // calculate totalPayout
-     var totalPayout = 0;
-     if(timesheets) {
+    // calculate totalPayout
+    var totalPayout = 0;
+    if (timesheets) {
       timesheets.forEach(timesheet => {
-  
+
         totalPayout += timesheet.creditAmount;
       });
-     }
-     event.payout = totalPayout;
-   
-     // get sales amounts
-     var sales = event.totalSalesCf;
- 
-     // calculate tax
-     var tax = sales * (contract.cfTaxRate - 1);
- 
-     // get total sales amounts
-     var totalSales = sales - tax;
-   
-     // estimated check
-     var estCheck = totalSales * contract.cfCommission;
- 
-     estCheck += event.venueBonus;
-     event.estimatedCheck = estCheck;
- 
-     // if we have a payout, we can calculate estimated profit, actual profit, and discrepancy
-     if(totalPayout > 0) {
-       // calculate estimated profit
-       var estProfit = (estCheck * (1 - event.tacPct)) - totalPayout - event.coordinatorAdminAmt;
-       event.estimatedProfit = estProfit;
- 
-       // get actual profit and discrepancy if check has been received
-       if(event.actualCheck > 0) {
-         var tacCut = event.actualCheck * event.tacPct;
-         var drCut = event.actualCheck * (1 - event.tacPct);
-         var actProfit = drCut - totalPayout - event.coordinatorAdminAmt;
-         var discrepancy = event.actualCheck - estCheck;
- 
-         event.tacCut = tacCut;
-         event.drCut = drCut;
-         event.actualProfit = actProfit;
-         event.discrepancy = discrepancy;
-       }
-       else {
-         event.tacCut = 0;
-         event.drCut = 0;
-         event.actualProfit = 0;
-         event.discrepancy = 0;
-       }
-     }
-     else {
-       event.estimatedProfit = 0; 
-       event.tacCut = 0;
-       event.drCut = 0;
-       event.actualProfit = 0;
-       event.discrepancy = 0;
-     }
- 
-     return event;
+    }
+    event.payout = totalPayout;
+
+    // get sales amounts
+    var sales = event.totalSalesCf;
+
+    // calculate tax
+    var tax = sales * (contract.cfTaxRate - 1);
+
+    // get total sales amounts
+    var totalSales = sales - tax;
+
+    // estimated check
+    var estCheck = totalSales * contract.cfCommission;
+
+    estCheck += event.venueBonus;
+    event.estimatedCheck = estCheck;
+
+    // if we have a payout, we can calculate estimated profit, actual profit, and discrepancy
+    if (totalPayout > 0) {
+      // calculate estimated profit
+      var estProfit = (estCheck * (1 - event.tacPct)) - totalPayout - event.coordinatorAdminAmt;
+      event.estimatedProfit = estProfit;
+
+      // get actual profit and discrepancy if check has been received
+      if (event.actualCheck > 0) {
+        var tacCut = event.actualCheck * event.tacPct;
+        var drCut = event.actualCheck * (1 - event.tacPct);
+        var actProfit = drCut - totalPayout - event.coordinatorAdminAmt;
+        var discrepancy = event.actualCheck - estCheck;
+
+        event.tacCut = tacCut;
+        event.drCut = drCut;
+        event.actualProfit = actProfit;
+        event.discrepancy = discrepancy;
+      }
+      else {
+        event.tacCut = 0;
+        event.drCut = 0;
+        event.actualProfit = 0;
+        event.discrepancy = 0;
+      }
+    }
+    else {
+      event.estimatedProfit = 0;
+      event.tacCut = 0;
+      event.drCut = 0;
+      event.actualProfit = 0;
+      event.discrepancy = 0;
+    }
+
+    return event;
   }
 
-   /*************************************************************************************
-   * 
-   * CF Events
-   * 2021/2022 Season and later
-   * 
-  *************************************************************************************/
-    calculateCfEvent2020(event: Event, contract: ContractCF, timesheets: Timesheet[]) {
-      // calculate tips per person
-      var tipAmountPerPerson = 0;
-      var totNumberOfWorkers = 0;
-      if(timesheets)
-        var totNumberOfWorkers = timesheets.length;
-      if(totNumberOfWorkers > 0 && event.creditCardTipsCf > 0) {
-        var ccTipsToDistribute = event.creditCardTipsCf;
-        tipAmountPerPerson = ccTipsToDistribute / totNumberOfWorkers;
-        tipAmountPerPerson = Math.min(event.maxCreditCardTipAmountCf, tipAmountPerPerson);
-      }
+  /*************************************************************************************
+  * 
+  * CF Events
+  * 2021/2022 Season and later
+  * 
+ *************************************************************************************/
+  calculateCfEvent2020(event: Event, contract: ContractCF, timesheets: Timesheet[]) {
+    // calculate tips per person
+    var tipAmountPerPerson = 0;
+    var totNumberOfWorkers = 0;
+    if (timesheets)
+      var totNumberOfWorkers = timesheets.length;
+    if (totNumberOfWorkers > 0 && event.creditCardTipsCf > 0) {
+      var ccTipsToDistribute = event.creditCardTipsCf;
+      tipAmountPerPerson = ccTipsToDistribute / totNumberOfWorkers;
+      tipAmountPerPerson = Math.min(event.maxCreditCardTipAmountCf, tipAmountPerPerson);
+    }
 
-      // update Timesheets
-      var totalPayout = 0;
-      if(timesheets) {
-        timesheets.forEach(ts => {
+    // update Timesheets
+    var totalPayout = 0;
+    if (timesheets) {
+      timesheets.forEach(ts => {
 
-          // cc tip amount
-          ts.creditCardTips = tipAmountPerPerson;
+        // cc tip amount
+        ts.creditCardTips = tipAmountPerPerson;
 
-          // update credit amount
-          ts.creditAmount = Math.ceil(ts.eventBonus + 
-                              ts.shuttleBonus +
-                              ((ts.hourlyRate + ts.hourlyBonus) * ts.hoursWorked) +
-                              ts.creditCardTips);
-                      
-          totalPayout += ts.creditAmount;
-        });
-        this.eventService.setTimesheets(timesheets);
-        this.timesheets = timesheets;
-      } 
-      // total Payout
-      event.payout = totalPayout;
+        // update credit amount
+        ts.creditAmount = Math.ceil(ts.eventBonus +
+          ts.shuttleBonus +
+          ((ts.hourlyRate + ts.hourlyBonus) * ts.hoursWorked) +
+          ts.creditCardTips);
 
-      // get sales amounts
+        totalPayout += ts.creditAmount;
+      });
+      this.eventService.setTimesheets(timesheets);
+      this.timesheets = timesheets;
+    }
+    // total Payout
+    event.payout = totalPayout;
 
-      // cast values to Decimal string
-      var zeroNum = new Decimal(0);
-      var totalSalesCf = event.totalSalesCf != null ? new Decimal(event.totalSalesCf) : zeroNum;
-      var creditCardTipsCf = event.creditCardTipsCf != null ? new Decimal(event.creditCardTipsCf) : zeroNum;
-      var venueBonus = event.venueBonus != null ? new Decimal(event.venueBonus) : zeroNum;
-      var payout = event.payout != null ? new Decimal(event.payout) : zeroNum;
-      var actualCheck = event.actualCheck != null ? new Decimal(event.actualCheck) : zeroNum;
-      var cfTaxRate = contract.cfTaxRate != null ? new Decimal(contract.cfTaxRate) : new Decimal(1);
-      var cfCommission = contract.cfCommission != null ? new Decimal(contract.cfCommission) : zeroNum;;
-      var tacPct = event.tacPct != null ? new Decimal(event.tacPct) : new Decimal(1);
-      var coordinatorAdminAmt = event.coordinatorAdminAmt != null ? new Decimal(event.coordinatorAdminAmt) : zeroNum;
-      var oneNum = new Decimal(1);
-      var tacCut = zeroNum;
-      var drCut = zeroNum;
-      var actualProfit = zeroNum;
-      var discrepancy = zeroNum;
-      var estimatedProfit = zeroNum;
+    // get sales amounts
 
-      // calculate tax
-      var tax = cfTaxRate.minus(1).times(totalSalesCf);
-  
-      // get total sales amounts
-      var totalSales = totalSalesCf.minus(tax);
-    
-      // estimated check
-      var estimatedCheck = totalSales.times(cfCommission).add(venueBonus).add(creditCardTipsCf);
-      var tempTacCut = estimatedCheck.minus(creditCardTipsCf).times(tacPct);
-      var tempDrCut = estimatedCheck.minus(tempTacCut);
-      estimatedProfit = tempDrCut.minus(payout).minus(coordinatorAdminAmt);
+    // cast values to Decimal string
+    var zeroNum = new Decimal(0);
+    var totalSalesCf = event.totalSalesCf != null ? new Decimal(event.totalSalesCf) : zeroNum;
+    var creditCardTipsCf = event.creditCardTipsCf != null ? new Decimal(event.creditCardTipsCf) : zeroNum;
+    var venueBonus = event.venueBonus != null ? new Decimal(event.venueBonus) : zeroNum;
+    var payout = event.payout != null ? new Decimal(event.payout) : zeroNum;
+    var actualCheck = event.actualCheck != null ? new Decimal(event.actualCheck) : zeroNum;
+    var cfTaxRate = contract.cfTaxRate != null ? new Decimal(contract.cfTaxRate) : new Decimal(1);
+    var cfCommission = contract.cfCommission != null ? new Decimal(contract.cfCommission) : zeroNum;;
+    var tacPct = event.tacPct != null ? new Decimal(event.tacPct) : new Decimal(1);
+    var coordinatorAdminAmt = event.coordinatorAdminAmt != null ? new Decimal(event.coordinatorAdminAmt) : zeroNum;
+    var oneNum = new Decimal(1);
+    var tacCut = zeroNum;
+    var drCut = zeroNum;
+    var actualProfit = zeroNum;
+    var discrepancy = zeroNum;
+    var estimatedProfit = zeroNum;
 
-      if(Number(actualCheck) <= 0) {
-        tacCut = estimatedCheck.minus(creditCardTipsCf).times(tacPct);
-        drCut = estimatedCheck.minus(tacCut); 
-      }
-      else if(Number(actualCheck) > 0) {
-        tacCut = actualCheck.minus(creditCardTipsCf).times(tacPct);
-        drCut = actualCheck.minus(tacCut);
-        actualProfit = drCut.minus(payout).minus(coordinatorAdminAmt);
-        discrepancy = actualCheck.minus(estimatedCheck);
-      }
-  
-      // cast values back to Number
-      event.estimatedCheck = Number(estimatedCheck);
-      event.estimatedProfit = Number(estimatedProfit);
-      event.discrepancy = Number(discrepancy);
-      event.tacCut = Number(tacCut);
-      event.drCut = Number(drCut);
-      event.actualProfit = Number(actualProfit);
+    // calculate tax
+    // var tax = cfTaxRate.minus(1).times(totalSalesCf);
 
-      return event;
-   }
+    // get total sales amounts
+    // var totalSales = totalSalesCf.minus(tax);
+
+    // estimated check
+    // var estimatedCheck = totalSales.times(cfCommission).add(venueBonus).add(creditCardTipsCf);
+    var estimatedCheck = totalSalesCf.add(venueBonus).add(creditCardTipsCf);
+    var tempTacCut = estimatedCheck.minus(creditCardTipsCf).times(tacPct);
+    var tempDrCut = estimatedCheck.minus(tempTacCut);
+    estimatedProfit = tempDrCut.minus(payout).minus(coordinatorAdminAmt);
+
+    if (Number(actualCheck) <= 0) {
+      tacCut = estimatedCheck.minus(creditCardTipsCf).times(tacPct);
+      drCut = estimatedCheck.minus(tacCut);
+    }
+    else if (Number(actualCheck) > 0) {
+      tacCut = actualCheck.minus(creditCardTipsCf).times(tacPct);
+      drCut = actualCheck.minus(tacCut);
+      actualProfit = drCut.minus(payout).minus(coordinatorAdminAmt);
+      discrepancy = actualCheck.minus(estimatedCheck);
+    }
+
+    // cast values back to Number
+    event.estimatedCheck = Number(estimatedCheck);
+    event.estimatedProfit = Number(estimatedProfit);
+    event.discrepancy = Number(discrepancy);
+    event.tacCut = Number(tacCut);
+    event.drCut = Number(drCut);
+    event.actualProfit = Number(actualProfit);
+
+    return event;
+  }
 
   /*************************************************************************************
    * 
@@ -664,7 +668,7 @@ export class MathService {
     timesheets.forEach(timesheet => {
       // hours worked
       var hoursWorked = 0;
-      if(timesheet.timeIn != null && timesheet.timeOut != null) {
+      if (timesheet.timeIn != null && timesheet.timeOut != null) {
         var datein = new Date(timesheet.timeIn);
         var dateout = new Date(timesheet.timeOut);
         var timein = datein.getTime();
@@ -673,9 +677,9 @@ export class MathService {
         hoursWorked = Math.floor(diff / (1000 * 60 * 60));
         diff -= hoursWorked * (1000 * 60 * 60);
         var mins = Math.floor(diff / (1000 * 60));
-        if(mins == 15) { hoursWorked += .25; }
-        else if(mins == 30) { hoursWorked  += .5; }
-        else if(mins == 45) { hoursWorked += .75; }
+        if (mins == 15) { hoursWorked += .25; }
+        else if (mins == 30) { hoursWorked += .5; }
+        else if (mins == 45) { hoursWorked += .75; }
       }
       timesheet.hoursWorked = hoursWorked;
 
@@ -686,14 +690,14 @@ export class MathService {
 
       // credit card tips
       var creditCardTips = 0;
-      if(timesheet.creditCardTips != null) {
+      if (timesheet.creditCardTips != null) {
         creditCardTips = timesheet.creditCardTips;
       }
 
       // total credit amount
-      var totalCredit = ((timesheet.hourlyRate + hourlyBonus) * hoursWorked) + 
-                                bonus + shuttleBonus +
-                                creditCardTips;
+      var totalCredit = ((timesheet.hourlyRate + hourlyBonus) * hoursWorked) +
+        bonus + shuttleBonus +
+        creditCardTips;
       timesheet.creditAmount = Math.ceil(totalCredit);
     });
   }
@@ -704,44 +708,44 @@ export class MathService {
    * 
   *************************************************************************************/
   calculateOneTimeSheet(timesheet: Timesheet) {
-    
-      // hours worked
-      var hoursWorked = 0;
-      if(timesheet.timeIn != null && timesheet.timeOut != null) {
-        var datein = new Date(timesheet.timeIn);
-        var dateout = new Date(timesheet.timeOut);
-        var timein = datein.getTime();
-        var timeout = dateout.getTime();
-        var diff = timeout - timein;
-        hoursWorked = Math.floor(diff / (1000 * 60 * 60));
-        diff -= hoursWorked * (1000 * 60 * 60);
-        var mins = Math.floor(diff / (1000 * 60));
-        if(mins == 15) { hoursWorked += .25; }
-        else if(mins == 30) { hoursWorked  += .5; }
-        else if(mins == 45) { hoursWorked += .75; }
-      }
-      timesheet.hoursWorked = hoursWorked;
 
-      // bonuses
-      var bonus = timesheet.eventBonus;
-      var shuttleBonus = timesheet.shuttleBonus;
-      var hourlyBonus = timesheet.hourlyBonus;
+    // hours worked
+    var hoursWorked = 0;
+    if (timesheet.timeIn != null && timesheet.timeOut != null) {
+      var datein = new Date(timesheet.timeIn);
+      var dateout = new Date(timesheet.timeOut);
+      var timein = datein.getTime();
+      var timeout = dateout.getTime();
+      var diff = timeout - timein;
+      hoursWorked = Math.floor(diff / (1000 * 60 * 60));
+      diff -= hoursWorked * (1000 * 60 * 60);
+      var mins = Math.floor(diff / (1000 * 60));
+      if (mins == 15) { hoursWorked += .25; }
+      else if (mins == 30) { hoursWorked += .5; }
+      else if (mins == 45) { hoursWorked += .75; }
+    }
+    timesheet.hoursWorked = hoursWorked;
 
-      // credit card tips
-      var creditCardTips = 0;
-      if(timesheet.creditCardTips != null) {
-        creditCardTips = timesheet.creditCardTips;
-      }
+    // bonuses
+    var bonus = timesheet.eventBonus;
+    var shuttleBonus = timesheet.shuttleBonus;
+    var hourlyBonus = timesheet.hourlyBonus;
 
-      // total credit amount
-      var totalCredit = ((timesheet.hourlyRate + hourlyBonus) * hoursWorked) + 
-                                bonus + shuttleBonus +
-                                creditCardTips;
-      // timesheet.creditAmount = totalCredit;
-      timesheet.creditAmount = Math.ceil(totalCredit);
+    // credit card tips
+    var creditCardTips = 0;
+    if (timesheet.creditCardTips != null) {
+      creditCardTips = timesheet.creditCardTips;
+    }
+
+    // total credit amount
+    var totalCredit = ((timesheet.hourlyRate + hourlyBonus) * hoursWorked) +
+      bonus + shuttleBonus +
+      creditCardTips;
+    // timesheet.creditAmount = totalCredit;
+    timesheet.creditAmount = Math.ceil(totalCredit);
 
 
-      return timesheet;
+    return timesheet;
   }
 }
 

@@ -25,13 +25,13 @@ export class AddEventBonusComponent implements OnInit {
   constructor(private eventService: EventService,
     private mathService: MathService,
     public activeModal: NgbActiveModal) {
-      this.modalOptions = {
-        backdrop:'static',
-        backdropClass:'customBackdrop',
-        size: 'xl',
-        centered: false
-     } 
+    this.modalOptions = {
+      backdrop: 'static',
+      backdropClass: 'customBackdrop',
+      size: 'xl',
+      centered: false
     }
+  }
 
   ngOnInit() {
     this.eventService.getSeasons().subscribe(res => {
@@ -60,7 +60,7 @@ export class AddEventBonusComponent implements OnInit {
     this.eventService.setTimesheets(this.timesheet);
     this.eventService.updateAllTimesheetsInDB(this.timesheet).subscribe(res => {
 
-      if(this.currentVenueID == 1 && this.currentSeasonID <= 3) {
+      if (this.currentVenueID == 1 && this.currentSeasonID <= 3) {
         this.eventService.getPncContractInfo().subscribe(contract => {
           this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
             this.event = this.mathService.calculatePncEvent(this.event, contract[0], timesheets);
@@ -75,7 +75,7 @@ export class AddEventBonusComponent implements OnInit {
         });
       }
 
-      else if(this.currentVenueID == 1 && this.currentSeasonID >= 4) {
+      else if (this.currentVenueID == 1 && this.currentSeasonID == 4) {
         this.eventService.getPncContractInfo().subscribe(contract => {
           this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
             this.event = this.mathService.calculatePncEvent2020(this.event, contract[0], timesheets);
@@ -90,7 +90,22 @@ export class AddEventBonusComponent implements OnInit {
         });
       }
 
-      else if(this.currentVenueID == 2 && this.currentSeasonID <= 3) {
+      else if (this.currentVenueID == 1 && this.currentSeasonID >= 5) {
+        this.eventService.getPncContractInfo().subscribe(contract => {
+          this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
+            this.event = this.mathService.calculatePncEvent2021(this.event, contract[0], timesheets);
+            this.eventService.editEvent(this.event, this.currentVenueID).subscribe(res => {
+              this.eventService.getAllEvents().subscribe(events => {
+                this.eventService.setAllEvents(events);
+                this.eventService.setEventStaffEdit(false);
+                this.activeModal.close('delete');
+              });
+            });
+          });
+        });
+      }
+
+      else if (this.currentVenueID == 2 && this.currentSeasonID <= 3) {
         this.eventService.getWcContractInfo().subscribe(contract => {
           this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
             this.event = this.mathService.calculateWcEvent(this.event, contract[0], timesheets);
@@ -105,7 +120,7 @@ export class AddEventBonusComponent implements OnInit {
         });
       }
 
-      else if(this.currentVenueID == 2 && this.currentSeasonID >=4) {
+      else if (this.currentVenueID == 2 && this.currentSeasonID >= 4) {
         this.eventService.getWcContractInfo().subscribe(contract => {
           this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
             this.event = this.mathService.calculateWcEvent2020(this.event, contract[0], timesheets);
@@ -120,7 +135,7 @@ export class AddEventBonusComponent implements OnInit {
         });
       }
 
-      else if(this.currentVenueID == 3) {
+      else if (this.currentVenueID == 3) {
         this.eventService.getCfContractInfo().subscribe(contract => {
           this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
             this.event = this.mathService.calculateCfEvent(this.event, contract[0], timesheets);
