@@ -1,271 +1,274 @@
 
 <div class="row">
-    <div class="col-md-5">
-  
-      <form [formGroup]="activeForm">
-  
-  <!-- Venue Level Select -->
-  
-        <div *ngIf="currentVenueID == 99">
-          <div class="form-row">
-            <div class="col-md-3">Venue:</div>
-          </div>
-          <div class="form-row">
-            <div class="form-group col-md-9" (change)="changeStaffList()">
-              <div class="form-check form-check-inline">
-                <input type="radio" class="form-check-input" id="99" formControlName="venueSelect" value="99">
-                <label class="form-check-label" for="99">ALL</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input type="radio" class="form-check-input" id="1" formControlName="venueSelect" value="1">
-                <label class="form-check-label" for="1">PNC</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input type="radio" class="form-check-input" id="2" formControlName="venueSelect" value="2">
-                <label class="form-check-label" for="2">WC</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input type="radio" class="form-check-input" id="3" formControlName="venueSelect" value="3">
-                <label class="form-check-label" for="3">CF</label>
-              </div>
+  <div class="col-md-5">
+
+    <form [formGroup]="activeForm">
+
+      <!-- Venue Level Select -->
+
+      <div *ngIf="currentVenueID == 99">
+        <div class="form-row">
+          <div class="col-md-3">Venue:</div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-9" (change)="changeStaffList()">
+            <div class="form-check form-check-inline">
+              <input type="radio" class="form-check-input" id="99" formControlName="venueSelect" value="99">
+              <label class="form-check-label" for="99">ALL</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input type="radio" class="form-check-input" id="1" formControlName="venueSelect" value="1">
+              <label class="form-check-label" for="1">PNC</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input type="radio" class="form-check-input" id="2" formControlName="venueSelect" value="2">
+              <label class="form-check-label" for="2">WC</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input type="radio" class="form-check-input" id="3" formControlName="venueSelect" value="3">
+              <label class="form-check-label" for="3">CF</label>
             </div>
           </div>
         </div>
-  
-        <!-- TODO: Add option to filter by job title -->
-  
-      </form>
+      </div>
 
-      <!-- Active Level Select Group-->
-      <div class="btn-group linkGroup" role="group" aria-label="Active Status Links">
-        <button class="btn btn-dark btn-rounded active-btn" routerLink="../staff-active" routerLinkActive="active-activity">
-          Active
-        </button>
-        <button class="btn btn-dark btn-rounded active-btn" routerLink="../staff-inactive" routerLinkActive="active-activity">
-          Inactive
-        </button>
-        <button class="btn btn-dark btn-rounded active-btn" routerLink="../staff-interested" routerLinkActive="active-activity" >
-          Interested
-        </button>
-        <button class="btn btn-dark btn-rounded active-btn" routerLink="../staff-all" routerLinkActive="active-activity">
-          All
-        </button>
-      </div>
-  
-    </div>
-  
-    <div class="col-md-3"></div>
-    
-    <div class="col-md-4">
-      <div *ngIf="currentVenueID == 99">
-        <button class="btn new-event-btn" (click)="onCreateMonthlyReport()">Create Monthly Report</button>
-        <br><br>
-      </div>
-      <div>
-        <button class="btn new-event-btn" (click)="onAddStaff()">Add New Staff Member</button>
-      </div>
-    </div>
-  </div>
-  
-  <app-staff-new *ngIf="staffNew == true"
-                  [currentVenueID]="currentVenueID">
-  </app-staff-new>
-  <hr>
-  
-  <div *ngIf="monthlyReportMsg">
-    <form [formGroup]="monthlyReportForm">
-      <div class="form-row">
-        <div class="form-group col-md-3">
-          <label for="month">Month</label>
-          <select id="month" class="form-control" formControlName="month">
-            <option [value]="1">January</option>
-            <option [value]="2">February</option>
-            <option [value]="3">March</option>
-            <option [value]="4">April</option>
-            <option [value]="5">May</option>
-            <option [value]="6">June</option>
-            <option [value]="7">July</option>
-            <option [value]="8">August</option>
-            <option [value]="9">September</option>
-            <option [value]="10">October</option>
-            <option [value]="11">November</option>
-            <option [value]="12">December</option>
-          </select>
-        </div>
-        <div class="form-group col-md-2">
-          <label for="year">Year</label>
-          <select id="year" class="form-control" formControlName="year">
-            <option [value]="2021">2021</option>
-            <option [value]="2020">2020</option>
-            <option [value]="2019">2019</option>
-            <option [value]="2018">2018</option>
-            <option [value]="2017">2017</option>
-          </select>
-        </div>
-      </div>
-  
-      <div *ngIf="howToSendMsg" class="form-row howToSendMsg">
-        What do you want to do with the Monthly Report?
-      </div>
-  
-      <div class="form-row">
-        <div class="form-group col-md-12">
-          <div class="form-check form-check-inline">
-            <input type="checkbox" class="form-check-input" id="emailReport1" formControlName="emailReport1">
-            <label for="emailReport1" class="form-check-label">Send email to TAC</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input type="checkbox" class="form-check-input" id="emailReport2" formControlName="emailReport2">
-            <label for="emailReport2" class="form-check-label">Send email to coordinator</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input type="checkbox" class="form-check-input" id="downloadReport" formControlName="downloadReport">
-            <label for="downloadReport" class="form-check-label">Download Report</label>
-          </div>
-        </div>
-      </div>
-  
-      <div class="form-row">
-        <div class="col-md-4">
-          <button class="btn btn-info" type="button" (click)="onCancelMonthlyReport()">Cancel</button>
-        </div>
-        <div class="col-md-4">
-          <button class="btn btn-info" type="button" (click)="onSendMonthlyReport()">Create Report</button>
-        </div>
-      </div>
+      <!-- TODO: Add option to filter by job title -->
+
     </form>
-    <hr>
+
+    <!-- Active Level Select Group-->
+    <div class="btn-group linkGroup" role="group" aria-label="Active Status Links">
+      <button class="btn btn-dark btn-rounded active-btn" routerLink="../staff-active" routerLinkActive="active-activity">
+        Active
+      </button>
+      <button class="btn btn-dark btn-rounded active-btn" routerLink="../staff-inactive" routerLinkActive="active-activity">
+        Inactive
+      </button>
+      <button class="btn btn-dark btn-rounded active-btn" routerLink="../staff-interested" routerLinkActive="active-activity">
+        Interested
+      </button>
+      <button class="btn btn-dark btn-rounded active-btn" routerLink="../staff-all" routerLinkActive="active-activity">
+        All
+      </button>
+    </div>
+
   </div>
-  
-  <!-- Collapsible Table -->
-  <div *ngIf="showVenue == 1">
-    <table datatable [dtOptions]="dtOptions"  class="row-border hover table table-striped collapsed main-table">
-      <thead>
-        <tr>
-          <th></th>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Phone</th>
-          <th>TU Account</th>
-          <th>Health Form</th>
-          <th>Exp.</th>
-          <th>Waiver</th>
-          <th>Bars</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr #trRef *ngFor="let person of setStaff" class="tableRow">
-          <td (click)="expandRow(trRef, person)"></td>
-          <td>{{ person.Name }}</td>
-          <td>{{ person.Email }}</td>
-          <td>{{ person.Phone }}</td>
-          <td>{{ person.tuAccount }}</td>
-          <td>
-            <span *ngIf="person.pncHealthForm == 1"><i class="fas fa-check"></i></span>
-          </td>
-          <td>
-            <span *ngIf="person.pncExperienced == 1"><i class="fas fa-check"></i></span>
-          </td>
-          <td>
-            <span *ngIf="person.pncWaiver == 1"><i class="fas fa-check"></i></span>
-          </td>
-          <td><span *ngIf="person.pncBars != null">{{ person.pncBars | date: 'MM/dd/yyyy' }}</span></td>
-        </tr>
-      </tbody> 
-    </table>
+
+  <div class="col-md-3"></div>
+
+  <div class="col-md-4">
+    <div *ngIf="currentVenueID == 99">
+      <button class="btn new-event-btn" (click)="onCreateMonthlyReport()">Create Monthly Report</button>
+      <br><br>
+    </div>
+    <div>
+      <button class="btn new-event-btn" (click)="onAddStaff()">Add New Staff Member</button>
+    </div>
   </div>
-  
-  <div *ngIf="showVenue == 2">
-    <table datatable [dtOptions]="dtOptions"  class="row-border hover table table-striped collapsed main-table">
-      <thead>
-        <tr>
-          <th></th>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Phone</th>
-          <th>TU Account</th>
-          <th>Team Training</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr #trRef *ngFor="let person of setStaff" class="tableRow">
-          <td (click)="expandRow(trRef, person)"></td>
-          <td>{{ person.Name }}</td>
-          <td>{{ person.Email }}</td>
-          <td>{{ person.Phone }}</td>
-          <td>{{ person.tuAccount }}</td>
-          <td><span *ngIf="person.wcTeamTraining != null">{{ person.wcTeamTraining | date: 'MM/dd/yyyy' }}</span></td>
-        </tr>
-      </tbody> 
-    </table>
-  </div>
-  
-  <div *ngIf="showVenue == 3">
-    <table datatable [dtOptions]="dtOptions"  class="row-border hover table table-striped collapsed main-table">
-      <thead>
-        <tr>
-          <th></th>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Phone</th>
-          <th>TU Account</th>
-          <th>Alcohol Training</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr #trRef *ngFor="let person of setStaff" class="tableRow">
-          <td (click)="expandRow(trRef, person)"></td>
-          <td>{{ person.Name }}</td>
-          <td>{{ person.Email }}</td>
-          <td>{{ person.Phone }}</td>
-          <td>{{ person.tuAccount }}</td>
-          <td><span *ngIf="person.cfAlcoholTraining != null">{{ person.cfAlcoholTraining | date: 'MM/dd/yyyy' }}</span></td>
-        </tr>
-      </tbody> 
-    </table>
-  </div>
-  
-  <div *ngIf="showVenue == 99">
-    <table datatable [dtOptions]="dtOptions"  class="row-border hover table table-striped collapsed main-table">
-      <thead>
-        <tr>
-          <th></th>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Phone</th>
-          <th>TU Account</th>
-          <th>Health Form</th>
-          <th>Exp.</th>
-          <th>Waiver</th>
-          <th>Bars</th>
-          <th>Team Training</th>
-          <th>Alcohol Training</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr #trRef *ngFor="let person of setStaff" class="tableRow">
-          <td (click)="expandRow(trRef, person)"></td>
-          <td>{{ person.Name }}</td>
-          <td>{{ person.Email }}</td>
-          <td>{{ person.Phone }}</td>
-          <td>{{ person.tuAccount }}</td>
-          <td>
-            <span *ngIf="person.pncHealthForm == 1"><i class="fas fa-check"></i></span>
-          </td>
-          <td>
-            <span *ngIf="person.pncExperienced == 1"><i class="fas fa-check"></i></span>
-          </td>
-          <td>
-            <span *ngIf="person.pncWaiver == 1"><i class="fas fa-check"></i></span>
-          </td>
-          <td><span *ngIf="person.pncBars != null">{{ person.pncBars | date: 'MM/dd/yyyy' }}</span></td>
-          <td><span *ngIf="person.wcTeamTraining != null">{{ person.wcTeamTraining | date: 'MM/dd/yyyy' }}</span></td>
-          <td><span *ngIf="person.cfAlcoholTraining != null">{{ person.cfAlcoholTraining | date: 'MM/dd/yyyy' }}</span></td>
-        </tr>
-      </tbody> 
-    </table>
-  </div>
-  
-  
-  
-  
+</div>
+
+<app-staff-new *ngIf="staffNew == true"
+               [currentVenueID]="currentVenueID">
+</app-staff-new>
+<hr>
+
+<div *ngIf="monthlyReportMsg">
+  <form [formGroup]="monthlyReportForm">
+    <div class="form-row">
+      <div class="form-group col-md-3">
+        <label for="month">Month</label>
+        <select id="month" class="form-control" formControlName="month">
+          <option [value]="1">January</option>
+          <option [value]="2">February</option>
+          <option [value]="3">March</option>
+          <option [value]="4">April</option>
+          <option [value]="5">May</option>
+          <option [value]="6">June</option>
+          <option [value]="7">July</option>
+          <option [value]="8">August</option>
+          <option [value]="9">September</option>
+          <option [value]="10">October</option>
+          <option [value]="11">November</option>
+          <option [value]="12">December</option>
+        </select>
+      </div>
+      <div class="form-group col-md-2">
+        <label for="year">Year</label>
+        <select id="year" class="form-control" formControlName="year">
+          <option [value]="2024">2024</option>
+          <option [value]="2023">2023</option>
+          <option [value]="2022">2022</option>
+          <option [value]="2021">2021</option>
+          <option [value]="2020">2020</option>
+          <option [value]="2019">2019</option>
+          <option [value]="2018">2018</option>
+          <option [value]="2017">2017</option>
+        </select>
+      </div>
+    </div>
+
+    <div *ngIf="howToSendMsg" class="form-row howToSendMsg">
+      What do you want to do with the Monthly Report?
+    </div>
+
+    <div class="form-row">
+      <div class="form-group col-md-12">
+        <div class="form-check form-check-inline">
+          <input type="checkbox" class="form-check-input" id="emailReport1" formControlName="emailReport1">
+          <label for="emailReport1" class="form-check-label">Send email to TAC</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input type="checkbox" class="form-check-input" id="emailReport2" formControlName="emailReport2">
+          <label for="emailReport2" class="form-check-label">Send email to coordinator</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input type="checkbox" class="form-check-input" id="downloadReport" formControlName="downloadReport">
+          <label for="downloadReport" class="form-check-label">Download Report</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="col-md-4">
+        <button class="btn btn-info" type="button" (click)="onCancelMonthlyReport()">Cancel</button>
+      </div>
+      <div class="col-md-4">
+        <button class="btn btn-info" type="button" (click)="onSendMonthlyReport()">Create Report</button>
+      </div>
+    </div>
+  </form>
+  <hr>
+</div>
+
+<!-- Collapsible Table -->
+<div *ngIf="showVenue == 1">
+  <table datatable [dtOptions]="dtOptions" class="row-border hover table table-striped collapsed main-table">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>TU Account</th>
+        <th>Health Form</th>
+        <th>Exp.</th>
+        <th>Waiver</th>
+        <th>Bars</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr #trRef *ngFor="let person of setStaff" class="tableRow">
+        <td (click)="expandRow(trRef, person)"></td>
+        <td>{{ person.Name }}</td>
+        <td>{{ person.Email }}</td>
+        <td>{{ person.Phone }}</td>
+        <td>{{ person.tuAccount }}</td>
+        <td>
+          <span *ngIf="person.pncHealthForm == 1"><i class="fas fa-check"></i></span>
+        </td>
+        <td>
+          <span *ngIf="person.pncExperienced == 1"><i class="fas fa-check"></i></span>
+        </td>
+        <td>
+          <span *ngIf="person.pncWaiver == 1"><i class="fas fa-check"></i></span>
+        </td>
+        <td><span *ngIf="person.pncBars != null">{{ person.pncBars | date: 'MM/dd/yyyy' }}</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div *ngIf="showVenue == 2">
+  <table datatable [dtOptions]="dtOptions" class="row-border hover table table-striped collapsed main-table">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>TU Account</th>
+        <th>Team Training</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr #trRef *ngFor="let person of setStaff" class="tableRow">
+        <td (click)="expandRow(trRef, person)"></td>
+        <td>{{ person.Name }}</td>
+        <td>{{ person.Email }}</td>
+        <td>{{ person.Phone }}</td>
+        <td>{{ person.tuAccount }}</td>
+        <td><span *ngIf="person.wcTeamTraining != null">{{ person.wcTeamTraining | date: 'MM/dd/yyyy' }}</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div *ngIf="showVenue == 3">
+  <table datatable [dtOptions]="dtOptions" class="row-border hover table table-striped collapsed main-table">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>TU Account</th>
+        <th>Alcohol Training</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr #trRef *ngFor="let person of setStaff" class="tableRow">
+        <td (click)="expandRow(trRef, person)"></td>
+        <td>{{ person.Name }}</td>
+        <td>{{ person.Email }}</td>
+        <td>{{ person.Phone }}</td>
+        <td>{{ person.tuAccount }}</td>
+        <td><span *ngIf="person.cfAlcoholTraining != null">{{ person.cfAlcoholTraining | date: 'MM/dd/yyyy' }}</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div *ngIf="showVenue == 99">
+  <table datatable [dtOptions]="dtOptions" class="row-border hover table table-striped collapsed main-table">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>TU Account</th>
+        <th>Health Form</th>
+        <th>Exp.</th>
+        <th>Waiver</th>
+        <th>Bars</th>
+        <th>Team Training</th>
+        <th>Alcohol Training</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr #trRef *ngFor="let person of setStaff" class="tableRow">
+        <td (click)="expandRow(trRef, person)"></td>
+        <td>{{ person.Name }}</td>
+        <td>{{ person.Email }}</td>
+        <td>{{ person.Phone }}</td>
+        <td>{{ person.tuAccount }}</td>
+        <td>
+          <span *ngIf="person.pncHealthForm == 1"><i class="fas fa-check"></i></span>
+        </td>
+        <td>
+          <span *ngIf="person.pncExperienced == 1"><i class="fas fa-check"></i></span>
+        </td>
+        <td>
+          <span *ngIf="person.pncWaiver == 1"><i class="fas fa-check"></i></span>
+        </td>
+        <td><span *ngIf="person.pncBars != null">{{ person.pncBars | date: 'MM/dd/yyyy' }}</span></td>
+        <td><span *ngIf="person.wcTeamTraining != null">{{ person.wcTeamTraining | date: 'MM/dd/yyyy' }}</span></td>
+        <td><span *ngIf="person.cfAlcoholTraining != null">{{ person.cfAlcoholTraining | date: 'MM/dd/yyyy' }}</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+
+

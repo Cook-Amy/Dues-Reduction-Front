@@ -11,67 +11,67 @@ import { NgbActiveModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./staff-edit.component.css']
 })
 export class StaffEditComponent implements OnInit {
-@Input() staff: Staff;
-@Input() currentVenueID: number;
-@Input() showVenue: number;
+  @Input() staff: Staff;
+  @Input() currentVenueID: number;
+  @Input() showVenue: number;
 
-modalOptions: NgbModalOptions;
-allTuAccounts: any[];
-editStaffForm1: FormGroup;
-editStaffForm2: FormGroup;
-editStaffForm3: FormGroup;
-editStaffForm99: FormGroup;
-editStaff: Staff;
-status1: string;
-status2: string;
-status3: string;
-dateValue: Date;
-dateValue2: Date;
-dateValue3: Date;
-removeStaffConfirm: Boolean = false;
+  modalOptions: NgbModalOptions;
+  allTuAccounts: any[];
+  editStaffForm1: FormGroup;
+  editStaffForm2: FormGroup;
+  editStaffForm3: FormGroup;
+  editStaffForm99: FormGroup;
+  editStaff: Staff;
+  status1: string;
+  status2: string;
+  status3: string;
+  dateValue: Date;
+  dateValue2: Date;
+  dateValue3: Date;
+  removeStaffConfirm: Boolean = false;
 
   constructor(private staffService: StaffService,
-              public activeModal: NgbActiveModal) {
-                this.modalOptions = {
-                  backdrop:'static',
-                  backdropClass:'customBackdrop',
-                  size: 'xl'
-               } 
-              }
+    public activeModal: NgbActiveModal) {
+    this.modalOptions = {
+      backdrop: 'static',
+      backdropClass: 'customBackdrop',
+      size: 'xl'
+    }
+  }
 
   ngOnInit() {
     console.log(new Date() + "\t Opening Staff Edit Modal");
     this.allTuAccounts = this.staffService.returnAllTuAccounts();
 
-    if(this.currentVenueID == 1) {
-      if(this.staff.pncActive) {this.status1 = "pncActive";}
-      else if(this.staff.pncInactive) {this.status1 = "pncInactive";}
-      else if(this.staff.pncInterested) {this.status1 = "pncInterested";}
+    if (this.currentVenueID == 1) {
+      if (this.staff.pncActive) { this.status1 = "pncActive"; }
+      else if (this.staff.pncInactive) { this.status1 = "pncInactive"; }
+      else if (this.staff.pncInterested) { this.status1 = "pncInterested"; }
       this.initForm1();
     }
-    else if(this.currentVenueID == 2) {
-      if(this.staff.wcActive) {this.status1 = "wcActive";}
-      else if(this.staff.wcInactive) {this.status1 = "wcInactive";}
-      else if(this.staff.wcInterested) {this.status1 = "wcInterested";}
+    else if (this.currentVenueID == 2) {
+      if (this.staff.wcActive) { this.status1 = "wcActive"; }
+      else if (this.staff.wcInactive) { this.status1 = "wcInactive"; }
+      else if (this.staff.wcInterested) { this.status1 = "wcInterested"; }
       this.initForm2();
     }
-    else if(this.currentVenueID == 3) {
-      if(this.staff.cfActive) {this.status1 = "cfActive";}
-      else if(this.staff.cfInactive) {this.status1 = "cfInactive";}
-      else if(this.staff.cfInterested) {this.status1 = "cfInterested";}
+    else if (this.currentVenueID == 3) {
+      if (this.staff.cfActive) { this.status1 = "cfActive"; }
+      else if (this.staff.cfInactive) { this.status1 = "cfInactive"; }
+      else if (this.staff.cfInterested) { this.status1 = "cfInterested"; }
       this.initForm3()
     }
 
-    else if(this.currentVenueID == 99) {
-      if(this.staff.pncActive) {this.status1 = "pncActive";}
-      else if(this.staff.pncInactive) {this.status1 = "pncInactive";}
-      else if(this.staff.pncInterested) {this.status1 = "pncInterested";}
-      if(this.staff.cfActive) {this.status2 = "cfActive";}
-      else if(this.staff.cfInactive) {this.status2 = "cfInactive";}
-      else if(this.staff.cfInterested) {this.status2 = "cfInterested";}
-      if(this.staff.wcActive) {this.status3 = "wcActive";}
-      else if(this.staff.wcInactive) {this.status3 = "wcInactive";}
-      else if(this.staff.wcInterested) {this.status3 = "wcInterested";}
+    else if (this.currentVenueID == 99) {
+      if (this.staff.pncActive) { this.status1 = "pncActive"; }
+      else if (this.staff.pncInactive) { this.status1 = "pncInactive"; }
+      else if (this.staff.pncInterested) { this.status1 = "pncInterested"; }
+      if (this.staff.cfActive) { this.status2 = "cfActive"; }
+      else if (this.staff.cfInactive) { this.status2 = "cfInactive"; }
+      else if (this.staff.cfInterested) { this.status2 = "cfInterested"; }
+      if (this.staff.wcActive) { this.status3 = "wcActive"; }
+      else if (this.staff.wcInactive) { this.status3 = "wcInactive"; }
+      else if (this.staff.wcInterested) { this.status3 = "wcInterested"; }
       this.initForm99()
     }
   }
@@ -81,7 +81,7 @@ removeStaffConfirm: Boolean = false;
     var dd = String(today.getDate()).padStart(2, '0');
     var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
     var yyyy = today.getFullYear();
-    var todayDate = new Date(mm + '/' + dd + '/' + yyyy); 
+    var todayDate = new Date(mm + '/' + dd + '/' + yyyy);
     return todayDate;
   }
 
@@ -95,7 +95,7 @@ removeStaffConfirm: Boolean = false;
     let pncHealthForm = this.staff.pncHealthForm;
     let pncExperienced = this.staff.pncExperienced;
     let pncBars: string = this.staff.pncBars;
-    if(!pncBars) {
+    if (!pncBars) {
       pncBars = "";
       this.dateValue = this.getToday();
     }
@@ -146,7 +146,7 @@ removeStaffConfirm: Boolean = false;
     let tuAccount: string = this.staff.tuAccount;
     let active = this.status1;
     let wcTeamTraining: string = this.staff.wcTeamTraining;
-    if(!wcTeamTraining) {
+    if (!wcTeamTraining) {
       wcTeamTraining = "";
       this.dateValue = this.getToday();
     }
@@ -189,7 +189,7 @@ removeStaffConfirm: Boolean = false;
     let tuAccount: string = this.staff.tuAccount;
     let active = this.status1;
     let cfAlcoholTraining: string = this.staff.cfAlcoholTraining;
-    if(!cfAlcoholTraining) {
+    if (!cfAlcoholTraining) {
       cfAlcoholTraining = "";
       this.dateValue = this.getToday();
     }
@@ -202,7 +202,7 @@ removeStaffConfirm: Boolean = false;
     let cfLeader = this.staff.cfLeader;
     let cfAssistantLeader = this.staff.cfAssistantLeader;
     let cfStaff = this.staff.cfStaff;
-    
+
 
     this.editStaffForm3 = new FormGroup({
       'firstName': new FormControl(firstName, Validators.required),
@@ -236,7 +236,7 @@ removeStaffConfirm: Boolean = false;
     let pncHealthForm = this.staff.pncHealthForm;
     let pncExperienced = this.staff.pncExperienced;
     let pncBars: string = this.staff.pncBars;
-    if(!pncBars) {
+    if (!pncBars) {
       pncBars = "";
       this.dateValue = this.getToday();
     }
@@ -252,7 +252,7 @@ removeStaffConfirm: Boolean = false;
 
     // WC stuff
     let wcTeamTraining: string = this.staff.wcTeamTraining;
-    if(!wcTeamTraining) {
+    if (!wcTeamTraining) {
       wcTeamTraining = "";
       this.dateValue2 = this.getToday();
     }
@@ -265,7 +265,7 @@ removeStaffConfirm: Boolean = false;
 
     // CF stuff
     let cfAlcoholTraining: string = this.staff.cfAlcoholTraining;
-    if(!cfAlcoholTraining) {
+    if (!cfAlcoholTraining) {
       cfAlcoholTraining = "";
       this.dateValue3 = this.getToday();
     }
@@ -308,16 +308,16 @@ removeStaffConfirm: Boolean = false;
   }
 
   onSubmit() {
-    if(this.currentVenueID == 1) {
+    if (this.currentVenueID == 1) {
       this.updateStaffPnc();
     }
-    else if(this.currentVenueID == 2) {
+    else if (this.currentVenueID == 2) {
       this.updateStaffWc();
     }
-    else if(this.currentVenueID == 3) {
+    else if (this.currentVenueID == 3) {
       this.updateStaffCf();
     }
-    else if(this.currentVenueID == 99) {
+    else if (this.currentVenueID == 99) {
       this.updateStaffAll();
     }
 
@@ -337,24 +337,24 @@ removeStaffConfirm: Boolean = false;
 
   updateStaffPnc() {
     var newStatus = this.editStaffForm1.value['active1'];
-      var active;
-      var inactive;
-      var interested;
-      if(newStatus == "pncActive") {
-        active = true;
-        inactive = false;
-        interested = false;
-      }
-      if(newStatus == "pncInactive") {
-        active = false;
-        inactive = true;
-        interested = false;
-      }
-      if(newStatus == "pncInterested") {
-        active = false;
-        inactive = false;
-        interested = true;
-      }
+    var active;
+    var inactive;
+    var interested;
+    if (newStatus == "pncActive") {
+      active = true;
+      inactive = false;
+      interested = false;
+    }
+    if (newStatus == "pncInactive") {
+      active = false;
+      inactive = true;
+      interested = false;
+    }
+    if (newStatus == "pncInterested") {
+      active = false;
+      inactive = false;
+      interested = true;
+    }
     this.staff.Name = this.editStaffForm1.value['lastName'] + ", " + this.editStaffForm1.value['firstName'];
     this.staff.firstName = this.editStaffForm1.value['firstName'];
     this.staff.lastName = this.editStaffForm1.value['lastName'];
@@ -379,24 +379,24 @@ removeStaffConfirm: Boolean = false;
 
   updateStaffWc() {
     var newStatus = this.editStaffForm2.value['active1'];
-      var active;
-      var inactive;
-      var interested;
-      if(newStatus == "wcActive") {
-        active = true;
-        inactive = false;
-        interested = false;
-      }
-      if(newStatus == "wcInactive") {
-        active = false;
-        inactive = true;
-        interested = false;
-      }
-      if(newStatus == "wcInterested") {
-        active = false;
-        inactive = false;
-        interested = true;
-      }
+    var active;
+    var inactive;
+    var interested;
+    if (newStatus == "wcActive") {
+      active = true;
+      inactive = false;
+      interested = false;
+    }
+    if (newStatus == "wcInactive") {
+      active = false;
+      inactive = true;
+      interested = false;
+    }
+    if (newStatus == "wcInterested") {
+      active = false;
+      inactive = false;
+      interested = true;
+    }
     this.staff.Name = this.editStaffForm2.value['lastName'] + ", " + this.editStaffForm2.value['firstName'];
     this.staff.firstName = this.editStaffForm2.value['firstName'];
     this.staff.lastName = this.editStaffForm2.value['lastName'];
@@ -416,24 +416,24 @@ removeStaffConfirm: Boolean = false;
 
   updateStaffCf() {
     var newStatus = this.editStaffForm3.value['active1'];
-      var active;
-      var inactive;
-      var interested;
-      if(newStatus == "cfActive") {
-        active = true;
-        inactive = false;
-        interested = false;
-      }
-      if(newStatus == "cfInactive") {
-        active = false;
-        inactive = true;
-        interested = false;
-      }
-      if(newStatus == "cfInterested") {
-        active = false;
-        inactive = false;
-        interested = true;
-      }
+    var active;
+    var inactive;
+    var interested;
+    if (newStatus == "cfActive") {
+      active = true;
+      inactive = false;
+      interested = false;
+    }
+    if (newStatus == "cfInactive") {
+      active = false;
+      inactive = true;
+      interested = false;
+    }
+    if (newStatus == "cfInterested") {
+      active = false;
+      inactive = false;
+      interested = true;
+    }
     this.staff.Name = this.editStaffForm3.value['lastName'] + ", " + this.editStaffForm3.value['firstName'];
     this.staff.firstName = this.editStaffForm3.value['firstName'];
     this.staff.lastName = this.editStaffForm3.value['lastName'];
@@ -451,64 +451,64 @@ removeStaffConfirm: Boolean = false;
 
   updateStaffAll() {
     var newStatus1 = this.editStaffForm99.value['active1'];
-      var active1;
-      var inactive1;
-      var interested1;
-      if(newStatus1 == "pncActive") {
-        active1 = true;
-        inactive1 = false;
-        interested1 = false;
-      }
-      else if(newStatus1 == "pncInactive") {
-        active1 = false;
-        inactive1 = true;
-        interested1 = false;
-      }
-      else if(newStatus1 == "pncInterested") {
-        active1 = false;
-        inactive1 = false;
-        interested1 = true;
-      }
+    var active1;
+    var inactive1;
+    var interested1;
+    if (newStatus1 == "pncActive") {
+      active1 = true;
+      inactive1 = false;
+      interested1 = false;
+    }
+    else if (newStatus1 == "pncInactive") {
+      active1 = false;
+      inactive1 = true;
+      interested1 = false;
+    }
+    else if (newStatus1 == "pncInterested") {
+      active1 = false;
+      inactive1 = false;
+      interested1 = true;
+    }
 
-      var newStatus2 = this.editStaffForm99.value['active2'];
-      var active2;
-      var inactive2;
-      var interested2;
-      if(newStatus2 == "wcActive") {
-        active2 = true;
-        inactive2 = false;
-        interested2 = false;
-      }
-      else if(newStatus2 == "wcInactive") {
-        active2 = false;
-        inactive2 = true;
-        interested2 = false;
-      }
-      else if(newStatus2 == "wcInterested") {
-        active2 = false;
-        inactive2 = false;
-        interested2 = true;
-      }
+    var newStatus2 = this.editStaffForm99.value['active2'];
+    var active2;
+    var inactive2;
+    var interested2;
+    if (newStatus2 == "wcActive") {
+      active2 = true;
+      inactive2 = false;
+      interested2 = false;
+    }
+    else if (newStatus2 == "wcInactive") {
+      active2 = false;
+      inactive2 = true;
+      interested2 = false;
+    }
+    else if (newStatus2 == "wcInterested") {
+      active2 = false;
+      inactive2 = false;
+      interested2 = true;
+    }
 
-      var newStatus3 = this.editStaffForm99.value['active3'];
-      var active3;
-      var inactive3;
-      var interested3;
-      if(newStatus3 == "cfActive") {
-        active3 = true;
-        inactive3 = false;
-        interested3 = false;
-      }
-      else if(newStatus3 == "cfInactive") {
-        active3 = false;
-        inactive3 = true;
-        interested3 = false;
-      }
-      else if(newStatus3 == "cfInterested") {
-        active3 = false;
-        inactive3 = false;
-        interested3 = true;
-      }
+    var newStatus3 = this.editStaffForm99.value['active3'];
+    var active3;
+    var inactive3;
+    var interested3;
+    if (newStatus3 == "cfActive") {
+      active3 = true;
+      inactive3 = false;
+      interested3 = false;
+    }
+    else if (newStatus3 == "cfInactive") {
+      active3 = false;
+      inactive3 = true;
+      interested3 = false;
+    }
+    else if (newStatus3 == "cfInterested") {
+      active3 = false;
+      inactive3 = false;
+      interested3 = true;
+    }
 
     this.staff.Name = this.editStaffForm99.value['lastName'] + ", " + this.editStaffForm99.value['firstName'];
     this.staff.firstName = this.editStaffForm99.value['firstName'];
@@ -525,30 +525,30 @@ removeStaffConfirm: Boolean = false;
     this.staff.pncBars = this.editStaffForm99.value['pncBars'];
     this.staff.pncBarsRefresher = this.editStaffForm99.value['pncBarsRefresher'];
     this.staff.pncWaiver = this.editStaffForm99.value['pncWaiver'];
-    this.staff.pncStandLeader = this.editStaffForm1.value['pncStandLeader'];
-    this.staff.pncGroupLeader = this.editStaffForm1.value['pncGroupLeader'];
-    this.staff.pncHeadCook = this.editStaffForm1.value['pncHeadCook'];
-    this.staff.pncRegister = this.editStaffForm1.value['pncRegister'];
-    this.staff.pncAssistantCook = this.editStaffForm1.value['pncAssistantCook'];
-    this.staff.pncBeerCart = this.editStaffForm1.value['pncBeerCart'];
+    this.staff.pncStandLeader = this.editStaffForm99.value['pncStandLeader'];
+    this.staff.pncGroupLeader = this.editStaffForm99.value['pncGroupLeader'];
+    this.staff.pncHeadCook = this.editStaffForm99.value['pncHeadCook'];
+    this.staff.pncRegister = this.editStaffForm99.value['pncRegister'];
+    this.staff.pncAssistantCook = this.editStaffForm99.value['pncAssistantCook'];
+    this.staff.pncBeerCart = this.editStaffForm99.value['pncBeerCart'];
 
     this.staff.wcActive = active2;
     this.staff.wcInactive = inactive2;
     this.staff.wcInterested = interested2;
     this.staff.wcTeamTraining = this.editStaffForm99.value['wcTeamTraining'];
-    this.staff.wcStandLeader = this.editStaffForm2.value['wcStandLeader'];
-    this.staff.wcMoveStockOut = this.editStaffForm2.value['wcMoveStockOut'];
-    this.staff.wcContainerBarLead = this.editStaffForm2.value['wcContainerBarLead'];
-    this.staff.wcFinalStandPrep = this.editStaffForm2.value['wcFinalStandPrep'];
-    this.staff.wcSales = this.editStaffForm2.value['wcSales'];
+    this.staff.wcStandLeader = this.editStaffForm99.value['wcStandLeader'];
+    this.staff.wcMoveStockOut = this.editStaffForm99.value['wcMoveStockOut'];
+    this.staff.wcContainerBarLead = this.editStaffForm99.value['wcContainerBarLead'];
+    this.staff.wcFinalStandPrep = this.editStaffForm99.value['wcFinalStandPrep'];
+    this.staff.wcSales = this.editStaffForm99.value['wcSales'];
 
     this.staff.cfActive = active3;
     this.staff.cfInactive = inactive3;
     this.staff.cfInterested = interested3;
     this.staff.cfAlcoholTraining = this.editStaffForm99.value['cfAlcoholTraining'];
-    this.staff.cfLeader = this.editStaffForm3.value['cfLeader'];
-    this.staff.cfAssistantLeader = this.editStaffForm3.value['cfAssistantLeader'];
-    this.staff.cfStaff = this.editStaffForm3.value['cfStaff'];
+    this.staff.cfLeader = this.editStaffForm99.value['cfLeader'];
+    this.staff.cfAssistantLeader = this.editStaffForm99.value['cfAssistantLeader'];
+    this.staff.cfStaff = this.editStaffForm99.value['cfStaff'];
   }
 
   onRemoveStaff() {

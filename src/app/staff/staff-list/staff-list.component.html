@@ -1,10 +1,15 @@
+<!--
+  THIS FILE NO LONGER BEING USED
+  SEE staff-active, staff-inactive, staff-interested, staff-all
+-->
+
 
 <div class="row">
   <div class="col-md-5">
 
     <form [formGroup]="activeForm">
 
-<!-- Venue Level Select -->
+      <!-- Venue Level Select -->
 
       <div *ngIf="currentVenueID == 99">
         <div class="form-row">
@@ -33,7 +38,7 @@
       </div>
 
 
-<!-- Activity Level Select -->
+      <!-- Activity Level Select -->
 
       <div class="form-row">
         <div class="col-md-5">Active Status:</div>
@@ -70,7 +75,7 @@
       <button class="btn btn-dark btn-rounded active-btn" routerLink="./inactive" routerLinkActive="active-activity">
         Inactive
       </button>
-      <button class="btn btn-dark btn-rounded active-btn" routerLink="./interested" routerLinkActive="active-activity" >
+      <button class="btn btn-dark btn-rounded active-btn" routerLink="./interested" routerLinkActive="active-activity">
         Interested
       </button>
       <button class="btn btn-dark btn-rounded active-btn" routerLink="./all" routerLinkActive="active-activity">
@@ -81,7 +86,7 @@
   </div>
 
   <div class="col-md-3"></div>
-  
+
   <div class="col-md-4">
     <div *ngIf="currentVenueID == 99">
       <button class="btn new-event-btn" (click)="onCreateMonthlyReport()">Create Monthly Report</button>
@@ -94,7 +99,7 @@
 </div>
 
 <app-staff-new *ngIf="staffNew == true"
-                [currentVenueID]="currentVenueID">
+               [currentVenueID]="currentVenueID">
 </app-staff-new>
 <hr>
 
@@ -121,6 +126,9 @@
       <div class="form-group col-md-2">
         <label for="year">Year</label>
         <select id="year" class="form-control" formControlName="year">
+          <option [value]="2024">2024</option>
+          <option [value]="2023">2023</option>
+          <option [value]="2022">2022</option>
           <option [value]="2021">2021</option>
           <option [value]="2020">2020</option>
           <option [value]="2019">2019</option>
@@ -165,7 +173,7 @@
 
 <!-- Collapsible Table -->
 <div *ngIf="showVenue == 1">
-  <table datatable [dtOptions]="dtOptions"  class="row-border hover table table-striped collapsed main-table">
+  <table datatable [dtOptions]="dtOptions" class="row-border hover table table-striped collapsed main-table">
     <thead>
       <tr>
         <th></th>
@@ -197,12 +205,12 @@
         </td>
         <td><span *ngIf="person.pncBars != null">{{ person.pncBars | date: 'MM/dd/yyyy' }}</span></td>
       </tr>
-    </tbody> 
+    </tbody>
   </table>
 </div>
 
 <div *ngIf="showVenue == 2">
-  <table datatable [dtOptions]="dtOptions"  class="row-border hover table table-striped collapsed main-table">
+  <table datatable [dtOptions]="dtOptions" class="row-border hover table table-striped collapsed main-table">
     <thead>
       <tr>
         <th></th>
@@ -222,12 +230,12 @@
         <td>{{ person.tuAccount }}</td>
         <td><span *ngIf="person.wcTeamTraining != null">{{ person.wcTeamTraining | date: 'MM/dd/yyyy' }}</span></td>
       </tr>
-    </tbody> 
+    </tbody>
   </table>
 </div>
 
 <div *ngIf="showVenue == 3">
-  <table datatable [dtOptions]="dtOptions"  class="row-border hover table table-striped collapsed main-table">
+  <table datatable [dtOptions]="dtOptions" class="row-border hover table table-striped collapsed main-table">
     <thead>
       <tr>
         <th></th>
@@ -247,12 +255,12 @@
         <td>{{ person.tuAccount }}</td>
         <td><span *ngIf="person.cfAlcoholTraining != null">{{ person.cfAlcoholTraining | date: 'MM/dd/yyyy' }}</span></td>
       </tr>
-    </tbody> 
+    </tbody>
   </table>
 </div>
 
 <div *ngIf="showVenue == 99">
-  <table datatable [dtOptions]="dtOptions"  class="row-border hover table table-striped collapsed main-table">
+  <table datatable [dtOptions]="dtOptions" class="row-border hover table table-striped collapsed main-table">
     <thead>
       <tr>
         <th></th>
@@ -288,7 +296,7 @@
         <td><span *ngIf="person.wcTeamTraining != null">{{ person.wcTeamTraining | date: 'MM/dd/yyyy' }}</span></td>
         <td><span *ngIf="person.cfAlcoholTraining != null">{{ person.cfAlcoholTraining | date: 'MM/dd/yyyy' }}</span></td>
       </tr>
-    </tbody> 
+    </tbody>
   </table>
 </div>
 

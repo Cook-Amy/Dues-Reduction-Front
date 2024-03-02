@@ -25,23 +25,23 @@ export class EventStaffAddComponent implements OnInit {
   jobs: Job[] = [];
   staff: Staff[] = [];
   timesheet: Timesheet;
-  idVenue: number; 
+  idVenue: number;
   interval: number = 15;
   modalOptions: NgbModalOptions;
 
   constructor(private eventService: EventService,
-              private staffService: StaffService,
-              private mathService: MathService,
-              private route: ActivatedRoute,
-              private router: Router, 
-              public activeModal: NgbActiveModal) {
-                this.modalOptions = {
-                  backdrop:'static',
-                  backdropClass:'customBackdrop',
-                  size: 'xl',
-                  centered: true
-               }  
-              }
+    private staffService: StaffService,
+    private mathService: MathService,
+    private route: ActivatedRoute,
+    private router: Router,
+    public activeModal: NgbActiveModal) {
+    this.modalOptions = {
+      backdrop: 'static',
+      backdropClass: 'customBackdrop',
+      size: 'xl',
+      centered: true
+    }
+  }
 
   ngOnInit() {
     this.eventService.getSeasons().subscribe(res => {
@@ -49,43 +49,43 @@ export class EventStaffAddComponent implements OnInit {
       this.eventService.setCurrentSeasonById(this.currentSeasonID);
       this.currentSeason = this.eventService.getCurrentSeason();
     });
-    
+
     this.idVenue = this.event.venueID;
     this.initForm();
 
-    if(this.idVenue == 1) {
+    if (this.idVenue == 1) {
       this.eventService.getPncJobs().subscribe(jobs => {
         jobs.forEach(job => {
           this.jobs.push(job);
         });
       });
-  
+
       this.staffService.getActivePncStaff().subscribe(staff => {
         this.staffService.setActivePncStaff(staff);
         this.staff = this.staffService.returnActivePncStaff();
       });
     }
 
-    else if(this.idVenue == 2) {
+    else if (this.idVenue == 2) {
       this.eventService.getWcJobs().subscribe(jobs => {
         jobs.forEach(job => {
           this.jobs.push(job);
         });
       });
-  
+
       this.staffService.getActiveWcStaff().subscribe(staff => {
         this.staffService.setActiveWcStaff(staff);
         this.staff = this.staffService.returnActiveWcStaff();
       });
     }
 
-    else if(this.idVenue == 3) {
+    else if (this.idVenue == 3) {
       this.eventService.getCfJobs().subscribe(jobs => {
         jobs.forEach(job => {
           this.jobs.push(job);
         });
       });
-  
+
       this.staffService.getActiveCfStaff().subscribe(staff => {
         this.staffService.setActiveCfStaff(staff);
         this.staff = this.staffService.returnActiveCfStaff();
@@ -123,14 +123,14 @@ export class EventStaffAddComponent implements OnInit {
     // when staff position changes
     this.staffAddForm.get('position').valueChanges.subscribe(val => {
       this.jobs.forEach(job => {
-        if(job.jobName == val) {
+        if (job.jobName == val) {
           this.staffAddForm.patchValue({
             rate: job.hourlyRate
           });
           // update scheduled arrival time
           var newTime = new Date(this.computeScheduledArrival(
-                                      this.event.Date, 
-                                      job.minutesBeforeOpen));
+            this.event.Date,
+            job.minutesBeforeOpen));
 
           // update TimeIn and TimeOut
           var timeIn = newTime;
@@ -166,7 +166,7 @@ export class EventStaffAddComponent implements OnInit {
     this.eventService.addToTimesheets(this.timesheet);
     this.eventService.addTimesheetinDB(this.timesheet, this.event.idevent).subscribe(id => {
       this.timesheet.idtimesheet = id;
-      if(this.idVenue == 1 && this.currentSeasonID <= 3) {
+      if (this.idVenue == 1 && this.currentSeasonID <= 3) {
         this.eventService.getPncContractInfo().subscribe(contract => {
           this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
             this.event = this.mathService.calculatePncEvent(this.event, contract[0], timesheets);
@@ -180,7 +180,7 @@ export class EventStaffAddComponent implements OnInit {
         });
       }
 
-      else if(this.idVenue == 1 && this.currentSeasonID >= 4) {
+      else if (this.idVenue == 1 && this.currentSeasonID == 4) {
         this.eventService.getPncContractInfo().subscribe(contract => {
           this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
             this.event = this.mathService.calculatePncEvent2020(this.event, contract[0], timesheets);
@@ -194,7 +194,21 @@ export class EventStaffAddComponent implements OnInit {
         });
       }
 
-      else if(this.idVenue == 2 && this.currentSeasonID <= 3) {
+      else if (this.idVenue == 1 && this.currentSeasonID >= 5) {
+        this.eventService.getPncContractInfo().subscribe(contract => {
+          this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
+            this.event = this.mathService.calculatePncEvent2021(this.event, contract[0], timesheets);
+            this.eventService.editEvent(this.event, this.idVenue).subscribe(res => {
+              this.eventService.getAllEvents().subscribe(events => {
+                this.eventService.setAllEvents(events);
+                this.activeModal.close("added");
+              });
+            });
+          });
+        });
+      }
+
+      else if (this.idVenue == 2 && this.currentSeasonID <= 3) {
         this.eventService.getWcContractInfo().subscribe(contract => {
           this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
             this.event = this.mathService.calculateWcEvent(this.event, contract[0], timesheets);
@@ -208,7 +222,7 @@ export class EventStaffAddComponent implements OnInit {
         });
       }
 
-      else if(this.idVenue == 2 && this.currentSeasonID >= 4) {
+      else if (this.idVenue == 2 && this.currentSeasonID >= 4) {
         this.eventService.getWcContractInfo().subscribe(contract => {
           this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
             this.event = this.mathService.calculateWcEvent2020(this.event, contract[0], timesheets);
@@ -222,7 +236,7 @@ export class EventStaffAddComponent implements OnInit {
         });
       }
 
-      else if(this.idVenue == 3) {
+      else if (this.idVenue == 3) {
         this.eventService.getCfContractInfo().subscribe(contract => {
           this.eventService.getTimesheetForEvent(this.event.idevent).subscribe(timesheets => {
             this.event = this.mathService.calculateCfEvent(this.event, contract[0], timesheets);
@@ -253,14 +267,14 @@ export class EventStaffAddComponent implements OnInit {
       }
     });
     this.jobs.forEach(job => {
-      if(job.jobName == this.staffAddForm.value['position']) {
+      if (job.jobName == this.staffAddForm.value['position']) {
         jobID = job.jobID;
         guar = job.isGuarantee;
       }
     });
 
     this.timesheet = new Timesheet(
-      0, 
+      0,
       first,
       last,
       personID,
@@ -283,8 +297,8 @@ export class EventStaffAddComponent implements OnInit {
   }
 
   // CHECK DATE
-    // First, make sure date matches event date
-    // Second, if time out is after midnight, make sure date is the next day
+  // First, make sure date matches event date
+  // Second, if time out is after midnight, make sure date is the next day
   checkDate(dateVal, inDateVal, outDate = null) {
     console.log("starting date value: " + dateVal);
     var eventDate = new Date(this.event.Date);
@@ -295,14 +309,14 @@ export class EventStaffAddComponent implements OnInit {
     var yyyy = eventDate.getFullYear();
 
     // check for timeOut that is after midnight
-    if(inDateVal && outDate) {
+    if (inDateVal && outDate) {
       console.log("checking timeOut");
       var timein = new Date(inDateVal);
       var timeout = timesheetDate;
 
-      if(timein.getTime() > timeout.getTime()) 
-      console.log("Time out is before time in");
-        dd = eventDate.getDate() + 1;
+      if (timein.getTime() > timeout.getTime())
+        console.log("Time out is before time in");
+      dd = eventDate.getDate() + 1;
     }
 
     timesheetDate.setMonth(mm);
